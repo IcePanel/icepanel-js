@@ -1,0 +1,13 @@
+{
+    "cliVersion": "3.32.0",
+    "generatorName": "fernapi/fern-typescript-sdk",
+    "generatorVersion": "3.40.0",
+    "generatorConfig": {
+        "namespaceExport": "IcePanel",
+        "enableInlineTypes": false,
+        "includeOtherInUnionTypes": true,
+        "includeCredentialsOnCrossOriginRequests": true,
+        "exportAllRequestsAtRoot": true,
+        "consolidateTypeFiles": true
+    }
+}
