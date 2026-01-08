@@ -35,21 +35,6 @@ npm i -s @icepanel/sdk
 
 A full reference for this library is available [here](https://github.com/IcePanel/icepanel-js/blob/HEAD/./reference.md).
 
-## Latest Helper
-
-Use the following constant to specify the latest version.
-```typescript
-import { IcePanelClient, LandscapeVersion } from "@icepanel/sdk";
-
-const landscapeId = "landscapeId";
-
-const client = new IcePanelClient({ apiKey: "YOUR_API_KEY", authorization: "YOUR_AUTHORIZATION" });
-await client.model.objects.list({
-  landscapeId,
-  versionId: LandscapeVersion.Latest
-});
-```
-
 
 ## Helpers
 
