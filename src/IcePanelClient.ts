@@ -22,13 +22,19 @@ export class IcePanelClient extends Client {
         updatedOptions.baseUrl = async () => {
             const baseUrl = options.baseUrl ? await core.Supplier.get(options.baseUrl) : undefined
             if (baseUrl) {
-                return `https://${baseUrl}/${options.apiVersion}`
+                const url = new URL(baseUrl)
+                url.pathname = `/${options.apiVersion}`
+                return url.toString()
             }
             const environment = options.environment ? await core.Supplier.get(options.environment) : undefined
             if (environment) {
-                return `https://api.${environment}.icepanel.cloud/${options.apiVersion}`
+                const url = new URL(`https://api.${environment}.icepanel.cloud`)
+                url.pathname = `/${options.apiVersion}`
+                return url.toString()
             }
-            return `https://api.icepanel.io/${options.apiVersion}`
+            const url = new URL(`https://api.icepanel.io`)
+            url.pathname = `/${options.apiVersion}`
+            return url.toString()
         }
 
         if (options.apiKey) {
