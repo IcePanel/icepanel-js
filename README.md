@@ -9,7 +9,6 @@ The IcePanel TypeScript library provides convenient access to the IcePanel APIs 
 
 - [Installation](#installation)
 - [Reference](#reference)
-- [Latest Helper](#latest-helper)
 - [Helpers](#helpers)
 - [Usage](#usage)
 - [Request and Response Types](#request-and-response-types)
@@ -34,7 +33,6 @@ npm i -s @icepanel/sdk
 ## Reference
 
 A full reference for this library is available [here](https://github.com/IcePanel/icepanel-js/blob/HEAD/./reference.md).
-
 
 ## Helpers
 
