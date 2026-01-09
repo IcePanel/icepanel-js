@@ -8,6 +8,9 @@
         "includeOtherInUnionTypes": true,
         "includeCredentialsOnCrossOriginRequests": true,
         "exportAllRequestsAtRoot": true,
-        "consolidateTypeFiles": true
+        "consolidateTypeFiles": true,
+        "extraDependencies": {
+            "nanoid": "^5.1.6"
+        }
     }
 }

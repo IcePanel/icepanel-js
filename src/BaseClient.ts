@@ -52,8 +52,8 @@ export function normalizeClientOptions<T extends BaseClientOptions>(options: T):
         {
             "X-Fern-Language": "JavaScript",
             "X-Fern-SDK-Name": "@icepanel/sdk",
-            "X-Fern-SDK-Version": "0.0.43",
-            "User-Agent": "@icepanel/sdk/0.0.43",
+            "X-Fern-SDK-Version": "0.1.1",
+            "User-Agent": "@icepanel/sdk/0.1.1",
             "X-Fern-Runtime": core.RUNTIME.type,
             "X-Fern-Runtime-Version": core.RUNTIME.version,
         },
