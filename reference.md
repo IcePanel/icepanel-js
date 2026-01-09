@@ -398,10 +398,12 @@ await client.diagrams.list({
 await client.diagrams.create({
     landscapeId: "landscapeId",
     versionId: "versionId",
-    index: 1.1,
-    modelId: "modelId",
-    name: "name",
-    type: "app-diagram"
+    body: {
+        index: 1.1,
+        modelId: "modelId",
+        name: "name",
+        type: "app-diagram"
+    }
 });
 
 ```
@@ -508,10 +510,12 @@ await client.diagrams.upsert({
     landscapeId: "landscapeId",
     versionId: "versionId",
     diagramId: "diagramId",
-    index: 1.1,
-    modelId: "modelId",
-    name: "name",
-    type: "app-diagram"
+    body: {
+        index: 1.1,
+        modelId: "modelId",
+        name: "name",
+        type: "app-diagram"
+    }
 });
 
 ```

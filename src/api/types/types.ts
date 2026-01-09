@@ -2467,6 +2467,29 @@ export interface Diagram {
     versionId: string;
 }
 
+export interface DiagramCreate {
+    commit?: number;
+    description?: string;
+    groupId?: string | null;
+    index: number;
+    labels?: Record<string, string>;
+    /** model object id this object belongs to */
+    modelId: string;
+    name: string;
+    parentId?: string | null;
+    pinned?: boolean;
+    pinnedAt?: string;
+    pinnedIndex?: number;
+    status?: IcePanel.DiagramStatus;
+    /** Custom zoom levels for specific model objects within the diagram. The key is the modelObjectId and the value is the diagram id. */
+    zoomOverrides?: Record<string, string | null> | null;
+    handleId?: string;
+    type: IcePanel.DiagramType;
+    comments?: Record<string, IcePanel.DiagramComment>;
+    connections?: Record<string, IcePanel.DiagramConnection>;
+    objects?: Record<string, IcePanel.DiagramObject>;
+}
+
 export const DiagramObjectShape = {
     Area: "area",
     Box: "box",
@@ -5304,6 +5327,7 @@ export type SearchResultData = IcePanel.ModelObject | IcePanel.ModelConnection |
 export interface SearchResult {
     data?: IcePanel.SearchResultData;
     id: string;
+    name: string;
     score: number;
     type: IcePanel.SearchIndexType;
 }

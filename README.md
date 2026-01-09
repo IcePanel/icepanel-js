@@ -9,7 +9,6 @@ The IcePanel TypeScript library provides convenient access to the IcePanel APIs 
 
 - [Installation](#installation)
 - [Reference](#reference)
-- [Helpers](#helpers)
 - [Usage](#usage)
 - [Request and Response Types](#request-and-response-types)
 - [Exception Handling](#exception-handling)
@@ -27,7 +26,7 @@ The IcePanel TypeScript library provides convenient access to the IcePanel APIs 
 ## Installation
 
 ```sh
-npm i @icepanel/sdk
+npm i -s @icepanel/sdk
 ```
 
 ## Reference
@@ -36,17 +35,15 @@ A full reference for this library is available [here](https://github.com/IcePane
 
 ## Usage
 
-Use the following constant to specify the latest version.
-```typescript
-import { IcePanelClient, LandscapeVersion } from "@icepanel/sdk";
+Instantiate and use the client with the following:
 
-const client = new IcePanelClient({
-  apiKey: "YOUR_API_KEY",
-  apiVersion: "v1"
-});
+```typescript
+import { IcePanelClient } from "@icepanel/sdk";
+
+const client = new IcePanelClient({ apiKey: "YOUR_API_KEY", authorization: "YOUR_AUTHORIZATION" });
 await client.model.objects.list({
-  landscapeId: "YOUR_LANDSCAPE_ID",
-  versionId: LandscapeVersion.Latest
+    landscapeId: "landscapeId",
+    versionId: "versionId"
 });
 ```
 

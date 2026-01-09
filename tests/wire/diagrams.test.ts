@@ -334,10 +334,12 @@ describe("DiagramsClient", () => {
         const response = await client.diagrams.create({
             landscapeId: "landscapeId",
             versionId: "versionId",
-            index: 1.1,
-            modelId: "modelId",
-            name: "name",
-            type: "app-diagram",
+            body: {
+                index: 1.1,
+                modelId: "modelId",
+                name: "name",
+                type: "app-diagram",
+            },
         });
         expect(response).toEqual({
             diagram: {
@@ -472,10 +474,12 @@ describe("DiagramsClient", () => {
             return await client.diagrams.create({
                 landscapeId: "landscapeId",
                 versionId: "versionId",
-                index: 1.1,
-                modelId: "modelId",
-                name: "name",
-                type: "app-diagram",
+                body: {
+                    index: 1.1,
+                    modelId: "modelId",
+                    name: "name",
+                    type: "app-diagram",
+                },
             });
         }).rejects.toThrow(IcePanel.UnauthorizedError);
     });
@@ -503,10 +507,12 @@ describe("DiagramsClient", () => {
             return await client.diagrams.create({
                 landscapeId: "landscapeId",
                 versionId: "versionId",
-                index: 1.1,
-                modelId: "modelId",
-                name: "name",
-                type: "app-diagram",
+                body: {
+                    index: 1.1,
+                    modelId: "modelId",
+                    name: "name",
+                    type: "app-diagram",
+                },
             });
         }).rejects.toThrow(IcePanel.NotFoundError);
     });
@@ -534,10 +540,12 @@ describe("DiagramsClient", () => {
             return await client.diagrams.create({
                 landscapeId: "landscapeId",
                 versionId: "versionId",
-                index: 1.1,
-                modelId: "modelId",
-                name: "name",
-                type: "app-diagram",
+                body: {
+                    index: 1.1,
+                    modelId: "modelId",
+                    name: "name",
+                    type: "app-diagram",
+                },
             });
         }).rejects.toThrow(IcePanel.UnprocessableEntityError);
     });
@@ -565,10 +573,12 @@ describe("DiagramsClient", () => {
             return await client.diagrams.create({
                 landscapeId: "landscapeId",
                 versionId: "versionId",
-                index: 1.1,
-                modelId: "modelId",
-                name: "name",
-                type: "app-diagram",
+                body: {
+                    index: 1.1,
+                    modelId: "modelId",
+                    name: "name",
+                    type: "app-diagram",
+                },
             });
         }).rejects.toThrow(IcePanel.InternalServerError);
     });
@@ -908,10 +918,12 @@ describe("DiagramsClient", () => {
             landscapeId: "landscapeId",
             versionId: "versionId",
             diagramId: "diagramId",
-            index: 1.1,
-            modelId: "modelId",
-            name: "name",
-            type: "app-diagram",
+            body: {
+                index: 1.1,
+                modelId: "modelId",
+                name: "name",
+                type: "app-diagram",
+            },
         });
         expect(response).toEqual({
             diagram: {
@@ -1047,10 +1059,12 @@ describe("DiagramsClient", () => {
                 landscapeId: "landscapeId",
                 versionId: "versionId",
                 diagramId: "diagramId",
-                index: 1.1,
-                modelId: "modelId",
-                name: "name",
-                type: "app-diagram",
+                body: {
+                    index: 1.1,
+                    modelId: "modelId",
+                    name: "name",
+                    type: "app-diagram",
+                },
             });
         }).rejects.toThrow(IcePanel.BadRequestError);
     });
@@ -1079,10 +1093,12 @@ describe("DiagramsClient", () => {
                 landscapeId: "landscapeId",
                 versionId: "versionId",
                 diagramId: "diagramId",
-                index: 1.1,
-                modelId: "modelId",
-                name: "name",
-                type: "app-diagram",
+                body: {
+                    index: 1.1,
+                    modelId: "modelId",
+                    name: "name",
+                    type: "app-diagram",
+                },
             });
         }).rejects.toThrow(IcePanel.UnauthorizedError);
     });
@@ -1111,10 +1127,12 @@ describe("DiagramsClient", () => {
                 landscapeId: "landscapeId",
                 versionId: "versionId",
                 diagramId: "diagramId",
-                index: 1.1,
-                modelId: "modelId",
-                name: "name",
-                type: "app-diagram",
+                body: {
+                    index: 1.1,
+                    modelId: "modelId",
+                    name: "name",
+                    type: "app-diagram",
+                },
             });
         }).rejects.toThrow(IcePanel.NotFoundError);
     });
@@ -1143,10 +1161,12 @@ describe("DiagramsClient", () => {
                 landscapeId: "landscapeId",
                 versionId: "versionId",
                 diagramId: "diagramId",
-                index: 1.1,
-                modelId: "modelId",
-                name: "name",
-                type: "app-diagram",
+                body: {
+                    index: 1.1,
+                    modelId: "modelId",
+                    name: "name",
+                    type: "app-diagram",
+                },
             });
         }).rejects.toThrow(IcePanel.ConflictError);
     });
@@ -1175,10 +1195,12 @@ describe("DiagramsClient", () => {
                 landscapeId: "landscapeId",
                 versionId: "versionId",
                 diagramId: "diagramId",
-                index: 1.1,
-                modelId: "modelId",
-                name: "name",
-                type: "app-diagram",
+                body: {
+                    index: 1.1,
+                    modelId: "modelId",
+                    name: "name",
+                    type: "app-diagram",
+                },
             });
         }).rejects.toThrow(IcePanel.UnprocessableEntityError);
     });
@@ -1207,10 +1229,12 @@ describe("DiagramsClient", () => {
                 landscapeId: "landscapeId",
                 versionId: "versionId",
                 diagramId: "diagramId",
-                index: 1.1,
-                modelId: "modelId",
-                name: "name",
-                type: "app-diagram",
+                body: {
+                    index: 1.1,
+                    modelId: "modelId",
+                    name: "name",
+                    type: "app-diagram",
+                },
             });
         }).rejects.toThrow(IcePanel.InternalServerError);
     });

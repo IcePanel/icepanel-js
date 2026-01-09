@@ -134,10 +134,12 @@ export class DiagramsClient {
      *     await client.diagrams.create({
      *         landscapeId: "landscapeId",
      *         versionId: "versionId",
-     *         index: 1.1,
-     *         modelId: "modelId",
-     *         name: "name",
-     *         type: "app-diagram"
+     *         body: {
+     *             index: 1.1,
+     *             modelId: "modelId",
+     *             name: "name",
+     *             type: "app-diagram"
+     *         }
      *     })
      */
     public create(
@@ -151,7 +153,7 @@ export class DiagramsClient {
         request: IcePanel.DiagramCreateRequest,
         requestOptions?: DiagramsClient.RequestOptions,
     ): Promise<core.WithRawResponse<IcePanel.DiagramsCreateResponse>> {
-        const { landscapeId, versionId, updateViewedAt, ..._body } = request;
+        const { landscapeId, versionId, updateViewedAt, body: _body } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (updateViewedAt != null) {
             _queryParams.updateViewedAt = updateViewedAt.toString();
@@ -307,10 +309,12 @@ export class DiagramsClient {
      *         landscapeId: "landscapeId",
      *         versionId: "versionId",
      *         diagramId: "diagramId",
-     *         index: 1.1,
-     *         modelId: "modelId",
-     *         name: "name",
-     *         type: "app-diagram"
+     *         body: {
+     *             index: 1.1,
+     *             modelId: "modelId",
+     *             name: "name",
+     *             type: "app-diagram"
+     *         }
      *     })
      */
     public upsert(
@@ -324,7 +328,7 @@ export class DiagramsClient {
         request: IcePanel.DiagramUpsertRequest,
         requestOptions?: DiagramsClient.RequestOptions,
     ): Promise<core.WithRawResponse<IcePanel.DiagramsUpsertResponse>> {
-        const { landscapeId, versionId, diagramId, updateViewedAt, ..._body } = request;
+        const { landscapeId, versionId, diagramId, updateViewedAt, body: _body } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (updateViewedAt != null) {
             _queryParams.updateViewedAt = updateViewedAt.toString();

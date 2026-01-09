@@ -120,36 +120,19 @@ export interface DiagramsListRequest {
  *     {
  *         landscapeId: "landscapeId",
  *         versionId: "versionId",
- *         index: 1.1,
- *         modelId: "modelId",
- *         name: "name",
- *         type: "app-diagram"
+ *         body: {
+ *             index: 1.1,
+ *             modelId: "modelId",
+ *             name: "name",
+ *             type: "app-diagram"
+ *         }
  *     }
  */
 export interface DiagramCreateRequest {
     landscapeId: string;
     versionId: string;
     updateViewedAt?: boolean;
-    commit?: number;
-    description?: string;
-    groupId?: string | null;
-    index: number;
-    labels?: Record<string, string>;
-    /** model object id this object belongs to */
-    modelId: string;
-    name: string;
-    parentId?: string | null;
-    pinned?: boolean;
-    pinnedAt?: string;
-    pinnedIndex?: number;
-    status?: IcePanel.DiagramStatus;
-    /** Custom zoom levels for specific model objects within the diagram. The key is the modelObjectId and the value is the diagram id. */
-    zoomOverrides?: Record<string, string | null> | null;
-    handleId?: string;
-    type: IcePanel.DiagramType;
-    comments?: Record<string, IcePanel.DiagramComment>;
-    connections?: Record<string, IcePanel.DiagramConnection>;
-    objects?: Record<string, IcePanel.DiagramObject>;
+    body: IcePanel.DiagramCreate;
 }
 
 /**
@@ -173,10 +156,12 @@ export interface DiagramFindRequest {
  *         landscapeId: "landscapeId",
  *         versionId: "versionId",
  *         diagramId: "diagramId",
- *         index: 1.1,
- *         modelId: "modelId",
- *         name: "name",
- *         type: "app-diagram"
+ *         body: {
+ *             index: 1.1,
+ *             modelId: "modelId",
+ *             name: "name",
+ *             type: "app-diagram"
+ *         }
  *     }
  */
 export interface DiagramUpsertRequest {
@@ -184,26 +169,7 @@ export interface DiagramUpsertRequest {
     versionId: string;
     diagramId: string;
     updateViewedAt?: boolean;
-    commit?: number;
-    description?: string;
-    groupId?: string | null;
-    index: number;
-    labels?: Record<string, string>;
-    /** model object id this object belongs to */
-    modelId: string;
-    name: string;
-    parentId?: string | null;
-    pinned?: boolean;
-    pinnedAt?: string;
-    pinnedIndex?: number;
-    status?: IcePanel.DiagramStatus;
-    /** Custom zoom levels for specific model objects within the diagram. The key is the modelObjectId and the value is the diagram id. */
-    zoomOverrides?: Record<string, string | null> | null;
-    handleId?: string;
-    type: IcePanel.DiagramType;
-    comments?: Record<string, IcePanel.DiagramComment>;
-    connections?: Record<string, IcePanel.DiagramConnection>;
-    objects?: Record<string, IcePanel.DiagramObject>;
+    body: IcePanel.DiagramCreate;
 }
 
 /**
