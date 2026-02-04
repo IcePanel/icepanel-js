@@ -9,8 +9,8 @@ describe("GroupsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
 
@@ -86,8 +86,8 @@ describe("GroupsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
 
@@ -112,8 +112,8 @@ describe("GroupsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
 
@@ -138,8 +138,8 @@ describe("GroupsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
 
@@ -164,8 +164,8 @@ describe("GroupsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
 
@@ -190,8 +190,8 @@ describe("GroupsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
         const rawRequestBody = { icon: "bug", index: 1.1, name: "name" };
@@ -269,8 +269,8 @@ describe("GroupsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
         const rawRequestBody = { icon: "bug", index: 1.1, name: "name" };
@@ -301,8 +301,8 @@ describe("GroupsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
         const rawRequestBody = { icon: "bug", index: 1.1, name: "name" };
@@ -333,8 +333,8 @@ describe("GroupsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
         const rawRequestBody = { icon: "bug", index: 1.1, name: "name" };
@@ -365,8 +365,8 @@ describe("GroupsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
         const rawRequestBody = { icon: "bug", index: 1.1, name: "name" };
@@ -397,8 +397,8 @@ describe("GroupsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
         const rawRequestBody = { icon: "bug", index: 1.1, name: "name" };
@@ -429,8 +429,8 @@ describe("GroupsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
 
@@ -503,8 +503,8 @@ describe("GroupsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
 
@@ -530,8 +530,8 @@ describe("GroupsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
 
@@ -557,8 +557,8 @@ describe("GroupsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
 
@@ -584,8 +584,8 @@ describe("GroupsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
 
@@ -611,8 +611,8 @@ describe("GroupsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
         const rawRequestBody = { icon: "bug", index: 1.1, name: "name" };
@@ -653,9 +653,11 @@ describe("GroupsClient", () => {
             landscapeId: "landscapeId",
             versionId: "versionId",
             tagGroupId: "tagGroupId",
-            icon: "bug",
-            index: 1.1,
-            name: "name",
+            body: {
+                icon: "bug",
+                index: 1.1,
+                name: "name",
+            },
         });
         expect(response).toEqual({
             tagGroup: {
@@ -689,8 +691,8 @@ describe("GroupsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
         const rawRequestBody = { icon: "bug", index: 1.1, name: "name" };
@@ -709,9 +711,11 @@ describe("GroupsClient", () => {
                 landscapeId: "landscapeId",
                 versionId: "versionId",
                 tagGroupId: "tagGroupId",
-                icon: "bug",
-                index: 1.1,
-                name: "name",
+                body: {
+                    icon: "bug",
+                    index: 1.1,
+                    name: "name",
+                },
             });
         }).rejects.toThrow(IcePanel.UnauthorizedError);
     });
@@ -720,8 +724,8 @@ describe("GroupsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
         const rawRequestBody = { icon: "bug", index: 1.1, name: "name" };
@@ -740,9 +744,11 @@ describe("GroupsClient", () => {
                 landscapeId: "landscapeId",
                 versionId: "versionId",
                 tagGroupId: "tagGroupId",
-                icon: "bug",
-                index: 1.1,
-                name: "name",
+                body: {
+                    icon: "bug",
+                    index: 1.1,
+                    name: "name",
+                },
             });
         }).rejects.toThrow(IcePanel.NotFoundError);
     });
@@ -751,8 +757,8 @@ describe("GroupsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
         const rawRequestBody = { icon: "bug", index: 1.1, name: "name" };
@@ -771,9 +777,11 @@ describe("GroupsClient", () => {
                 landscapeId: "landscapeId",
                 versionId: "versionId",
                 tagGroupId: "tagGroupId",
-                icon: "bug",
-                index: 1.1,
-                name: "name",
+                body: {
+                    icon: "bug",
+                    index: 1.1,
+                    name: "name",
+                },
             });
         }).rejects.toThrow(IcePanel.ConflictError);
     });
@@ -782,8 +790,8 @@ describe("GroupsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
         const rawRequestBody = { icon: "bug", index: 1.1, name: "name" };
@@ -802,9 +810,11 @@ describe("GroupsClient", () => {
                 landscapeId: "landscapeId",
                 versionId: "versionId",
                 tagGroupId: "tagGroupId",
-                icon: "bug",
-                index: 1.1,
-                name: "name",
+                body: {
+                    icon: "bug",
+                    index: 1.1,
+                    name: "name",
+                },
             });
         }).rejects.toThrow(IcePanel.UnprocessableEntityError);
     });
@@ -813,8 +823,8 @@ describe("GroupsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
         const rawRequestBody = { icon: "bug", index: 1.1, name: "name" };
@@ -833,9 +843,11 @@ describe("GroupsClient", () => {
                 landscapeId: "landscapeId",
                 versionId: "versionId",
                 tagGroupId: "tagGroupId",
-                icon: "bug",
-                index: 1.1,
-                name: "name",
+                body: {
+                    icon: "bug",
+                    index: 1.1,
+                    name: "name",
+                },
             });
         }).rejects.toThrow(IcePanel.InternalServerError);
     });
@@ -844,8 +856,8 @@ describe("GroupsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
 
@@ -872,8 +884,8 @@ describe("GroupsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
 
@@ -899,8 +911,8 @@ describe("GroupsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
 
@@ -926,8 +938,8 @@ describe("GroupsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
 
@@ -953,8 +965,8 @@ describe("GroupsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
 
@@ -980,8 +992,8 @@ describe("GroupsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
         const rawRequestBody = {};
@@ -1056,8 +1068,8 @@ describe("GroupsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
         const rawRequestBody = {};
@@ -1085,8 +1097,8 @@ describe("GroupsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
         const rawRequestBody = {};
@@ -1114,8 +1126,8 @@ describe("GroupsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
         const rawRequestBody = {};
@@ -1143,8 +1155,8 @@ describe("GroupsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
         const rawRequestBody = {};
@@ -1172,8 +1184,8 @@ describe("GroupsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
         const rawRequestBody = {};

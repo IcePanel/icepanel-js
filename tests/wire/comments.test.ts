@@ -9,8 +9,8 @@ describe("CommentsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
 
@@ -93,8 +93,8 @@ describe("CommentsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
 
@@ -119,8 +119,8 @@ describe("CommentsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
 
@@ -145,8 +145,8 @@ describe("CommentsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
 
@@ -171,8 +171,8 @@ describe("CommentsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
 
@@ -197,8 +197,8 @@ describe("CommentsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
         const rawRequestBody = { body: { content: "content", status: "open", type: "question" } };
@@ -286,8 +286,8 @@ describe("CommentsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
         const rawRequestBody = { body: { content: "content", status: "open", type: "question" } };
@@ -320,8 +320,8 @@ describe("CommentsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
         const rawRequestBody = { body: { content: "content", status: "open", type: "question" } };
@@ -354,8 +354,8 @@ describe("CommentsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
         const rawRequestBody = { body: { content: "content", status: "open", type: "question" } };
@@ -388,8 +388,8 @@ describe("CommentsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
         const rawRequestBody = { body: { content: "content", status: "open", type: "question" } };
@@ -422,8 +422,8 @@ describe("CommentsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
 
@@ -504,8 +504,8 @@ describe("CommentsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
 
@@ -531,8 +531,8 @@ describe("CommentsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
 
@@ -558,8 +558,8 @@ describe("CommentsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
 
@@ -585,8 +585,8 @@ describe("CommentsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
 
@@ -612,8 +612,8 @@ describe("CommentsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
         const rawRequestBody = { body: { content: "content", status: "open", type: "question" } };
@@ -655,9 +655,11 @@ describe("CommentsClient", () => {
             versionId: "versionId",
             commentId: "commentId",
             body: {
-                content: "content",
-                status: "open",
-                type: "question",
+                body: {
+                    content: "content",
+                    status: "open",
+                    type: "question",
+                },
             },
         });
         expect(response).toEqual({
@@ -700,8 +702,8 @@ describe("CommentsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
         const rawRequestBody = { body: { content: "content", status: "open", type: "question" } };
@@ -721,9 +723,11 @@ describe("CommentsClient", () => {
                 versionId: "versionId",
                 commentId: "commentId",
                 body: {
-                    content: "content",
-                    status: "open",
-                    type: "question",
+                    body: {
+                        content: "content",
+                        status: "open",
+                        type: "question",
+                    },
                 },
             });
         }).rejects.toThrow(IcePanel.UnauthorizedError);
@@ -733,8 +737,8 @@ describe("CommentsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
         const rawRequestBody = { body: { content: "content", status: "open", type: "question" } };
@@ -754,9 +758,11 @@ describe("CommentsClient", () => {
                 versionId: "versionId",
                 commentId: "commentId",
                 body: {
-                    content: "content",
-                    status: "open",
-                    type: "question",
+                    body: {
+                        content: "content",
+                        status: "open",
+                        type: "question",
+                    },
                 },
             });
         }).rejects.toThrow(IcePanel.NotFoundError);
@@ -766,8 +772,8 @@ describe("CommentsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
         const rawRequestBody = { body: { content: "content", status: "open", type: "question" } };
@@ -787,9 +793,11 @@ describe("CommentsClient", () => {
                 versionId: "versionId",
                 commentId: "commentId",
                 body: {
-                    content: "content",
-                    status: "open",
-                    type: "question",
+                    body: {
+                        content: "content",
+                        status: "open",
+                        type: "question",
+                    },
                 },
             });
         }).rejects.toThrow(IcePanel.ConflictError);
@@ -799,8 +807,8 @@ describe("CommentsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
         const rawRequestBody = { body: { content: "content", status: "open", type: "question" } };
@@ -820,9 +828,11 @@ describe("CommentsClient", () => {
                 versionId: "versionId",
                 commentId: "commentId",
                 body: {
-                    content: "content",
-                    status: "open",
-                    type: "question",
+                    body: {
+                        content: "content",
+                        status: "open",
+                        type: "question",
+                    },
                 },
             });
         }).rejects.toThrow(IcePanel.UnprocessableEntityError);
@@ -832,8 +842,8 @@ describe("CommentsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
         const rawRequestBody = { body: { content: "content", status: "open", type: "question" } };
@@ -853,9 +863,11 @@ describe("CommentsClient", () => {
                 versionId: "versionId",
                 commentId: "commentId",
                 body: {
-                    content: "content",
-                    status: "open",
-                    type: "question",
+                    body: {
+                        content: "content",
+                        status: "open",
+                        type: "question",
+                    },
                 },
             });
         }).rejects.toThrow(IcePanel.InternalServerError);
@@ -865,8 +877,8 @@ describe("CommentsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
 
@@ -893,8 +905,8 @@ describe("CommentsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
 
@@ -920,8 +932,8 @@ describe("CommentsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
 
@@ -947,8 +959,8 @@ describe("CommentsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
 
@@ -974,8 +986,8 @@ describe("CommentsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
 
@@ -1001,8 +1013,8 @@ describe("CommentsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
 
@@ -1028,8 +1040,8 @@ describe("CommentsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
         const rawRequestBody = {};
@@ -1112,8 +1124,8 @@ describe("CommentsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
         const rawRequestBody = {};
@@ -1141,8 +1153,8 @@ describe("CommentsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
         const rawRequestBody = {};
@@ -1170,8 +1182,8 @@ describe("CommentsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
         const rawRequestBody = {};
@@ -1199,8 +1211,8 @@ describe("CommentsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
         const rawRequestBody = {};
@@ -1228,8 +1240,8 @@ describe("CommentsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
         const rawRequestBody = {};

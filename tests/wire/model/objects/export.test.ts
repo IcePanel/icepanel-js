@@ -9,8 +9,8 @@ describe("ExportClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
 
@@ -197,8 +197,8 @@ describe("ExportClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
 
@@ -224,8 +224,8 @@ describe("ExportClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
 
@@ -251,8 +251,8 @@ describe("ExportClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
 
@@ -278,8 +278,8 @@ describe("ExportClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
 
@@ -297,133 +297,6 @@ describe("ExportClient", () => {
                 landscapeId: "landscapeId",
                 versionId: "versionId",
                 modelObjectId: "modelObjectId",
-            });
-        }).rejects.toThrow(IcePanel.InternalServerError);
-    });
-
-    test("csv (1)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new IcePanelClient({
-            maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
-            environment: server.baseUrl,
-        });
-
-        server
-            .mockEndpoint()
-            .get("/landscapes/landscapeId/versions/versionId/model/objects/export/csv")
-            .respondWith()
-            .statusCode(200)
-            .build();
-
-        const response = await client.model.objects.export.csv({
-            landscapeId: "landscapeId",
-            versionId: "versionId",
-        });
-        expect(response).toEqual(undefined);
-    });
-
-    test("csv (2)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new IcePanelClient({
-            maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
-            environment: server.baseUrl,
-        });
-
-        const rawResponseBody = { key: "value" };
-        server
-            .mockEndpoint()
-            .get("/landscapes/landscapeId/versions/versionId/model/objects/export/csv")
-            .respondWith()
-            .statusCode(401)
-            .jsonBody(rawResponseBody)
-            .build();
-
-        await expect(async () => {
-            return await client.model.objects.export.csv({
-                landscapeId: "landscapeId",
-                versionId: "versionId",
-            });
-        }).rejects.toThrow(IcePanel.UnauthorizedError);
-    });
-
-    test("csv (3)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new IcePanelClient({
-            maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
-            environment: server.baseUrl,
-        });
-
-        const rawResponseBody = { key: "value" };
-        server
-            .mockEndpoint()
-            .get("/landscapes/landscapeId/versions/versionId/model/objects/export/csv")
-            .respondWith()
-            .statusCode(404)
-            .jsonBody(rawResponseBody)
-            .build();
-
-        await expect(async () => {
-            return await client.model.objects.export.csv({
-                landscapeId: "landscapeId",
-                versionId: "versionId",
-            });
-        }).rejects.toThrow(IcePanel.NotFoundError);
-    });
-
-    test("csv (4)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new IcePanelClient({
-            maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
-            environment: server.baseUrl,
-        });
-
-        const rawResponseBody = { key: "value" };
-        server
-            .mockEndpoint()
-            .get("/landscapes/landscapeId/versions/versionId/model/objects/export/csv")
-            .respondWith()
-            .statusCode(422)
-            .jsonBody(rawResponseBody)
-            .build();
-
-        await expect(async () => {
-            return await client.model.objects.export.csv({
-                landscapeId: "landscapeId",
-                versionId: "versionId",
-            });
-        }).rejects.toThrow(IcePanel.UnprocessableEntityError);
-    });
-
-    test("csv (5)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new IcePanelClient({
-            maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
-            environment: server.baseUrl,
-        });
-
-        const rawResponseBody = { key: "value" };
-        server
-            .mockEndpoint()
-            .get("/landscapes/landscapeId/versions/versionId/model/objects/export/csv")
-            .respondWith()
-            .statusCode(500)
-            .jsonBody(rawResponseBody)
-            .build();
-
-        await expect(async () => {
-            return await client.model.objects.export.csv({
-                landscapeId: "landscapeId",
-                versionId: "versionId",
             });
         }).rejects.toThrow(IcePanel.InternalServerError);
     });

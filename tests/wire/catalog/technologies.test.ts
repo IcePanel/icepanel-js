@@ -5,479 +5,12 @@ import { IcePanelClient } from "../../../src/Client";
 import { mockServerPool } from "../../mock-server/MockServerPool";
 
 describe("TechnologiesClient", () => {
-    test("list (1)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new IcePanelClient({
-            maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
-            environment: server.baseUrl,
-        });
-
-        const rawResponseBody = {
-            catalogTechnologies: [
-                {
-                    category: "category",
-                    color: "blue",
-                    deprecatedAt: "2024-01-15T09:30:00Z",
-                    description: "description",
-                    docsUrl: "docsUrl",
-                    iconUrlDark: "iconUrlDark",
-                    iconUrlLight: "iconUrlLight",
-                    name: "name",
-                    nameShort: "nameShort",
-                    provider: "aws",
-                    rejectionMessage: "rejectionMessage",
-                    rejectionReason: "duplicate",
-                    restrictions: ["actor"],
-                    status: "approved",
-                    type: "data-storage",
-                    updatesUrl: "updatesUrl",
-                    websiteUrl: "websiteUrl",
-                    awsXmlSelector: "awsXmlSelector",
-                    azureUpdatesKeyword: "azureUpdatesKeyword",
-                    createdAt: "2024-01-15T09:30:00Z",
-                    createdBy: "user",
-                    createdById: "createdById",
-                    defaultSlug: "defaultSlug",
-                    deletedAt: "2024-01-15T09:30:00Z",
-                    deletedBy: "user",
-                    deletedById: "deletedById",
-                    disabled: true,
-                    iconUrl: "iconUrl",
-                    id: "id",
-                    organizationId: "organizationId",
-                    slugs: ["slugs"],
-                    updatedAt: "2024-01-15T09:30:00Z",
-                    updatedBy: "user",
-                    updatedById: "updatedById",
-                    updatesXmlUrl: "updatesXmlUrl",
-                },
-            ],
-        };
-        server
-            .mockEndpoint()
-            .get("/catalog/technologies")
-            .respondWith()
-            .statusCode(200)
-            .jsonBody(rawResponseBody)
-            .build();
-
-        const response = await client.catalog.technologies.list();
-        expect(response).toEqual({
-            catalogTechnologies: [
-                {
-                    category: "category",
-                    color: "blue",
-                    deprecatedAt: "2024-01-15T09:30:00Z",
-                    description: "description",
-                    docsUrl: "docsUrl",
-                    iconUrlDark: "iconUrlDark",
-                    iconUrlLight: "iconUrlLight",
-                    name: "name",
-                    nameShort: "nameShort",
-                    provider: "aws",
-                    rejectionMessage: "rejectionMessage",
-                    rejectionReason: "duplicate",
-                    restrictions: ["actor"],
-                    status: "approved",
-                    type: "data-storage",
-                    updatesUrl: "updatesUrl",
-                    websiteUrl: "websiteUrl",
-                    awsXmlSelector: "awsXmlSelector",
-                    azureUpdatesKeyword: "azureUpdatesKeyword",
-                    createdAt: "2024-01-15T09:30:00Z",
-                    createdBy: "user",
-                    createdById: "createdById",
-                    defaultSlug: "defaultSlug",
-                    deletedAt: "2024-01-15T09:30:00Z",
-                    deletedBy: "user",
-                    deletedById: "deletedById",
-                    disabled: true,
-                    iconUrl: "iconUrl",
-                    id: "id",
-                    organizationId: "organizationId",
-                    slugs: ["slugs"],
-                    updatedAt: "2024-01-15T09:30:00Z",
-                    updatedBy: "user",
-                    updatedById: "updatedById",
-                    updatesXmlUrl: "updatesXmlUrl",
-                },
-            ],
-        });
-    });
-
-    test("list (2)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new IcePanelClient({
-            maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
-            environment: server.baseUrl,
-        });
-
-        const rawResponseBody = { key: "value" };
-        server
-            .mockEndpoint()
-            .get("/catalog/technologies")
-            .respondWith()
-            .statusCode(401)
-            .jsonBody(rawResponseBody)
-            .build();
-
-        await expect(async () => {
-            return await client.catalog.technologies.list();
-        }).rejects.toThrow(IcePanel.UnauthorizedError);
-    });
-
-    test("list (3)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new IcePanelClient({
-            maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
-            environment: server.baseUrl,
-        });
-
-        const rawResponseBody = { message: "message" };
-        server
-            .mockEndpoint()
-            .get("/catalog/technologies")
-            .respondWith()
-            .statusCode(403)
-            .jsonBody(rawResponseBody)
-            .build();
-
-        await expect(async () => {
-            return await client.catalog.technologies.list();
-        }).rejects.toThrow(IcePanel.ForbiddenError);
-    });
-
-    test("list (4)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new IcePanelClient({
-            maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
-            environment: server.baseUrl,
-        });
-
-        const rawResponseBody = { key: "value" };
-        server
-            .mockEndpoint()
-            .get("/catalog/technologies")
-            .respondWith()
-            .statusCode(404)
-            .jsonBody(rawResponseBody)
-            .build();
-
-        await expect(async () => {
-            return await client.catalog.technologies.list();
-        }).rejects.toThrow(IcePanel.NotFoundError);
-    });
-
-    test("list (5)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new IcePanelClient({
-            maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
-            environment: server.baseUrl,
-        });
-
-        const rawResponseBody = { key: "value" };
-        server
-            .mockEndpoint()
-            .get("/catalog/technologies")
-            .respondWith()
-            .statusCode(422)
-            .jsonBody(rawResponseBody)
-            .build();
-
-        await expect(async () => {
-            return await client.catalog.technologies.list();
-        }).rejects.toThrow(IcePanel.UnprocessableEntityError);
-    });
-
-    test("list (6)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new IcePanelClient({
-            maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
-            environment: server.baseUrl,
-        });
-
-        const rawResponseBody = { key: "value" };
-        server
-            .mockEndpoint()
-            .get("/catalog/technologies")
-            .respondWith()
-            .statusCode(500)
-            .jsonBody(rawResponseBody)
-            .build();
-
-        await expect(async () => {
-            return await client.catalog.technologies.list();
-        }).rejects.toThrow(IcePanel.InternalServerError);
-    });
-
-    test("suggestInformation (1)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new IcePanelClient({
-            maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
-            environment: server.baseUrl,
-        });
-
-        const rawResponseBody = {
-            catalogSuggestionInformation: {
-                description: "description",
-                docsUrl: "docsUrl",
-                githubUrl: "githubUrl",
-                name: "name",
-                nameShort: "nameShort",
-                newsUrl: "newsUrl",
-                type: "data-storage",
-                updatesUrl: "updatesUrl",
-            },
-        };
-        server
-            .mockEndpoint()
-            .get("/catalog/suggestion/information")
-            .respondWith()
-            .statusCode(200)
-            .jsonBody(rawResponseBody)
-            .build();
-
-        const response = await client.catalog.technologies.suggestInformation({
-            url: "url",
-        });
-        expect(response).toEqual({
-            catalogSuggestionInformation: {
-                description: "description",
-                docsUrl: "docsUrl",
-                githubUrl: "githubUrl",
-                name: "name",
-                nameShort: "nameShort",
-                newsUrl: "newsUrl",
-                type: "data-storage",
-                updatesUrl: "updatesUrl",
-            },
-        });
-    });
-
-    test("suggestInformation (2)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new IcePanelClient({
-            maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
-            environment: server.baseUrl,
-        });
-
-        const rawResponseBody = { key: "value" };
-        server
-            .mockEndpoint()
-            .get("/catalog/suggestion/information")
-            .respondWith()
-            .statusCode(401)
-            .jsonBody(rawResponseBody)
-            .build();
-
-        await expect(async () => {
-            return await client.catalog.technologies.suggestInformation({
-                url: "url",
-            });
-        }).rejects.toThrow(IcePanel.UnauthorizedError);
-    });
-
-    test("suggestInformation (3)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new IcePanelClient({
-            maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
-            environment: server.baseUrl,
-        });
-
-        const rawResponseBody = { key: "value" };
-        server
-            .mockEndpoint()
-            .get("/catalog/suggestion/information")
-            .respondWith()
-            .statusCode(500)
-            .jsonBody(rawResponseBody)
-            .build();
-
-        await expect(async () => {
-            return await client.catalog.technologies.suggestInformation({
-                url: "url",
-            });
-        }).rejects.toThrow(IcePanel.InternalServerError);
-    });
-
-    test("suggestBrand (1)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new IcePanelClient({
-            maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
-            environment: server.baseUrl,
-        });
-
-        const rawResponseBody = {
-            catalogSuggestionBrand: {
-                colors: [{ brightness: 1.1, hex: "hex", type: "accent" }],
-                isNsfw: true,
-                logos: [{ formats: [{ format: "svg", size: 1.1, src: "src" }], tags: ["tags"], type: "icon" }],
-            },
-        };
-        server
-            .mockEndpoint()
-            .get("/catalog/suggestion/brand")
-            .respondWith()
-            .statusCode(200)
-            .jsonBody(rawResponseBody)
-            .build();
-
-        const response = await client.catalog.technologies.suggestBrand({
-            url: "url",
-        });
-        expect(response).toEqual({
-            catalogSuggestionBrand: {
-                colors: [
-                    {
-                        brightness: 1.1,
-                        hex: "hex",
-                        type: "accent",
-                    },
-                ],
-                isNsfw: true,
-                logos: [
-                    {
-                        formats: [
-                            {
-                                format: "svg",
-                                size: 1.1,
-                                src: "src",
-                            },
-                        ],
-                        tags: ["tags"],
-                        type: "icon",
-                    },
-                ],
-            },
-        });
-    });
-
-    test("suggestBrand (2)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new IcePanelClient({
-            maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
-            environment: server.baseUrl,
-        });
-
-        const rawResponseBody = { key: "value" };
-        server
-            .mockEndpoint()
-            .get("/catalog/suggestion/brand")
-            .respondWith()
-            .statusCode(401)
-            .jsonBody(rawResponseBody)
-            .build();
-
-        await expect(async () => {
-            return await client.catalog.technologies.suggestBrand({
-                url: "url",
-            });
-        }).rejects.toThrow(IcePanel.UnauthorizedError);
-    });
-
-    test("suggestBrand (3)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new IcePanelClient({
-            maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
-            environment: server.baseUrl,
-        });
-
-        const rawResponseBody = { key: "value" };
-        server
-            .mockEndpoint()
-            .get("/catalog/suggestion/brand")
-            .respondWith()
-            .statusCode(404)
-            .jsonBody(rawResponseBody)
-            .build();
-
-        await expect(async () => {
-            return await client.catalog.technologies.suggestBrand({
-                url: "url",
-            });
-        }).rejects.toThrow(IcePanel.NotFoundError);
-    });
-
-    test("suggestBrand (4)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new IcePanelClient({
-            maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
-            environment: server.baseUrl,
-        });
-
-        const rawResponseBody = { key: "value" };
-        server
-            .mockEndpoint()
-            .get("/catalog/suggestion/brand")
-            .respondWith()
-            .statusCode(422)
-            .jsonBody(rawResponseBody)
-            .build();
-
-        await expect(async () => {
-            return await client.catalog.technologies.suggestBrand({
-                url: "url",
-            });
-        }).rejects.toThrow(IcePanel.UnprocessableEntityError);
-    });
-
-    test("suggestBrand (5)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new IcePanelClient({
-            maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
-            environment: server.baseUrl,
-        });
-
-        const rawResponseBody = { key: "value" };
-        server
-            .mockEndpoint()
-            .get("/catalog/suggestion/brand")
-            .respondWith()
-            .statusCode(500)
-            .jsonBody(rawResponseBody)
-            .build();
-
-        await expect(async () => {
-            return await client.catalog.technologies.suggestBrand({
-                url: "url",
-            });
-        }).rejects.toThrow(IcePanel.InternalServerError);
-    });
-
     test("createSignedIconUrl (1)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
 
@@ -504,8 +37,8 @@ describe("TechnologiesClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
 
@@ -527,8 +60,8 @@ describe("TechnologiesClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
 
@@ -550,8 +83,8 @@ describe("TechnologiesClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
 
@@ -573,8 +106,8 @@ describe("TechnologiesClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
 
@@ -596,8 +129,8 @@ describe("TechnologiesClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
 
@@ -619,8 +152,8 @@ describe("TechnologiesClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
 
@@ -719,8 +252,8 @@ describe("TechnologiesClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
 
@@ -744,8 +277,8 @@ describe("TechnologiesClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
 
@@ -769,8 +302,8 @@ describe("TechnologiesClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
 
@@ -794,8 +327,8 @@ describe("TechnologiesClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
 
@@ -811,206 +344,6 @@ describe("TechnologiesClient", () => {
         await expect(async () => {
             return await client.catalog.technologies.get({
                 catalogTechnologyId: "catalogTechnologyId",
-            });
-        }).rejects.toThrow(IcePanel.InternalServerError);
-    });
-
-    test("getSlug (1)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new IcePanelClient({
-            maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
-            environment: server.baseUrl,
-        });
-
-        const rawResponseBody = {
-            catalogTechnology: {
-                category: "category",
-                color: "blue",
-                deprecatedAt: "2024-01-15T09:30:00Z",
-                description: "description",
-                docsUrl: "docsUrl",
-                iconUrlDark: "iconUrlDark",
-                iconUrlLight: "iconUrlLight",
-                name: "name",
-                nameShort: "nameShort",
-                provider: "aws",
-                rejectionMessage: "rejectionMessage",
-                rejectionReason: "duplicate",
-                restrictions: ["actor"],
-                status: "approved",
-                type: "data-storage",
-                updatesUrl: "updatesUrl",
-                websiteUrl: "websiteUrl",
-                awsXmlSelector: "awsXmlSelector",
-                azureUpdatesKeyword: "azureUpdatesKeyword",
-                createdAt: "2024-01-15T09:30:00Z",
-                createdBy: "user",
-                createdById: "createdById",
-                defaultSlug: "defaultSlug",
-                deletedAt: "2024-01-15T09:30:00Z",
-                deletedBy: "user",
-                deletedById: "deletedById",
-                disabled: true,
-                iconUrl: "iconUrl",
-                id: "id",
-                organizationId: "organizationId",
-                slugs: ["slugs"],
-                updatedAt: "2024-01-15T09:30:00Z",
-                updatedBy: "user",
-                updatedById: "updatedById",
-                updatesXmlUrl: "updatesXmlUrl",
-            },
-        };
-        server
-            .mockEndpoint()
-            .get("/catalog/technologies/slugs/catalogTechnologySlug")
-            .respondWith()
-            .statusCode(200)
-            .jsonBody(rawResponseBody)
-            .build();
-
-        const response = await client.catalog.technologies.getSlug({
-            catalogTechnologySlug: "catalogTechnologySlug",
-        });
-        expect(response).toEqual({
-            catalogTechnology: {
-                category: "category",
-                color: "blue",
-                deprecatedAt: "2024-01-15T09:30:00Z",
-                description: "description",
-                docsUrl: "docsUrl",
-                iconUrlDark: "iconUrlDark",
-                iconUrlLight: "iconUrlLight",
-                name: "name",
-                nameShort: "nameShort",
-                provider: "aws",
-                rejectionMessage: "rejectionMessage",
-                rejectionReason: "duplicate",
-                restrictions: ["actor"],
-                status: "approved",
-                type: "data-storage",
-                updatesUrl: "updatesUrl",
-                websiteUrl: "websiteUrl",
-                awsXmlSelector: "awsXmlSelector",
-                azureUpdatesKeyword: "azureUpdatesKeyword",
-                createdAt: "2024-01-15T09:30:00Z",
-                createdBy: "user",
-                createdById: "createdById",
-                defaultSlug: "defaultSlug",
-                deletedAt: "2024-01-15T09:30:00Z",
-                deletedBy: "user",
-                deletedById: "deletedById",
-                disabled: true,
-                iconUrl: "iconUrl",
-                id: "id",
-                organizationId: "organizationId",
-                slugs: ["slugs"],
-                updatedAt: "2024-01-15T09:30:00Z",
-                updatedBy: "user",
-                updatedById: "updatedById",
-                updatesXmlUrl: "updatesXmlUrl",
-            },
-        });
-    });
-
-    test("getSlug (2)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new IcePanelClient({
-            maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
-            environment: server.baseUrl,
-        });
-
-        const rawResponseBody = { key: "value" };
-        server
-            .mockEndpoint()
-            .get("/catalog/technologies/slugs/catalogTechnologySlug")
-            .respondWith()
-            .statusCode(401)
-            .jsonBody(rawResponseBody)
-            .build();
-
-        await expect(async () => {
-            return await client.catalog.technologies.getSlug({
-                catalogTechnologySlug: "catalogTechnologySlug",
-            });
-        }).rejects.toThrow(IcePanel.UnauthorizedError);
-    });
-
-    test("getSlug (3)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new IcePanelClient({
-            maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
-            environment: server.baseUrl,
-        });
-
-        const rawResponseBody = { key: "value" };
-        server
-            .mockEndpoint()
-            .get("/catalog/technologies/slugs/catalogTechnologySlug")
-            .respondWith()
-            .statusCode(404)
-            .jsonBody(rawResponseBody)
-            .build();
-
-        await expect(async () => {
-            return await client.catalog.technologies.getSlug({
-                catalogTechnologySlug: "catalogTechnologySlug",
-            });
-        }).rejects.toThrow(IcePanel.NotFoundError);
-    });
-
-    test("getSlug (4)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new IcePanelClient({
-            maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
-            environment: server.baseUrl,
-        });
-
-        const rawResponseBody = { key: "value" };
-        server
-            .mockEndpoint()
-            .get("/catalog/technologies/slugs/catalogTechnologySlug")
-            .respondWith()
-            .statusCode(422)
-            .jsonBody(rawResponseBody)
-            .build();
-
-        await expect(async () => {
-            return await client.catalog.technologies.getSlug({
-                catalogTechnologySlug: "catalogTechnologySlug",
-            });
-        }).rejects.toThrow(IcePanel.UnprocessableEntityError);
-    });
-
-    test("getSlug (5)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new IcePanelClient({
-            maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
-            environment: server.baseUrl,
-        });
-
-        const rawResponseBody = { key: "value" };
-        server
-            .mockEndpoint()
-            .get("/catalog/technologies/slugs/catalogTechnologySlug")
-            .respondWith()
-            .statusCode(500)
-            .jsonBody(rawResponseBody)
-            .build();
-
-        await expect(async () => {
-            return await client.catalog.technologies.getSlug({
-                catalogTechnologySlug: "catalogTechnologySlug",
             });
         }).rejects.toThrow(IcePanel.InternalServerError);
     });

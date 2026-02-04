@@ -9,8 +9,8 @@ describe("DiagramsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
 
@@ -29,6 +29,7 @@ describe("DiagramsClient", () => {
                     pinnedAt: "2024-01-15T09:30:00Z",
                     pinnedIndex: 1.1,
                     status: "current",
+                    zoomOverrides: { key: "value" },
                     handleId: "handleId",
                     type: "app-diagram",
                     commentCount: 1.1,
@@ -89,6 +90,9 @@ describe("DiagramsClient", () => {
                     pinnedAt: "2024-01-15T09:30:00Z",
                     pinnedIndex: 1.1,
                     status: "current",
+                    zoomOverrides: {
+                        key: "value",
+                    },
                     handleId: "handleId",
                     type: "app-diagram",
                     commentCount: 1.1,
@@ -126,8 +130,8 @@ describe("DiagramsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
 
@@ -152,8 +156,8 @@ describe("DiagramsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
 
@@ -178,8 +182,8 @@ describe("DiagramsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
 
@@ -204,8 +208,8 @@ describe("DiagramsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
 
@@ -230,8 +234,8 @@ describe("DiagramsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
         const rawRequestBody = { index: 1.1, modelId: "modelId", name: "name", type: "app-diagram" };
@@ -455,8 +459,8 @@ describe("DiagramsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
         const rawRequestBody = { index: 1.1, modelId: "modelId", name: "name", type: "app-diagram" };
@@ -488,8 +492,8 @@ describe("DiagramsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
         const rawRequestBody = { index: 1.1, modelId: "modelId", name: "name", type: "app-diagram" };
@@ -521,8 +525,8 @@ describe("DiagramsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
         const rawRequestBody = { index: 1.1, modelId: "modelId", name: "name", type: "app-diagram" };
@@ -554,8 +558,8 @@ describe("DiagramsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
         const rawRequestBody = { index: 1.1, modelId: "modelId", name: "name", type: "app-diagram" };
@@ -587,8 +591,8 @@ describe("DiagramsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
 
@@ -705,8 +709,8 @@ describe("DiagramsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
 
@@ -732,8 +736,8 @@ describe("DiagramsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
 
@@ -759,8 +763,8 @@ describe("DiagramsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
 
@@ -786,8 +790,8 @@ describe("DiagramsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
 
@@ -813,8 +817,8 @@ describe("DiagramsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
         const rawRequestBody = { index: 1.1, modelId: "modelId", name: "name", type: "app-diagram" };
@@ -1039,8 +1043,8 @@ describe("DiagramsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
         const rawRequestBody = { index: 1.1, modelId: "modelId", name: "name", type: "app-diagram" };
@@ -1073,8 +1077,8 @@ describe("DiagramsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
         const rawRequestBody = { index: 1.1, modelId: "modelId", name: "name", type: "app-diagram" };
@@ -1107,8 +1111,8 @@ describe("DiagramsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
         const rawRequestBody = { index: 1.1, modelId: "modelId", name: "name", type: "app-diagram" };
@@ -1141,8 +1145,8 @@ describe("DiagramsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
         const rawRequestBody = { index: 1.1, modelId: "modelId", name: "name", type: "app-diagram" };
@@ -1175,8 +1179,8 @@ describe("DiagramsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
         const rawRequestBody = { index: 1.1, modelId: "modelId", name: "name", type: "app-diagram" };
@@ -1209,8 +1213,8 @@ describe("DiagramsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
         const rawRequestBody = { index: 1.1, modelId: "modelId", name: "name", type: "app-diagram" };
@@ -1243,8 +1247,8 @@ describe("DiagramsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
 
@@ -1271,8 +1275,8 @@ describe("DiagramsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
 
@@ -1298,8 +1302,8 @@ describe("DiagramsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
 
@@ -1325,8 +1329,8 @@ describe("DiagramsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
 
@@ -1352,8 +1356,8 @@ describe("DiagramsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
 
@@ -1379,8 +1383,8 @@ describe("DiagramsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
         const rawRequestBody = {};
@@ -1484,6 +1488,7 @@ describe("DiagramsClient", () => {
             landscapeId: "landscapeId",
             versionId: "versionId",
             diagramId: "diagramId",
+            body: {},
         });
         expect(response).toEqual({
             diagram: {
@@ -1599,8 +1604,8 @@ describe("DiagramsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
         const rawRequestBody = {};
@@ -1619,6 +1624,7 @@ describe("DiagramsClient", () => {
                 landscapeId: "landscapeId",
                 versionId: "versionId",
                 diagramId: "diagramId",
+                body: {},
             });
         }).rejects.toThrow(IcePanel.BadRequestError);
     });
@@ -1627,8 +1633,8 @@ describe("DiagramsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
         const rawRequestBody = {};
@@ -1647,6 +1653,7 @@ describe("DiagramsClient", () => {
                 landscapeId: "landscapeId",
                 versionId: "versionId",
                 diagramId: "diagramId",
+                body: {},
             });
         }).rejects.toThrow(IcePanel.UnauthorizedError);
     });
@@ -1655,8 +1662,8 @@ describe("DiagramsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
         const rawRequestBody = {};
@@ -1675,6 +1682,7 @@ describe("DiagramsClient", () => {
                 landscapeId: "landscapeId",
                 versionId: "versionId",
                 diagramId: "diagramId",
+                body: {},
             });
         }).rejects.toThrow(IcePanel.NotFoundError);
     });
@@ -1683,8 +1691,8 @@ describe("DiagramsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
         const rawRequestBody = {};
@@ -1703,6 +1711,7 @@ describe("DiagramsClient", () => {
                 landscapeId: "landscapeId",
                 versionId: "versionId",
                 diagramId: "diagramId",
+                body: {},
             });
         }).rejects.toThrow(IcePanel.ConflictError);
     });
@@ -1711,8 +1720,8 @@ describe("DiagramsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
         const rawRequestBody = {};
@@ -1731,6 +1740,7 @@ describe("DiagramsClient", () => {
                 landscapeId: "landscapeId",
                 versionId: "versionId",
                 diagramId: "diagramId",
+                body: {},
             });
         }).rejects.toThrow(IcePanel.UnprocessableEntityError);
     });
@@ -1739,8 +1749,8 @@ describe("DiagramsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
         const rawRequestBody = {};
@@ -1759,6 +1769,7 @@ describe("DiagramsClient", () => {
                 landscapeId: "landscapeId",
                 versionId: "versionId",
                 diagramId: "diagramId",
+                body: {},
             });
         }).rejects.toThrow(IcePanel.InternalServerError);
     });
@@ -1767,8 +1778,8 @@ describe("DiagramsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
 
@@ -1791,8 +1802,8 @@ describe("DiagramsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
 
@@ -1818,8 +1829,8 @@ describe("DiagramsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
 
@@ -1845,8 +1856,8 @@ describe("DiagramsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
 
@@ -1872,8 +1883,8 @@ describe("DiagramsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
 
@@ -1899,8 +1910,8 @@ describe("DiagramsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
 
@@ -1954,8 +1965,8 @@ describe("DiagramsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
 
@@ -1980,8 +1991,8 @@ describe("DiagramsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
 
@@ -2006,8 +2017,8 @@ describe("DiagramsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
 
@@ -2032,8 +2043,8 @@ describe("DiagramsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
 
@@ -2058,8 +2069,8 @@ describe("DiagramsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
 
@@ -2110,8 +2121,8 @@ describe("DiagramsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
 
@@ -2137,8 +2148,8 @@ describe("DiagramsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
 
@@ -2164,8 +2175,8 @@ describe("DiagramsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
 
@@ -2191,8 +2202,8 @@ describe("DiagramsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
 

@@ -2,27 +2,6 @@
 
 import type * as IcePanel from "../index.js";
 
-export interface DiagramContentPartialComments {
-    $add?: Record<string, IcePanel.DiagramComment>;
-    $remove?: string[];
-    $replace?: Record<string, IcePanel.DiagramComment>;
-    $update?: Record<string, IcePanel.DiagramCommentPartial>;
-}
-
-export interface DiagramContentPartialConnections {
-    $add?: Record<string, IcePanel.DiagramConnection>;
-    $remove?: string[];
-    $replace?: Record<string, IcePanel.DiagramConnection>;
-    $update?: Record<string, IcePanel.DiagramConnectionPartial>;
-}
-
-export interface DiagramContentPartialObjects {
-    $add?: Record<string, IcePanel.DiagramObject>;
-    $remove?: string[];
-    $replace?: Record<string, IcePanel.DiagramObject>;
-    $update?: Record<string, IcePanel.DiagramObjectPartial>;
-}
-
 export const LandscapeActionType = {
     CommentCreate: "comment-create",
     CommentDelete: "comment-delete",
@@ -1112,9 +1091,9 @@ export interface ActionDraftTaskCreate {
 }
 
 export interface ActionLandscapeCreateContext {
-    backstageImport: boolean;
+    backstageImport?: boolean;
     name: string;
-    structurizrImport: boolean;
+    structurizrImport?: boolean;
 }
 
 export const ActionLandscapeCreateType = {
@@ -2052,106 +2031,6 @@ export interface CatalogTechnology {
     updatesXmlUrl?: string;
 }
 
-export interface CatalogSuggestionInformation {
-    /** Technical description for the technology */
-    description?: string;
-    /** Documentation or readme url */
-    docsUrl?: string;
-    /** GitHub repo url */
-    githubUrl?: string;
-    name?: string;
-    /** Short name to show in places with limited space */
-    nameShort?: string;
-    /** News url */
-    newsUrl?: string;
-    /** Type or category of technology */
-    type?: IcePanel.CatalogTechnologyTypeNullable | null;
-    /** Release notes or changelog url */
-    updatesUrl?: string;
-}
-
-/** Color type. For example, "accent" or "dark" */
-export const CatalogSuggestionBrandColorType = {
-    Accent: "accent",
-    Dark: "dark",
-    Light: "light",
-    Brand: "brand",
-} as const;
-export type CatalogSuggestionBrandColorType =
-    (typeof CatalogSuggestionBrandColorType)[keyof typeof CatalogSuggestionBrandColorType];
-
-export interface CatalogSuggestionBrandColor {
-    /** Color brightness. Calculated based on the standard formula 0.2126R + 0.7152G + 0.0722*B */
-    brightness: number;
-    /** Hexadecimal color code */
-    hex: string;
-    /** Color type. For example, "accent" or "dark" */
-    type: IcePanel.CatalogSuggestionBrandColorType;
-}
-
-/** File format of the logo */
-export const CatalogSuggestionBrandLogoFormatFormat = {
-    Svg: "svg",
-    Png: "png",
-    Webp: "webp",
-    Jpeg: "jpeg",
-} as const;
-export type CatalogSuggestionBrandLogoFormatFormat =
-    (typeof CatalogSuggestionBrandLogoFormatFormat)[keyof typeof CatalogSuggestionBrandLogoFormatFormat];
-
-export interface CatalogSuggestionBrandLogoFormat {
-    /** Indicates if the file has a transparent background. */
-    background: string | null;
-    /** File format of the logo */
-    format: IcePanel.CatalogSuggestionBrandLogoFormatFormat;
-    /** Height of the logo in pixels */
-    height: number | null;
-    /** File size in bytes */
-    size: number;
-    /** File source url of the logo */
-    src: string;
-    /** Width of the logo in pixels */
-    width: number | null;
-}
-
-/** Theme of the logo. For example, "dark" or "light" */
-export const CatalogSuggestionBrandLogoTheme = {
-    Light: "light",
-    Dark: "dark",
-} as const;
-export type CatalogSuggestionBrandLogoTheme =
-    (typeof CatalogSuggestionBrandLogoTheme)[keyof typeof CatalogSuggestionBrandLogoTheme];
-
-/** Logo type. For example, "icon" or "symbol" */
-export const CatalogSuggestionBrandLogoType = {
-    Icon: "icon",
-    Logo: "logo",
-    Symbol: "symbol",
-    Other: "other",
-} as const;
-export type CatalogSuggestionBrandLogoType =
-    (typeof CatalogSuggestionBrandLogoType)[keyof typeof CatalogSuggestionBrandLogoType];
-
-export interface CatalogSuggestionBrandLogo {
-    /** A list of format objects containing files in different formats */
-    formats: IcePanel.CatalogSuggestionBrandLogoFormat[];
-    /** A list of strings attached to the logo. For example, if the logo icon is "photographic" rather than a logomark. */
-    tags: string[];
-    /** Theme of the logo. For example, "dark" or "light" */
-    theme: IcePanel.CatalogSuggestionBrandLogoTheme | null;
-    /** Logo type. For example, "icon" or "symbol" */
-    type: IcePanel.CatalogSuggestionBrandLogoType;
-}
-
-export interface CatalogSuggestionBrand {
-    /** Accent, dark, light & palette colors of the brand */
-    colors: IcePanel.CatalogSuggestionBrandColor[];
-    /** true when the brand is for adult content, e.g. is not safe for work */
-    isNsfw: boolean;
-    /** Logos, symbols & icons of the brand */
-    logos: IcePanel.CatalogSuggestionBrandLogo[];
-}
-
 export interface CommentDiagram {
     commentId: string;
     id: string;
@@ -2164,6 +2043,13 @@ export interface CommentPartial {
 }
 
 export interface CommentRequired {
+    body: IcePanel.CommentBody;
+    commit?: number;
+    mentionedUserIds?: string[];
+    handleId?: string;
+}
+
+export interface CommentUpsert {
     body: IcePanel.CommentBody;
     commit?: number;
     mentionedUserIds?: string[];
@@ -2330,6 +2216,11 @@ export interface CommentReplyRequired {
     mentionedUserIds?: string[];
 }
 
+export interface CommentReplyUpsert {
+    content: string;
+    mentionedUserIds?: string[];
+}
+
 export interface CommentReply {
     content: string;
     mentionedUserIds: string[];
@@ -2406,8 +2297,7 @@ export interface DiagramPartial {
     pinnedAt?: string;
     pinnedIndex?: number;
     status?: IcePanel.DiagramStatus;
-    /** Custom zoom levels for specific model objects within the diagram. The key is the modelObjectId and the value is the diagram id. */
-    zoomOverrides?: Record<string, string | null> | null;
+    zoomOverrides?: IcePanel.DiagramZoomOverridesNullable | null;
 }
 
 export interface DiagramRequired {
@@ -2424,10 +2314,57 @@ export interface DiagramRequired {
     pinnedAt?: string;
     pinnedIndex?: number;
     status?: IcePanel.DiagramStatus;
-    /** Custom zoom levels for specific model objects within the diagram. The key is the modelObjectId and the value is the diagram id. */
-    zoomOverrides?: Record<string, string | null> | null;
+    zoomOverrides?: IcePanel.DiagramZoomOverridesNullable | null;
     handleId?: string;
     type: IcePanel.DiagramType;
+}
+
+/**
+ * Custom zoom levels for specific model objects within the diagram. The key is the modelObjectId and the value is the diagram id.
+ */
+export type DiagramZoomOverrides = Record<string, string>;
+
+export type DiagramZoomOverridesNullable = IcePanel.DiagramZoomOverrides | null;
+
+export interface DiagramContentPartialComments {
+    $add?: Record<string, IcePanel.DiagramComment>;
+    $remove?: string[];
+    $replace?: Record<string, IcePanel.DiagramComment>;
+    $update?: Record<string, IcePanel.DiagramCommentPartial>;
+}
+
+export interface DiagramContentPartialConnections {
+    $add?: Record<string, IcePanel.DiagramConnection>;
+    $remove?: string[];
+    $replace?: Record<string, IcePanel.DiagramConnection>;
+    $update?: Record<string, IcePanel.DiagramConnectionPartial>;
+}
+
+export interface DiagramContentPartialObjects {
+    $add?: Record<string, IcePanel.DiagramObject>;
+    $remove?: string[];
+    $replace?: Record<string, IcePanel.DiagramObject>;
+    $update?: Record<string, IcePanel.DiagramObjectPartial>;
+}
+
+export interface DiagramUpsert {
+    commit?: number;
+    description?: string;
+    groupId?: string | null;
+    index?: number;
+    labels?: Record<string, string>;
+    /** model object id this object belongs to */
+    modelId?: string;
+    name?: string;
+    parentId?: string | null;
+    pinned?: boolean;
+    pinnedAt?: string;
+    pinnedIndex?: number;
+    status?: IcePanel.DiagramStatus;
+    zoomOverrides?: IcePanel.DiagramZoomOverridesNullable | null;
+    comments?: IcePanel.DiagramContentPartialComments;
+    connections?: IcePanel.DiagramContentPartialConnections;
+    objects?: IcePanel.DiagramContentPartialObjects;
 }
 
 export interface Diagram {
@@ -2444,8 +2381,7 @@ export interface Diagram {
     pinnedAt?: string;
     pinnedIndex?: number;
     status: IcePanel.DiagramStatus;
-    /** Custom zoom levels for specific model objects within the diagram. The key is the modelObjectId and the value is the diagram id. */
-    zoomOverrides?: Record<string, string | null> | null;
+    zoomOverrides?: IcePanel.DiagramZoomOverridesNullable | null;
     handleId: string;
     type: IcePanel.DiagramType;
     commentCount: number;
@@ -2481,8 +2417,7 @@ export interface DiagramCreate {
     pinnedAt?: string;
     pinnedIndex?: number;
     status?: IcePanel.DiagramStatus;
-    /** Custom zoom levels for specific model objects within the diagram. The key is the modelObjectId and the value is the diagram id. */
-    zoomOverrides?: Record<string, string | null> | null;
+    zoomOverrides?: IcePanel.DiagramZoomOverridesNullable | null;
     handleId?: string;
     type: IcePanel.DiagramType;
     comments?: Record<string, IcePanel.DiagramComment>;
@@ -2722,6 +2657,15 @@ export interface DiagramGroupRequired {
     handleId?: string;
 }
 
+export interface DiagramGroupUpsert {
+    commit?: number;
+    index?: number;
+    labels?: Record<string, string>;
+    modelId: string;
+    name: string;
+    handleId?: string;
+}
+
 export interface DiagramGroup {
     commit: number;
     index: number;
@@ -2761,6 +2705,14 @@ export interface DomainPartial {
 }
 
 export interface DomainRequired {
+    commit?: number;
+    index?: number;
+    labels?: Record<string, string>;
+    name: string;
+    handleId?: string;
+}
+
+export interface DomainUpsert {
     commit?: number;
     index?: number;
     labels?: Record<string, string>;
@@ -2955,8 +2907,7 @@ export interface DraftTaskDiagramCreateProps {
     pinnedAt?: string;
     pinnedIndex?: number;
     status?: IcePanel.DiagramStatus;
-    /** Custom zoom levels for specific model objects within the diagram. The key is the modelObjectId and the value is the diagram id. */
-    zoomOverrides?: Record<string, string | null> | null;
+    zoomOverrides?: IcePanel.DiagramZoomOverridesNullable | null;
     handleId?: string;
     type: IcePanel.DiagramType;
     comments?: Record<string, IcePanel.DiagramComment>;
@@ -2989,8 +2940,7 @@ export interface DraftTaskDiagramUpdateProps {
     pinnedAt?: string;
     pinnedIndex?: number;
     status?: IcePanel.DiagramStatus;
-    /** Custom zoom levels for specific model objects within the diagram. The key is the modelObjectId and the value is the diagram id. */
-    zoomOverrides?: Record<string, string | null> | null;
+    zoomOverrides?: IcePanel.DiagramZoomOverridesNullable | null;
     comments?: IcePanel.DiagramContentPartialComments;
     connections?: IcePanel.DiagramContentPartialConnections;
     objects?: IcePanel.DiagramContentPartialObjects;
@@ -3411,6 +3361,10 @@ export interface FlowStepPath {
     name: string;
 }
 
+export type FlowStepPaths = Record<string, IcePanel.FlowStepPath>;
+
+export type FlowStepPathsNullable = IcePanel.FlowStepPaths | null;
+
 /** Type of flow step - deprecated values: reply */
 export const FlowStepPartialType = {
     AlternatePath: "alternate-path",
@@ -3435,7 +3389,7 @@ export interface FlowStepPartial {
     index?: number;
     originId?: string | null;
     parentId?: string | null;
-    paths?: Record<string, IcePanel.FlowStepPath | null> | null;
+    paths?: IcePanel.FlowStepPathsNullable | null;
     targetId?: string | null;
     /** Type of flow step - deprecated values: reply */
     type?: IcePanel.FlowStepPartialType | null;
@@ -3452,7 +3406,7 @@ export interface FlowStep {
     index: number;
     originId: string | null;
     parentId: string | null;
-    paths: Record<string, IcePanel.FlowStepPath | null> | null;
+    paths: IcePanel.FlowStepPathsNullable | null;
     targetId: string | null;
     /** Type of flow step - deprecated values: reply */
     type: IcePanel.FlowStepType | null;
@@ -3488,7 +3442,6 @@ export const LandscapeExportType = {
     Markdown: "markdown",
     Html: "html",
     Llms: "llms",
-    Structurizr: "structurizr",
     Json: "json",
 } as const;
 export type LandscapeExportType = (typeof LandscapeExportType)[keyof typeof LandscapeExportType];
@@ -3573,7 +3526,7 @@ export type ModelConnectionFilterViaId =
     | string[];
 
 export interface ModelConnectionFilter {
-    direction?: IcePanel.ModelConnectionDirection | null;
+    direction?: IcePanel.ModelConnectionDirection;
     handleId?: IcePanel.ModelConnectionFilterHandleId;
     labels?: Record<string, string>;
     linked?: boolean;
@@ -3591,6 +3544,8 @@ export const ModelConnectionDirection = {
     Bidirectional: "bidirectional",
 } as const;
 export type ModelConnectionDirection = (typeof ModelConnectionDirection)[keyof typeof ModelConnectionDirection];
+
+export type ModelConnectionDirectionNullable = IcePanel.ModelConnectionDirection | null;
 
 export const ModelConnectionStatus = {
     Deprecated: "deprecated",
@@ -3658,7 +3613,7 @@ export type ModelConnectionPartialTechnologyIds =
 export interface ModelConnectionPartial {
     commit?: number;
     description?: string;
-    direction?: IcePanel.ModelConnectionDirection | null;
+    direction?: IcePanel.ModelConnectionDirectionNullable | null;
     labels?: Record<string, string>;
     links?: IcePanel.ModelConnectionPartialLinks;
     name?: string;
@@ -3676,7 +3631,28 @@ export interface ModelConnectionPartial {
 export interface ModelConnectionRequired {
     commit?: number;
     description?: string;
-    direction: IcePanel.ModelConnectionDirection | null;
+    direction: IcePanel.ModelConnectionDirectionNullable | null;
+    labels?: Record<string, string>;
+    links?: Record<string, IcePanel.RealityLinkRequired>;
+    name: string;
+    /** Model object that initiates the connection */
+    originId: string;
+    status?: IcePanel.ModelConnectionStatus;
+    /** Tag IDs assigned to this model */
+    tagIds?: string[];
+    /** Model object that receives the message */
+    targetId: string;
+    /** Technology IDs assigned to this model */
+    technologyIds?: string[];
+    /** Model object that facilitates the connection, such as a Kafka topic, or RabbitMQ queue */
+    viaId?: string | null;
+    handleId?: string;
+}
+
+export interface ModelConnectionUpsert {
+    commit?: number;
+    description?: string;
+    direction: IcePanel.ModelConnectionDirectionNullable | null;
     labels?: Record<string, string>;
     links?: Record<string, IcePanel.RealityLinkRequired>;
     name: string;
@@ -3697,7 +3673,7 @@ export interface ModelConnectionRequired {
 export interface ModelConnection {
     commit: number;
     description?: string;
-    direction: IcePanel.ModelConnectionDirection | null;
+    direction: IcePanel.ModelConnectionDirectionNullable | null;
     labels: Record<string, string>;
     links: Record<string, IcePanel.RealityLink>;
     name: string;
@@ -3829,7 +3805,7 @@ export const ModelObjectStatus = {
 } as const;
 export type ModelObjectStatus = (typeof ModelObjectStatus)[keyof typeof ModelObjectStatus];
 
-export interface ModelObjectIconNullable {
+export interface ModelObjectIcon {
     catalogTechnologyId: string;
     name: string;
     /** Use either urlDark or urlLight */
@@ -3839,6 +3815,8 @@ export interface ModelObjectIconNullable {
     /** Icon that only works on light backgrounds */
     urlLight?: string;
 }
+
+export type ModelObjectIconNullable = IcePanel.ModelObjectIcon | null;
 
 export interface ModelObjectDiagram {
     id: string;
@@ -3981,6 +3959,35 @@ export interface ModelObjectRequired {
     handleId?: string;
 }
 
+export interface ModelObjectUpsert {
+    /** Short summary of the object shown as the display description */
+    caption?: string;
+    commit?: number;
+    description?: string;
+    external?: boolean;
+    /** IDs of the groups this model object belongs to */
+    groupIds?: string[];
+    icon?: IcePanel.ModelObjectIconNullable | null;
+    /** Generic key value store used for creating custom integrations */
+    labels?: Record<string, string>;
+    links?: Record<string, IcePanel.RealityLinkRequired>;
+    name: string;
+    /** Parent model object ID, null for the root level model object */
+    parentId: string | null;
+    status?: IcePanel.ModelObjectStatus;
+    /** Tag IDs assigned to this model */
+    tagIds?: string[];
+    /** Team IDs that own this model object, does not propergate up or down */
+    teamIds?: string[];
+    /** Model object (+child diagram, diagram groups and flows) can only be edited by owners and admins */
+    teamOnlyEditing?: boolean;
+    /** Technology IDs assigned to this model */
+    technologyIds?: string[];
+    type: IcePanel.ModelObjectType;
+    domainId?: string;
+    handleId?: string;
+}
+
 export interface ModelObject {
     /** Short summary of the object shown as the display description */
     caption?: string;
@@ -4075,6 +4082,15 @@ export const OrganizationStatus = {
 } as const;
 export type OrganizationStatus = (typeof OrganizationStatus)[keyof typeof OrganizationStatus];
 
+export const OrganizationLanguage = {
+    EnUs: "en-US",
+    EnGb: "en-GB",
+    FrFr: "fr-FR",
+    EsEs: "es-ES",
+    Es419: "es-419",
+} as const;
+export type OrganizationLanguage = (typeof OrganizationLanguage)[keyof typeof OrganizationLanguage];
+
 export interface OrganizationUser {
     landscapePermissions?: Record<string, boolean>;
     permission: IcePanel.PermissionType;
@@ -4087,12 +4103,29 @@ export interface OrganizationUserInfo {
     name?: string;
 }
 
+/**
+ * AI features that are enabled for the organization
+ */
+export interface OrganizationAiFeatures {
+    /** Whether to enable detailed descriptions for objects, connections, and diagrams */
+    generateDetailedDescriptions?: boolean;
+    /** Whether to enable display descriptions for objects */
+    generateDisplayDescriptions?: boolean;
+    /** Whether to enable draft summaries for diagrams */
+    generateDraftSummary?: boolean;
+    /** Whether to enable object summaries for objects and connections in the right click context menu */
+    generateObjectSummary?: boolean;
+}
+
 export interface OrganizationPartial {
+    aiFeatures?: IcePanel.OrganizationAiFeatures;
+    /** Whether to enable all AI features for the organization */
     aiFeaturesEnabled?: boolean;
     billingCurrency?: IcePanel.OrganizationBillingCurrency;
     billingCycle?: IcePanel.OrganizationBillingCycle;
     billingEmail?: string;
     experiments?: Record<string, boolean>;
+    language?: IcePanel.OrganizationLanguage;
     lineShapeDefault?: IcePanel.LineShape;
     name?: string;
     shareLinkAuthDomains?: string[] | null;
@@ -4100,11 +4133,14 @@ export interface OrganizationPartial {
 }
 
 export interface OrganizationRequired {
+    aiFeatures?: IcePanel.OrganizationAiFeatures;
+    /** Whether to enable all AI features for the organization */
     aiFeaturesEnabled?: boolean;
     billingCurrency?: IcePanel.OrganizationBillingCurrency;
     billingCycle?: IcePanel.OrganizationBillingCycle;
     billingEmail?: string;
     experiments?: Record<string, boolean>;
+    language?: IcePanel.OrganizationLanguage;
     lineShapeDefault?: IcePanel.LineShape;
     name: string;
     shareLinkAuthDomains?: string[] | null;
@@ -4112,11 +4148,14 @@ export interface OrganizationRequired {
 }
 
 export interface Organization {
+    aiFeatures?: IcePanel.OrganizationAiFeatures;
+    /** Whether to enable all AI features for the organization */
     aiFeaturesEnabled?: boolean;
     billingCurrency?: IcePanel.OrganizationBillingCurrency;
     billingCycle?: IcePanel.OrganizationBillingCycle;
     billingEmail?: string;
     experiments?: Record<string, boolean>;
+    language?: IcePanel.OrganizationLanguage;
     lineShapeDefault: IcePanel.LineShape;
     name: string;
     shareLinkAuthDomains: string[] | null;
@@ -4367,6 +4406,16 @@ export interface TagRequired {
     handleId?: string;
 }
 
+export interface TagUpsert {
+    color: IcePanel.TagColor;
+    commit?: number;
+    groupId: string;
+    index: number;
+    labels?: Record<string, string>;
+    name: string;
+    handleId?: string;
+}
+
 export interface Tag {
     color: IcePanel.TagColor;
     commit: number;
@@ -4444,6 +4493,15 @@ export interface TagGroupPartial {
 }
 
 export interface TagGroupRequired {
+    commit?: number;
+    icon: IcePanel.TagGroupIcon;
+    index: number;
+    labels?: Record<string, string>;
+    name: string;
+    handleId?: string;
+}
+
+export interface TagGroupUpsert {
     commit?: number;
     icon: IcePanel.TagGroupIcon;
     index: number;
@@ -4554,6 +4612,12 @@ export interface VersionRevert {
     updatedById: string;
 }
 
+export const AiDescriptionType = {
+    Caption: "caption",
+    Detailed: "detailed",
+} as const;
+export type AiDescriptionType = (typeof AiDescriptionType)[keyof typeof AiDescriptionType];
+
 export const AuthType = {
     User: "user",
     ApiKey: "api-key",
@@ -4569,304 +4633,6 @@ export const PermissionType = {
     Admin: "admin",
 } as const;
 export type PermissionType = (typeof PermissionType)[keyof typeof PermissionType];
-
-export const BackstageApiApiVersion = {
-    BackstageIoV1Alpha1: "backstage.io/v1alpha1",
-    BackstageIoV1Beta1: "backstage.io/v1beta1",
-} as const;
-export type BackstageApiApiVersion = (typeof BackstageApiApiVersion)[keyof typeof BackstageApiApiVersion];
-
-export const BackstageApiKind = {
-    Api: "API",
-} as const;
-export type BackstageApiKind = (typeof BackstageApiKind)[keyof typeof BackstageApiKind];
-
-export interface BackstageApiSpec {
-    /** The type of the API definition. */
-    type: string;
-    /** The lifecycle state of the API. */
-    lifecycle: string;
-    /** An entity reference to the owner of the API. */
-    owner: string;
-    /** An entity reference to the system that the API belongs to. */
-    system?: string;
-    /** The definition of the API, based on the format defined by the type. */
-    definition: string;
-}
-
-/**
- * An API describes an interface that can be exposed by a component. The API can be defined in different formats, like OpenAPI, AsyncAPI, GraphQL, gRPC, or other formats.
- */
-export interface BackstageApi {
-    metadata: IcePanel.BackstageEntityMeta;
-    /** The relations that this entity has with other entities. */
-    relations?: IcePanel.BackstageRelation[];
-    status?: IcePanel.BackstageStatus;
-    apiVersion: IcePanel.BackstageApiApiVersion;
-    kind: IcePanel.BackstageApiKind;
-    spec: IcePanel.BackstageApiSpec;
-}
-
-export const BackstageComponentApiVersion = {
-    BackstageIoV1Alpha1: "backstage.io/v1alpha1",
-    BackstageIoV1Beta1: "backstage.io/v1beta1",
-} as const;
-export type BackstageComponentApiVersion =
-    (typeof BackstageComponentApiVersion)[keyof typeof BackstageComponentApiVersion];
-
-export const BackstageComponentKind = {
-    Component: "Component",
-} as const;
-export type BackstageComponentKind = (typeof BackstageComponentKind)[keyof typeof BackstageComponentKind];
-
-export interface BackstageComponentSpec {
-    /** The type of component. */
-    type: string;
-    /** The lifecycle state of the component. */
-    lifecycle: string;
-    /** An entity reference to the owner of the component. */
-    owner: string;
-    /** An entity reference to the system that the component belongs to. */
-    system?: string;
-    /** An entity reference to another component of which the component is a part. */
-    subcomponentOf?: string;
-    /** An array of entity references to the APIs that are provided by the component. */
-    providesApis?: string[];
-    /** An array of entity references to the APIs that are consumed by the component. */
-    consumesApis?: string[];
-    /** An array of references to other entities that the component depends on to function. */
-    dependsOn?: string[];
-}
-
-/**
- * A Component describes a software component. It is typically intimately linked to the source code that constitutes the component, and should be what a developer may regard a "unit of software", usually with a distinct deployable or linkable artifact.
- */
-export interface BackstageComponent {
-    metadata: IcePanel.BackstageEntityMeta;
-    /** The relations that this entity has with other entities. */
-    relations?: IcePanel.BackstageRelation[];
-    status?: IcePanel.BackstageStatus;
-    apiVersion: IcePanel.BackstageComponentApiVersion;
-    kind: IcePanel.BackstageComponentKind;
-    spec: IcePanel.BackstageComponentSpec;
-}
-
-export const BackstageDomainApiVersion = {
-    BackstageIoV1Alpha1: "backstage.io/v1alpha1",
-    BackstageIoV1Beta1: "backstage.io/v1beta1",
-} as const;
-export type BackstageDomainApiVersion = (typeof BackstageDomainApiVersion)[keyof typeof BackstageDomainApiVersion];
-
-export const BackstageDomainKind = {
-    Domain: "Domain",
-} as const;
-export type BackstageDomainKind = (typeof BackstageDomainKind)[keyof typeof BackstageDomainKind];
-
-export interface BackstageDomainSpec {
-    /** An entity reference to the owner of the component. */
-    owner: string;
-}
-
-/**
- * A Domain groups a collection of systems that share terminology, domain models, business purpose, or documentation, i.e. form a bounded context.
- */
-export interface BackstageDomain {
-    metadata: IcePanel.BackstageEntityMeta;
-    /** The relations that this entity has with other entities. */
-    relations?: IcePanel.BackstageRelation[];
-    status?: IcePanel.BackstageStatus;
-    apiVersion: IcePanel.BackstageDomainApiVersion;
-    kind: IcePanel.BackstageDomainKind;
-    spec: IcePanel.BackstageDomainSpec;
-}
-
-/**
- * The parts of the format that's common to all versions/kinds of entity.
- */
-export interface BackstageEntityMap {
-    apis?: IcePanel.BackstageApi[];
-    components?: IcePanel.BackstageComponent[];
-    domains?: IcePanel.BackstageDomain[];
-    resources?: IcePanel.BackstageResource[];
-    systems?: IcePanel.BackstageSystem[];
-}
-
-export interface BackstageEntityMetaLinksItem {
-    /** A url in a standard uri format. */
-    url: string;
-    /** A user friendly display name for the link. */
-    title?: string;
-    /** A key representing a visual icon to be displayed in the UI. */
-    icon?: string;
-    /** An optional value to categorize links into specific groups. */
-    type?: string;
-}
-
-/**
- * Metadata fields common to all versions/kinds of entity.
- */
-export interface BackstageEntityMeta {
-    /** A globally unique ID for the entity. This field can not be set by the user at creation time, and the server will reject an attempt to do so. The field will be populated in read operations. The field can (optionally) be specified when performing update or delete operations, but the server is free to reject requests that do so in such a way that it breaks semantics. */
-    uid?: string;
-    /** An opaque string that changes for each update operation to any part of the entity, including metadata. This field can not be set by the user at creation time, and the server will reject an attempt to do so. The field will be populated in read operations. The field can (optionally) be specified when performing update or delete operations, and the server will then reject the operation if it does not match the current stored value. */
-    etag?: string;
-    /** The name of the entity. Must be unique within the catalog at any given point in time, for any given namespace + kind pair. */
-    name: string;
-    /** The namespace that the entity belongs to. */
-    namespace?: string;
-    /** A display name of the entity, to be presented in user interfaces instead of the name property, when available. */
-    title?: string;
-    /** A short (typically relatively few words, on one line) description of the entity. */
-    description?: string;
-    /** Key/value pairs of identifying information attached to the entity. */
-    labels?: Record<string, unknown>;
-    /** Key/value pairs of non-identifying auxiliary information attached to the entity. */
-    annotations?: Record<string, unknown> | null;
-    /** A list of single-valued strings, to for example classify catalog entities in various ways. */
-    tags?: string[];
-    /** A list of external hyperlinks related to the entity. Links can provide additional contextual information that may be located outside of Backstage itself. For example, an admin dashboard or external CMS page. */
-    links?: IcePanel.BackstageEntityMetaLinksItem[];
-    /** Accepts any additional properties */
-    [key: string]: any;
-}
-
-/**
- * A serialized error object.
- */
-export interface BackstageError {
-    /** The type name of the error */
-    name: string;
-    /** The message of the error */
-    message: string;
-    /** An error code associated with the error */
-    code?: string;
-    /** An error stack trace */
-    stack?: string;
-    /** Accepts any additional properties */
-    [key: string]: any;
-}
-
-/**
- * A reference by name to another entity.
- */
-export interface BackstageReference {
-    /** The kind field of the entity. */
-    kind: string;
-    /** The metadata.namespace field of the entity. */
-    namespace: string;
-    /** The metadata.name field of the entity. */
-    name: string;
-}
-
-/**
- * A directed relation from one entity to another.
- */
-export interface BackstageRelation {
-    /** The type of relation. */
-    type: string;
-    target: IcePanel.BackstageReference;
-    /** The entity ref of the target of this relation. */
-    targetRef?: string;
-}
-
-export const BackstageResourceApiVersion = {
-    BackstageIoV1Alpha1: "backstage.io/v1alpha1",
-    BackstageIoV1Beta1: "backstage.io/v1beta1",
-} as const;
-export type BackstageResourceApiVersion =
-    (typeof BackstageResourceApiVersion)[keyof typeof BackstageResourceApiVersion];
-
-export const BackstageResourceKind = {
-    Resource: "Resource",
-} as const;
-export type BackstageResourceKind = (typeof BackstageResourceKind)[keyof typeof BackstageResourceKind];
-
-export interface BackstageResourceSpec {
-    /** The type of resource. */
-    type: string;
-    /** An entity reference to the owner of the resource. */
-    owner: string;
-    /** An array of references to other entities that the resource depends on to function. */
-    dependsOn?: string[];
-    /** An entity reference to the system that the resource belongs to. */
-    system?: string;
-}
-
-/**
- * A resource describes the infrastructure a system needs to operate, like BigTable databases, Pub/Sub topics, S3 buckets or CDNs. Modelling them together with components and systems allows to visualize resource footprint, and create tooling around them.
- */
-export interface BackstageResource {
-    metadata: IcePanel.BackstageEntityMeta;
-    /** The relations that this entity has with other entities. */
-    relations?: IcePanel.BackstageRelation[];
-    status?: IcePanel.BackstageStatus;
-    apiVersion: IcePanel.BackstageResourceApiVersion;
-    kind: IcePanel.BackstageResourceKind;
-    spec: IcePanel.BackstageResourceSpec;
-}
-
-/**
- * The current status of the entity, as claimed by various sources.
- */
-export interface BackstageStatus {
-    items?: IcePanel.BackstageStatusItem[];
-    /** Accepts any additional properties */
-    [key: string]: any;
-}
-
-/**
- * A specific status item on a well known format.
- */
-export interface BackstageStatusItem {
-    type: string;
-    /** The status level / severity of the status item. */
-    level: IcePanel.BackstageStatusLevel;
-    /** A brief message describing the status, intended for human consumption. */
-    message: string;
-    /** An optional serialized error object related to the status. */
-    error?: IcePanel.BackstageError;
-    /** Accepts any additional properties */
-    [key: string]: any;
-}
-
-/** A status level / severity. */
-export const BackstageStatusLevel = {
-    Info: "info",
-    Warning: "warning",
-    Error: "error",
-} as const;
-export type BackstageStatusLevel = (typeof BackstageStatusLevel)[keyof typeof BackstageStatusLevel];
-
-export const BackstageSystemApiVersion = {
-    BackstageIoV1Alpha1: "backstage.io/v1alpha1",
-    BackstageIoV1Beta1: "backstage.io/v1beta1",
-} as const;
-export type BackstageSystemApiVersion = (typeof BackstageSystemApiVersion)[keyof typeof BackstageSystemApiVersion];
-
-export const BackstageSystemKind = {
-    System: "System",
-} as const;
-export type BackstageSystemKind = (typeof BackstageSystemKind)[keyof typeof BackstageSystemKind];
-
-export interface BackstageSystemSpec {
-    /** An entity reference to the owner of the component. */
-    owner: string;
-    /** An entity reference to the domain that the system belongs to. */
-    domain?: string;
-}
-
-/**
- * A system is a collection of resources and components. The system may expose or consume one or several APIs. It is viewed as abstraction level that provides potential consumers insights into exposed features without needing a too detailed view into the details of all components. This also gives the owning team the possibility to decide about published artifacts and APIs.
- */
-export interface BackstageSystem {
-    metadata: IcePanel.BackstageEntityMeta;
-    /** The relations that this entity has with other entities. */
-    relations?: IcePanel.BackstageRelation[];
-    status?: IcePanel.BackstageStatus;
-    apiVersion: IcePanel.BackstageSystemApiVersion;
-    kind: IcePanel.BackstageSystemKind;
-    spec: IcePanel.BackstageSystemSpec;
-}
 
 export interface Error_ {
     code?: string;
@@ -4898,7 +4664,7 @@ export interface DomainExport {
 
 export interface ModelConnectionExport {
     description: string;
-    direction: IcePanel.ModelConnectionDirection | null;
+    direction: IcePanel.ModelConnectionDirectionNullable | null;
     id: string;
     links?: Record<string, IcePanel.RealityLink>;
     name: string;
@@ -5330,1182 +5096,6 @@ export interface SearchResult {
     name: string;
     score: number;
     type: IcePanel.SearchIndexType;
-}
-
-/**
- * An animation step
- */
-export interface StructurizrAnimationStep {
-    /** The order of this animation step. */
-    order?: number;
-    /** The set of element IDs that should be included in this animation step. */
-    elements?: string[];
-    /** The set of relationship IDs that should be included in this animation step. */
-    relationships?: string[];
-}
-
-/** The automatic layout implementation. */
-export const StructurizrAutomaticLayoutImplementation = {
-    Graphviz: "Graphviz",
-    Dagre: "Dagre",
-} as const;
-export type StructurizrAutomaticLayoutImplementation =
-    (typeof StructurizrAutomaticLayoutImplementation)[keyof typeof StructurizrAutomaticLayoutImplementation];
-
-/** The algorithm rank direction. */
-export const StructurizrAutomaticLayoutRankDirection = {
-    TopBottom: "TopBottom",
-    BottomTop: "BottomTop",
-    LeftRight: "LeftRight",
-    RightLeft: "RightLeft",
-} as const;
-export type StructurizrAutomaticLayoutRankDirection =
-    (typeof StructurizrAutomaticLayoutRankDirection)[keyof typeof StructurizrAutomaticLayoutRankDirection];
-
-/**
- * Represents the auto-layout configuration for a given view.
- */
-export interface StructurizrAutomaticLayout {
-    /** The automatic layout implementation. */
-    implementation?: IcePanel.StructurizrAutomaticLayoutImplementation;
-    /** The algorithm rank direction. */
-    rankDirection?: IcePanel.StructurizrAutomaticLayoutRankDirection;
-    /** The separation between ranks (pixels). */
-    rankSeparation?: number;
-    /** The separation between nodes in the same rank (pixels). */
-    nodeSeparation?: number;
-    /** The separation between edges (pixels). */
-    edgeSeparation?: number;
-    /** Whether vertices should be created during automatic layout. */
-    vertices?: boolean;
-}
-
-/**
- * Represents a font, including a name and an optional URL for web fonts.
- */
-export interface StructurizrBrandingFont {
-    /** The font name (e.g. "Times New Roman", "Open Sans", etc). */
-    name?: string;
-    /** For web fonts, the URL where the font can be found. */
-    url?: string;
-}
-
-/**
- * A wrapper for the font and logo for diagram/documentation branding purposes.
- */
-export interface StructurizrBranding {
-    /** A Base64 data URI representation of a PNG/JPG/GIF file. */
-    logo?: string;
-    /** Represents a font, including a name and an optional URL for web fonts. */
-    font?: IcePanel.StructurizrBrandingFont;
-}
-
-/**
- * A component (a grouping of related functionality behind an interface that runs inside a container).
- */
-export interface StructurizrComponent {
-    /** The ID of this component in the model. */
-    id?: string;
-    /** The name of this component. */
-    name?: string;
-    /** A short description of this component. */
-    description?: string;
-    /** The technology associated with this component (e.g. Spring Bean). */
-    technology?: string;
-    /** A comma separated list of tags associated with this component. */
-    tags?: string;
-    /** The URL where more information about this element can be found. */
-    url?: string;
-    /** The name of the group in which this component should be included in. */
-    group?: string;
-    /** A set of arbitrary name-value properties. */
-    properties?: Record<string, unknown>;
-    /** The set of perspectives associated with this element. */
-    perspectives?: IcePanel.StructurizrPerspective[];
-    /** The set of relationships from this component to other elements. */
-    relationships?: IcePanel.StructurizrRelationship[];
-    documentation?: IcePanel.StructurizrDocumentation;
-}
-
-/** The paper size that should be used to render this view. */
-export const StructurizrComponentViewPaperSize = {
-    A6Portrait: "A6_Portrait",
-    A6Landscape: "A6_Landscape",
-    A5Portrait: "A5_Portrait",
-    A5Landscape: "A5_Landscape",
-    A4Portrait: "A4_Portrait",
-    A4Landscape: "A4_Landscape",
-    A3Portrait: "A3_Portrait",
-    A3Landscape: "A3_Landscape",
-    A2Portrait: "A2_Portrait",
-    A2Landscape: "A2_Landscape",
-    A1Portrait: "A1_Portrait",
-    A1Landscape: "A1_Landscape",
-    A0Portrait: "A0_Portrait",
-    A0Landscape: "A0_Landscape",
-    LetterPortrait: "Letter_Portrait",
-    LetterLandscape: "Letter_Landscape",
-    LegalPortrait: "Legal_Portrait",
-    LegalLandscape: "Legal_Landscape",
-    Slide43: "Slide_4_3",
-    Slide169: "Slide_16_9",
-    Slide1610: "Slide_16_10",
-} as const;
-export type StructurizrComponentViewPaperSize =
-    (typeof StructurizrComponentViewPaperSize)[keyof typeof StructurizrComponentViewPaperSize];
-
-/**
- * A component view.
- */
-export interface StructurizrComponentView {
-    /** A unique identifier for this view. */
-    key?: string;
-    /** An integer representing the creation order of this view. */
-    order?: number;
-    /** The title of this view (optional). */
-    title?: string;
-    /** The description of this view. */
-    description?: string;
-    /** A set of arbitrary name-value properties. */
-    properties?: Record<string, unknown>;
-    /** The ID of the container this view is associated with. */
-    containerId?: string;
-    /** The paper size that should be used to render this view. */
-    paperSize?: IcePanel.StructurizrComponentViewPaperSize;
-    dimensions?: IcePanel.StructurizrDimensions;
-    automaticLayout?: IcePanel.StructurizrAutomaticLayout;
-    /** The set of elements in this views. */
-    elements?: IcePanel.StructurizrElementView[];
-    /** The set of relationships in this views. */
-    relationships?: IcePanel.StructurizrRelationshipView[];
-    /** The set of animation steps (optional). */
-    animations?: IcePanel.StructurizrAnimationStep[];
-    /** Specifies whether container boundaries should be visible for "external" components (those outside the container in scope). */
-    externalContainerBoundariesVisible?: boolean;
-}
-
-/**
- * The styles associated with this set of views.
- */
-export interface StructurizrConfigurationStyles {
-    /** The set of element styles. */
-    elements?: IcePanel.StructurizrElementStyle[];
-    /** The set of relationship styles. */
-    relationships?: IcePanel.StructurizrRelationshipStyle[];
-}
-
-/** The type of symbols to use when rendering metadata. */
-export const StructurizrConfigurationMetadataSymbols = {
-    SquareBrackets: "SquareBrackets",
-    RoundBrackets: "RoundBrackets",
-    CurlyBrackets: "CurlyBrackets",
-    AngleBrackets: "AngleBrackets",
-    DoubleAngleBrackets: "DoubleAngleBrackets",
-    None: "None",
-} as const;
-export type StructurizrConfigurationMetadataSymbols =
-    (typeof StructurizrConfigurationMetadataSymbols)[keyof typeof StructurizrConfigurationMetadataSymbols];
-
-/**
- * The configuration associated with a set of views.
- */
-export interface StructurizrConfiguration {
-    /** The styles associated with this set of views. */
-    styles?: IcePanel.StructurizrConfigurationStyles;
-    /** The key of the view that was saved most recently. */
-    lastSavedView?: string;
-    /** The key of the view that should be shown by default. */
-    defaultView?: string;
-    /** The URL(s) of the theme(s) to be used when rendering diagrams. */
-    themes?: string[];
-    branding?: IcePanel.StructurizrBranding;
-    terminology?: IcePanel.StructurizrTerminology;
-    /** The type of symbols to use when rendering metadata. */
-    metadataSymbols?: IcePanel.StructurizrConfigurationMetadataSymbols;
-    /** A set of arbitrary name-value properties. */
-    properties?: Record<string, unknown>;
-}
-
-/**
- * A container (something that can execute code or host data).
- */
-export interface StructurizrContainer {
-    /** The ID of this container in the model. */
-    id?: string;
-    /** The name of this container. */
-    name?: string;
-    /** A short description of this container. */
-    description?: string;
-    /** The technology associated with this container (e.g. Apache Tomcat). */
-    technology?: string;
-    /** A comma separated list of tags associated with this container. */
-    tags?: string;
-    /** The URL where more information about this element can be found. */
-    url?: string;
-    /** The set of components within this container. */
-    components?: IcePanel.StructurizrComponent[];
-    /** The name of the group in which this container should be included in. */
-    group?: string;
-    /** A set of arbitrary name-value properties. */
-    properties?: Record<string, unknown>;
-    /** The set of perspectives associated with this element. */
-    perspectives?: IcePanel.StructurizrPerspective[];
-    /** The set of relationships from this container to other elements. */
-    relationships?: IcePanel.StructurizrRelationship[];
-    documentation?: IcePanel.StructurizrDocumentation;
-}
-
-/**
- * An instance of a container, running on a deployment node.
- */
-export interface StructurizrContainerInstance {
-    /** The ID of this container instance in the model. */
-    id?: string;
-    /** The ID of the container this is an instance of. */
-    containerId?: string;
-    /** The number/index of this instance. */
-    instanceId?: number;
-    /** The deployment environment in which this container instance resides (e.g. "Development", "Live", etc). */
-    environment?: string;
-    /** A comma separated list of tags associated with this container instance. */
-    tags?: string;
-    /** A set of arbitrary name-value properties. */
-    properties?: Record<string, unknown>;
-    /** The set of perspectives associated with this element. */
-    perspectives?: IcePanel.StructurizrPerspective[];
-    /** The set of relationships from this container instance to other elements. */
-    relationships?: IcePanel.StructurizrRelationship[];
-    /** The set of HTTP-based health checks for this container instance. */
-    healthChecks?: IcePanel.StructurizrHttpHealthCheck[];
-}
-
-/** The paper size that should be used to render this view. */
-export const StructurizrContainerViewPaperSize = {
-    A6Portrait: "A6_Portrait",
-    A6Landscape: "A6_Landscape",
-    A5Portrait: "A5_Portrait",
-    A5Landscape: "A5_Landscape",
-    A4Portrait: "A4_Portrait",
-    A4Landscape: "A4_Landscape",
-    A3Portrait: "A3_Portrait",
-    A3Landscape: "A3_Landscape",
-    A2Portrait: "A2_Portrait",
-    A2Landscape: "A2_Landscape",
-    A1Portrait: "A1_Portrait",
-    A1Landscape: "A1_Landscape",
-    A0Portrait: "A0_Portrait",
-    A0Landscape: "A0_Landscape",
-    LetterPortrait: "Letter_Portrait",
-    LetterLandscape: "Letter_Landscape",
-    LegalPortrait: "Legal_Portrait",
-    LegalLandscape: "Legal_Landscape",
-    Slide43: "Slide_4_3",
-    Slide169: "Slide_16_9",
-    Slide1610: "Slide_16_10",
-} as const;
-export type StructurizrContainerViewPaperSize =
-    (typeof StructurizrContainerViewPaperSize)[keyof typeof StructurizrContainerViewPaperSize];
-
-/**
- * A container view.
- */
-export interface StructurizrContainerView {
-    /** A unique identifier for this view. */
-    key?: string;
-    /** An integer representing the creation order of this view. */
-    order?: number;
-    /** The title of this view (optional). */
-    title?: string;
-    /** The description of this view. */
-    description?: string;
-    /** A set of arbitrary name-value properties. */
-    properties?: Record<string, unknown>;
-    /** The ID of the software system this view is associated with. */
-    softwareSystemId?: string;
-    /** The paper size that should be used to render this view. */
-    paperSize?: IcePanel.StructurizrContainerViewPaperSize;
-    dimensions?: IcePanel.StructurizrDimensions;
-    automaticLayout?: IcePanel.StructurizrAutomaticLayout;
-    /** The set of elements in this views. */
-    elements?: IcePanel.StructurizrElementView[];
-    /** The set of relationships in this views. */
-    relationships?: IcePanel.StructurizrRelationshipView[];
-    /** The set of animation steps (optional). */
-    animations?: IcePanel.StructurizrAnimationStep[];
-    /** Specifies whether software system boundaries should be visible for "external" containers (those outside the software system in scope). */
-    externalSoftwareSystemBoundariesVisible?: boolean;
-}
-
-/** The status of the decision. */
-export const StructurizrDecisionStatus = {
-    Proposed: "Proposed",
-    Accepted: "Accepted",
-    Superseded: "Superseded",
-    Deprecated: "Deprecated",
-    Rejected: "Rejected",
-} as const;
-export type StructurizrDecisionStatus = (typeof StructurizrDecisionStatus)[keyof typeof StructurizrDecisionStatus];
-
-/** The content format type. */
-export const StructurizrDecisionFormat = {
-    Markdown: "Markdown",
-    AsciiDoc: "AsciiDoc",
-} as const;
-export type StructurizrDecisionFormat = (typeof StructurizrDecisionFormat)[keyof typeof StructurizrDecisionFormat];
-
-/**
- * A decision record (e.g. architecture decision record).
- */
-export interface StructurizrDecision {
-    /** The ID of the decision. */
-    id?: string;
-    /** The date that the decision was made (ISO 8601 format). */
-    date?: string;
-    /** The status of the decision. */
-    status?: IcePanel.StructurizrDecisionStatus;
-    /** The title of the decision. */
-    title?: string;
-    /** The Markdown or AsciiDoc content of the section. */
-    content?: string;
-    /** The content format type. */
-    format?: IcePanel.StructurizrDecisionFormat;
-    /** The ID of the element (in the model) that this decision applies to (optional). */
-    elementId?: string;
-}
-
-/**
- * A deployment node.
- */
-export interface StructurizrDeploymentNode {
-    /** The ID of this deployment node in the model. */
-    id?: string;
-    /** The name of this deployment node. */
-    name?: string;
-    /** A short description of this deployment node. */
-    description?: string;
-    /** The technology associated with this deployment node (e.g. Apache Tomcat). */
-    technology?: string;
-    /** The deployment environment in which this deployment node resides (e.g. "Development", "Live", etc). */
-    environment?: string;
-    /** The number of instances; either a number (e.g. 1, 2, etc) or a range (e.g. 0..N, 0..*, 1..3, etc). */
-    instances?: string;
-    /** A comma separated list of tags associated with this deployment node. */
-    tags?: string;
-    /** The URL where more information about this element can be found. */
-    url?: string;
-    /** The set of child/nested deployment nodes. */
-    children?: IcePanel.StructurizrDeploymentNode[];
-    infrastructureNodes?: IcePanel.StructurizrInfrastructureNode[];
-    /** The set of software systems instances running in this deployment node.. */
-    softwareSystemInstances?: IcePanel.StructurizrSoftwareSystemInstance[];
-    /** The set of container instances running in this deployment node.. */
-    containerInstances?: IcePanel.StructurizrContainerInstance[];
-    /** A set of arbitrary name-value properties. */
-    properties?: Record<string, unknown>;
-    /** The set of perspectives associated with this element. */
-    perspectives?: IcePanel.StructurizrPerspective[];
-    /** The set of relationships from this deployment node to other elements. */
-    relationships?: IcePanel.StructurizrRelationship[];
-}
-
-/** The paper size that should be used to render this view. */
-export const StructurizrDeploymentViewPaperSize = {
-    A6Portrait: "A6_Portrait",
-    A6Landscape: "A6_Landscape",
-    A5Portrait: "A5_Portrait",
-    A5Landscape: "A5_Landscape",
-    A4Portrait: "A4_Portrait",
-    A4Landscape: "A4_Landscape",
-    A3Portrait: "A3_Portrait",
-    A3Landscape: "A3_Landscape",
-    A2Portrait: "A2_Portrait",
-    A2Landscape: "A2_Landscape",
-    A1Portrait: "A1_Portrait",
-    A1Landscape: "A1_Landscape",
-    A0Portrait: "A0_Portrait",
-    A0Landscape: "A0_Landscape",
-    LetterPortrait: "Letter_Portrait",
-    LetterLandscape: "Letter_Landscape",
-    LegalPortrait: "Legal_Portrait",
-    LegalLandscape: "Legal_Landscape",
-    Slide43: "Slide_4_3",
-    Slide169: "Slide_16_9",
-    Slide1610: "Slide_16_10",
-} as const;
-export type StructurizrDeploymentViewPaperSize =
-    (typeof StructurizrDeploymentViewPaperSize)[keyof typeof StructurizrDeploymentViewPaperSize];
-
-/**
- * A deployment view.
- */
-export interface StructurizrDeploymentView {
-    /** A unique identifier for this view. */
-    key?: string;
-    /** An integer representing the creation order of this view. */
-    order?: number;
-    /** The title of this view (optional). */
-    title?: string;
-    /** The description of this view. */
-    description?: string;
-    /** A set of arbitrary name-value properties. */
-    properties?: Record<string, unknown>;
-    /** The ID of the software system this view is associated with (optional). */
-    softwareSystemId?: string;
-    /** The name of the environment that this deployment view is for (e.g. "Development", "Live", etc). */
-    environment?: string;
-    /** The paper size that should be used to render this view. */
-    paperSize?: IcePanel.StructurizrDeploymentViewPaperSize;
-    dimensions?: IcePanel.StructurizrDimensions;
-    automaticLayout?: IcePanel.StructurizrAutomaticLayout;
-    /** The set of elements in this views. */
-    elements?: IcePanel.StructurizrElementView[];
-    /** The set of relationships in this views. */
-    relationships?: IcePanel.StructurizrRelationshipView[];
-    /** The set of animation steps (optional). */
-    animations?: IcePanel.StructurizrAnimationStep[];
-}
-
-/**
- * Represents a width and height pair.
- */
-export interface StructurizrDimensions {
-    /** The width (pixels). */
-    width?: number;
-    /** The height (pixels). */
-    height?: number;
-}
-
-/**
- * A wrapper for documentation.
- */
-export interface StructurizrDocumentation {
-    sections?: IcePanel.StructurizrDocumentationSection[];
-    decisions?: IcePanel.StructurizrDecision[];
-    images?: IcePanel.StructurizrImage[];
-}
-
-/** The content format type. */
-export const StructurizrDocumentationSectionFormat = {
-    Markdown: "Markdown",
-    AsciiDoc: "AsciiDoc",
-} as const;
-export type StructurizrDocumentationSectionFormat =
-    (typeof StructurizrDocumentationSectionFormat)[keyof typeof StructurizrDocumentationSectionFormat];
-
-/**
- * A documentation section.
- */
-export interface StructurizrDocumentationSection {
-    /** The Markdown or AsciiDoc content of the section. */
-    content?: string;
-    /** The content format type. */
-    format?: IcePanel.StructurizrDocumentationSectionFormat;
-    /** The order (index) of the section in the document. */
-    order?: number;
-}
-
-/** The paper size that should be used to render this view. */
-export const StructurizrDynamicViewPaperSize = {
-    A6Portrait: "A6_Portrait",
-    A6Landscape: "A6_Landscape",
-    A5Portrait: "A5_Portrait",
-    A5Landscape: "A5_Landscape",
-    A4Portrait: "A4_Portrait",
-    A4Landscape: "A4_Landscape",
-    A3Portrait: "A3_Portrait",
-    A3Landscape: "A3_Landscape",
-    A2Portrait: "A2_Portrait",
-    A2Landscape: "A2_Landscape",
-    A1Portrait: "A1_Portrait",
-    A1Landscape: "A1_Landscape",
-    A0Portrait: "A0_Portrait",
-    A0Landscape: "A0_Landscape",
-    LetterPortrait: "Letter_Portrait",
-    LetterLandscape: "Letter_Landscape",
-    LegalPortrait: "Legal_Portrait",
-    LegalLandscape: "Legal_Landscape",
-    Slide43: "Slide_4_3",
-    Slide169: "Slide_16_9",
-    Slide1610: "Slide_16_10",
-} as const;
-export type StructurizrDynamicViewPaperSize =
-    (typeof StructurizrDynamicViewPaperSize)[keyof typeof StructurizrDynamicViewPaperSize];
-
-/**
- * A dynamic view.
- */
-export interface StructurizrDynamicView {
-    /** A unique identifier for this view. */
-    key?: string;
-    /** An integer representing the creation order of this view. */
-    order?: number;
-    /** The title of this view (optional). */
-    title?: string;
-    /** The description of this view. */
-    description?: string;
-    /** A set of arbitrary name-value properties. */
-    properties?: Record<string, unknown>;
-    /** The ID of the element this view is associated with (optional). */
-    elementId?: string;
-    /** The paper size that should be used to render this view. */
-    paperSize?: IcePanel.StructurizrDynamicViewPaperSize;
-    dimensions?: IcePanel.StructurizrDimensions;
-    automaticLayout?: IcePanel.StructurizrAutomaticLayout;
-    /** The set of elements in this views. */
-    elements?: IcePanel.StructurizrElementView[];
-    /** The set of relationships in this views. */
-    relationships?: IcePanel.StructurizrRelationshipView[];
-    /** Specifies software system/container boundaries should be visible for "external" containers/components (those outside the element in scope) */
-    externalBoundariesVisible?: boolean;
-}
-
-/** The shape used to render the element. */
-export const StructurizrElementStyleShape = {
-    Box: "Box",
-    RoundedBox: "RoundedBox",
-    Component: "Component",
-    Circle: "Circle",
-    Ellipse: "Ellipse",
-    Hexagon: "Hexagon",
-    Diamond: "Diamond",
-    Folder: "Folder",
-    Cylinder: "Cylinder",
-    Pipe: "Pipe",
-    WebBrowser: "WebBrowser",
-    Window: "Window",
-    MobileDevicePortrait: "MobileDevicePortrait",
-    MobileDeviceLandscape: "MobileDeviceLandscape",
-    Person: "Person",
-    Robot: "Robot",
-} as const;
-export type StructurizrElementStyleShape =
-    (typeof StructurizrElementStyleShape)[keyof typeof StructurizrElementStyleShape];
-
-/** The type of border used to render the element. */
-export const StructurizrElementStyleBorder = {
-    Solid: "Solid",
-    Dashed: "Dashed",
-    Dotted: "Dotted",
-} as const;
-export type StructurizrElementStyleBorder =
-    (typeof StructurizrElementStyleBorder)[keyof typeof StructurizrElementStyleBorder];
-
-/**
- * A definition of an element style.
- */
-export interface StructurizrElementStyle {
-    /** The tag to which this element style applies. */
-    tag?: string;
-    /** The width of the element, in pixels. */
-    width?: number;
-    /** The height of the element, in pixels. */
-    height?: number;
-    /** The background colour of the element, as a HTML RGB hex string (e.g. '#ffffff'). */
-    background?: string;
-    /** The stroke colour of the element, as a HTML RGB hex string (e.g. '#000000'). */
-    stroke?: string;
-    /** The width of the stroke, in pixels. */
-    strokeWidth?: number;
-    /** The foreground (text) colour of the element, as a HTML RGB hex string (e.g. '#ffffff'). */
-    color?: string;
-    /** The standard font size used to render text, in pixels. */
-    fontSize?: number;
-    /** The shape used to render the element. */
-    shape?: IcePanel.StructurizrElementStyleShape;
-    /** A Base64 data URI representation of a PNG/JPG/GIF file. */
-    icon?: string;
-    /** The type of border used to render the element. */
-    border?: IcePanel.StructurizrElementStyleBorder;
-    /** The opacity used when rendering the element; 0-100. */
-    opacity?: number;
-    /** Whether the element metadata should be shown or not. */
-    metadata?: boolean;
-    /** Whether the element description should be shown or not. */
-    description?: boolean;
-}
-
-/**
- * An instance of a model element (Person, Software System, Container or Component) in a View.
- */
-export interface StructurizrElementView {
-    /** The ID of the element. */
-    id?: string;
-    /** The horizontal position of the element when rendered. */
-    x?: number;
-    /** The vertical position of the element when rendered. */
-    y?: number;
-}
-
-/** Whether elements/relationships are being included or excluded based upon the set of tags. */
-export const StructurizrFilteredViewMode = {
-    Include: "Include",
-    Exclude: "Exclude",
-} as const;
-export type StructurizrFilteredViewMode =
-    (typeof StructurizrFilteredViewMode)[keyof typeof StructurizrFilteredViewMode];
-
-/**
- * Represents a view on top of a view, which can be used to include or exclude specific elements.
- */
-export interface StructurizrFilteredView {
-    /** A unique identifier for this view. */
-    key?: string;
-    /** An integer representing the creation order of this view. */
-    order?: number;
-    /** The title of this view (optional). */
-    title?: string;
-    /** The description of this view. */
-    description?: string;
-    /** A set of arbitrary name-value properties. */
-    properties?: Record<string, unknown>;
-    /** The key of the view on which this filtered view is based. */
-    baseViewKey?: string;
-    /** Whether elements/relationships are being included or excluded based upon the set of tags. */
-    mode?: IcePanel.StructurizrFilteredViewMode;
-    /** The set of tags to include/exclude elements/relationships when rendering this filtered view. */
-    tags?: string[];
-}
-
-/**
- * Describes a HTTP based health check.
- */
-export interface StructurizrHttpHealthCheck {
-    /** The name of the health check. */
-    name?: string;
-    /** The health check URL/endpoint. */
-    url?: string;
-    /** The polling interval, in seconds. */
-    interval?: number;
-    /** The timeout after which a health check is deemed as failed, in milliseconds. */
-    timeout?: number;
-    /** A set of name-value pairs corresponding to HTTP headers that should be sent with the request. */
-    headers?: Record<string, unknown>;
-}
-
-/**
- * Represents a base64 encoded image (png/jpg/gif).
- */
-export interface StructurizrImage {
-    /** The name of the image. */
-    name?: string;
-    /** The (base64 encoded) content of the image. */
-    content?: string;
-    /** The image MIME type (e.g. "image/png"). */
-    type?: string;
-}
-
-/**
- * A view that has been rendered elsewhere (e.g. PlantUML, Mermaid, Kroki, etc) as a image (e.g. PNG).
- */
-export interface StructurizrImageView {
-    /** A unique identifier for this view. */
-    key?: string;
-    /** An integer representing the creation order of this view. */
-    order?: number;
-    /** The title of this view (optional). */
-    title?: string;
-    /** The description of this view. */
-    description?: string;
-    /** A set of arbitrary name-value properties. */
-    properties?: Record<string, unknown>;
-    /** The ID of the element this view is associated with (optional). */
-    elementId?: string;
-    /** The content of this image view, which needs to be a URL or a data URI. */
-    content?: string;
-    /** The content type of this view (e.g. "image/png"). */
-    contentType?: string;
-}
-
-/**
- * An infrastructure node.
- */
-export interface StructurizrInfrastructureNode {
-    /** The ID of this infrastructure node in the model. */
-    id?: string;
-    /** The name of this infrastructure node. */
-    name?: string;
-    /** A short description of this infrastructure node. */
-    description?: string;
-    /** The technology associated with this infrastructure node (e.g. "Route 53"). */
-    technology?: string;
-    /** The deployment environment in which this infrastructure node resides (e.g. "Development", "Live", etc). */
-    environment?: string;
-    /** A comma separated list of tags associated with this infrastructure node. */
-    tags?: string;
-    /** The URL where more information about this element can be found. */
-    url?: string;
-    /** A set of arbitrary name-value properties. */
-    properties?: Record<string, unknown>;
-    /** The set of perspectives associated with this element. */
-    perspectives?: IcePanel.StructurizrPerspective[];
-    /** The set of relationships from this infrastructure node to other elements. */
-    relationships?: IcePanel.StructurizrRelationship[];
-}
-
-/**
- * The enterprise associated with this model.
- */
-export interface StructurizrModelEnterprise {
-    /** The name of the enterprise. */
-    name?: string;
-}
-
-/**
- * A software architecture model.
- */
-export interface StructurizrModel {
-    /** The enterprise associated with this model. */
-    enterprise?: IcePanel.StructurizrModelEnterprise;
-    people?: IcePanel.StructurizrPerson[];
-    softwareSystems?: IcePanel.StructurizrSoftwareSystem[];
-    deploymentNodes?: IcePanel.StructurizrDeploymentNode[];
-    /** A set of arbitrary name-value properties. */
-    properties?: Record<string, unknown>;
-}
-
-/** The location of this person. */
-export const StructurizrPersonLocation = {
-    External: "External",
-    Internal: "Internal",
-    Unspecified: "Unspecified",
-} as const;
-export type StructurizrPersonLocation = (typeof StructurizrPersonLocation)[keyof typeof StructurizrPersonLocation];
-
-/**
- * A person who uses a software system.
- */
-export interface StructurizrPerson {
-    /** The ID of this person in the model. */
-    id?: string;
-    /** The name of this person. */
-    name?: string;
-    /** A short description of this person. */
-    description?: string;
-    /** A comma separated list of tags associated with this person. */
-    tags?: string;
-    /** The URL where more information about this element can be found. */
-    url?: string;
-    /** The location of this person. */
-    location?: IcePanel.StructurizrPersonLocation;
-    /** The name of the group in which this person should be included in. */
-    group?: string;
-    /** A set of arbitrary name-value properties. */
-    properties?: Record<string, unknown>;
-    /** The set of perspectives associated with this element. */
-    perspectives?: IcePanel.StructurizrPerspective[];
-    /** The set of relationships from this person to other elements. */
-    relationships?: IcePanel.StructurizrRelationship[];
-}
-
-/**
- * Represents an architectural perspective, that can be applied to elements and relationships.
- */
-export interface StructurizrPerspective {
-    /** The name of this perspective (e.g. "Security"). */
-    name?: string;
-    /** The description of this perspective. */
-    description?: string;
-    /** The value of this perspective (optional). */
-    value?: string;
-}
-
-/** The interaction style (synchronous or asynchronous). */
-export const StructurizrRelationshipInteractionStyle = {
-    Synchronous: "Synchronous",
-    Asynchronous: "Asynchronous",
-} as const;
-export type StructurizrRelationshipInteractionStyle =
-    (typeof StructurizrRelationshipInteractionStyle)[keyof typeof StructurizrRelationshipInteractionStyle];
-
-/**
- * A relationship between two elements.
- */
-export interface StructurizrRelationship {
-    /** The ID of this relationship in the model. */
-    id?: string;
-    /** A short description of this relationship. */
-    description?: string;
-    /** A comma separated list of tags associated with this relationship. */
-    tags?: string;
-    /** The URL where more information about this relationship can be found. */
-    url?: string;
-    /** A set of arbitrary name-value properties. */
-    properties?: Record<string, unknown>;
-    /** The set of perspectives associated with this relationship. */
-    perspectives?: IcePanel.StructurizrPerspective[];
-    /** The ID of the source element. */
-    sourceId?: string;
-    /** The ID of the destination element. */
-    destinationId?: string;
-    /** The technology associated with this relationship (e.g. HTTPS, JDBC, etc). */
-    technology?: string;
-    /** The interaction style (synchronous or asynchronous). */
-    interactionStyle?: IcePanel.StructurizrRelationshipInteractionStyle;
-    /** The ID of the container-container relationship upon which this container instance-container instance relationship is based. */
-    linkedRelationshipId?: string;
-}
-
-/** The routing algorithm used when rendering lines. */
-export const StructurizrRelationshipStyleRouting = {
-    Direct: "Direct",
-    Curved: "Curved",
-    Orthogonal: "Orthogonal",
-} as const;
-export type StructurizrRelationshipStyleRouting =
-    (typeof StructurizrRelationshipStyleRouting)[keyof typeof StructurizrRelationshipStyleRouting];
-
-/**
- * A definition of a relationship style.
- */
-export interface StructurizrRelationshipStyle {
-    /** The tag to which this relationship style applies. */
-    tag?: string;
-    /** The thickness of the line, in pixels. */
-    thickness?: number;
-    /** The colour of the line, as a HTML RGB hex string (e.g. '#ffffff'). */
-    color?: string;
-    /** The standard font size used to render the relationship annotation, in pixels. */
-    fontSize?: number;
-    /** The width of the relationship annotation, in pixels. */
-    width?: number;
-    /** A flag to indicate whether the line is rendered as dashed or not. */
-    dashed?: boolean;
-    /** The routing algorithm used when rendering lines. */
-    routing?: IcePanel.StructurizrRelationshipStyleRouting;
-    /** The position of the annotation along the line; 0 (start) to 100 (end). */
-    position?: number;
-    /** The opacity used when rendering the line; 0-100. */
-    opacity?: number;
-}
-
-/** The routing algorithm used when rendering this individual relationship. */
-export const StructurizrRelationshipViewRouting = {
-    Direct: "Direct",
-    Curved: "Curved",
-    Orthogonal: "Orthogonal",
-} as const;
-export type StructurizrRelationshipViewRouting =
-    (typeof StructurizrRelationshipViewRouting)[keyof typeof StructurizrRelationshipViewRouting];
-
-/**
- * An instance of a model relationship in a View.
- */
-export interface StructurizrRelationshipView {
-    /** The ID of the relationship. */
-    id?: string;
-    /** The description of this relationship (used in dynamic views only). */
-    description?: string;
-    /** Signifies whether this relationship represents a return/response message (used in dynamic views only). */
-    response?: boolean;
-    /** Gets the order of this relationship (used in dynamic views only; e.g. 1.0, 1.1, 2.0, etc). */
-    order?: string;
-    /** The set of vertices used to render the relationship. */
-    vertices?: IcePanel.StructurizrVertex[];
-    /** The routing algorithm used when rendering this individual relationship. */
-    routing?: IcePanel.StructurizrRelationshipViewRouting;
-    /** The position of the annotation along the line; 0 (start) to 100 (end). */
-    position?: number;
-}
-
-/** The location of this software system. */
-export const StructurizrSoftwareSystemLocation = {
-    External: "External",
-    Internal: "Internal",
-    Unspecified: "Unspecified",
-} as const;
-export type StructurizrSoftwareSystemLocation =
-    (typeof StructurizrSoftwareSystemLocation)[keyof typeof StructurizrSoftwareSystemLocation];
-
-/**
- * A software system.
- */
-export interface StructurizrSoftwareSystem {
-    /** The ID of this software system in the model. */
-    id?: string;
-    /** The name of this software system. */
-    name?: string;
-    /** A short description of this software system. */
-    description?: string;
-    /** The location of this software system. */
-    location?: IcePanel.StructurizrSoftwareSystemLocation;
-    /** A comma separated list of tags associated with this software system. */
-    tags?: string;
-    /** The URL where more information about this element can be found. */
-    url?: string;
-    /** The set of containers within this software system. */
-    containers?: IcePanel.StructurizrContainer[];
-    /** The name of the group in which this software system should be included in. */
-    group?: string;
-    /** A set of arbitrary name-value properties. */
-    properties?: Record<string, unknown>;
-    /** The set of perspectives associated with this element. */
-    perspectives?: IcePanel.StructurizrPerspective[];
-    /** The set of relationships from this software system to other elements. */
-    relationships?: IcePanel.StructurizrRelationship[];
-    documentation?: IcePanel.StructurizrDocumentation;
-}
-
-/**
- * An instance of a software system, running on a deployment node.
- */
-export interface StructurizrSoftwareSystemInstance {
-    /** The ID of this software system instance in the model. */
-    id?: string;
-    /** The ID of the software system this is an instance of. */
-    softwareSystemId?: string;
-    /** The number/index of this instance. */
-    instanceId?: number;
-    /** The deployment environment in which this software system instance resides (e.g. "Development", "Live", etc). */
-    environment?: string;
-    /** A comma separated list of tags associated with this software system instance. */
-    tags?: string;
-    /** A set of arbitrary name-value properties. */
-    properties?: Record<string, unknown>;
-    /** The set of perspectives associated with this element. */
-    perspectives?: IcePanel.StructurizrPerspective[];
-    /** The set of relationships from this software system instance to other elements. */
-    relationships?: IcePanel.StructurizrRelationship[];
-    /** The set of HTTP-based health checks for this software system instance. */
-    healthChecks?: IcePanel.StructurizrHttpHealthCheck[];
-}
-
-/** The paper size that should be used to render this view. */
-export const StructurizrSystemContextViewPaperSize = {
-    A6Portrait: "A6_Portrait",
-    A6Landscape: "A6_Landscape",
-    A5Portrait: "A5_Portrait",
-    A5Landscape: "A5_Landscape",
-    A4Portrait: "A4_Portrait",
-    A4Landscape: "A4_Landscape",
-    A3Portrait: "A3_Portrait",
-    A3Landscape: "A3_Landscape",
-    A2Portrait: "A2_Portrait",
-    A2Landscape: "A2_Landscape",
-    A1Portrait: "A1_Portrait",
-    A1Landscape: "A1_Landscape",
-    A0Portrait: "A0_Portrait",
-    A0Landscape: "A0_Landscape",
-    LetterPortrait: "Letter_Portrait",
-    LetterLandscape: "Letter_Landscape",
-    LegalPortrait: "Legal_Portrait",
-    LegalLandscape: "Legal_Landscape",
-    Slide43: "Slide_4_3",
-    Slide169: "Slide_16_9",
-    Slide1610: "Slide_16_10",
-} as const;
-export type StructurizrSystemContextViewPaperSize =
-    (typeof StructurizrSystemContextViewPaperSize)[keyof typeof StructurizrSystemContextViewPaperSize];
-
-/**
- * A system context view.
- */
-export interface StructurizrSystemContextView {
-    /** A unique identifier for this view. */
-    key?: string;
-    /** An integer representing the creation order of this view. */
-    order?: number;
-    /** The title of this view (optional). */
-    title?: string;
-    /** The description of this view. */
-    description?: string;
-    /** A set of arbitrary name-value properties. */
-    properties?: Record<string, unknown>;
-    /** The ID of the software system this view is associated with. */
-    softwareSystemId?: string;
-    /** The paper size that should be used to render this view. */
-    paperSize?: IcePanel.StructurizrSystemContextViewPaperSize;
-    dimensions?: IcePanel.StructurizrDimensions;
-    automaticLayout?: IcePanel.StructurizrAutomaticLayout;
-    /** Specifies whether the enterprise boundary (to differentiate internal elements from external elements") should be visible on the resulting diagram. */
-    enterpriseBoundaryVisible?: boolean;
-    /** The set of elements in this view. */
-    elements?: IcePanel.StructurizrElementView[];
-    /** The set of relationships in this view. */
-    relationships?: IcePanel.StructurizrRelationshipView[];
-    /** The set of animation steps (optional). */
-    animations?: IcePanel.StructurizrAnimationStep[];
-}
-
-/** The paper size that should be used to render this view. */
-export const StructurizrSystemLandscapeViewPaperSize = {
-    A6Portrait: "A6_Portrait",
-    A6Landscape: "A6_Landscape",
-    A5Portrait: "A5_Portrait",
-    A5Landscape: "A5_Landscape",
-    A4Portrait: "A4_Portrait",
-    A4Landscape: "A4_Landscape",
-    A3Portrait: "A3_Portrait",
-    A3Landscape: "A3_Landscape",
-    A2Portrait: "A2_Portrait",
-    A2Landscape: "A2_Landscape",
-    A1Portrait: "A1_Portrait",
-    A1Landscape: "A1_Landscape",
-    A0Portrait: "A0_Portrait",
-    A0Landscape: "A0_Landscape",
-    LetterPortrait: "Letter_Portrait",
-    LetterLandscape: "Letter_Landscape",
-    LegalPortrait: "Legal_Portrait",
-    LegalLandscape: "Legal_Landscape",
-    Slide43: "Slide_4_3",
-    Slide169: "Slide_16_9",
-    Slide1610: "Slide_16_10",
-} as const;
-export type StructurizrSystemLandscapeViewPaperSize =
-    (typeof StructurizrSystemLandscapeViewPaperSize)[keyof typeof StructurizrSystemLandscapeViewPaperSize];
-
-/**
- * A system landscape view.
- */
-export interface StructurizrSystemLandscapeView {
-    /** A unique identifier for this view. */
-    key?: string;
-    /** An integer representing the creation order of this view. */
-    order?: number;
-    /** The title of this view (optional). */
-    title?: string;
-    /** The description of this view. */
-    description?: string;
-    /** A set of arbitrary name-value properties. */
-    properties?: Record<string, unknown>;
-    /** The paper size that should be used to render this view. */
-    paperSize?: IcePanel.StructurizrSystemLandscapeViewPaperSize;
-    dimensions?: IcePanel.StructurizrDimensions;
-    automaticLayout?: IcePanel.StructurizrAutomaticLayout;
-    /** Specifies whether the enterprise boundary (to differentiate internal elements from external elements) should be visible on the resulting diagram. */
-    enterpriseBoundaryVisible?: boolean;
-    /** The set of elements in this views. */
-    elements?: IcePanel.StructurizrElementView[];
-    /** The set of relationships in this views. */
-    relationships?: IcePanel.StructurizrRelationshipView[];
-    /** The set of animation steps (optional). */
-    animations?: IcePanel.StructurizrAnimationStep[];
-}
-
-/**
- * Provides a way for the terminology on diagrams, etc to be modified (e.g. language translations).
- */
-export interface StructurizrTerminology {
-    /** The terminology used when rendering the enterprise boundary. */
-    enterprise?: string;
-    /** The terminology used when rendering people. */
-    person?: string;
-    /** The terminology used when rendering software systems. */
-    softwareSystem?: string;
-    /** The terminology used when rendering containers. */
-    container?: string;
-    /** The terminology used when rendering components. */
-    component?: string;
-    /** The terminology used when rendering code elements. */
-    code?: string;
-    /** The terminology used when rendering deployment nodes. */
-    deploymentNode?: string;
-    /** The terminology used when rendering relationships. */
-    relationship?: string;
-}
-
-/** The user's role. */
-export const StructurizrUserRole = {
-    ReadWrite: "ReadWrite",
-    ReadOnly: "ReadOnly",
-} as const;
-export type StructurizrUserRole = (typeof StructurizrUserRole)[keyof typeof StructurizrUserRole];
-
-/**
- * Represents a user who should have access to a workspace.
- */
-export interface StructurizrUser {
-    /** The username of the user (e.g. e-mail address). */
-    username?: string;
-    /** The user's role. */
-    role?: IcePanel.StructurizrUserRole;
-}
-
-/**
- * The X, Y coordinate of a bend in a line.
- */
-export interface StructurizrVertex {
-    /** The horizontal position of the vertex when rendered. */
-    x?: number;
-    /** The vertical position of the vertex when rendered. */
-    y?: number;
-}
-
-/**
- * The set of views onto a software architecture model.
- */
-export interface StructurizrViews {
-    /** The set of system landscape views. */
-    systemLandscapeViews?: IcePanel.StructurizrSystemLandscapeView[];
-    /** The set of system context views. */
-    systemContextViews?: IcePanel.StructurizrSystemContextView[];
-    /** The set of container views. */
-    containerViews?: IcePanel.StructurizrContainerView[];
-    /** The set of component views. */
-    componentViews?: IcePanel.StructurizrComponentView[];
-    /** The set of dynamic views. */
-    dynamicViews?: IcePanel.StructurizrDynamicView[];
-    /** The set of deployment views. */
-    deploymentViews?: IcePanel.StructurizrDeploymentView[];
-    /** The set of filtered views. */
-    filteredViews?: IcePanel.StructurizrFilteredView[];
-    /** The set of image views. */
-    imageViews?: IcePanel.StructurizrImageView[];
-    configuration?: IcePanel.StructurizrConfiguration;
-}
-
-/**
- * Represents a Structurizr workspace, which is a wrapper for a software architecture model, views, and documentation.
- */
-export interface StructurizrWorkspace {
-    /** The workspace ID. */
-    id?: number;
-    /** The name of the workspace. */
-    name?: string;
-    /** A short description of the workspace. */
-    description?: string;
-    /** A version number for the workspace. */
-    version?: string;
-    /** The thumbnail associated with the workspace; a Base64 encoded PNG file as a data URI (data:image/png;base64). */
-    thumbnail?: string;
-    /** The last modified date, in ISO 8601 format (e.g. "2018-09-08T12:40:03Z"). */
-    lastModifiedDate?: string;
-    /** A string identifying the user who last modified the workspace (e.g. an e-mail address or username). */
-    lastModifiedUser?: string;
-    /** A string identifying the agent that was last used to modify the workspace (e.g. "structurizr-java/1.2.0"). */
-    lastModifiedAgent?: string;
-    model?: IcePanel.StructurizrModel;
-    views?: IcePanel.StructurizrViews;
-    documentation?: IcePanel.StructurizrDocumentation;
-    configuration?: IcePanel.StructurizrWorkspaceConfiguration;
-    /** A set of arbitrary name-value properties. */
-    properties?: Record<string, unknown>;
-}
-
-/** The visibility of the workspace */
-export const StructurizrWorkspaceConfigurationVisibility = {
-    Public: "Public",
-    Private: "Private",
-} as const;
-export type StructurizrWorkspaceConfigurationVisibility =
-    (typeof StructurizrWorkspaceConfigurationVisibility)[keyof typeof StructurizrWorkspaceConfigurationVisibility];
-
-/** The scope of the workspace (can be unset for unscoped). */
-export const StructurizrWorkspaceConfigurationScope = {
-    Landscape: "Landscape",
-    SoftwareSystem: "SoftwareSystem",
-} as const;
-export type StructurizrWorkspaceConfigurationScope =
-    (typeof StructurizrWorkspaceConfigurationScope)[keyof typeof StructurizrWorkspaceConfigurationScope];
-
-/**
- * The workspace configuration (for Structurizr cloud service and on-premises installation).
- */
-export interface StructurizrWorkspaceConfiguration {
-    users?: IcePanel.StructurizrUser[];
-    /** The visibility of the workspace */
-    visibility?: IcePanel.StructurizrWorkspaceConfigurationVisibility;
-    /** The scope of the workspace (can be unset for unscoped). */
-    scope?: IcePanel.StructurizrWorkspaceConfigurationScope;
 }
 
 export const Theme = {

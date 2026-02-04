@@ -14,7 +14,7 @@ import { TagsClient } from "./api/resources/tags/client/Client.js";
 import { TeamsClient } from "./api/resources/teams/client/Client.js";
 import { VersionsClient } from "./api/resources/versions/client/Client.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
-import { type NormalizedClientOptions, normalizeClientOptions } from "./BaseClient.js";
+import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "./BaseClient.js";
 
 export declare namespace IcePanelClient {
     export type Options = BaseClientOptions;
@@ -23,7 +23,7 @@ export declare namespace IcePanelClient {
 }
 
 export class IcePanelClient {
-    protected readonly _options: NormalizedClientOptions<IcePanelClient.Options>;
+    protected readonly _options: NormalizedClientOptionsWithAuth<IcePanelClient.Options>;
     protected _comments: CommentsClient | undefined;
     protected _diagrams: DiagramsClient | undefined;
     protected _domains: DomainsClient | undefined;
@@ -39,7 +39,7 @@ export class IcePanelClient {
     protected _model: ModelClient | undefined;
 
     constructor(options: IcePanelClient.Options = {}) {
-        this._options = normalizeClientOptions(options);
+        this._options = normalizeClientOptionsWithAuth(options);
     }
 
     public get comments(): CommentsClient {

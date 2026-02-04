@@ -9,8 +9,8 @@ describe("ConnectionsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
 
@@ -147,8 +147,8 @@ describe("ConnectionsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
 
@@ -173,8 +173,8 @@ describe("ConnectionsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
 
@@ -199,8 +199,8 @@ describe("ConnectionsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
 
@@ -225,8 +225,8 @@ describe("ConnectionsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
 
@@ -251,8 +251,8 @@ describe("ConnectionsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
         const rawRequestBody = { name: "name", originId: "originId", targetId: "targetId" };
@@ -374,8 +374,8 @@ describe("ConnectionsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
         const rawRequestBody = { name: "name", originId: "originId", targetId: "targetId" };
@@ -406,8 +406,8 @@ describe("ConnectionsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
         const rawRequestBody = { name: "name", originId: "originId", targetId: "targetId" };
@@ -438,8 +438,8 @@ describe("ConnectionsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
         const rawRequestBody = { name: "name", originId: "originId", targetId: "targetId" };
@@ -470,8 +470,8 @@ describe("ConnectionsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
         const rawRequestBody = { name: "name", originId: "originId", targetId: "targetId" };
@@ -502,8 +502,8 @@ describe("ConnectionsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
         const rawRequestBody = { name: "name", originId: "originId", targetId: "targetId" };
@@ -534,8 +534,8 @@ describe("ConnectionsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
 
@@ -669,8 +669,8 @@ describe("ConnectionsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
 
@@ -696,8 +696,8 @@ describe("ConnectionsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
 
@@ -723,8 +723,8 @@ describe("ConnectionsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
 
@@ -750,8 +750,8 @@ describe("ConnectionsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
 
@@ -777,8 +777,8 @@ describe("ConnectionsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
         const rawRequestBody = { name: "name", originId: "originId", targetId: "targetId" };
@@ -836,9 +836,11 @@ describe("ConnectionsClient", () => {
             landscapeId: "landscapeId",
             versionId: "versionId",
             modelConnectionId: "modelConnectionId",
-            name: "name",
-            originId: "originId",
-            targetId: "targetId",
+            body: {
+                name: "name",
+                originId: "originId",
+                targetId: "targetId",
+            },
         });
         expect(response).toEqual({
             modelConnection: {
@@ -899,20 +901,11 @@ describe("ConnectionsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
-        const rawRequestBody = {
-            direction: { key: "value" },
-            links: { key: "value" },
-            name: "name",
-            originId: "originId",
-            tagIds: { key: "value" },
-            targetId: "targetId",
-            technologyIds: { key: "value" },
-            viaId: { key: "value" },
-        };
+        const rawRequestBody = { name: "name", originId: "originId", targetId: "targetId" };
         const rawResponseBody = { key: "value" };
         server
             .mockEndpoint()
@@ -928,23 +921,10 @@ describe("ConnectionsClient", () => {
                 landscapeId: "landscapeId",
                 versionId: "versionId",
                 modelConnectionId: "modelConnectionId",
-                direction: {
-                    key: "value",
-                },
-                links: {
-                    key: "value",
-                },
-                name: "name",
-                originId: "originId",
-                tagIds: {
-                    key: "value",
-                },
-                targetId: "targetId",
-                technologyIds: {
-                    key: "value",
-                },
-                viaId: {
-                    key: "value",
+                body: {
+                    name: "name",
+                    originId: "originId",
+                    targetId: "targetId",
                 },
             });
         }).rejects.toThrow(IcePanel.UnauthorizedError);
@@ -954,20 +934,11 @@ describe("ConnectionsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
-        const rawRequestBody = {
-            direction: { key: "value" },
-            links: { key: "value" },
-            name: "name",
-            originId: "originId",
-            tagIds: { key: "value" },
-            targetId: "targetId",
-            technologyIds: { key: "value" },
-            viaId: { key: "value" },
-        };
+        const rawRequestBody = { name: "name", originId: "originId", targetId: "targetId" };
         const rawResponseBody = { key: "value" };
         server
             .mockEndpoint()
@@ -983,23 +954,10 @@ describe("ConnectionsClient", () => {
                 landscapeId: "landscapeId",
                 versionId: "versionId",
                 modelConnectionId: "modelConnectionId",
-                direction: {
-                    key: "value",
-                },
-                links: {
-                    key: "value",
-                },
-                name: "name",
-                originId: "originId",
-                tagIds: {
-                    key: "value",
-                },
-                targetId: "targetId",
-                technologyIds: {
-                    key: "value",
-                },
-                viaId: {
-                    key: "value",
+                body: {
+                    name: "name",
+                    originId: "originId",
+                    targetId: "targetId",
                 },
             });
         }).rejects.toThrow(IcePanel.NotFoundError);
@@ -1009,20 +967,11 @@ describe("ConnectionsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
-        const rawRequestBody = {
-            direction: { key: "value" },
-            links: { key: "value" },
-            name: "name",
-            originId: "originId",
-            tagIds: { key: "value" },
-            targetId: "targetId",
-            technologyIds: { key: "value" },
-            viaId: { key: "value" },
-        };
+        const rawRequestBody = { name: "name", originId: "originId", targetId: "targetId" };
         const rawResponseBody = { message: "message" };
         server
             .mockEndpoint()
@@ -1038,23 +987,10 @@ describe("ConnectionsClient", () => {
                 landscapeId: "landscapeId",
                 versionId: "versionId",
                 modelConnectionId: "modelConnectionId",
-                direction: {
-                    key: "value",
-                },
-                links: {
-                    key: "value",
-                },
-                name: "name",
-                originId: "originId",
-                tagIds: {
-                    key: "value",
-                },
-                targetId: "targetId",
-                technologyIds: {
-                    key: "value",
-                },
-                viaId: {
-                    key: "value",
+                body: {
+                    name: "name",
+                    originId: "originId",
+                    targetId: "targetId",
                 },
             });
         }).rejects.toThrow(IcePanel.ConflictError);
@@ -1064,20 +1000,11 @@ describe("ConnectionsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
-        const rawRequestBody = {
-            direction: { key: "value" },
-            links: { key: "value" },
-            name: "name",
-            originId: "originId",
-            tagIds: { key: "value" },
-            targetId: "targetId",
-            technologyIds: { key: "value" },
-            viaId: { key: "value" },
-        };
+        const rawRequestBody = { name: "name", originId: "originId", targetId: "targetId" };
         const rawResponseBody = { key: "value" };
         server
             .mockEndpoint()
@@ -1093,23 +1020,10 @@ describe("ConnectionsClient", () => {
                 landscapeId: "landscapeId",
                 versionId: "versionId",
                 modelConnectionId: "modelConnectionId",
-                direction: {
-                    key: "value",
-                },
-                links: {
-                    key: "value",
-                },
-                name: "name",
-                originId: "originId",
-                tagIds: {
-                    key: "value",
-                },
-                targetId: "targetId",
-                technologyIds: {
-                    key: "value",
-                },
-                viaId: {
-                    key: "value",
+                body: {
+                    name: "name",
+                    originId: "originId",
+                    targetId: "targetId",
                 },
             });
         }).rejects.toThrow(IcePanel.UnprocessableEntityError);
@@ -1119,20 +1033,11 @@ describe("ConnectionsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
-        const rawRequestBody = {
-            direction: { key: "value" },
-            links: { key: "value" },
-            name: "name",
-            originId: "originId",
-            tagIds: { key: "value" },
-            targetId: "targetId",
-            technologyIds: { key: "value" },
-            viaId: { key: "value" },
-        };
+        const rawRequestBody = { name: "name", originId: "originId", targetId: "targetId" };
         const rawResponseBody = { message: "message" };
         server
             .mockEndpoint()
@@ -1148,23 +1053,10 @@ describe("ConnectionsClient", () => {
                 landscapeId: "landscapeId",
                 versionId: "versionId",
                 modelConnectionId: "modelConnectionId",
-                direction: {
-                    key: "value",
-                },
-                links: {
-                    key: "value",
-                },
-                name: "name",
-                originId: "originId",
-                tagIds: {
-                    key: "value",
-                },
-                targetId: "targetId",
-                technologyIds: {
-                    key: "value",
-                },
-                viaId: {
-                    key: "value",
+                body: {
+                    name: "name",
+                    originId: "originId",
+                    targetId: "targetId",
                 },
             });
         }).rejects.toThrow(IcePanel.TooManyRequestsError);
@@ -1174,20 +1066,11 @@ describe("ConnectionsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
-        const rawRequestBody = {
-            direction: { key: "value" },
-            links: { key: "value" },
-            name: "name",
-            originId: "originId",
-            tagIds: { key: "value" },
-            targetId: "targetId",
-            technologyIds: { key: "value" },
-            viaId: { key: "value" },
-        };
+        const rawRequestBody = { name: "name", originId: "originId", targetId: "targetId" };
         const rawResponseBody = { key: "value" };
         server
             .mockEndpoint()
@@ -1203,23 +1086,10 @@ describe("ConnectionsClient", () => {
                 landscapeId: "landscapeId",
                 versionId: "versionId",
                 modelConnectionId: "modelConnectionId",
-                direction: {
-                    key: "value",
-                },
-                links: {
-                    key: "value",
-                },
-                name: "name",
-                originId: "originId",
-                tagIds: {
-                    key: "value",
-                },
-                targetId: "targetId",
-                technologyIds: {
-                    key: "value",
-                },
-                viaId: {
-                    key: "value",
+                body: {
+                    name: "name",
+                    originId: "originId",
+                    targetId: "targetId",
                 },
             });
         }).rejects.toThrow(IcePanel.InternalServerError);
@@ -1229,8 +1099,8 @@ describe("ConnectionsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
 
@@ -1257,8 +1127,8 @@ describe("ConnectionsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
 
@@ -1284,8 +1154,8 @@ describe("ConnectionsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
 
@@ -1311,8 +1181,8 @@ describe("ConnectionsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
 
@@ -1338,8 +1208,8 @@ describe("ConnectionsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
 
@@ -1365,8 +1235,8 @@ describe("ConnectionsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
         const rawRequestBody = {};
@@ -1485,8 +1355,8 @@ describe("ConnectionsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
         const rawRequestBody = {};
@@ -1514,8 +1384,8 @@ describe("ConnectionsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
         const rawRequestBody = {};
@@ -1543,8 +1413,8 @@ describe("ConnectionsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
         const rawRequestBody = {};
@@ -1572,8 +1442,8 @@ describe("ConnectionsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
         const rawRequestBody = {};
@@ -1601,8 +1471,8 @@ describe("ConnectionsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
         const rawRequestBody = {};
@@ -1630,8 +1500,8 @@ describe("ConnectionsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: "test",
-            authorization: "test",
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
             environment: server.baseUrl,
         });
         const rawRequestBody = {};
@@ -1651,6 +1521,153 @@ describe("ConnectionsClient", () => {
                 versionId: "versionId",
                 modelConnectionId: "modelConnectionId",
                 body: {},
+            });
+        }).rejects.toThrow(IcePanel.InternalServerError);
+    });
+
+    test("generateDescription (1)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
+            environment: server.baseUrl,
+        });
+        const rawRequestBody = { type: "caption" };
+        const rawResponseBody = { description: "description", message: "message" };
+        server
+            .mockEndpoint()
+            .post("/landscapes/landscapeId/versions/versionId/model/connections/modelConnectionId/generate-description")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.model.connections.generateDescription({
+            landscapeId: "landscapeId",
+            versionId: "versionId",
+            modelConnectionId: "modelConnectionId",
+            type: "caption",
+        });
+        expect(response).toEqual({
+            description: "description",
+            message: "message",
+        });
+    });
+
+    test("generateDescription (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
+            environment: server.baseUrl,
+        });
+        const rawRequestBody = { type: "caption" };
+        const rawResponseBody = { key: "value" };
+        server
+            .mockEndpoint()
+            .post("/landscapes/landscapeId/versions/versionId/model/connections/modelConnectionId/generate-description")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(401)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.model.connections.generateDescription({
+                landscapeId: "landscapeId",
+                versionId: "versionId",
+                modelConnectionId: "modelConnectionId",
+                type: "caption",
+            });
+        }).rejects.toThrow(IcePanel.UnauthorizedError);
+    });
+
+    test("generateDescription (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
+            environment: server.baseUrl,
+        });
+        const rawRequestBody = { type: "caption" };
+        const rawResponseBody = { key: "value" };
+        server
+            .mockEndpoint()
+            .post("/landscapes/landscapeId/versions/versionId/model/connections/modelConnectionId/generate-description")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(404)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.model.connections.generateDescription({
+                landscapeId: "landscapeId",
+                versionId: "versionId",
+                modelConnectionId: "modelConnectionId",
+                type: "caption",
+            });
+        }).rejects.toThrow(IcePanel.NotFoundError);
+    });
+
+    test("generateDescription (4)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
+            environment: server.baseUrl,
+        });
+        const rawRequestBody = { type: "caption" };
+        const rawResponseBody = { key: "value" };
+        server
+            .mockEndpoint()
+            .post("/landscapes/landscapeId/versions/versionId/model/connections/modelConnectionId/generate-description")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(422)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.model.connections.generateDescription({
+                landscapeId: "landscapeId",
+                versionId: "versionId",
+                modelConnectionId: "modelConnectionId",
+                type: "caption",
+            });
+        }).rejects.toThrow(IcePanel.UnprocessableEntityError);
+    });
+
+    test("generateDescription (5)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKey: { apiKey: "test" },
+            bearer: { token: "test" },
+            environment: server.baseUrl,
+        });
+        const rawRequestBody = { type: "caption" };
+        const rawResponseBody = { key: "value" };
+        server
+            .mockEndpoint()
+            .post("/landscapes/landscapeId/versions/versionId/model/connections/modelConnectionId/generate-description")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(500)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.model.connections.generateDescription({
+                landscapeId: "landscapeId",
+                versionId: "versionId",
+                modelConnectionId: "modelConnectionId",
+                type: "caption",
             });
         }).rejects.toThrow(IcePanel.InternalServerError);
     });

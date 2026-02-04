@@ -56,9 +56,11 @@ export interface CommentFindRequest {
  *         versionId: "versionId",
  *         commentId: "commentId",
  *         body: {
- *             content: "content",
- *             status: "open",
- *             type: "question"
+ *             body: {
+ *                 content: "content",
+ *                 status: "open",
+ *                 type: "question"
+ *             }
  *         }
  *     }
  */
@@ -66,10 +68,7 @@ export interface CommentUpsertRequest {
     landscapeId: string;
     versionId: string;
     commentId: string;
-    body: IcePanel.CommentBody;
-    commit?: number;
-    mentionedUserIds?: string[];
-    handleId?: string;
+    body: IcePanel.CommentUpsert;
 }
 
 /**
@@ -192,7 +191,8 @@ export interface DiagramDeleteRequest {
  *     {
  *         landscapeId: "landscapeId",
  *         versionId: "versionId",
- *         diagramId: "diagramId"
+ *         diagramId: "diagramId",
+ *         body: {}
  *     }
  */
 export interface DiagramUpdateRequest {
@@ -200,24 +200,7 @@ export interface DiagramUpdateRequest {
     versionId: string;
     diagramId: string;
     updateViewedAt?: boolean;
-    commit?: number;
-    description?: string;
-    groupId?: string | null;
-    index?: number;
-    labels?: Record<string, string>;
-    /** model object id this object belongs to */
-    modelId?: string;
-    name?: string;
-    parentId?: string | null;
-    pinned?: boolean;
-    pinnedAt?: string;
-    pinnedIndex?: number;
-    status?: IcePanel.DiagramStatus;
-    /** Custom zoom levels for specific model objects within the diagram. The key is the modelObjectId and the value is the diagram id. */
-    zoomOverrides?: Record<string, string | null> | null;
-    comments?: IcePanel.DiagramContentPartialComments;
-    connections?: IcePanel.DiagramContentPartialConnections;
-    objects?: IcePanel.DiagramContentPartialObjects;
+    body: IcePanel.DiagramUpsert;
 }
 
 /**
@@ -311,18 +294,16 @@ export interface DomainFindRequest {
  *         landscapeId: "landscapeId",
  *         versionId: "versionId",
  *         domainId: "domainId",
- *         name: "name"
+ *         body: {
+ *             name: "name"
+ *         }
  *     }
  */
 export interface DomainUpsertRequest {
     landscapeId: string;
     versionId: string;
     domainId: string;
-    commit?: number;
-    index?: number;
-    labels?: Record<string, string>;
-    name: string;
-    handleId?: string;
+    body: IcePanel.DomainUpsert;
 }
 
 /**
@@ -834,23 +815,19 @@ export interface TagFindRequest {
  *         landscapeId: "landscapeId",
  *         versionId: "versionId",
  *         tagId: "tagId",
- *         color: "blue",
- *         groupId: "groupId",
- *         index: 1.1,
- *         name: "name"
+ *         body: {
+ *             color: "blue",
+ *             groupId: "groupId",
+ *             index: 1.1,
+ *             name: "name"
+ *         }
  *     }
  */
 export interface TagUpsertRequest {
     landscapeId: string;
     versionId: string;
     tagId: string;
-    color: IcePanel.TagColor;
-    commit?: number;
-    groupId: string;
-    index: number;
-    labels?: Record<string, string>;
-    name: string;
-    handleId?: string;
+    body: IcePanel.TagUpsert;
 }
 
 /**
@@ -1034,52 +1011,12 @@ export interface VersionUpdateRequest {
 
 /**
  * @example
- *     {}
- */
-export interface CatalogTechnologiesListRequest {
-    filter?: IcePanel.CatalogTechnologyFilter;
-    /** list all technologies on the platform */
-    admin?: boolean;
-}
-
-/**
- * @example
- *     {
- *         url: "url"
- *     }
- */
-export interface CatalogSuggestionInformationGetRequest {
-    url: string;
-}
-
-/**
- * @example
- *     {
- *         url: "url"
- *     }
- */
-export interface CatalogSuggestionBrandGetRequest {
-    url: string;
-}
-
-/**
- * @example
  *     {
  *         catalogTechnologyId: "catalogTechnologyId"
  *     }
  */
 export interface CatalogTechnologyFindRequest {
     catalogTechnologyId: string;
-}
-
-/**
- * @example
- *     {
- *         catalogTechnologySlug: "catalogTechnologySlug"
- *     }
- */
-export interface CatalogTechnologySlugFindRequest {
-    catalogTechnologySlug: string;
 }
 
 /**
@@ -1137,7 +1074,9 @@ export interface CommentReplyFindRequest {
  *         versionId: "versionId",
  *         commentId: "commentId",
  *         commentReplyId: "commentReplyId",
- *         content: "content"
+ *         body: {
+ *             content: "content"
+ *         }
  *     }
  */
 export interface CommentReplyUpsertRequest {
@@ -1145,8 +1084,7 @@ export interface CommentReplyUpsertRequest {
     versionId: string;
     commentId: string;
     commentReplyId: string;
-    content: string;
-    mentionedUserIds?: string[];
+    body: IcePanel.CommentReplyUpsert;
 }
 
 /**
@@ -1282,20 +1220,17 @@ export interface DiagramGroupFindRequest {
  *         landscapeId: "landscapeId",
  *         versionId: "versionId",
  *         diagramGroupId: "diagramGroupId",
- *         modelId: "modelId",
- *         name: "name"
+ *         body: {
+ *             modelId: "modelId",
+ *             name: "name"
+ *         }
  *     }
  */
 export interface DiagramGroupUpsertRequest {
     landscapeId: string;
     versionId: string;
     diagramGroupId: string;
-    commit?: number;
-    index?: number;
-    labels?: Record<string, string>;
-    modelId: string;
-    name: string;
-    handleId?: string;
+    body: IcePanel.DiagramGroupUpsert;
 }
 
 /**
@@ -1560,9 +1495,11 @@ export interface ModelConnectionFindRequest {
  *         landscapeId: "landscapeId",
  *         versionId: "versionId",
  *         modelConnectionId: "modelConnectionId",
- *         name: "name",
- *         originId: "originId",
- *         targetId: "targetId"
+ *         body: {
+ *             name: "name",
+ *             originId: "originId",
+ *             targetId: "targetId"
+ *         }
  *     }
  */
 export interface ModelConnectionUpsertRequest {
@@ -1572,21 +1509,7 @@ export interface ModelConnectionUpsertRequest {
     originConnector?: IcePanel.model.ConnectionsUpsertRequestOriginConnector;
     targetConnector?: IcePanel.model.ConnectionsUpsertRequestTargetConnector;
     updateDiagrams?: boolean;
-    commit?: number;
-    description?: string;
-    direction?: unknown;
-    labels?: Record<string, string>;
-    links?: unknown;
-    name: string;
-    /** Model object that initiates the connection */
-    originId: string;
-    status?: IcePanel.ModelConnectionStatus;
-    tagIds?: unknown;
-    /** Model object that receives the message */
-    targetId: string;
-    technologyIds?: unknown;
-    viaId?: unknown;
-    handleId?: string;
+    body: IcePanel.ModelConnectionUpsert;
 }
 
 /**
@@ -1618,6 +1541,23 @@ export interface ModelConnectionUpdateRequest {
     modelConnectionId: string;
     updateDiagrams?: boolean;
     body: IcePanel.ModelConnectionPartial;
+}
+
+/**
+ * @example
+ *     {
+ *         landscapeId: "landscapeId",
+ *         versionId: "versionId",
+ *         modelConnectionId: "modelConnectionId",
+ *         type: "caption"
+ *     }
+ */
+export interface ModelConnectionGenerateDescriptionRequest {
+    landscapeId: string;
+    versionId: string;
+    modelConnectionId: string;
+    /** Type of description to generate: "caption" for a short caption(50-70 characters), or "detailed" for a detailed description (max 2000 characters) */
+    type: IcePanel.AiDescriptionType;
 }
 
 /**
@@ -1672,35 +1612,17 @@ export interface ModelObjectFindRequest {
  *         landscapeId: "landscapeId",
  *         versionId: "versionId",
  *         modelObjectId: "modelObjectId",
- *         name: "name",
- *         type: "actor"
+ *         body: {
+ *             name: "name",
+ *             type: "actor"
+ *         }
  *     }
  */
 export interface ModelObjectUpsertRequest {
     landscapeId: string;
     versionId: string;
     modelObjectId: string;
-    /** Short summary of the object shown as the display description */
-    caption?: string;
-    commit?: number;
-    description?: string;
-    external?: boolean;
-    groupIds?: unknown;
-    icon?: IcePanel.ModelObjectIconNullable | null;
-    /** Generic key value store used for creating custom integrations */
-    labels?: Record<string, string>;
-    links?: unknown;
-    name: string;
-    parentId?: unknown;
-    status?: IcePanel.ModelObjectStatus;
-    tagIds?: unknown;
-    teamIds?: unknown;
-    /** Model object (+child diagram, diagram groups and flows) can only be edited by owners and admins */
-    teamOnlyEditing?: boolean;
-    technologyIds?: unknown;
-    type: IcePanel.ModelObjectType;
-    domainId?: string;
-    handleId?: string;
+    body: IcePanel.ModelObjectUpsert;
 }
 
 /**
@@ -1790,8 +1712,6 @@ export interface OrganizationLandscapesListRequest {
  */
 export interface OrganizationLandscapeCreateRequest extends IcePanel.LandscapeRequired {
     organizationId: string;
-    backstageEntities?: IcePanel.BackstageEntityMap;
-    structurizrWorkspace?: IcePanel.StructurizrWorkspace;
     templateId?: string;
 }
 
@@ -2033,21 +1953,18 @@ export interface TagGroupFindRequest {
  *         landscapeId: "landscapeId",
  *         versionId: "versionId",
  *         tagGroupId: "tagGroupId",
- *         icon: "bug",
- *         index: 1.1,
- *         name: "name"
+ *         body: {
+ *             icon: "bug",
+ *             index: 1.1,
+ *             name: "name"
+ *         }
  *     }
  */
 export interface TagGroupUpsertRequest {
     landscapeId: string;
     versionId: string;
     tagGroupId: string;
-    commit?: number;
-    icon: IcePanel.TagGroupIcon;
-    index: number;
-    labels?: Record<string, string>;
-    name: string;
-    handleId?: string;
+    body: IcePanel.TagGroupUpsert;
 }
 
 /**

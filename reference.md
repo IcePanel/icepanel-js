@@ -182,9 +182,11 @@ await client.comments.upsert({
     versionId: "versionId",
     commentId: "commentId",
     body: {
-        content: "content",
-        status: "open",
-        type: "question"
+        body: {
+            content: "content",
+            status: "open",
+            type: "question"
+        }
     }
 });
 
@@ -621,7 +623,8 @@ await client.diagrams.delete({
 await client.diagrams.update({
     landscapeId: "landscapeId",
     versionId: "versionId",
-    diagramId: "diagramId"
+    diagramId: "diagramId",
+    body: {}
 });
 
 ```
@@ -994,7 +997,9 @@ await client.domains.upsert({
     landscapeId: "landscapeId",
     versionId: "versionId",
     domainId: "domainId",
-    name: "name"
+    body: {
+        name: "name"
+    }
 });
 
 ```
@@ -3031,10 +3036,12 @@ await client.tags.upsert({
     landscapeId: "landscapeId",
     versionId: "versionId",
     tagId: "tagId",
-    color: "blue",
-    groupId: "groupId",
-    index: 1.1,
-    name: "name"
+    body: {
+        color: "blue",
+        groupId: "groupId",
+        index: 1.1,
+        name: "name"
+    }
 });
 
 ```
@@ -3810,199 +3817,6 @@ await client.versions.update({
 </details>
 
 ## Catalog Technologies
-<details><summary><code>client.catalog.technologies.<a href="/src/api/resources/catalog/resources/technologies/client/Client.ts">list</a>({ ...params }) -> IcePanel.TechnologiesListResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-List technologies
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.catalog.technologies.list();
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `IcePanel.CatalogTechnologiesListRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `TechnologiesClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.catalog.technologies.<a href="/src/api/resources/catalog/resources/technologies/client/Client.ts">suggestInformation</a>({ ...params }) -> IcePanel.TechnologiesSuggestInformationResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Generate suggestions for a technologies information
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.catalog.technologies.suggestInformation({
-    url: "url"
-});
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `IcePanel.CatalogSuggestionInformationGetRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `TechnologiesClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.catalog.technologies.<a href="/src/api/resources/catalog/resources/technologies/client/Client.ts">suggestBrand</a>({ ...params }) -> IcePanel.TechnologiesSuggestBrandResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Generate suggestions for a technologies branding
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.catalog.technologies.suggestBrand({
-    url: "url"
-});
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `IcePanel.CatalogSuggestionBrandGetRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `TechnologiesClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
 <details><summary><code>client.catalog.technologies.<a href="/src/api/resources/catalog/resources/technologies/client/Client.ts">createSignedIconUrl</a>() -> IcePanel.TechnologiesCreateSignedIconUrlResponse</code></summary>
 <dl>
 <dd>
@@ -4104,71 +3918,6 @@ await client.catalog.technologies.get({
 <dd>
 
 **request:** `IcePanel.CatalogTechnologyFindRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `TechnologiesClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.catalog.technologies.<a href="/src/api/resources/catalog/resources/technologies/client/Client.ts">getSlug</a>({ ...params }) -> IcePanel.TechnologiesGetSlugResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Find a technology by the slug
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.catalog.technologies.getSlug({
-    catalogTechnologySlug: "catalogTechnologySlug"
-});
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `IcePanel.CatalogTechnologySlugFindRequest` 
     
 </dd>
 </dl>
@@ -4412,7 +4161,9 @@ await client.comments.replies.upsert({
     versionId: "versionId",
     commentId: "commentId",
     commentReplyId: "commentReplyId",
-    content: "content"
+    body: {
+        content: "content"
+    }
 });
 
 ```
@@ -4927,8 +4678,10 @@ await client.diagrams.groups.upsert({
     landscapeId: "landscapeId",
     versionId: "versionId",
     diagramGroupId: "diagramGroupId",
-    modelId: "modelId",
-    name: "name"
+    body: {
+        modelId: "modelId",
+        name: "name"
+    }
 });
 
 ```
@@ -6011,9 +5764,11 @@ await client.model.connections.upsert({
     landscapeId: "landscapeId",
     versionId: "versionId",
     modelConnectionId: "modelConnectionId",
-    name: "name",
-    originId: "originId",
-    targetId: "targetId"
+    body: {
+        name: "name",
+        originId: "originId",
+        targetId: "targetId"
+    }
 });
 
 ```
@@ -6138,6 +5893,74 @@ await client.model.connections.update({
 <dd>
 
 **request:** `IcePanel.ModelConnectionUpdateRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ConnectionsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.model.connections.<a href="/src/api/resources/model/resources/connections/client/Client.ts">generateDescription</a>({ ...params }) -> IcePanel.ConnectionsGenerateDescriptionResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Generate a description for a model connection
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.model.connections.generateDescription({
+    landscapeId: "landscapeId",
+    versionId: "versionId",
+    modelConnectionId: "modelConnectionId",
+    type: "caption"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IcePanel.ModelConnectionGenerateDescriptionRequest` 
     
 </dd>
 </dl>
@@ -6336,8 +6159,10 @@ await client.model.objects.upsert({
     landscapeId: "landscapeId",
     versionId: "versionId",
     modelObjectId: "modelObjectId",
-    name: "name",
-    type: "actor"
+    body: {
+        name: "name",
+        type: "actor"
+    }
 });
 
 ```
@@ -6482,7 +6307,7 @@ await client.model.objects.update({
 </details>
 
 ## Model Connections Export
-<details><summary><code>client.model.connections.export.<a href="/src/api/resources/model/resources/connections/resources/export/client/Client.ts">csv</a>({ ...params }) -> void</code></summary>
+<details><summary><code>client.model.connections.export.<a href="/src/api/resources/model/resources/connections/resources/export/client/Client.ts">csv</a>({ ...params }) -> string</code></summary>
 <dl>
 <dd>
 
@@ -6602,7 +6427,7 @@ await client.model.objects.export.dependenciesJson({
 </dl>
 </details>
 
-<details><summary><code>client.model.objects.export.<a href="/src/api/resources/model/resources/objects/resources/export/client/Client.ts">csv</a>({ ...params }) -> void</code></summary>
+<details><summary><code>client.model.objects.export.<a href="/src/api/resources/model/resources/objects/resources/export/client/Client.ts">csv</a>({ ...params }) -> string</code></summary>
 <dl>
 <dd>
 
@@ -7798,9 +7623,11 @@ await client.tags.groups.upsert({
     landscapeId: "landscapeId",
     versionId: "versionId",
     tagGroupId: "tagGroupId",
-    icon: "bug",
-    index: 1.1,
-    name: "name"
+    body: {
+        icon: "bug",
+        index: 1.1,
+        name: "name"
+    }
 });
 
 ```

@@ -59,3 +59,10 @@ export interface ConnectionsDeleteResponse {
 export interface ConnectionsUpdateResponse {
     modelConnection: IcePanel.ModelConnection;
 }
+
+export interface ConnectionsGenerateDescriptionResponse {
+    /** AI-generated description of the model connection */
+    description: string;
+    /** Success message from the AI API */
+    message: string;
+}
