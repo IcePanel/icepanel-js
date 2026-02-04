@@ -1,7 +1,7 @@
-import { IcePanelClient as Client } from "./Client"
-import type { BaseClientOptions } from "./BaseClient"
-import * as core from "./core/index"
-import type { IcePanelAPIVersion } from "./consts"
+import { IcePanelClient as Client } from "./Client.js"
+import type { BaseClientOptions } from "./BaseClient.js"
+import * as core from "./core/index.js"
+import type { IcePanelAPIVersion } from "./consts.js"
 
 export interface IcePanelOptions {
     apiVersion: IcePanelAPIVersion
