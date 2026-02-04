@@ -9,8 +9,8 @@ describe("ObjectsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: { apiKey: "test" },
-            bearer: { token: "test" },
+            apiKeyAuth: { key: "test" },
+            bearerAuth: { token: "test" },
             environment: server.baseUrl,
         });
 
@@ -162,8 +162,8 @@ describe("ObjectsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: { apiKey: "test" },
-            bearer: { token: "test" },
+            apiKeyAuth: { key: "test" },
+            bearerAuth: { token: "test" },
             environment: server.baseUrl,
         });
 
@@ -188,8 +188,8 @@ describe("ObjectsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: { apiKey: "test" },
-            bearer: { token: "test" },
+            apiKeyAuth: { key: "test" },
+            bearerAuth: { token: "test" },
             environment: server.baseUrl,
         });
 
@@ -214,8 +214,8 @@ describe("ObjectsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: { apiKey: "test" },
-            bearer: { token: "test" },
+            apiKeyAuth: { key: "test" },
+            bearerAuth: { token: "test" },
             environment: server.baseUrl,
         });
 
@@ -240,8 +240,8 @@ describe("ObjectsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: { apiKey: "test" },
-            bearer: { token: "test" },
+            apiKeyAuth: { key: "test" },
+            bearerAuth: { token: "test" },
             environment: server.baseUrl,
         });
 
@@ -266,8 +266,8 @@ describe("ObjectsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: { apiKey: "test" },
-            bearer: { token: "test" },
+            apiKeyAuth: { key: "test" },
+            bearerAuth: { token: "test" },
             environment: server.baseUrl,
         });
         const rawRequestBody = { name: "name", type: "actor" };
@@ -405,8 +405,8 @@ describe("ObjectsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: { apiKey: "test" },
-            bearer: { token: "test" },
+            apiKeyAuth: { key: "test" },
+            bearerAuth: { token: "test" },
             environment: server.baseUrl,
         });
         const rawRequestBody = { name: "name", type: "actor" };
@@ -436,8 +436,8 @@ describe("ObjectsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: { apiKey: "test" },
-            bearer: { token: "test" },
+            apiKeyAuth: { key: "test" },
+            bearerAuth: { token: "test" },
             environment: server.baseUrl,
         });
         const rawRequestBody = { name: "name", type: "actor" };
@@ -467,8 +467,8 @@ describe("ObjectsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: { apiKey: "test" },
-            bearer: { token: "test" },
+            apiKeyAuth: { key: "test" },
+            bearerAuth: { token: "test" },
             environment: server.baseUrl,
         });
         const rawRequestBody = { name: "name", type: "actor" };
@@ -498,8 +498,8 @@ describe("ObjectsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: { apiKey: "test" },
-            bearer: { token: "test" },
+            apiKeyAuth: { key: "test" },
+            bearerAuth: { token: "test" },
             environment: server.baseUrl,
         });
         const rawRequestBody = { name: "name", type: "actor" };
@@ -529,8 +529,8 @@ describe("ObjectsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: { apiKey: "test" },
-            bearer: { token: "test" },
+            apiKeyAuth: { key: "test" },
+            bearerAuth: { token: "test" },
             environment: server.baseUrl,
         });
         const rawRequestBody = { name: "name", type: "actor" };
@@ -560,8 +560,8 @@ describe("ObjectsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: { apiKey: "test" },
-            bearer: { token: "test" },
+            apiKeyAuth: { key: "test" },
+            bearerAuth: { token: "test" },
             environment: server.baseUrl,
         });
 
@@ -717,8 +717,8 @@ describe("ObjectsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: { apiKey: "test" },
-            bearer: { token: "test" },
+            apiKeyAuth: { key: "test" },
+            bearerAuth: { token: "test" },
             environment: server.baseUrl,
         });
 
@@ -744,8 +744,8 @@ describe("ObjectsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: { apiKey: "test" },
-            bearer: { token: "test" },
+            apiKeyAuth: { key: "test" },
+            bearerAuth: { token: "test" },
             environment: server.baseUrl,
         });
 
@@ -771,8 +771,8 @@ describe("ObjectsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: { apiKey: "test" },
-            bearer: { token: "test" },
+            apiKeyAuth: { key: "test" },
+            bearerAuth: { token: "test" },
             environment: server.baseUrl,
         });
 
@@ -798,8 +798,8 @@ describe("ObjectsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: { apiKey: "test" },
-            bearer: { token: "test" },
+            apiKeyAuth: { key: "test" },
+            bearerAuth: { token: "test" },
             environment: server.baseUrl,
         });
 
@@ -825,8 +825,8 @@ describe("ObjectsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: { apiKey: "test" },
-            bearer: { token: "test" },
+            apiKeyAuth: { key: "test" },
+            bearerAuth: { token: "test" },
             environment: server.baseUrl,
         });
         const rawRequestBody = { name: "name", type: "actor" };
@@ -965,8 +965,8 @@ describe("ObjectsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: { apiKey: "test" },
-            bearer: { token: "test" },
+            apiKeyAuth: { key: "test" },
+            bearerAuth: { token: "test" },
             environment: server.baseUrl,
         });
         const rawRequestBody = { name: "name", type: "actor" };
@@ -997,8 +997,8 @@ describe("ObjectsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: { apiKey: "test" },
-            bearer: { token: "test" },
+            apiKeyAuth: { key: "test" },
+            bearerAuth: { token: "test" },
             environment: server.baseUrl,
         });
         const rawRequestBody = { name: "name", type: "actor" };
@@ -1029,8 +1029,8 @@ describe("ObjectsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: { apiKey: "test" },
-            bearer: { token: "test" },
+            apiKeyAuth: { key: "test" },
+            bearerAuth: { token: "test" },
             environment: server.baseUrl,
         });
         const rawRequestBody = { name: "name", type: "actor" };
@@ -1061,8 +1061,8 @@ describe("ObjectsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: { apiKey: "test" },
-            bearer: { token: "test" },
+            apiKeyAuth: { key: "test" },
+            bearerAuth: { token: "test" },
             environment: server.baseUrl,
         });
         const rawRequestBody = { name: "name", type: "actor" };
@@ -1093,8 +1093,8 @@ describe("ObjectsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: { apiKey: "test" },
-            bearer: { token: "test" },
+            apiKeyAuth: { key: "test" },
+            bearerAuth: { token: "test" },
             environment: server.baseUrl,
         });
         const rawRequestBody = { name: "name", type: "actor" };
@@ -1125,8 +1125,8 @@ describe("ObjectsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: { apiKey: "test" },
-            bearer: { token: "test" },
+            apiKeyAuth: { key: "test" },
+            bearerAuth: { token: "test" },
             environment: server.baseUrl,
         });
 
@@ -1159,8 +1159,8 @@ describe("ObjectsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: { apiKey: "test" },
-            bearer: { token: "test" },
+            apiKeyAuth: { key: "test" },
+            bearerAuth: { token: "test" },
             environment: server.baseUrl,
         });
 
@@ -1186,8 +1186,8 @@ describe("ObjectsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: { apiKey: "test" },
-            bearer: { token: "test" },
+            apiKeyAuth: { key: "test" },
+            bearerAuth: { token: "test" },
             environment: server.baseUrl,
         });
 
@@ -1213,8 +1213,8 @@ describe("ObjectsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: { apiKey: "test" },
-            bearer: { token: "test" },
+            apiKeyAuth: { key: "test" },
+            bearerAuth: { token: "test" },
             environment: server.baseUrl,
         });
 
@@ -1240,8 +1240,8 @@ describe("ObjectsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: { apiKey: "test" },
-            bearer: { token: "test" },
+            apiKeyAuth: { key: "test" },
+            bearerAuth: { token: "test" },
             environment: server.baseUrl,
         });
 
@@ -1267,8 +1267,8 @@ describe("ObjectsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: { apiKey: "test" },
-            bearer: { token: "test" },
+            apiKeyAuth: { key: "test" },
+            bearerAuth: { token: "test" },
             environment: server.baseUrl,
         });
         const rawRequestBody = {};
@@ -1404,8 +1404,8 @@ describe("ObjectsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: { apiKey: "test" },
-            bearer: { token: "test" },
+            apiKeyAuth: { key: "test" },
+            bearerAuth: { token: "test" },
             environment: server.baseUrl,
         });
         const rawRequestBody = {};
@@ -1433,8 +1433,8 @@ describe("ObjectsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: { apiKey: "test" },
-            bearer: { token: "test" },
+            apiKeyAuth: { key: "test" },
+            bearerAuth: { token: "test" },
             environment: server.baseUrl,
         });
         const rawRequestBody = {};
@@ -1462,8 +1462,8 @@ describe("ObjectsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: { apiKey: "test" },
-            bearer: { token: "test" },
+            apiKeyAuth: { key: "test" },
+            bearerAuth: { token: "test" },
             environment: server.baseUrl,
         });
         const rawRequestBody = {};
@@ -1491,8 +1491,8 @@ describe("ObjectsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: { apiKey: "test" },
-            bearer: { token: "test" },
+            apiKeyAuth: { key: "test" },
+            bearerAuth: { token: "test" },
             environment: server.baseUrl,
         });
         const rawRequestBody = {};
@@ -1520,8 +1520,8 @@ describe("ObjectsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: { apiKey: "test" },
-            bearer: { token: "test" },
+            apiKeyAuth: { key: "test" },
+            bearerAuth: { token: "test" },
             environment: server.baseUrl,
         });
         const rawRequestBody = {};
@@ -1549,8 +1549,8 @@ describe("ObjectsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKey: { apiKey: "test" },
-            bearer: { token: "test" },
+            apiKeyAuth: { key: "test" },
+            bearerAuth: { token: "test" },
             environment: server.baseUrl,
         });
         const rawRequestBody = {};

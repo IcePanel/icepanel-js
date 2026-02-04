@@ -3,7 +3,7 @@
 import * as core from "../core/index.js";
 import * as errors from "../errors/index.js";
 
-const WRAPPER_PROPERTY = "bearer" as const;
+const WRAPPER_PROPERTY = "bearerAuth" as const;
 const TOKEN_PARAM = "token" as const;
 
 export class BearerAuthProvider implements core.AuthProvider {
@@ -36,7 +36,7 @@ export class BearerAuthProvider implements core.AuthProvider {
 }
 
 export namespace BearerAuthProvider {
-    export const AUTH_SCHEME = "Bearer" as const;
+    export const AUTH_SCHEME = "BearerAuth" as const;
     export const AUTH_CONFIG_ERROR_MESSAGE: string =
         `Please provide '${TOKEN_PARAM}' when initializing the client` as const;
     export type Options = AuthOptions;

@@ -3,8 +3,8 @@
 import * as core from "../core/index.js";
 import * as errors from "../errors/index.js";
 
-const WRAPPER_PROPERTY = "apiKey" as const;
-const PARAM_KEY = "apiKey" as const;
+const WRAPPER_PROPERTY = "apiKeyAuth" as const;
+const PARAM_KEY = "key" as const;
 const ENV_HEADER_KEY = "ICEPANEL_API_KEY" as const;
 const HEADER_NAME = "X-API-Key" as const;
 
@@ -39,7 +39,7 @@ export class HeaderAuthProvider implements core.AuthProvider {
 }
 
 export namespace HeaderAuthProvider {
-    export const AUTH_SCHEME = "ApiKey" as const;
+    export const AUTH_SCHEME = "ApiKeyAuth" as const;
     export const AUTH_CONFIG_ERROR_MESSAGE: string =
         `Please provide '${PARAM_KEY}' when initializing the client, or set the '${ENV_HEADER_KEY}' environment variable` as const;
     export type Options = AuthOptions;
