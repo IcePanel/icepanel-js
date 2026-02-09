@@ -27,8 +27,8 @@ export class IcePanelClient extends Client {
 
         if (options.apiKey) {
             updatedOptions.apiKeyAuth = {
-                key: options.apiKey
-            }
+                apiKey: options.apiKey
+        }
         }
 
         if (options.token) {
