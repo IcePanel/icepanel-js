@@ -4,7 +4,7 @@ import * as core from "../core/index.js";
 import * as errors from "../errors/index.js";
 
 const WRAPPER_PROPERTY = "apiKeyAuth" as const;
-const PARAM_KEY = "key" as const;
+const PARAM_KEY = "apiKey" as const;
 const ENV_HEADER_KEY = "ICEPANEL_API_KEY" as const;
 const HEADER_NAME = "X-API-Key" as const;
 

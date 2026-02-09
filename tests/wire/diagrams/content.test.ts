@@ -9,7 +9,7 @@ describe("ContentClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKeyAuth: { key: "test" },
+            apiKeyAuth: { apiKey: "test" },
             bearerAuth: { token: "test" },
             environment: server.baseUrl,
         });
@@ -138,7 +138,7 @@ describe("ContentClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKeyAuth: { key: "test" },
+            apiKeyAuth: { apiKey: "test" },
             bearerAuth: { token: "test" },
             environment: server.baseUrl,
         });
@@ -165,7 +165,7 @@ describe("ContentClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKeyAuth: { key: "test" },
+            apiKeyAuth: { apiKey: "test" },
             bearerAuth: { token: "test" },
             environment: server.baseUrl,
         });
@@ -192,7 +192,7 @@ describe("ContentClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKeyAuth: { key: "test" },
+            apiKeyAuth: { apiKey: "test" },
             bearerAuth: { token: "test" },
             environment: server.baseUrl,
         });
@@ -219,7 +219,7 @@ describe("ContentClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKeyAuth: { key: "test" },
+            apiKeyAuth: { apiKey: "test" },
             bearerAuth: { token: "test" },
             environment: server.baseUrl,
         });
@@ -246,7 +246,7 @@ describe("ContentClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKeyAuth: { key: "test" },
+            apiKeyAuth: { apiKey: "test" },
             bearerAuth: { token: "test" },
             environment: server.baseUrl,
         });
@@ -377,7 +377,7 @@ describe("ContentClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKeyAuth: { key: "test" },
+            apiKeyAuth: { apiKey: "test" },
             bearerAuth: { token: "test" },
             environment: server.baseUrl,
         });
@@ -406,7 +406,7 @@ describe("ContentClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKeyAuth: { key: "test" },
+            apiKeyAuth: { apiKey: "test" },
             bearerAuth: { token: "test" },
             environment: server.baseUrl,
         });
@@ -435,7 +435,7 @@ describe("ContentClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKeyAuth: { key: "test" },
+            apiKeyAuth: { apiKey: "test" },
             bearerAuth: { token: "test" },
             environment: server.baseUrl,
         });
@@ -464,7 +464,7 @@ describe("ContentClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKeyAuth: { key: "test" },
+            apiKeyAuth: { apiKey: "test" },
             bearerAuth: { token: "test" },
             environment: server.baseUrl,
         });
@@ -493,7 +493,7 @@ describe("ContentClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKeyAuth: { key: "test" },
+            apiKeyAuth: { apiKey: "test" },
             bearerAuth: { token: "test" },
             environment: server.baseUrl,
         });
@@ -522,7 +522,7 @@ describe("ContentClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKeyAuth: { key: "test" },
+            apiKeyAuth: { apiKey: "test" },
             bearerAuth: { token: "test" },
             environment: server.baseUrl,
         });
@@ -551,7 +551,7 @@ describe("ContentClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKeyAuth: { key: "test" },
+            apiKeyAuth: { apiKey: "test" },
             bearerAuth: { token: "test" },
             environment: server.baseUrl,
         });
@@ -682,7 +682,7 @@ describe("ContentClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKeyAuth: { key: "test" },
+            apiKeyAuth: { apiKey: "test" },
             bearerAuth: { token: "test" },
             environment: server.baseUrl,
         });
@@ -711,7 +711,7 @@ describe("ContentClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKeyAuth: { key: "test" },
+            apiKeyAuth: { apiKey: "test" },
             bearerAuth: { token: "test" },
             environment: server.baseUrl,
         });
@@ -740,7 +740,7 @@ describe("ContentClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKeyAuth: { key: "test" },
+            apiKeyAuth: { apiKey: "test" },
             bearerAuth: { token: "test" },
             environment: server.baseUrl,
         });
@@ -769,7 +769,7 @@ describe("ContentClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKeyAuth: { key: "test" },
+            apiKeyAuth: { apiKey: "test" },
             bearerAuth: { token: "test" },
             environment: server.baseUrl,
         });
@@ -798,7 +798,7 @@ describe("ContentClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKeyAuth: { key: "test" },
+            apiKeyAuth: { apiKey: "test" },
             bearerAuth: { token: "test" },
             environment: server.baseUrl,
         });
@@ -827,7 +827,7 @@ describe("ContentClient", () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
-            apiKeyAuth: { key: "test" },
+            apiKeyAuth: { apiKey: "test" },
             bearerAuth: { token: "test" },
             environment: server.baseUrl,
         });

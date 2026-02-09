@@ -35,7 +35,7 @@ A full reference for this library is available [here](https://github.com/IcePane
 
 ## Getting Started
 
-Use the following constant to specify the latest version.
+Use the following example to list the model objects in the latest version of a landscape.
 ```typescript
 import { IcePanelClient, LandscapeVersion } from "@icepanel/sdk";
 
