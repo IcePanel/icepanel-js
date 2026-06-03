@@ -18,6 +18,7 @@ describe("TechnologiesClient", () => {
             signedUrl:
                 "https://api.icepanel.io/icons/?URLPrefix=aHR0cHM6Ly9tZWRpYS5leGFtcGxlLmNvbS92aWRlb3Mv&Expires=1566268009&KeyName=Key&Signature=8NBSdQGzvDftrOIa3WHpp646Iis=",
         };
+
         server
             .mockEndpoint()
             .post("/catalog/icons/signed-url")
@@ -27,10 +28,7 @@ describe("TechnologiesClient", () => {
             .build();
 
         const response = await client.catalog.technologies.createSignedIconUrl();
-        expect(response).toEqual({
-            signedUrl:
-                "https://api.icepanel.io/icons/?URLPrefix=aHR0cHM6Ly9tZWRpYS5leGFtcGxlLmNvbS92aWRlb3Mv&Expires=1566268009&KeyName=Key&Signature=8NBSdQGzvDftrOIa3WHpp646Iis=",
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("createSignedIconUrl (2)", async () => {
@@ -42,7 +40,32 @@ describe("TechnologiesClient", () => {
             environment: server.baseUrl,
         });
 
+        const rawResponseBody = { message: "message" };
+
+        server
+            .mockEndpoint()
+            .post("/catalog/icons/signed-url")
+            .respondWith()
+            .statusCode(400)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.catalog.technologies.createSignedIconUrl();
+        }).rejects.toThrow(IcePanel.BadRequestError);
+    });
+
+    test("createSignedIconUrl (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .post("/catalog/icons/signed-url")
@@ -56,7 +79,7 @@ describe("TechnologiesClient", () => {
         }).rejects.toThrow(IcePanel.UnauthorizedError);
     });
 
-    test("createSignedIconUrl (3)", async () => {
+    test("createSignedIconUrl (4)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -66,6 +89,7 @@ describe("TechnologiesClient", () => {
         });
 
         const rawResponseBody = { message: "message" };
+
         server
             .mockEndpoint()
             .post("/catalog/icons/signed-url")
@@ -79,7 +103,7 @@ describe("TechnologiesClient", () => {
         }).rejects.toThrow(IcePanel.ForbiddenError);
     });
 
-    test("createSignedIconUrl (4)", async () => {
+    test("createSignedIconUrl (5)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -89,6 +113,7 @@ describe("TechnologiesClient", () => {
         });
 
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .post("/catalog/icons/signed-url")
@@ -102,7 +127,7 @@ describe("TechnologiesClient", () => {
         }).rejects.toThrow(IcePanel.NotFoundError);
     });
 
-    test("createSignedIconUrl (5)", async () => {
+    test("createSignedIconUrl (6)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -112,6 +137,7 @@ describe("TechnologiesClient", () => {
         });
 
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .post("/catalog/icons/signed-url")
@@ -125,7 +151,7 @@ describe("TechnologiesClient", () => {
         }).rejects.toThrow(IcePanel.UnprocessableEntityError);
     });
 
-    test("createSignedIconUrl (6)", async () => {
+    test("createSignedIconUrl (7)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -135,6 +161,7 @@ describe("TechnologiesClient", () => {
         });
 
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .post("/catalog/icons/signed-url")
@@ -196,6 +223,7 @@ describe("TechnologiesClient", () => {
                 updatesXmlUrl: "updatesXmlUrl",
             },
         };
+
         server
             .mockEndpoint()
             .get("/catalog/technologies/catalogTechnologyId")
@@ -207,45 +235,7 @@ describe("TechnologiesClient", () => {
         const response = await client.catalog.technologies.get({
             catalogTechnologyId: "catalogTechnologyId",
         });
-        expect(response).toEqual({
-            catalogTechnology: {
-                category: "category",
-                color: "blue",
-                deprecatedAt: "2024-01-15T09:30:00Z",
-                description: "description",
-                docsUrl: "docsUrl",
-                iconUrlDark: "iconUrlDark",
-                iconUrlLight: "iconUrlLight",
-                name: "name",
-                nameShort: "nameShort",
-                provider: "aws",
-                rejectionMessage: "rejectionMessage",
-                rejectionReason: "duplicate",
-                restrictions: ["actor"],
-                status: "approved",
-                type: "data-storage",
-                updatesUrl: "updatesUrl",
-                websiteUrl: "websiteUrl",
-                awsXmlSelector: "awsXmlSelector",
-                azureUpdatesKeyword: "azureUpdatesKeyword",
-                createdAt: "2024-01-15T09:30:00Z",
-                createdBy: "user",
-                createdById: "createdById",
-                defaultSlug: "defaultSlug",
-                deletedAt: "2024-01-15T09:30:00Z",
-                deletedBy: "user",
-                deletedById: "deletedById",
-                disabled: true,
-                iconUrl: "iconUrl",
-                id: "id",
-                organizationId: "organizationId",
-                slugs: ["slugs"],
-                updatedAt: "2024-01-15T09:30:00Z",
-                updatedBy: "user",
-                updatedById: "updatedById",
-                updatesXmlUrl: "updatesXmlUrl",
-            },
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("get (2)", async () => {
@@ -257,7 +247,34 @@ describe("TechnologiesClient", () => {
             environment: server.baseUrl,
         });
 
+        const rawResponseBody = { message: "message" };
+
+        server
+            .mockEndpoint()
+            .get("/catalog/technologies/catalogTechnologyId")
+            .respondWith()
+            .statusCode(400)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.catalog.technologies.get({
+                catalogTechnologyId: "catalogTechnologyId",
+            });
+        }).rejects.toThrow(IcePanel.BadRequestError);
+    });
+
+    test("get (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .get("/catalog/technologies/catalogTechnologyId")
@@ -273,7 +290,7 @@ describe("TechnologiesClient", () => {
         }).rejects.toThrow(IcePanel.UnauthorizedError);
     });
 
-    test("get (3)", async () => {
+    test("get (4)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -283,6 +300,7 @@ describe("TechnologiesClient", () => {
         });
 
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .get("/catalog/technologies/catalogTechnologyId")
@@ -298,7 +316,7 @@ describe("TechnologiesClient", () => {
         }).rejects.toThrow(IcePanel.NotFoundError);
     });
 
-    test("get (4)", async () => {
+    test("get (5)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -308,6 +326,7 @@ describe("TechnologiesClient", () => {
         });
 
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .get("/catalog/technologies/catalogTechnologyId")
@@ -323,7 +342,7 @@ describe("TechnologiesClient", () => {
         }).rejects.toThrow(IcePanel.UnprocessableEntityError);
     });
 
-    test("get (5)", async () => {
+    test("get (6)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -333,6 +352,7 @@ describe("TechnologiesClient", () => {
         });
 
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .get("/catalog/technologies/catalogTechnologyId")

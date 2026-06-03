@@ -20,16 +20,20 @@ describe("LogsClient", () => {
                     action: { id: "id", props: { name: "name", permission: "billing" }, type: "api-key-create" },
                     actionIds: ["actionIds"],
                     id: "id",
-                    importance: "low",
                     landscapeId: "landscapeId",
                     parentId: "parentId",
                     performedAt: "2024-01-15T09:30:00Z",
                     performedBy: "user",
+                    performedByAuthProvider: "performedByAuthProvider",
+                    performedByClientId: "performedByClientId",
                     performedById: "performedById",
+                    performedByIp: "performedByIp",
                     performedByName: "performedByName",
+                    performedByUserAgent: "performedByUserAgent",
                 },
             ],
         };
+
         server
             .mockEndpoint()
             .get("/landscapes/landscapeId/action-logs")
@@ -41,29 +45,7 @@ describe("LogsClient", () => {
         const response = await client.landscapes.logs.list({
             landscapeId: "landscapeId",
         });
-        expect(response).toEqual({
-            actionLogs: [
-                {
-                    action: {
-                        id: "id",
-                        props: {
-                            name: "name",
-                            permission: "billing",
-                        },
-                        type: "api-key-create",
-                    },
-                    actionIds: ["actionIds"],
-                    id: "id",
-                    importance: "low",
-                    landscapeId: "landscapeId",
-                    parentId: "parentId",
-                    performedAt: "2024-01-15T09:30:00Z",
-                    performedBy: "user",
-                    performedById: "performedById",
-                    performedByName: "performedByName",
-                },
-            ],
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("list (2)", async () => {
@@ -75,7 +57,34 @@ describe("LogsClient", () => {
             environment: server.baseUrl,
         });
 
+        const rawResponseBody = { message: "message" };
+
+        server
+            .mockEndpoint()
+            .get("/landscapes/landscapeId/action-logs")
+            .respondWith()
+            .statusCode(400)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.landscapes.logs.list({
+                landscapeId: "landscapeId",
+            });
+        }).rejects.toThrow(IcePanel.BadRequestError);
+    });
+
+    test("list (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .get("/landscapes/landscapeId/action-logs")
@@ -91,7 +100,33 @@ describe("LogsClient", () => {
         }).rejects.toThrow(IcePanel.UnauthorizedError);
     });
 
-    test("list (3)", async () => {
+    test("list (4)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+
+        const rawResponseBody = { message: "message" };
+
+        server
+            .mockEndpoint()
+            .get("/landscapes/landscapeId/action-logs")
+            .respondWith()
+            .statusCode(403)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.landscapes.logs.list({
+                landscapeId: "landscapeId",
+            });
+        }).rejects.toThrow(IcePanel.ForbiddenError);
+    });
+
+    test("list (5)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -101,6 +136,7 @@ describe("LogsClient", () => {
         });
 
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .get("/landscapes/landscapeId/action-logs")
@@ -116,7 +152,7 @@ describe("LogsClient", () => {
         }).rejects.toThrow(IcePanel.NotFoundError);
     });
 
-    test("list (4)", async () => {
+    test("list (6)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -126,6 +162,7 @@ describe("LogsClient", () => {
         });
 
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .get("/landscapes/landscapeId/action-logs")
@@ -141,7 +178,7 @@ describe("LogsClient", () => {
         }).rejects.toThrow(IcePanel.UnprocessableEntityError);
     });
 
-    test("list (5)", async () => {
+    test("list (7)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -151,6 +188,7 @@ describe("LogsClient", () => {
         });
 
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .get("/landscapes/landscapeId/action-logs")
@@ -180,15 +218,19 @@ describe("LogsClient", () => {
                 action: { id: "id", props: { name: "name", permission: "billing" }, type: "api-key-create" },
                 actionIds: ["actionIds"],
                 id: "id",
-                importance: "low",
                 landscapeId: "landscapeId",
                 parentId: "parentId",
                 performedAt: "2024-01-15T09:30:00Z",
                 performedBy: "user",
+                performedByAuthProvider: "performedByAuthProvider",
+                performedByClientId: "performedByClientId",
                 performedById: "performedById",
+                performedByIp: "performedByIp",
                 performedByName: "performedByName",
+                performedByUserAgent: "performedByUserAgent",
             },
         };
+
         server
             .mockEndpoint()
             .get("/landscapes/landscapeId/action-logs/actionLogId")
@@ -201,27 +243,7 @@ describe("LogsClient", () => {
             landscapeId: "landscapeId",
             actionLogId: "actionLogId",
         });
-        expect(response).toEqual({
-            actionLog: {
-                action: {
-                    id: "id",
-                    props: {
-                        name: "name",
-                        permission: "billing",
-                    },
-                    type: "api-key-create",
-                },
-                actionIds: ["actionIds"],
-                id: "id",
-                importance: "low",
-                landscapeId: "landscapeId",
-                parentId: "parentId",
-                performedAt: "2024-01-15T09:30:00Z",
-                performedBy: "user",
-                performedById: "performedById",
-                performedByName: "performedByName",
-            },
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("get (2)", async () => {
@@ -233,7 +255,35 @@ describe("LogsClient", () => {
             environment: server.baseUrl,
         });
 
+        const rawResponseBody = { message: "message" };
+
+        server
+            .mockEndpoint()
+            .get("/landscapes/landscapeId/action-logs/actionLogId")
+            .respondWith()
+            .statusCode(400)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.landscapes.logs.get({
+                landscapeId: "landscapeId",
+                actionLogId: "actionLogId",
+            });
+        }).rejects.toThrow(IcePanel.BadRequestError);
+    });
+
+    test("get (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .get("/landscapes/landscapeId/action-logs/actionLogId")
@@ -250,7 +300,34 @@ describe("LogsClient", () => {
         }).rejects.toThrow(IcePanel.UnauthorizedError);
     });
 
-    test("get (3)", async () => {
+    test("get (4)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+
+        const rawResponseBody = { message: "message" };
+
+        server
+            .mockEndpoint()
+            .get("/landscapes/landscapeId/action-logs/actionLogId")
+            .respondWith()
+            .statusCode(403)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.landscapes.logs.get({
+                landscapeId: "landscapeId",
+                actionLogId: "actionLogId",
+            });
+        }).rejects.toThrow(IcePanel.ForbiddenError);
+    });
+
+    test("get (5)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -260,6 +337,7 @@ describe("LogsClient", () => {
         });
 
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .get("/landscapes/landscapeId/action-logs/actionLogId")
@@ -276,7 +354,7 @@ describe("LogsClient", () => {
         }).rejects.toThrow(IcePanel.NotFoundError);
     });
 
-    test("get (4)", async () => {
+    test("get (6)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -286,6 +364,7 @@ describe("LogsClient", () => {
         });
 
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .get("/landscapes/landscapeId/action-logs/actionLogId")
@@ -302,7 +381,7 @@ describe("LogsClient", () => {
         }).rejects.toThrow(IcePanel.UnprocessableEntityError);
     });
 
-    test("get (5)", async () => {
+    test("get (7)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -312,6 +391,7 @@ describe("LogsClient", () => {
         });
 
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .get("/landscapes/landscapeId/action-logs/actionLogId")
@@ -343,16 +423,20 @@ describe("LogsClient", () => {
                     action: { id: "id", props: { name: "name", permission: "billing" }, type: "api-key-create" },
                     actionIds: ["actionIds"],
                     id: "id",
-                    importance: "low",
                     landscapeId: "landscapeId",
                     parentId: "parentId",
                     performedAt: "2024-01-15T09:30:00Z",
                     performedBy: "user",
+                    performedByAuthProvider: "performedByAuthProvider",
+                    performedByClientId: "performedByClientId",
                     performedById: "performedById",
+                    performedByIp: "performedByIp",
                     performedByName: "performedByName",
+                    performedByUserAgent: "performedByUserAgent",
                 },
             ],
         };
+
         server
             .mockEndpoint()
             .get("/landscapes/landscapeId/action-logs/actionLogId/children")
@@ -365,29 +449,7 @@ describe("LogsClient", () => {
             landscapeId: "landscapeId",
             actionLogId: "actionLogId",
         });
-        expect(response).toEqual({
-            actionLogs: [
-                {
-                    action: {
-                        id: "id",
-                        props: {
-                            name: "name",
-                            permission: "billing",
-                        },
-                        type: "api-key-create",
-                    },
-                    actionIds: ["actionIds"],
-                    id: "id",
-                    importance: "low",
-                    landscapeId: "landscapeId",
-                    parentId: "parentId",
-                    performedAt: "2024-01-15T09:30:00Z",
-                    performedBy: "user",
-                    performedById: "performedById",
-                    performedByName: "performedByName",
-                },
-            ],
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("listChildren (2)", async () => {
@@ -399,7 +461,35 @@ describe("LogsClient", () => {
             environment: server.baseUrl,
         });
 
+        const rawResponseBody = { message: "message" };
+
+        server
+            .mockEndpoint()
+            .get("/landscapes/landscapeId/action-logs/actionLogId/children")
+            .respondWith()
+            .statusCode(400)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.landscapes.logs.listChildren({
+                landscapeId: "landscapeId",
+                actionLogId: "actionLogId",
+            });
+        }).rejects.toThrow(IcePanel.BadRequestError);
+    });
+
+    test("listChildren (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .get("/landscapes/landscapeId/action-logs/actionLogId/children")
@@ -416,7 +506,34 @@ describe("LogsClient", () => {
         }).rejects.toThrow(IcePanel.UnauthorizedError);
     });
 
-    test("listChildren (3)", async () => {
+    test("listChildren (4)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+
+        const rawResponseBody = { message: "message" };
+
+        server
+            .mockEndpoint()
+            .get("/landscapes/landscapeId/action-logs/actionLogId/children")
+            .respondWith()
+            .statusCode(403)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.landscapes.logs.listChildren({
+                landscapeId: "landscapeId",
+                actionLogId: "actionLogId",
+            });
+        }).rejects.toThrow(IcePanel.ForbiddenError);
+    });
+
+    test("listChildren (5)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -426,6 +543,7 @@ describe("LogsClient", () => {
         });
 
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .get("/landscapes/landscapeId/action-logs/actionLogId/children")
@@ -442,7 +560,7 @@ describe("LogsClient", () => {
         }).rejects.toThrow(IcePanel.NotFoundError);
     });
 
-    test("listChildren (4)", async () => {
+    test("listChildren (6)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -452,6 +570,7 @@ describe("LogsClient", () => {
         });
 
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .get("/landscapes/landscapeId/action-logs/actionLogId/children")
@@ -468,7 +587,7 @@ describe("LogsClient", () => {
         }).rejects.toThrow(IcePanel.UnprocessableEntityError);
     });
 
-    test("listChildren (5)", async () => {
+    test("listChildren (7)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -478,6 +597,7 @@ describe("LogsClient", () => {
         });
 
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .get("/landscapes/landscapeId/action-logs/actionLogId/children")

@@ -29,45 +29,40 @@ export class ObjectsClient {
     }
 
     /**
-     * @param {IcePanel.ModelObjectsListRequest} request
+     * Returns the incoming and outgoing dependencies for each requested object. Objects can be specified by ID or by label key-value pairs (or both): label pairs use OR semantics so an object matching any pair is included. Results are filtered by tags and/or technologies when provided: within each filter array the semantics are OR (any match passes), and between the two filter dimensions the semantics are AND (an object must satisfy both when both are specified).
+     *
+     * @param {IcePanel.ModelObjectDependenciesListRequest} request
      * @param {ObjectsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link IcePanel.BadRequestError}
      * @throws {@link IcePanel.UnauthorizedError}
+     * @throws {@link IcePanel.ForbiddenError}
      * @throws {@link IcePanel.NotFoundError}
      * @throws {@link IcePanel.UnprocessableEntityError}
      * @throws {@link IcePanel.InternalServerError}
      *
      * @example
-     *     await client.model.objects.list({
+     *     await client.model.objects.dependenciesList({
      *         landscapeId: "landscapeId",
-     *         versionId: "versionId"
+     *         versionId: "versionId",
+     *         filter: {}
      *     })
      */
-    public list(
-        request: IcePanel.ModelObjectsListRequest,
+    public dependenciesList(
+        request: IcePanel.ModelObjectDependenciesListRequest,
         requestOptions?: ObjectsClient.RequestOptions,
-    ): core.HttpResponsePromise<IcePanel.model.ObjectsListResponse> {
-        return core.HttpResponsePromise.fromPromise(this.__list(request, requestOptions));
+    ): core.HttpResponsePromise<Record<string, IcePanel.model.ObjectsDependenciesListResponseValue>> {
+        return core.HttpResponsePromise.fromPromise(this.__dependenciesList(request, requestOptions));
     }
 
-    private async __list(
-        request: IcePanel.ModelObjectsListRequest,
+    private async __dependenciesList(
+        request: IcePanel.ModelObjectDependenciesListRequest,
         requestOptions?: ObjectsClient.RequestOptions,
-    ): Promise<core.WithRawResponse<IcePanel.model.ObjectsListResponse>> {
-        const { landscapeId, versionId, filter, expand } = request;
-        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
-        if (filter != null) {
-            _queryParams.filter = filter;
-        }
-
-        if (expand != null) {
-            if (Array.isArray(expand)) {
-                _queryParams.expand = expand.map((item) => item);
-            } else {
-                _queryParams.expand = expand;
-            }
-        }
-
+    ): Promise<core.WithRawResponse<Record<string, IcePanel.model.ObjectsDependenciesListResponseValue>>> {
+        const { landscapeId, versionId, filter } = request;
+        const _queryParams: Record<string, unknown> = {
+            filter,
+        };
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
@@ -79,11 +74,15 @@ export class ObjectsClient {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.IcePanelEnvironment.ApiV1,
-                `landscapes/${core.url.encodePathParam(landscapeId)}/versions/${core.url.encodePathParam(versionId)}/model/objects`,
+                `landscapes/${core.url.encodePathParam(landscapeId)}/versions/${core.url.encodePathParam(versionId)}/model/dependencies`,
             ),
             method: "GET",
             headers: _headers,
-            queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            queryString: core.url
+                .queryBuilder()
+                .addMany(_queryParams)
+                .mergeAdditional(requestOptions?.queryParams)
+                .build(),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             withCredentials: true,
@@ -92,13 +91,20 @@ export class ObjectsClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as IcePanel.model.ObjectsListResponse, rawResponse: _response.rawResponse };
+            return {
+                data: _response.body as Record<string, IcePanel.model.ObjectsDependenciesListResponseValue>,
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
+                case 400:
+                    throw new IcePanel.BadRequestError(_response.error.body as IcePanel.Error_, _response.rawResponse);
                 case 401:
                     throw new IcePanel.UnauthorizedError(_response.error.body as unknown, _response.rawResponse);
+                case 403:
+                    throw new IcePanel.ForbiddenError(_response.error.body as IcePanel.Error_, _response.rawResponse);
                 case 404:
                     throw new IcePanel.NotFoundError(_response.error.body as unknown, _response.rawResponse);
                 case 422:
@@ -118,19 +124,145 @@ export class ObjectsClient {
             _response.error,
             _response.rawResponse,
             "GET",
-            "/landscapes/{landscapeId}/versions/{versionId}/model/objects",
+            "/landscapes/{landscapeId}/versions/{versionId}/model/dependencies",
         );
+    }
+
+    /**
+     * @param {IcePanel.ModelObjectsListRequest} request
+     * @param {ObjectsClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link IcePanel.BadRequestError}
+     * @throws {@link IcePanel.UnauthorizedError}
+     * @throws {@link IcePanel.ForbiddenError}
+     * @throws {@link IcePanel.NotFoundError}
+     * @throws {@link IcePanel.UnprocessableEntityError}
+     * @throws {@link IcePanel.InternalServerError}
+     *
+     * @example
+     *     await client.model.objects.list({
+     *         landscapeId: "landscapeId",
+     *         versionId: "versionId"
+     *     })
+     */
+    public async list(
+        request: IcePanel.ModelObjectsListRequest,
+        requestOptions?: ObjectsClient.RequestOptions,
+    ): Promise<core.Page<IcePanel.ModelObjectExpanded, IcePanel.model.ObjectsListResponse>> {
+        const list = core.HttpResponsePromise.interceptFunction(
+            async (
+                request: IcePanel.ModelObjectsListRequest,
+            ): Promise<core.WithRawResponse<IcePanel.model.ObjectsListResponse>> => {
+                const { landscapeId, versionId, filter, expand, cursor, limit } = request;
+                const _queryParams: Record<string, unknown> = {
+                    filter,
+                    expand: Array.isArray(expand) ? expand.map((item) => item) : expand != null ? expand : undefined,
+                    cursor,
+                    limit,
+                };
+                const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+                const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+                    _authRequest.headers,
+                    this._options?.headers,
+                    requestOptions?.headers,
+                );
+                const _response = await core.fetcher({
+                    url: core.url.join(
+                        (await core.Supplier.get(this._options.baseUrl)) ??
+                            (await core.Supplier.get(this._options.environment)) ??
+                            environments.IcePanelEnvironment.ApiV1,
+                        `landscapes/${core.url.encodePathParam(landscapeId)}/versions/${core.url.encodePathParam(versionId)}/model/objects`,
+                    ),
+                    method: "GET",
+                    headers: _headers,
+                    queryString: core.url
+                        .queryBuilder()
+                        .addMany(_queryParams)
+                        .mergeAdditional(requestOptions?.queryParams)
+                        .build(),
+                    timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+                    maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+                    withCredentials: true,
+                    abortSignal: requestOptions?.abortSignal,
+                    fetchFn: this._options?.fetch,
+                    logging: this._options.logging,
+                });
+                if (_response.ok) {
+                    return {
+                        data: _response.body as IcePanel.model.ObjectsListResponse,
+                        rawResponse: _response.rawResponse,
+                    };
+                }
+                if (_response.error.reason === "status-code") {
+                    switch (_response.error.statusCode) {
+                        case 400:
+                            throw new IcePanel.BadRequestError(
+                                _response.error.body as IcePanel.Error_,
+                                _response.rawResponse,
+                            );
+                        case 401:
+                            throw new IcePanel.UnauthorizedError(
+                                _response.error.body as unknown,
+                                _response.rawResponse,
+                            );
+                        case 403:
+                            throw new IcePanel.ForbiddenError(
+                                _response.error.body as IcePanel.Error_,
+                                _response.rawResponse,
+                            );
+                        case 404:
+                            throw new IcePanel.NotFoundError(_response.error.body as unknown, _response.rawResponse);
+                        case 422:
+                            throw new IcePanel.UnprocessableEntityError(
+                                _response.error.body as unknown,
+                                _response.rawResponse,
+                            );
+                        case 500:
+                            throw new IcePanel.InternalServerError(
+                                _response.error.body as unknown,
+                                _response.rawResponse,
+                            );
+                        default:
+                            throw new errors.IcePanelError({
+                                statusCode: _response.error.statusCode,
+                                body: _response.error.body,
+                                rawResponse: _response.rawResponse,
+                            });
+                    }
+                }
+                return handleNonStatusCodeError(
+                    _response.error,
+                    _response.rawResponse,
+                    "GET",
+                    "/landscapes/{landscapeId}/versions/{versionId}/model/objects",
+                );
+            },
+        );
+        const dataWithRawResponse = await list(request).withRawResponse();
+        return new core.Page<IcePanel.ModelObjectExpanded, IcePanel.model.ObjectsListResponse>({
+            response: dataWithRawResponse.data,
+            rawResponse: dataWithRawResponse.rawResponse,
+            hasNextPage: (response) =>
+                response?.nextCursor != null &&
+                !(typeof response?.nextCursor === "string" && response?.nextCursor === ""),
+            getItems: (response) => response?.modelObjects ?? [],
+            loadPage: (response) => {
+                return list(core.setObjectProperty(request, "cursor", response?.nextCursor));
+            },
+        });
     }
 
     /**
      * @param {IcePanel.ModelObjectCreateRequest} request
      * @param {ObjectsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link IcePanel.BadRequestError}
      * @throws {@link IcePanel.UnauthorizedError}
      * @throws {@link IcePanel.ForbiddenError}
      * @throws {@link IcePanel.NotFoundError}
      * @throws {@link IcePanel.UnprocessableEntityError}
      * @throws {@link IcePanel.InternalServerError}
+     * @throws {@link IcePanel.ServiceUnavailableError}
      *
      * @example
      *     await client.model.objects.create({
@@ -170,7 +302,7 @@ export class ObjectsClient {
             method: "POST",
             headers: _headers,
             contentType: "application/json",
-            queryParameters: requestOptions?.queryParams,
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
             body: _body,
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
@@ -186,6 +318,8 @@ export class ObjectsClient {
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
+                case 400:
+                    throw new IcePanel.BadRequestError(_response.error.body as IcePanel.Error_, _response.rawResponse);
                 case 401:
                     throw new IcePanel.UnauthorizedError(_response.error.body as unknown, _response.rawResponse);
                 case 403:
@@ -196,6 +330,8 @@ export class ObjectsClient {
                     throw new IcePanel.UnprocessableEntityError(_response.error.body as unknown, _response.rawResponse);
                 case 500:
                     throw new IcePanel.InternalServerError(_response.error.body as unknown, _response.rawResponse);
+                case 503:
+                    throw new IcePanel.ServiceUnavailableError(_response.error.body as unknown, _response.rawResponse);
                 default:
                     throw new errors.IcePanelError({
                         statusCode: _response.error.statusCode,
@@ -217,7 +353,9 @@ export class ObjectsClient {
      * @param {IcePanel.ModelObjectFindRequest} request
      * @param {ObjectsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link IcePanel.BadRequestError}
      * @throws {@link IcePanel.UnauthorizedError}
+     * @throws {@link IcePanel.ForbiddenError}
      * @throws {@link IcePanel.NotFoundError}
      * @throws {@link IcePanel.UnprocessableEntityError}
      * @throws {@link IcePanel.InternalServerError}
@@ -241,15 +379,9 @@ export class ObjectsClient {
         requestOptions?: ObjectsClient.RequestOptions,
     ): Promise<core.WithRawResponse<IcePanel.model.ObjectsGetResponse>> {
         const { landscapeId, versionId, modelObjectId, expand } = request;
-        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
-        if (expand != null) {
-            if (Array.isArray(expand)) {
-                _queryParams.expand = expand.map((item) => item);
-            } else {
-                _queryParams.expand = expand;
-            }
-        }
-
+        const _queryParams: Record<string, unknown> = {
+            expand: Array.isArray(expand) ? expand.map((item) => item) : expand != null ? expand : undefined,
+        };
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
@@ -265,7 +397,11 @@ export class ObjectsClient {
             ),
             method: "GET",
             headers: _headers,
-            queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            queryString: core.url
+                .queryBuilder()
+                .addMany(_queryParams)
+                .mergeAdditional(requestOptions?.queryParams)
+                .build(),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             withCredentials: true,
@@ -279,8 +415,12 @@ export class ObjectsClient {
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
+                case 400:
+                    throw new IcePanel.BadRequestError(_response.error.body as IcePanel.Error_, _response.rawResponse);
                 case 401:
                     throw new IcePanel.UnauthorizedError(_response.error.body as unknown, _response.rawResponse);
+                case 403:
+                    throw new IcePanel.ForbiddenError(_response.error.body as IcePanel.Error_, _response.rawResponse);
                 case 404:
                     throw new IcePanel.NotFoundError(_response.error.body as unknown, _response.rawResponse);
                 case 422:
@@ -308,11 +448,14 @@ export class ObjectsClient {
      * @param {IcePanel.ModelObjectUpsertRequest} request
      * @param {ObjectsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link IcePanel.BadRequestError}
      * @throws {@link IcePanel.UnauthorizedError}
+     * @throws {@link IcePanel.ForbiddenError}
      * @throws {@link IcePanel.NotFoundError}
      * @throws {@link IcePanel.ConflictError}
      * @throws {@link IcePanel.UnprocessableEntityError}
      * @throws {@link IcePanel.InternalServerError}
+     * @throws {@link IcePanel.ServiceUnavailableError}
      *
      * @example
      *     await client.model.objects.upsert({
@@ -353,7 +496,7 @@ export class ObjectsClient {
             method: "PUT",
             headers: _headers,
             contentType: "application/json",
-            queryParameters: requestOptions?.queryParams,
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
             body: _body,
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
@@ -369,8 +512,12 @@ export class ObjectsClient {
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
+                case 400:
+                    throw new IcePanel.BadRequestError(_response.error.body as IcePanel.Error_, _response.rawResponse);
                 case 401:
                     throw new IcePanel.UnauthorizedError(_response.error.body as unknown, _response.rawResponse);
+                case 403:
+                    throw new IcePanel.ForbiddenError(_response.error.body as IcePanel.Error_, _response.rawResponse);
                 case 404:
                     throw new IcePanel.NotFoundError(_response.error.body as unknown, _response.rawResponse);
                 case 409:
@@ -379,6 +526,8 @@ export class ObjectsClient {
                     throw new IcePanel.UnprocessableEntityError(_response.error.body as unknown, _response.rawResponse);
                 case 500:
                     throw new IcePanel.InternalServerError(_response.error.body as unknown, _response.rawResponse);
+                case 503:
+                    throw new IcePanel.ServiceUnavailableError(_response.error.body as unknown, _response.rawResponse);
                 default:
                     throw new errors.IcePanelError({
                         statusCode: _response.error.statusCode,
@@ -400,10 +549,13 @@ export class ObjectsClient {
      * @param {IcePanel.ModelObjectDeleteRequest} request
      * @param {ObjectsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link IcePanel.BadRequestError}
      * @throws {@link IcePanel.UnauthorizedError}
+     * @throws {@link IcePanel.ForbiddenError}
      * @throws {@link IcePanel.NotFoundError}
      * @throws {@link IcePanel.UnprocessableEntityError}
      * @throws {@link IcePanel.InternalServerError}
+     * @throws {@link IcePanel.ServiceUnavailableError}
      *
      * @example
      *     await client.model.objects.delete({
@@ -439,7 +591,7 @@ export class ObjectsClient {
             ),
             method: "DELETE",
             headers: _headers,
-            queryParameters: requestOptions?.queryParams,
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             withCredentials: true,
@@ -453,14 +605,20 @@ export class ObjectsClient {
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
+                case 400:
+                    throw new IcePanel.BadRequestError(_response.error.body as IcePanel.Error_, _response.rawResponse);
                 case 401:
                     throw new IcePanel.UnauthorizedError(_response.error.body as unknown, _response.rawResponse);
+                case 403:
+                    throw new IcePanel.ForbiddenError(_response.error.body as IcePanel.Error_, _response.rawResponse);
                 case 404:
                     throw new IcePanel.NotFoundError(_response.error.body as unknown, _response.rawResponse);
                 case 422:
                     throw new IcePanel.UnprocessableEntityError(_response.error.body as unknown, _response.rawResponse);
                 case 500:
                     throw new IcePanel.InternalServerError(_response.error.body as unknown, _response.rawResponse);
+                case 503:
+                    throw new IcePanel.ServiceUnavailableError(_response.error.body as unknown, _response.rawResponse);
                 default:
                     throw new errors.IcePanelError({
                         statusCode: _response.error.statusCode,
@@ -482,12 +640,14 @@ export class ObjectsClient {
      * @param {IcePanel.ModelObjectUpdateRequest} request
      * @param {ObjectsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link IcePanel.BadRequestError}
      * @throws {@link IcePanel.UnauthorizedError}
      * @throws {@link IcePanel.ForbiddenError}
      * @throws {@link IcePanel.NotFoundError}
      * @throws {@link IcePanel.ConflictError}
      * @throws {@link IcePanel.UnprocessableEntityError}
      * @throws {@link IcePanel.InternalServerError}
+     * @throws {@link IcePanel.ServiceUnavailableError}
      *
      * @example
      *     await client.model.objects.update({
@@ -525,7 +685,7 @@ export class ObjectsClient {
             method: "PATCH",
             headers: _headers,
             contentType: "application/json",
-            queryParameters: requestOptions?.queryParams,
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
             body: _body,
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
@@ -541,6 +701,8 @@ export class ObjectsClient {
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
+                case 400:
+                    throw new IcePanel.BadRequestError(_response.error.body as IcePanel.Error_, _response.rawResponse);
                 case 401:
                     throw new IcePanel.UnauthorizedError(_response.error.body as unknown, _response.rawResponse);
                 case 403:
@@ -553,6 +715,8 @@ export class ObjectsClient {
                     throw new IcePanel.UnprocessableEntityError(_response.error.body as unknown, _response.rawResponse);
                 case 500:
                     throw new IcePanel.InternalServerError(_response.error.body as unknown, _response.rawResponse);
+                case 503:
+                    throw new IcePanel.ServiceUnavailableError(_response.error.body as unknown, _response.rawResponse);
                 default:
                     throw new errors.IcePanelError({
                         statusCode: _response.error.statusCode,

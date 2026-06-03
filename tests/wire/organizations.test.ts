@@ -18,6 +18,7 @@ describe("OrganizationsClient", () => {
             organizations: [
                 {
                     aiFeaturesEnabled: true,
+                    aiModel: "gpt-5",
                     billingCurrency: "usd",
                     billingCycle: "monthly",
                     billingEmail: "billingEmail",
@@ -25,10 +26,12 @@ describe("OrganizationsClient", () => {
                     language: "en-US",
                     lineShapeDefault: "curved",
                     name: "name",
+                    oauthLandscapeWriteEnabled: true,
                     shareLinkAuthDomains: ["shareLinkAuthDomains"],
                     shareLinksEnabled: true,
                     autoInviteDomains: ["autoInviteDomains"],
                     billingCollectionMethod: "charge",
+                    billingMonthlyCost: 1.1,
                     billingPaymentMethod: true,
                     cancelAt: "2024-01-15T09:30:00Z",
                     canceledAt: "2024-01-15T09:30:00Z",
@@ -49,50 +52,11 @@ describe("OrganizationsClient", () => {
                 },
             ],
         };
+
         server.mockEndpoint().get("/organizations").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.organizations.list();
-        expect(response).toEqual({
-            organizations: [
-                {
-                    aiFeaturesEnabled: true,
-                    billingCurrency: "usd",
-                    billingCycle: "monthly",
-                    billingEmail: "billingEmail",
-                    experiments: {
-                        key: true,
-                    },
-                    language: "en-US",
-                    lineShapeDefault: "curved",
-                    name: "name",
-                    shareLinkAuthDomains: ["shareLinkAuthDomains"],
-                    shareLinksEnabled: true,
-                    autoInviteDomains: ["autoInviteDomains"],
-                    billingCollectionMethod: "charge",
-                    billingPaymentMethod: true,
-                    cancelAt: "2024-01-15T09:30:00Z",
-                    canceledAt: "2024-01-15T09:30:00Z",
-                    createdAt: "2024-01-15T09:30:00Z",
-                    createdBy: "user",
-                    createdById: "createdById",
-                    id: "id",
-                    plan: "free",
-                    planEndsAt: "2024-01-15T09:30:00Z",
-                    seats: 1.1,
-                    status: "active",
-                    trialEndsAt: "2024-01-15T09:30:00Z",
-                    updatedAt: "2024-01-15T09:30:00Z",
-                    updatedBy: "user",
-                    updatedById: "updatedById",
-                    userIds: ["userIds"],
-                    users: {
-                        key: {
-                            permission: "billing",
-                        },
-                    },
-                },
-            ],
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("list (2)", async () => {
@@ -104,12 +68,13 @@ describe("OrganizationsClient", () => {
             environment: server.baseUrl,
         });
 
-        const rawResponseBody = { key: "value" };
-        server.mockEndpoint().get("/organizations").respondWith().statusCode(401).jsonBody(rawResponseBody).build();
+        const rawResponseBody = { message: "message" };
+
+        server.mockEndpoint().get("/organizations").respondWith().statusCode(400).jsonBody(rawResponseBody).build();
 
         await expect(async () => {
             return await client.organizations.list();
-        }).rejects.toThrow(IcePanel.UnauthorizedError);
+        }).rejects.toThrow(IcePanel.BadRequestError);
     });
 
     test("list (3)", async () => {
@@ -122,11 +87,12 @@ describe("OrganizationsClient", () => {
         });
 
         const rawResponseBody = { key: "value" };
-        server.mockEndpoint().get("/organizations").respondWith().statusCode(404).jsonBody(rawResponseBody).build();
+
+        server.mockEndpoint().get("/organizations").respondWith().statusCode(401).jsonBody(rawResponseBody).build();
 
         await expect(async () => {
             return await client.organizations.list();
-        }).rejects.toThrow(IcePanel.NotFoundError);
+        }).rejects.toThrow(IcePanel.UnauthorizedError);
     });
 
     test("list (4)", async () => {
@@ -138,12 +104,13 @@ describe("OrganizationsClient", () => {
             environment: server.baseUrl,
         });
 
-        const rawResponseBody = { key: "value" };
-        server.mockEndpoint().get("/organizations").respondWith().statusCode(422).jsonBody(rawResponseBody).build();
+        const rawResponseBody = { message: "message" };
+
+        server.mockEndpoint().get("/organizations").respondWith().statusCode(403).jsonBody(rawResponseBody).build();
 
         await expect(async () => {
             return await client.organizations.list();
-        }).rejects.toThrow(IcePanel.UnprocessableEntityError);
+        }).rejects.toThrow(IcePanel.ForbiddenError);
     });
 
     test("list (5)", async () => {
@@ -156,6 +123,43 @@ describe("OrganizationsClient", () => {
         });
 
         const rawResponseBody = { key: "value" };
+
+        server.mockEndpoint().get("/organizations").respondWith().statusCode(404).jsonBody(rawResponseBody).build();
+
+        await expect(async () => {
+            return await client.organizations.list();
+        }).rejects.toThrow(IcePanel.NotFoundError);
+    });
+
+    test("list (6)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+
+        const rawResponseBody = { key: "value" };
+
+        server.mockEndpoint().get("/organizations").respondWith().statusCode(422).jsonBody(rawResponseBody).build();
+
+        await expect(async () => {
+            return await client.organizations.list();
+        }).rejects.toThrow(IcePanel.UnprocessableEntityError);
+    });
+
+    test("list (7)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+
+        const rawResponseBody = { key: "value" };
+
         server.mockEndpoint().get("/organizations").respondWith().statusCode(500).jsonBody(rawResponseBody).build();
 
         await expect(async () => {
@@ -181,6 +185,7 @@ describe("OrganizationsClient", () => {
                     generateObjectSummary: true,
                 },
                 aiFeaturesEnabled: true,
+                aiModel: "gpt-5",
                 billingCurrency: "usd",
                 billingCycle: "monthly",
                 billingEmail: "billingEmail",
@@ -188,10 +193,12 @@ describe("OrganizationsClient", () => {
                 language: "en-US",
                 lineShapeDefault: "curved",
                 name: "name",
+                oauthLandscapeWriteEnabled: true,
                 shareLinkAuthDomains: ["shareLinkAuthDomains"],
                 shareLinksEnabled: true,
                 autoInviteDomains: ["autoInviteDomains"],
                 billingCollectionMethod: "charge",
+                billingMonthlyCost: 1.1,
                 billingPaymentMethod: true,
                 cancelAt: "2024-01-15T09:30:00Z",
                 canceledAt: "2024-01-15T09:30:00Z",
@@ -211,6 +218,7 @@ describe("OrganizationsClient", () => {
                 users: { key: { permission: "billing" } },
             },
         };
+
         server
             .mockEndpoint()
             .post("/organizations")
@@ -223,51 +231,7 @@ describe("OrganizationsClient", () => {
         const response = await client.organizations.create({
             name: "name",
         });
-        expect(response).toEqual({
-            organization: {
-                aiFeatures: {
-                    generateDetailedDescriptions: true,
-                    generateDisplayDescriptions: true,
-                    generateDraftSummary: true,
-                    generateObjectSummary: true,
-                },
-                aiFeaturesEnabled: true,
-                billingCurrency: "usd",
-                billingCycle: "monthly",
-                billingEmail: "billingEmail",
-                experiments: {
-                    key: true,
-                },
-                language: "en-US",
-                lineShapeDefault: "curved",
-                name: "name",
-                shareLinkAuthDomains: ["shareLinkAuthDomains"],
-                shareLinksEnabled: true,
-                autoInviteDomains: ["autoInviteDomains"],
-                billingCollectionMethod: "charge",
-                billingPaymentMethod: true,
-                cancelAt: "2024-01-15T09:30:00Z",
-                canceledAt: "2024-01-15T09:30:00Z",
-                createdAt: "2024-01-15T09:30:00Z",
-                createdBy: "user",
-                createdById: "createdById",
-                id: "id",
-                plan: "free",
-                planEndsAt: "2024-01-15T09:30:00Z",
-                seats: 1.1,
-                status: "active",
-                trialEndsAt: "2024-01-15T09:30:00Z",
-                updatedAt: "2024-01-15T09:30:00Z",
-                updatedBy: "user",
-                updatedById: "updatedById",
-                userIds: ["userIds"],
-                users: {
-                    key: {
-                        permission: "billing",
-                    },
-                },
-            },
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("create (2)", async () => {
@@ -279,7 +243,35 @@ describe("OrganizationsClient", () => {
             environment: server.baseUrl,
         });
         const rawRequestBody = { name: "name" };
+        const rawResponseBody = { message: "message" };
+
+        server
+            .mockEndpoint()
+            .post("/organizations")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(400)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.organizations.create({
+                name: "name",
+            });
+        }).rejects.toThrow(IcePanel.BadRequestError);
+    });
+
+    test("create (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+        const rawRequestBody = { name: "name" };
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .post("/organizations")
@@ -296,7 +288,7 @@ describe("OrganizationsClient", () => {
         }).rejects.toThrow(IcePanel.UnauthorizedError);
     });
 
-    test("create (3)", async () => {
+    test("create (4)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -306,6 +298,7 @@ describe("OrganizationsClient", () => {
         });
         const rawRequestBody = { name: "name" };
         const rawResponseBody = { message: "message" };
+
         server
             .mockEndpoint()
             .post("/organizations")
@@ -322,7 +315,7 @@ describe("OrganizationsClient", () => {
         }).rejects.toThrow(IcePanel.ForbiddenError);
     });
 
-    test("create (4)", async () => {
+    test("create (5)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -332,6 +325,7 @@ describe("OrganizationsClient", () => {
         });
         const rawRequestBody = { name: "name" };
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .post("/organizations")
@@ -348,7 +342,7 @@ describe("OrganizationsClient", () => {
         }).rejects.toThrow(IcePanel.NotFoundError);
     });
 
-    test("create (5)", async () => {
+    test("create (6)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -358,6 +352,7 @@ describe("OrganizationsClient", () => {
         });
         const rawRequestBody = { name: "name" };
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .post("/organizations")
@@ -374,7 +369,7 @@ describe("OrganizationsClient", () => {
         }).rejects.toThrow(IcePanel.UnprocessableEntityError);
     });
 
-    test("create (6)", async () => {
+    test("create (7)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -384,6 +379,7 @@ describe("OrganizationsClient", () => {
         });
         const rawRequestBody = { name: "name" };
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .post("/organizations")
@@ -398,6 +394,33 @@ describe("OrganizationsClient", () => {
                 name: "name",
             });
         }).rejects.toThrow(IcePanel.InternalServerError);
+    });
+
+    test("create (8)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+        const rawRequestBody = { name: "name" };
+        const rawResponseBody = { key: "value" };
+
+        server
+            .mockEndpoint()
+            .post("/organizations")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(503)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.organizations.create({
+                name: "name",
+            });
+        }).rejects.toThrow(IcePanel.ServiceUnavailableError);
     });
 
     test("get (1)", async () => {
@@ -418,6 +441,7 @@ describe("OrganizationsClient", () => {
                     generateObjectSummary: true,
                 },
                 aiFeaturesEnabled: true,
+                aiModel: "gpt-5",
                 billingCurrency: "usd",
                 billingCycle: "monthly",
                 billingEmail: "billingEmail",
@@ -425,10 +449,12 @@ describe("OrganizationsClient", () => {
                 language: "en-US",
                 lineShapeDefault: "curved",
                 name: "name",
+                oauthLandscapeWriteEnabled: true,
                 shareLinkAuthDomains: ["shareLinkAuthDomains"],
                 shareLinksEnabled: true,
                 autoInviteDomains: ["autoInviteDomains"],
                 billingCollectionMethod: "charge",
+                billingMonthlyCost: 1.1,
                 billingPaymentMethod: true,
                 cancelAt: "2024-01-15T09:30:00Z",
                 canceledAt: "2024-01-15T09:30:00Z",
@@ -448,6 +474,7 @@ describe("OrganizationsClient", () => {
                 users: { key: { permission: "billing" } },
             },
         };
+
         server
             .mockEndpoint()
             .get("/organizations/organizationId")
@@ -459,51 +486,7 @@ describe("OrganizationsClient", () => {
         const response = await client.organizations.get({
             organizationId: "organizationId",
         });
-        expect(response).toEqual({
-            organization: {
-                aiFeatures: {
-                    generateDetailedDescriptions: true,
-                    generateDisplayDescriptions: true,
-                    generateDraftSummary: true,
-                    generateObjectSummary: true,
-                },
-                aiFeaturesEnabled: true,
-                billingCurrency: "usd",
-                billingCycle: "monthly",
-                billingEmail: "billingEmail",
-                experiments: {
-                    key: true,
-                },
-                language: "en-US",
-                lineShapeDefault: "curved",
-                name: "name",
-                shareLinkAuthDomains: ["shareLinkAuthDomains"],
-                shareLinksEnabled: true,
-                autoInviteDomains: ["autoInviteDomains"],
-                billingCollectionMethod: "charge",
-                billingPaymentMethod: true,
-                cancelAt: "2024-01-15T09:30:00Z",
-                canceledAt: "2024-01-15T09:30:00Z",
-                createdAt: "2024-01-15T09:30:00Z",
-                createdBy: "user",
-                createdById: "createdById",
-                id: "id",
-                plan: "free",
-                planEndsAt: "2024-01-15T09:30:00Z",
-                seats: 1.1,
-                status: "active",
-                trialEndsAt: "2024-01-15T09:30:00Z",
-                updatedAt: "2024-01-15T09:30:00Z",
-                updatedBy: "user",
-                updatedById: "updatedById",
-                userIds: ["userIds"],
-                users: {
-                    key: {
-                        permission: "billing",
-                    },
-                },
-            },
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("get (2)", async () => {
@@ -515,7 +498,34 @@ describe("OrganizationsClient", () => {
             environment: server.baseUrl,
         });
 
+        const rawResponseBody = { message: "message" };
+
+        server
+            .mockEndpoint()
+            .get("/organizations/organizationId")
+            .respondWith()
+            .statusCode(400)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.organizations.get({
+                organizationId: "organizationId",
+            });
+        }).rejects.toThrow(IcePanel.BadRequestError);
+    });
+
+    test("get (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .get("/organizations/organizationId")
@@ -531,7 +541,33 @@ describe("OrganizationsClient", () => {
         }).rejects.toThrow(IcePanel.UnauthorizedError);
     });
 
-    test("get (3)", async () => {
+    test("get (4)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+
+        const rawResponseBody = { message: "message" };
+
+        server
+            .mockEndpoint()
+            .get("/organizations/organizationId")
+            .respondWith()
+            .statusCode(403)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.organizations.get({
+                organizationId: "organizationId",
+            });
+        }).rejects.toThrow(IcePanel.ForbiddenError);
+    });
+
+    test("get (5)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -541,6 +577,7 @@ describe("OrganizationsClient", () => {
         });
 
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .get("/organizations/organizationId")
@@ -556,7 +593,7 @@ describe("OrganizationsClient", () => {
         }).rejects.toThrow(IcePanel.NotFoundError);
     });
 
-    test("get (4)", async () => {
+    test("get (6)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -566,6 +603,7 @@ describe("OrganizationsClient", () => {
         });
 
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .get("/organizations/organizationId")
@@ -591,6 +629,7 @@ describe("OrganizationsClient", () => {
         });
 
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .delete("/organizations/organizationId")
@@ -602,9 +641,7 @@ describe("OrganizationsClient", () => {
         const response = await client.organizations.delete({
             organizationId: "organizationId",
         });
-        expect(response).toEqual({
-            key: "value",
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("delete (2)", async () => {
@@ -616,7 +653,34 @@ describe("OrganizationsClient", () => {
             environment: server.baseUrl,
         });
 
+        const rawResponseBody = { message: "message" };
+
+        server
+            .mockEndpoint()
+            .delete("/organizations/organizationId")
+            .respondWith()
+            .statusCode(400)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.organizations.delete({
+                organizationId: "organizationId",
+            });
+        }).rejects.toThrow(IcePanel.BadRequestError);
+    });
+
+    test("delete (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .delete("/organizations/organizationId")
@@ -632,7 +696,33 @@ describe("OrganizationsClient", () => {
         }).rejects.toThrow(IcePanel.UnauthorizedError);
     });
 
-    test("delete (3)", async () => {
+    test("delete (4)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+
+        const rawResponseBody = { message: "message" };
+
+        server
+            .mockEndpoint()
+            .delete("/organizations/organizationId")
+            .respondWith()
+            .statusCode(403)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.organizations.delete({
+                organizationId: "organizationId",
+            });
+        }).rejects.toThrow(IcePanel.ForbiddenError);
+    });
+
+    test("delete (5)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -642,6 +732,7 @@ describe("OrganizationsClient", () => {
         });
 
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .delete("/organizations/organizationId")
@@ -657,7 +748,7 @@ describe("OrganizationsClient", () => {
         }).rejects.toThrow(IcePanel.NotFoundError);
     });
 
-    test("delete (4)", async () => {
+    test("delete (6)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -667,6 +758,7 @@ describe("OrganizationsClient", () => {
         });
 
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .delete("/organizations/organizationId")
@@ -682,7 +774,7 @@ describe("OrganizationsClient", () => {
         }).rejects.toThrow(IcePanel.UnprocessableEntityError);
     });
 
-    test("delete (5)", async () => {
+    test("delete (7)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -692,6 +784,7 @@ describe("OrganizationsClient", () => {
         });
 
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .delete("/organizations/organizationId")
@@ -705,6 +798,32 @@ describe("OrganizationsClient", () => {
                 organizationId: "organizationId",
             });
         }).rejects.toThrow(IcePanel.InternalServerError);
+    });
+
+    test("delete (8)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+
+        const rawResponseBody = { key: "value" };
+
+        server
+            .mockEndpoint()
+            .delete("/organizations/organizationId")
+            .respondWith()
+            .statusCode(503)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.organizations.delete({
+                organizationId: "organizationId",
+            });
+        }).rejects.toThrow(IcePanel.ServiceUnavailableError);
     });
 
     test("update (1)", async () => {
@@ -725,6 +844,7 @@ describe("OrganizationsClient", () => {
                     generateObjectSummary: true,
                 },
                 aiFeaturesEnabled: true,
+                aiModel: "gpt-5",
                 billingCurrency: "usd",
                 billingCycle: "monthly",
                 billingEmail: "billingEmail",
@@ -732,10 +852,12 @@ describe("OrganizationsClient", () => {
                 language: "en-US",
                 lineShapeDefault: "curved",
                 name: "name",
+                oauthLandscapeWriteEnabled: true,
                 shareLinkAuthDomains: ["shareLinkAuthDomains"],
                 shareLinksEnabled: true,
                 autoInviteDomains: ["autoInviteDomains"],
                 billingCollectionMethod: "charge",
+                billingMonthlyCost: 1.1,
                 billingPaymentMethod: true,
                 cancelAt: "2024-01-15T09:30:00Z",
                 canceledAt: "2024-01-15T09:30:00Z",
@@ -755,6 +877,7 @@ describe("OrganizationsClient", () => {
                 users: { key: { permission: "billing" } },
             },
         };
+
         server
             .mockEndpoint()
             .patch("/organizations/organizationId")
@@ -768,51 +891,7 @@ describe("OrganizationsClient", () => {
             organizationId: "organizationId",
             body: {},
         });
-        expect(response).toEqual({
-            organization: {
-                aiFeatures: {
-                    generateDetailedDescriptions: true,
-                    generateDisplayDescriptions: true,
-                    generateDraftSummary: true,
-                    generateObjectSummary: true,
-                },
-                aiFeaturesEnabled: true,
-                billingCurrency: "usd",
-                billingCycle: "monthly",
-                billingEmail: "billingEmail",
-                experiments: {
-                    key: true,
-                },
-                language: "en-US",
-                lineShapeDefault: "curved",
-                name: "name",
-                shareLinkAuthDomains: ["shareLinkAuthDomains"],
-                shareLinksEnabled: true,
-                autoInviteDomains: ["autoInviteDomains"],
-                billingCollectionMethod: "charge",
-                billingPaymentMethod: true,
-                cancelAt: "2024-01-15T09:30:00Z",
-                canceledAt: "2024-01-15T09:30:00Z",
-                createdAt: "2024-01-15T09:30:00Z",
-                createdBy: "user",
-                createdById: "createdById",
-                id: "id",
-                plan: "free",
-                planEndsAt: "2024-01-15T09:30:00Z",
-                seats: 1.1,
-                status: "active",
-                trialEndsAt: "2024-01-15T09:30:00Z",
-                updatedAt: "2024-01-15T09:30:00Z",
-                updatedBy: "user",
-                updatedById: "updatedById",
-                userIds: ["userIds"],
-                users: {
-                    key: {
-                        permission: "billing",
-                    },
-                },
-            },
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("update (2)", async () => {
@@ -825,6 +904,7 @@ describe("OrganizationsClient", () => {
         });
         const rawRequestBody = {};
         const rawResponseBody = { message: "message" };
+
         server
             .mockEndpoint()
             .patch("/organizations/organizationId")
@@ -852,6 +932,7 @@ describe("OrganizationsClient", () => {
         });
         const rawRequestBody = {};
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .patch("/organizations/organizationId")
@@ -879,6 +960,7 @@ describe("OrganizationsClient", () => {
         });
         const rawRequestBody = {};
         const rawResponseBody = { message: "message" };
+
         server
             .mockEndpoint()
             .patch("/organizations/organizationId")
@@ -906,6 +988,7 @@ describe("OrganizationsClient", () => {
         });
         const rawRequestBody = {};
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .patch("/organizations/organizationId")
@@ -933,6 +1016,7 @@ describe("OrganizationsClient", () => {
         });
         const rawRequestBody = {};
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .patch("/organizations/organizationId")
@@ -960,6 +1044,7 @@ describe("OrganizationsClient", () => {
         });
         const rawRequestBody = {};
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .patch("/organizations/organizationId")
@@ -975,5 +1060,33 @@ describe("OrganizationsClient", () => {
                 body: {},
             });
         }).rejects.toThrow(IcePanel.InternalServerError);
+    });
+
+    test("update (8)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+        const rawRequestBody = {};
+        const rawResponseBody = { key: "value" };
+
+        server
+            .mockEndpoint()
+            .patch("/organizations/organizationId")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(503)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.organizations.update({
+                organizationId: "organizationId",
+                body: {},
+            });
+        }).rejects.toThrow(IcePanel.ServiceUnavailableError);
     });
 });

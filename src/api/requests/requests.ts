@@ -954,6 +954,9 @@ export interface TeamModelObjectsListRequest {
  */
 export interface VersionsListRequest {
     landscapeId: string;
+    filter?: IcePanel.VersionFilter;
+    cursor?: string;
+    limit?: number;
 }
 
 /**
@@ -1006,7 +1009,7 @@ export interface VersionDeleteRequest {
 export interface VersionUpdateRequest {
     landscapeId: string;
     versionId: string;
-    body: IcePanel.VersionPartial;
+    body: IcePanel.VersionUpdate;
 }
 
 /**
@@ -1421,6 +1424,72 @@ export interface LandscapeExportFindRequest {
 /**
  * @example
  *     {
+ *         landscapeId: "landscapeId",
+ *         versionId: "versionId",
+ *         body: {
+ *             modelConnections: [{
+ *                     direction: "outgoing",
+ *                     id: "connection-1",
+ *                     name: "Connection",
+ *                     originId: "object-2",
+ *                     targetId: "object-3"
+ *                 }],
+ *             modelObjects: [{
+ *                     id: "object-1",
+ *                     name: "Domain",
+ *                     type: "domain"
+ *                 }, {
+ *                     groupIds: ["object-3"],
+ *                     id: "object-2",
+ *                     name: "System",
+ *                     parentId: "object-1",
+ *                     type: "system"
+ *                 }, {
+ *                     id: "object-3",
+ *                     name: "Group",
+ *                     parentId: "object-1",
+ *                     tagIds: ["tag-1"],
+ *                     type: "group"
+ *                 }],
+ *             tagGroups: [{
+ *                     icon: "bug",
+ *                     id: "tag-group-1",
+ *                     name: "Tag Group"
+ *                 }],
+ *             tags: [{
+ *                     color: "beaver",
+ *                     groupId: "tag-group-1",
+ *                     id: "tag-1",
+ *                     name: "Tag"
+ *                 }]
+ *         }
+ *     }
+ */
+export interface LandscapeImportRequest {
+    landscapeId: string;
+    versionId: string;
+    /** When enabled, entities that are missing from the import will be deleted. */
+    prune?: boolean;
+    body: IcePanel.LandscapeImportData;
+}
+
+/**
+ * @example
+ *     {
+ *         landscapeId: "landscapeId",
+ *         versionId: "versionId",
+ *         landscapeImportId: "landscapeImportId"
+ *     }
+ */
+export interface LandscapeImportGetRequest {
+    landscapeId: string;
+    versionId: string;
+    landscapeImportId: string;
+}
+
+/**
+ * @example
+ *     {
  *         landscapeId: "landscapeId"
  *     }
  */
@@ -1454,6 +1523,8 @@ export interface ModelConnectionsListRequest {
     versionId: string;
     filter?: IcePanel.ModelConnectionFilter;
     expand?: IcePanel.ModelConnectionExpandKey | IcePanel.ModelConnectionExpandKey[];
+    cursor?: string;
+    limit?: number;
 }
 
 /**
@@ -1564,6 +1635,21 @@ export interface ModelConnectionGenerateDescriptionRequest {
  * @example
  *     {
  *         landscapeId: "landscapeId",
+ *         versionId: "versionId",
+ *         filter: {}
+ *     }
+ */
+export interface ModelObjectDependenciesListRequest {
+    landscapeId: string;
+    versionId: string;
+    /** Object selection and dependency filters. */
+    filter: IcePanel.ModelDependenciesFilter;
+}
+
+/**
+ * @example
+ *     {
+ *         landscapeId: "landscapeId",
  *         versionId: "versionId"
  *     }
  */
@@ -1572,6 +1658,8 @@ export interface ModelObjectsListRequest {
     versionId: string;
     filter?: IcePanel.ModelObjectFilter;
     expand?: IcePanel.ModelObjectExpandKey | IcePanel.ModelObjectExpandKey[];
+    cursor?: string;
+    limit?: number;
 }
 
 /**

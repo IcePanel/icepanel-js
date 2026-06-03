@@ -40,6 +40,7 @@ describe("CommentsClient", () => {
                 },
             ],
         };
+
         server
             .mockEndpoint()
             .get("/landscapes/landscapeId/versions/versionId/comments")
@@ -52,41 +53,7 @@ describe("CommentsClient", () => {
             landscapeId: "landscapeId",
             versionId: "versionId",
         });
-        expect(response).toEqual({
-            comments: [
-                {
-                    body: {
-                        content: "content",
-                        status: "open",
-                        type: "question",
-                    },
-                    commit: 1.1,
-                    mentionedUserIds: ["mentionedUserIds"],
-                    handleId: "handleId",
-                    createdAt: "2024-01-15T09:30:00Z",
-                    createdBy: "user",
-                    createdById: "createdById",
-                    deletedAt: "2024-01-15T09:30:00Z",
-                    deletedBy: "user",
-                    deletedById: "deletedById",
-                    diagrams: {
-                        key: {
-                            commentId: "commentId",
-                            id: "id",
-                        },
-                    },
-                    id: "id",
-                    landscapeId: "landscapeId",
-                    latestEntityId: "latestEntityId",
-                    replyCount: 1.1,
-                    updatedAt: "2024-01-15T09:30:00Z",
-                    updatedBy: "user",
-                    updatedById: "updatedById",
-                    version: 1.1,
-                    versionId: "versionId",
-                },
-            ],
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("list (2)", async () => {
@@ -98,7 +65,35 @@ describe("CommentsClient", () => {
             environment: server.baseUrl,
         });
 
+        const rawResponseBody = { message: "message" };
+
+        server
+            .mockEndpoint()
+            .get("/landscapes/landscapeId/versions/versionId/comments")
+            .respondWith()
+            .statusCode(400)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.comments.list({
+                landscapeId: "landscapeId",
+                versionId: "versionId",
+            });
+        }).rejects.toThrow(IcePanel.BadRequestError);
+    });
+
+    test("list (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .get("/landscapes/landscapeId/versions/versionId/comments")
@@ -115,7 +110,34 @@ describe("CommentsClient", () => {
         }).rejects.toThrow(IcePanel.UnauthorizedError);
     });
 
-    test("list (3)", async () => {
+    test("list (4)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+
+        const rawResponseBody = { message: "message" };
+
+        server
+            .mockEndpoint()
+            .get("/landscapes/landscapeId/versions/versionId/comments")
+            .respondWith()
+            .statusCode(403)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.comments.list({
+                landscapeId: "landscapeId",
+                versionId: "versionId",
+            });
+        }).rejects.toThrow(IcePanel.ForbiddenError);
+    });
+
+    test("list (5)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -125,6 +147,7 @@ describe("CommentsClient", () => {
         });
 
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .get("/landscapes/landscapeId/versions/versionId/comments")
@@ -141,7 +164,7 @@ describe("CommentsClient", () => {
         }).rejects.toThrow(IcePanel.NotFoundError);
     });
 
-    test("list (4)", async () => {
+    test("list (6)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -151,6 +174,7 @@ describe("CommentsClient", () => {
         });
 
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .get("/landscapes/landscapeId/versions/versionId/comments")
@@ -167,7 +191,7 @@ describe("CommentsClient", () => {
         }).rejects.toThrow(IcePanel.UnprocessableEntityError);
     });
 
-    test("list (5)", async () => {
+    test("list (7)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -177,6 +201,7 @@ describe("CommentsClient", () => {
         });
 
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .get("/landscapes/landscapeId/versions/versionId/comments")
@@ -226,6 +251,7 @@ describe("CommentsClient", () => {
                 versionId: "versionId",
             },
         };
+
         server
             .mockEndpoint()
             .post("/landscapes/landscapeId/versions/versionId/comments")
@@ -246,40 +272,7 @@ describe("CommentsClient", () => {
                 },
             },
         });
-        expect(response).toEqual({
-            comment: {
-                body: {
-                    content: "content",
-                    showContentPreview: true,
-                    status: "open",
-                    type: "question",
-                },
-                commit: 1.1,
-                mentionedUserIds: ["mentionedUserIds"],
-                handleId: "handleId",
-                createdAt: "2024-01-15T09:30:00Z",
-                createdBy: "user",
-                createdById: "createdById",
-                deletedAt: "2024-01-15T09:30:00Z",
-                deletedBy: "user",
-                deletedById: "deletedById",
-                diagrams: {
-                    key: {
-                        commentId: "commentId",
-                        id: "id",
-                    },
-                },
-                id: "id",
-                landscapeId: "landscapeId",
-                latestEntityId: "latestEntityId",
-                replyCount: 1.1,
-                updatedAt: "2024-01-15T09:30:00Z",
-                updatedBy: "user",
-                updatedById: "updatedById",
-                version: 1.1,
-                versionId: "versionId",
-            },
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("create (2)", async () => {
@@ -291,7 +284,43 @@ describe("CommentsClient", () => {
             environment: server.baseUrl,
         });
         const rawRequestBody = { body: { content: "content", status: "open", type: "question" } };
+        const rawResponseBody = { message: "message" };
+
+        server
+            .mockEndpoint()
+            .post("/landscapes/landscapeId/versions/versionId/comments")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(400)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.comments.create({
+                landscapeId: "landscapeId",
+                versionId: "versionId",
+                body: {
+                    body: {
+                        content: "content",
+                        status: "open",
+                        type: "question",
+                    },
+                },
+            });
+        }).rejects.toThrow(IcePanel.BadRequestError);
+    });
+
+    test("create (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+        const rawRequestBody = { body: { content: "content", status: "open", type: "question" } };
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .post("/landscapes/landscapeId/versions/versionId/comments")
@@ -316,7 +345,42 @@ describe("CommentsClient", () => {
         }).rejects.toThrow(IcePanel.UnauthorizedError);
     });
 
-    test("create (3)", async () => {
+    test("create (4)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+        const rawRequestBody = { body: { content: "content", status: "open", type: "question" } };
+        const rawResponseBody = { message: "message" };
+
+        server
+            .mockEndpoint()
+            .post("/landscapes/landscapeId/versions/versionId/comments")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(403)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.comments.create({
+                landscapeId: "landscapeId",
+                versionId: "versionId",
+                body: {
+                    body: {
+                        content: "content",
+                        status: "open",
+                        type: "question",
+                    },
+                },
+            });
+        }).rejects.toThrow(IcePanel.ForbiddenError);
+    });
+
+    test("create (5)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -326,6 +390,7 @@ describe("CommentsClient", () => {
         });
         const rawRequestBody = { body: { content: "content", status: "open", type: "question" } };
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .post("/landscapes/landscapeId/versions/versionId/comments")
@@ -350,7 +415,7 @@ describe("CommentsClient", () => {
         }).rejects.toThrow(IcePanel.NotFoundError);
     });
 
-    test("create (4)", async () => {
+    test("create (6)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -360,6 +425,7 @@ describe("CommentsClient", () => {
         });
         const rawRequestBody = { body: { content: "content", status: "open", type: "question" } };
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .post("/landscapes/landscapeId/versions/versionId/comments")
@@ -384,7 +450,7 @@ describe("CommentsClient", () => {
         }).rejects.toThrow(IcePanel.UnprocessableEntityError);
     });
 
-    test("create (5)", async () => {
+    test("create (7)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -394,6 +460,7 @@ describe("CommentsClient", () => {
         });
         const rawRequestBody = { body: { content: "content", status: "open", type: "question" } };
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .post("/landscapes/landscapeId/versions/versionId/comments")
@@ -416,6 +483,41 @@ describe("CommentsClient", () => {
                 },
             });
         }).rejects.toThrow(IcePanel.InternalServerError);
+    });
+
+    test("create (8)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+        const rawRequestBody = { body: { content: "content", status: "open", type: "question" } };
+        const rawResponseBody = { key: "value" };
+
+        server
+            .mockEndpoint()
+            .post("/landscapes/landscapeId/versions/versionId/comments")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(503)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.comments.create({
+                landscapeId: "landscapeId",
+                versionId: "versionId",
+                body: {
+                    body: {
+                        content: "content",
+                        status: "open",
+                        type: "question",
+                    },
+                },
+            });
+        }).rejects.toThrow(IcePanel.ServiceUnavailableError);
     });
 
     test("get (1)", async () => {
@@ -451,6 +553,7 @@ describe("CommentsClient", () => {
                 versionId: "versionId",
             },
         };
+
         server
             .mockEndpoint()
             .get("/landscapes/landscapeId/versions/versionId/comments/commentId")
@@ -464,40 +567,7 @@ describe("CommentsClient", () => {
             versionId: "versionId",
             commentId: "commentId",
         });
-        expect(response).toEqual({
-            comment: {
-                body: {
-                    content: "content",
-                    showContentPreview: true,
-                    status: "open",
-                    type: "question",
-                },
-                commit: 1.1,
-                mentionedUserIds: ["mentionedUserIds"],
-                handleId: "handleId",
-                createdAt: "2024-01-15T09:30:00Z",
-                createdBy: "user",
-                createdById: "createdById",
-                deletedAt: "2024-01-15T09:30:00Z",
-                deletedBy: "user",
-                deletedById: "deletedById",
-                diagrams: {
-                    key: {
-                        commentId: "commentId",
-                        id: "id",
-                    },
-                },
-                id: "id",
-                landscapeId: "landscapeId",
-                latestEntityId: "latestEntityId",
-                replyCount: 1.1,
-                updatedAt: "2024-01-15T09:30:00Z",
-                updatedBy: "user",
-                updatedById: "updatedById",
-                version: 1.1,
-                versionId: "versionId",
-            },
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("get (2)", async () => {
@@ -509,7 +579,36 @@ describe("CommentsClient", () => {
             environment: server.baseUrl,
         });
 
+        const rawResponseBody = { message: "message" };
+
+        server
+            .mockEndpoint()
+            .get("/landscapes/landscapeId/versions/versionId/comments/commentId")
+            .respondWith()
+            .statusCode(400)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.comments.get({
+                landscapeId: "landscapeId",
+                versionId: "versionId",
+                commentId: "commentId",
+            });
+        }).rejects.toThrow(IcePanel.BadRequestError);
+    });
+
+    test("get (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .get("/landscapes/landscapeId/versions/versionId/comments/commentId")
@@ -527,7 +626,35 @@ describe("CommentsClient", () => {
         }).rejects.toThrow(IcePanel.UnauthorizedError);
     });
 
-    test("get (3)", async () => {
+    test("get (4)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+
+        const rawResponseBody = { message: "message" };
+
+        server
+            .mockEndpoint()
+            .get("/landscapes/landscapeId/versions/versionId/comments/commentId")
+            .respondWith()
+            .statusCode(403)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.comments.get({
+                landscapeId: "landscapeId",
+                versionId: "versionId",
+                commentId: "commentId",
+            });
+        }).rejects.toThrow(IcePanel.ForbiddenError);
+    });
+
+    test("get (5)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -537,6 +664,7 @@ describe("CommentsClient", () => {
         });
 
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .get("/landscapes/landscapeId/versions/versionId/comments/commentId")
@@ -554,7 +682,7 @@ describe("CommentsClient", () => {
         }).rejects.toThrow(IcePanel.NotFoundError);
     });
 
-    test("get (4)", async () => {
+    test("get (6)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -564,6 +692,7 @@ describe("CommentsClient", () => {
         });
 
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .get("/landscapes/landscapeId/versions/versionId/comments/commentId")
@@ -581,7 +710,7 @@ describe("CommentsClient", () => {
         }).rejects.toThrow(IcePanel.UnprocessableEntityError);
     });
 
-    test("get (5)", async () => {
+    test("get (7)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -591,6 +720,7 @@ describe("CommentsClient", () => {
         });
 
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .get("/landscapes/landscapeId/versions/versionId/comments/commentId")
@@ -641,6 +771,7 @@ describe("CommentsClient", () => {
                 versionId: "versionId",
             },
         };
+
         server
             .mockEndpoint()
             .put("/landscapes/landscapeId/versions/versionId/comments/commentId")
@@ -662,40 +793,7 @@ describe("CommentsClient", () => {
                 },
             },
         });
-        expect(response).toEqual({
-            comment: {
-                body: {
-                    content: "content",
-                    showContentPreview: true,
-                    status: "open",
-                    type: "question",
-                },
-                commit: 1.1,
-                mentionedUserIds: ["mentionedUserIds"],
-                handleId: "handleId",
-                createdAt: "2024-01-15T09:30:00Z",
-                createdBy: "user",
-                createdById: "createdById",
-                deletedAt: "2024-01-15T09:30:00Z",
-                deletedBy: "user",
-                deletedById: "deletedById",
-                diagrams: {
-                    key: {
-                        commentId: "commentId",
-                        id: "id",
-                    },
-                },
-                id: "id",
-                landscapeId: "landscapeId",
-                latestEntityId: "latestEntityId",
-                replyCount: 1.1,
-                updatedAt: "2024-01-15T09:30:00Z",
-                updatedBy: "user",
-                updatedById: "updatedById",
-                version: 1.1,
-                versionId: "versionId",
-            },
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("upsert (2)", async () => {
@@ -707,7 +805,44 @@ describe("CommentsClient", () => {
             environment: server.baseUrl,
         });
         const rawRequestBody = { body: { content: "content", status: "open", type: "question" } };
+        const rawResponseBody = { message: "message" };
+
+        server
+            .mockEndpoint()
+            .put("/landscapes/landscapeId/versions/versionId/comments/commentId")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(400)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.comments.upsert({
+                landscapeId: "landscapeId",
+                versionId: "versionId",
+                commentId: "commentId",
+                body: {
+                    body: {
+                        content: "content",
+                        status: "open",
+                        type: "question",
+                    },
+                },
+            });
+        }).rejects.toThrow(IcePanel.BadRequestError);
+    });
+
+    test("upsert (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+        const rawRequestBody = { body: { content: "content", status: "open", type: "question" } };
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .put("/landscapes/landscapeId/versions/versionId/comments/commentId")
@@ -733,7 +868,43 @@ describe("CommentsClient", () => {
         }).rejects.toThrow(IcePanel.UnauthorizedError);
     });
 
-    test("upsert (3)", async () => {
+    test("upsert (4)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+        const rawRequestBody = { body: { content: "content", status: "open", type: "question" } };
+        const rawResponseBody = { message: "message" };
+
+        server
+            .mockEndpoint()
+            .put("/landscapes/landscapeId/versions/versionId/comments/commentId")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(403)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.comments.upsert({
+                landscapeId: "landscapeId",
+                versionId: "versionId",
+                commentId: "commentId",
+                body: {
+                    body: {
+                        content: "content",
+                        status: "open",
+                        type: "question",
+                    },
+                },
+            });
+        }).rejects.toThrow(IcePanel.ForbiddenError);
+    });
+
+    test("upsert (5)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -743,6 +914,7 @@ describe("CommentsClient", () => {
         });
         const rawRequestBody = { body: { content: "content", status: "open", type: "question" } };
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .put("/landscapes/landscapeId/versions/versionId/comments/commentId")
@@ -768,7 +940,7 @@ describe("CommentsClient", () => {
         }).rejects.toThrow(IcePanel.NotFoundError);
     });
 
-    test("upsert (4)", async () => {
+    test("upsert (6)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -778,6 +950,7 @@ describe("CommentsClient", () => {
         });
         const rawRequestBody = { body: { content: "content", status: "open", type: "question" } };
         const rawResponseBody = { message: "message" };
+
         server
             .mockEndpoint()
             .put("/landscapes/landscapeId/versions/versionId/comments/commentId")
@@ -803,7 +976,7 @@ describe("CommentsClient", () => {
         }).rejects.toThrow(IcePanel.ConflictError);
     });
 
-    test("upsert (5)", async () => {
+    test("upsert (7)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -813,6 +986,7 @@ describe("CommentsClient", () => {
         });
         const rawRequestBody = { body: { content: "content", status: "open", type: "question" } };
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .put("/landscapes/landscapeId/versions/versionId/comments/commentId")
@@ -838,7 +1012,7 @@ describe("CommentsClient", () => {
         }).rejects.toThrow(IcePanel.UnprocessableEntityError);
     });
 
-    test("upsert (6)", async () => {
+    test("upsert (8)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -848,6 +1022,7 @@ describe("CommentsClient", () => {
         });
         const rawRequestBody = { body: { content: "content", status: "open", type: "question" } };
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .put("/landscapes/landscapeId/versions/versionId/comments/commentId")
@@ -873,6 +1048,42 @@ describe("CommentsClient", () => {
         }).rejects.toThrow(IcePanel.InternalServerError);
     });
 
+    test("upsert (9)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+        const rawRequestBody = { body: { content: "content", status: "open", type: "question" } };
+        const rawResponseBody = { key: "value" };
+
+        server
+            .mockEndpoint()
+            .put("/landscapes/landscapeId/versions/versionId/comments/commentId")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(503)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.comments.upsert({
+                landscapeId: "landscapeId",
+                versionId: "versionId",
+                commentId: "commentId",
+                body: {
+                    body: {
+                        content: "content",
+                        status: "open",
+                        type: "question",
+                    },
+                },
+            });
+        }).rejects.toThrow(IcePanel.ServiceUnavailableError);
+    });
+
     test("delete (1)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
@@ -883,6 +1094,7 @@ describe("CommentsClient", () => {
         });
 
         const rawResponseBody = { commit: 1.1 };
+
         server
             .mockEndpoint()
             .delete("/landscapes/landscapeId/versions/versionId/comments/commentId")
@@ -896,9 +1108,7 @@ describe("CommentsClient", () => {
             versionId: "versionId",
             commentId: "commentId",
         });
-        expect(response).toEqual({
-            commit: 1.1,
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("delete (2)", async () => {
@@ -910,7 +1120,36 @@ describe("CommentsClient", () => {
             environment: server.baseUrl,
         });
 
+        const rawResponseBody = { message: "message" };
+
+        server
+            .mockEndpoint()
+            .delete("/landscapes/landscapeId/versions/versionId/comments/commentId")
+            .respondWith()
+            .statusCode(400)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.comments.delete({
+                landscapeId: "landscapeId",
+                versionId: "versionId",
+                commentId: "commentId",
+            });
+        }).rejects.toThrow(IcePanel.BadRequestError);
+    });
+
+    test("delete (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .delete("/landscapes/landscapeId/versions/versionId/comments/commentId")
@@ -928,7 +1167,35 @@ describe("CommentsClient", () => {
         }).rejects.toThrow(IcePanel.UnauthorizedError);
     });
 
-    test("delete (3)", async () => {
+    test("delete (4)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+
+        const rawResponseBody = { message: "message" };
+
+        server
+            .mockEndpoint()
+            .delete("/landscapes/landscapeId/versions/versionId/comments/commentId")
+            .respondWith()
+            .statusCode(403)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.comments.delete({
+                landscapeId: "landscapeId",
+                versionId: "versionId",
+                commentId: "commentId",
+            });
+        }).rejects.toThrow(IcePanel.ForbiddenError);
+    });
+
+    test("delete (5)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -938,6 +1205,7 @@ describe("CommentsClient", () => {
         });
 
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .delete("/landscapes/landscapeId/versions/versionId/comments/commentId")
@@ -955,7 +1223,7 @@ describe("CommentsClient", () => {
         }).rejects.toThrow(IcePanel.NotFoundError);
     });
 
-    test("delete (4)", async () => {
+    test("delete (6)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -965,6 +1233,7 @@ describe("CommentsClient", () => {
         });
 
         const rawResponseBody = { message: "message" };
+
         server
             .mockEndpoint()
             .delete("/landscapes/landscapeId/versions/versionId/comments/commentId")
@@ -982,7 +1251,7 @@ describe("CommentsClient", () => {
         }).rejects.toThrow(IcePanel.ConflictError);
     });
 
-    test("delete (5)", async () => {
+    test("delete (7)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -992,6 +1261,7 @@ describe("CommentsClient", () => {
         });
 
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .delete("/landscapes/landscapeId/versions/versionId/comments/commentId")
@@ -1009,7 +1279,7 @@ describe("CommentsClient", () => {
         }).rejects.toThrow(IcePanel.UnprocessableEntityError);
     });
 
-    test("delete (6)", async () => {
+    test("delete (8)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -1019,6 +1289,7 @@ describe("CommentsClient", () => {
         });
 
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .delete("/landscapes/landscapeId/versions/versionId/comments/commentId")
@@ -1034,6 +1305,34 @@ describe("CommentsClient", () => {
                 commentId: "commentId",
             });
         }).rejects.toThrow(IcePanel.InternalServerError);
+    });
+
+    test("delete (9)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+
+        const rawResponseBody = { key: "value" };
+
+        server
+            .mockEndpoint()
+            .delete("/landscapes/landscapeId/versions/versionId/comments/commentId")
+            .respondWith()
+            .statusCode(503)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.comments.delete({
+                landscapeId: "landscapeId",
+                versionId: "versionId",
+                commentId: "commentId",
+            });
+        }).rejects.toThrow(IcePanel.ServiceUnavailableError);
     });
 
     test("update (1)", async () => {
@@ -1069,6 +1368,7 @@ describe("CommentsClient", () => {
                 versionId: "versionId",
             },
         };
+
         server
             .mockEndpoint()
             .patch("/landscapes/landscapeId/versions/versionId/comments/commentId")
@@ -1084,40 +1384,7 @@ describe("CommentsClient", () => {
             commentId: "commentId",
             body: {},
         });
-        expect(response).toEqual({
-            comment: {
-                body: {
-                    content: "content",
-                    showContentPreview: true,
-                    status: "open",
-                    type: "question",
-                },
-                commit: 1.1,
-                mentionedUserIds: ["mentionedUserIds"],
-                handleId: "handleId",
-                createdAt: "2024-01-15T09:30:00Z",
-                createdBy: "user",
-                createdById: "createdById",
-                deletedAt: "2024-01-15T09:30:00Z",
-                deletedBy: "user",
-                deletedById: "deletedById",
-                diagrams: {
-                    key: {
-                        commentId: "commentId",
-                        id: "id",
-                    },
-                },
-                id: "id",
-                landscapeId: "landscapeId",
-                latestEntityId: "latestEntityId",
-                replyCount: 1.1,
-                updatedAt: "2024-01-15T09:30:00Z",
-                updatedBy: "user",
-                updatedById: "updatedById",
-                version: 1.1,
-                versionId: "versionId",
-            },
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("update (2)", async () => {
@@ -1129,7 +1396,38 @@ describe("CommentsClient", () => {
             environment: server.baseUrl,
         });
         const rawRequestBody = {};
+        const rawResponseBody = { message: "message" };
+
+        server
+            .mockEndpoint()
+            .patch("/landscapes/landscapeId/versions/versionId/comments/commentId")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(400)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.comments.update({
+                landscapeId: "landscapeId",
+                versionId: "versionId",
+                commentId: "commentId",
+                body: {},
+            });
+        }).rejects.toThrow(IcePanel.BadRequestError);
+    });
+
+    test("update (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+        const rawRequestBody = {};
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .patch("/landscapes/landscapeId/versions/versionId/comments/commentId")
@@ -1149,7 +1447,37 @@ describe("CommentsClient", () => {
         }).rejects.toThrow(IcePanel.UnauthorizedError);
     });
 
-    test("update (3)", async () => {
+    test("update (4)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+        const rawRequestBody = {};
+        const rawResponseBody = { message: "message" };
+
+        server
+            .mockEndpoint()
+            .patch("/landscapes/landscapeId/versions/versionId/comments/commentId")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(403)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.comments.update({
+                landscapeId: "landscapeId",
+                versionId: "versionId",
+                commentId: "commentId",
+                body: {},
+            });
+        }).rejects.toThrow(IcePanel.ForbiddenError);
+    });
+
+    test("update (5)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -1159,6 +1487,7 @@ describe("CommentsClient", () => {
         });
         const rawRequestBody = {};
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .patch("/landscapes/landscapeId/versions/versionId/comments/commentId")
@@ -1178,7 +1507,7 @@ describe("CommentsClient", () => {
         }).rejects.toThrow(IcePanel.NotFoundError);
     });
 
-    test("update (4)", async () => {
+    test("update (6)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -1188,6 +1517,7 @@ describe("CommentsClient", () => {
         });
         const rawRequestBody = {};
         const rawResponseBody = { message: "message" };
+
         server
             .mockEndpoint()
             .patch("/landscapes/landscapeId/versions/versionId/comments/commentId")
@@ -1207,7 +1537,7 @@ describe("CommentsClient", () => {
         }).rejects.toThrow(IcePanel.ConflictError);
     });
 
-    test("update (5)", async () => {
+    test("update (7)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -1217,6 +1547,7 @@ describe("CommentsClient", () => {
         });
         const rawRequestBody = {};
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .patch("/landscapes/landscapeId/versions/versionId/comments/commentId")
@@ -1236,7 +1567,7 @@ describe("CommentsClient", () => {
         }).rejects.toThrow(IcePanel.UnprocessableEntityError);
     });
 
-    test("update (6)", async () => {
+    test("update (8)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -1246,6 +1577,7 @@ describe("CommentsClient", () => {
         });
         const rawRequestBody = {};
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .patch("/landscapes/landscapeId/versions/versionId/comments/commentId")
@@ -1263,5 +1595,35 @@ describe("CommentsClient", () => {
                 body: {},
             });
         }).rejects.toThrow(IcePanel.InternalServerError);
+    });
+
+    test("update (9)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+        const rawRequestBody = {};
+        const rawResponseBody = { key: "value" };
+
+        server
+            .mockEndpoint()
+            .patch("/landscapes/landscapeId/versions/versionId/comments/commentId")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(503)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.comments.update({
+                landscapeId: "landscapeId",
+                versionId: "versionId",
+                commentId: "commentId",
+                body: {},
+            });
+        }).rejects.toThrow(IcePanel.ServiceUnavailableError);
     });
 });

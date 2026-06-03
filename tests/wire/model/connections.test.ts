@@ -54,93 +54,31 @@ describe("ConnectionsClient", () => {
                     updatedById: "updatedById",
                     version: 1.1,
                     versionId: "versionId",
-                    tags: { key: { color: "color", groupId: "groupId", id: "id", name: "name" } },
+                    tags: { key: { color: "blue", groupId: "groupId", id: "id", name: "name" } },
                     technologies: { key: { color: "blue", id: "id", name: "name" } },
                 },
             ],
+            nextCursor: "nextCursor",
         };
+
         server
-            .mockEndpoint()
+            .mockEndpoint({ once: false })
             .get("/landscapes/landscapeId/versions/versionId/model/connections")
             .respondWith()
             .statusCode(200)
             .jsonBody(rawResponseBody)
             .build();
 
-        const response = await client.model.connections.list({
+        const expected = rawResponseBody;
+        const page = await client.model.connections.list({
             landscapeId: "landscapeId",
             versionId: "versionId",
         });
-        expect(response).toEqual({
-            modelConnections: [
-                {
-                    commit: 1.1,
-                    description: "description",
-                    direction: "outgoing",
-                    labels: {
-                        key: "value",
-                    },
-                    links: {
-                        key: {
-                            index: 1.1,
-                            id: "id",
-                        },
-                    },
-                    name: "name",
-                    originId: "originId",
-                    status: "deprecated",
-                    tagIds: ["tagIds"],
-                    targetId: "targetId",
-                    technologyIds: ["technologyIds"],
-                    viaId: "viaId",
-                    handleId: "handleId",
-                    createdAt: "2024-01-15T09:30:00Z",
-                    createdBy: "user",
-                    createdById: "createdById",
-                    deletedAt: "2024-01-15T09:30:00Z",
-                    deletedBy: "user",
-                    deletedById: "deletedById",
-                    diagrams: {
-                        key: {
-                            connectionId: "connectionId",
-                            id: "id",
-                            originModelId: "originModelId",
-                            targetModelId: "targetModelId",
-                        },
-                    },
-                    flows: {
-                        key: {
-                            id: "id",
-                            stepId: "stepId",
-                        },
-                    },
-                    id: "id",
-                    landscapeId: "landscapeId",
-                    latestEntityId: "latestEntityId",
-                    linked: true,
-                    updatedAt: "2024-01-15T09:30:00Z",
-                    updatedBy: "user",
-                    updatedById: "updatedById",
-                    version: 1.1,
-                    versionId: "versionId",
-                    tags: {
-                        key: {
-                            color: "color",
-                            groupId: "groupId",
-                            id: "id",
-                            name: "name",
-                        },
-                    },
-                    technologies: {
-                        key: {
-                            color: "blue",
-                            id: "id",
-                            name: "name",
-                        },
-                    },
-                },
-            ],
-        });
+
+        expect(expected.modelConnections).toEqual(page.data);
+        expect(page.hasNextPage()).toBe(true);
+        const nextPage = await page.getNextPage();
+        expect(expected.modelConnections).toEqual(nextPage.data);
     });
 
     test("list (2)", async () => {
@@ -152,7 +90,35 @@ describe("ConnectionsClient", () => {
             environment: server.baseUrl,
         });
 
+        const rawResponseBody = { message: "message" };
+
+        server
+            .mockEndpoint()
+            .get("/landscapes/landscapeId/versions/versionId/model/connections")
+            .respondWith()
+            .statusCode(400)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.model.connections.list({
+                landscapeId: "landscapeId",
+                versionId: "versionId",
+            });
+        }).rejects.toThrow(IcePanel.BadRequestError);
+    });
+
+    test("list (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .get("/landscapes/landscapeId/versions/versionId/model/connections")
@@ -169,7 +135,34 @@ describe("ConnectionsClient", () => {
         }).rejects.toThrow(IcePanel.UnauthorizedError);
     });
 
-    test("list (3)", async () => {
+    test("list (4)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+
+        const rawResponseBody = { message: "message" };
+
+        server
+            .mockEndpoint()
+            .get("/landscapes/landscapeId/versions/versionId/model/connections")
+            .respondWith()
+            .statusCode(403)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.model.connections.list({
+                landscapeId: "landscapeId",
+                versionId: "versionId",
+            });
+        }).rejects.toThrow(IcePanel.ForbiddenError);
+    });
+
+    test("list (5)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -179,6 +172,7 @@ describe("ConnectionsClient", () => {
         });
 
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .get("/landscapes/landscapeId/versions/versionId/model/connections")
@@ -195,7 +189,7 @@ describe("ConnectionsClient", () => {
         }).rejects.toThrow(IcePanel.NotFoundError);
     });
 
-    test("list (4)", async () => {
+    test("list (6)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -205,6 +199,7 @@ describe("ConnectionsClient", () => {
         });
 
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .get("/landscapes/landscapeId/versions/versionId/model/connections")
@@ -221,7 +216,7 @@ describe("ConnectionsClient", () => {
         }).rejects.toThrow(IcePanel.UnprocessableEntityError);
     });
 
-    test("list (5)", async () => {
+    test("list (7)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -231,6 +226,7 @@ describe("ConnectionsClient", () => {
         });
 
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .get("/landscapes/landscapeId/versions/versionId/model/connections")
@@ -297,6 +293,7 @@ describe("ConnectionsClient", () => {
                 versionId: "versionId",
             },
         };
+
         server
             .mockEndpoint()
             .post("/landscapes/landscapeId/versions/versionId/model/connections")
@@ -315,59 +312,7 @@ describe("ConnectionsClient", () => {
                 targetId: "targetId",
             },
         });
-        expect(response).toEqual({
-            modelConnection: {
-                commit: 1.1,
-                description: "description",
-                direction: "outgoing",
-                labels: {
-                    key: "value",
-                },
-                links: {
-                    key: {
-                        index: 1.1,
-                        id: "id",
-                    },
-                },
-                name: "name",
-                originId: "originId",
-                status: "deprecated",
-                tagIds: ["tagIds"],
-                targetId: "targetId",
-                technologyIds: ["technologyIds"],
-                viaId: "viaId",
-                handleId: "handleId",
-                createdAt: "2024-01-15T09:30:00Z",
-                createdBy: "user",
-                createdById: "createdById",
-                deletedAt: "2024-01-15T09:30:00Z",
-                deletedBy: "user",
-                deletedById: "deletedById",
-                diagrams: {
-                    key: {
-                        connectionId: "connectionId",
-                        id: "id",
-                        originModelId: "originModelId",
-                        targetModelId: "targetModelId",
-                    },
-                },
-                flows: {
-                    key: {
-                        id: "id",
-                        stepId: "stepId",
-                    },
-                },
-                id: "id",
-                landscapeId: "landscapeId",
-                latestEntityId: "latestEntityId",
-                linked: true,
-                updatedAt: "2024-01-15T09:30:00Z",
-                updatedBy: "user",
-                updatedById: "updatedById",
-                version: 1.1,
-                versionId: "versionId",
-            },
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("create (2)", async () => {
@@ -379,7 +324,41 @@ describe("ConnectionsClient", () => {
             environment: server.baseUrl,
         });
         const rawRequestBody = { name: "name", originId: "originId", targetId: "targetId" };
+        const rawResponseBody = { message: "message" };
+
+        server
+            .mockEndpoint()
+            .post("/landscapes/landscapeId/versions/versionId/model/connections")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(400)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.model.connections.create({
+                landscapeId: "landscapeId",
+                versionId: "versionId",
+                body: {
+                    name: "name",
+                    originId: "originId",
+                    targetId: "targetId",
+                },
+            });
+        }).rejects.toThrow(IcePanel.BadRequestError);
+    });
+
+    test("create (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+        const rawRequestBody = { name: "name", originId: "originId", targetId: "targetId" };
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .post("/landscapes/landscapeId/versions/versionId/model/connections")
@@ -402,7 +381,40 @@ describe("ConnectionsClient", () => {
         }).rejects.toThrow(IcePanel.UnauthorizedError);
     });
 
-    test("create (3)", async () => {
+    test("create (4)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+        const rawRequestBody = { name: "name", originId: "originId", targetId: "targetId" };
+        const rawResponseBody = { message: "message" };
+
+        server
+            .mockEndpoint()
+            .post("/landscapes/landscapeId/versions/versionId/model/connections")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(403)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.model.connections.create({
+                landscapeId: "landscapeId",
+                versionId: "versionId",
+                body: {
+                    name: "name",
+                    originId: "originId",
+                    targetId: "targetId",
+                },
+            });
+        }).rejects.toThrow(IcePanel.ForbiddenError);
+    });
+
+    test("create (5)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -412,6 +424,7 @@ describe("ConnectionsClient", () => {
         });
         const rawRequestBody = { name: "name", originId: "originId", targetId: "targetId" };
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .post("/landscapes/landscapeId/versions/versionId/model/connections")
@@ -434,7 +447,7 @@ describe("ConnectionsClient", () => {
         }).rejects.toThrow(IcePanel.NotFoundError);
     });
 
-    test("create (4)", async () => {
+    test("create (6)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -444,6 +457,7 @@ describe("ConnectionsClient", () => {
         });
         const rawRequestBody = { name: "name", originId: "originId", targetId: "targetId" };
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .post("/landscapes/landscapeId/versions/versionId/model/connections")
@@ -466,7 +480,7 @@ describe("ConnectionsClient", () => {
         }).rejects.toThrow(IcePanel.UnprocessableEntityError);
     });
 
-    test("create (5)", async () => {
+    test("create (7)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -476,6 +490,7 @@ describe("ConnectionsClient", () => {
         });
         const rawRequestBody = { name: "name", originId: "originId", targetId: "targetId" };
         const rawResponseBody = { message: "message" };
+
         server
             .mockEndpoint()
             .post("/landscapes/landscapeId/versions/versionId/model/connections")
@@ -498,7 +513,7 @@ describe("ConnectionsClient", () => {
         }).rejects.toThrow(IcePanel.TooManyRequestsError);
     });
 
-    test("create (6)", async () => {
+    test("create (8)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -508,6 +523,7 @@ describe("ConnectionsClient", () => {
         });
         const rawRequestBody = { name: "name", originId: "originId", targetId: "targetId" };
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .post("/landscapes/landscapeId/versions/versionId/model/connections")
@@ -528,6 +544,39 @@ describe("ConnectionsClient", () => {
                 },
             });
         }).rejects.toThrow(IcePanel.InternalServerError);
+    });
+
+    test("create (9)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+        const rawRequestBody = { name: "name", originId: "originId", targetId: "targetId" };
+        const rawResponseBody = { key: "value" };
+
+        server
+            .mockEndpoint()
+            .post("/landscapes/landscapeId/versions/versionId/model/connections")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(503)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.model.connections.create({
+                landscapeId: "landscapeId",
+                versionId: "versionId",
+                body: {
+                    name: "name",
+                    originId: "originId",
+                    targetId: "targetId",
+                },
+            });
+        }).rejects.toThrow(IcePanel.ServiceUnavailableError);
     });
 
     test("get (1)", async () => {
@@ -578,10 +627,11 @@ describe("ConnectionsClient", () => {
                 updatedById: "updatedById",
                 version: 1.1,
                 versionId: "versionId",
-                tags: { key: { color: "color", groupId: "groupId", id: "id", name: "name" } },
+                tags: { key: { color: "blue", groupId: "groupId", id: "id", name: "name" } },
                 technologies: { key: { color: "blue", id: "id", name: "name" } },
             },
         };
+
         server
             .mockEndpoint()
             .get("/landscapes/landscapeId/versions/versionId/model/connections/modelConnectionId")
@@ -595,74 +645,7 @@ describe("ConnectionsClient", () => {
             versionId: "versionId",
             modelConnectionId: "modelConnectionId",
         });
-        expect(response).toEqual({
-            modelConnection: {
-                commit: 1.1,
-                description: "description",
-                direction: "outgoing",
-                labels: {
-                    key: "value",
-                },
-                links: {
-                    key: {
-                        index: 1.1,
-                        id: "id",
-                    },
-                },
-                name: "name",
-                originId: "originId",
-                status: "deprecated",
-                tagIds: ["tagIds"],
-                targetId: "targetId",
-                technologyIds: ["technologyIds"],
-                viaId: "viaId",
-                handleId: "handleId",
-                createdAt: "2024-01-15T09:30:00Z",
-                createdBy: "user",
-                createdById: "createdById",
-                deletedAt: "2024-01-15T09:30:00Z",
-                deletedBy: "user",
-                deletedById: "deletedById",
-                diagrams: {
-                    key: {
-                        connectionId: "connectionId",
-                        id: "id",
-                        originModelId: "originModelId",
-                        targetModelId: "targetModelId",
-                    },
-                },
-                flows: {
-                    key: {
-                        id: "id",
-                        stepId: "stepId",
-                    },
-                },
-                id: "id",
-                landscapeId: "landscapeId",
-                latestEntityId: "latestEntityId",
-                linked: true,
-                updatedAt: "2024-01-15T09:30:00Z",
-                updatedBy: "user",
-                updatedById: "updatedById",
-                version: 1.1,
-                versionId: "versionId",
-                tags: {
-                    key: {
-                        color: "color",
-                        groupId: "groupId",
-                        id: "id",
-                        name: "name",
-                    },
-                },
-                technologies: {
-                    key: {
-                        color: "blue",
-                        id: "id",
-                        name: "name",
-                    },
-                },
-            },
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("get (2)", async () => {
@@ -674,7 +657,36 @@ describe("ConnectionsClient", () => {
             environment: server.baseUrl,
         });
 
+        const rawResponseBody = { message: "message" };
+
+        server
+            .mockEndpoint()
+            .get("/landscapes/landscapeId/versions/versionId/model/connections/modelConnectionId")
+            .respondWith()
+            .statusCode(400)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.model.connections.get({
+                landscapeId: "landscapeId",
+                versionId: "versionId",
+                modelConnectionId: "modelConnectionId",
+            });
+        }).rejects.toThrow(IcePanel.BadRequestError);
+    });
+
+    test("get (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .get("/landscapes/landscapeId/versions/versionId/model/connections/modelConnectionId")
@@ -692,7 +704,35 @@ describe("ConnectionsClient", () => {
         }).rejects.toThrow(IcePanel.UnauthorizedError);
     });
 
-    test("get (3)", async () => {
+    test("get (4)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+
+        const rawResponseBody = { message: "message" };
+
+        server
+            .mockEndpoint()
+            .get("/landscapes/landscapeId/versions/versionId/model/connections/modelConnectionId")
+            .respondWith()
+            .statusCode(403)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.model.connections.get({
+                landscapeId: "landscapeId",
+                versionId: "versionId",
+                modelConnectionId: "modelConnectionId",
+            });
+        }).rejects.toThrow(IcePanel.ForbiddenError);
+    });
+
+    test("get (5)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -702,6 +742,7 @@ describe("ConnectionsClient", () => {
         });
 
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .get("/landscapes/landscapeId/versions/versionId/model/connections/modelConnectionId")
@@ -719,7 +760,7 @@ describe("ConnectionsClient", () => {
         }).rejects.toThrow(IcePanel.NotFoundError);
     });
 
-    test("get (4)", async () => {
+    test("get (6)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -729,6 +770,7 @@ describe("ConnectionsClient", () => {
         });
 
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .get("/landscapes/landscapeId/versions/versionId/model/connections/modelConnectionId")
@@ -746,7 +788,7 @@ describe("ConnectionsClient", () => {
         }).rejects.toThrow(IcePanel.UnprocessableEntityError);
     });
 
-    test("get (5)", async () => {
+    test("get (7)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -756,6 +798,7 @@ describe("ConnectionsClient", () => {
         });
 
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .get("/landscapes/landscapeId/versions/versionId/model/connections/modelConnectionId")
@@ -823,6 +866,7 @@ describe("ConnectionsClient", () => {
                 versionId: "versionId",
             },
         };
+
         server
             .mockEndpoint()
             .put("/landscapes/landscapeId/versions/versionId/model/connections/modelConnectionId")
@@ -842,59 +886,7 @@ describe("ConnectionsClient", () => {
                 targetId: "targetId",
             },
         });
-        expect(response).toEqual({
-            modelConnection: {
-                commit: 1.1,
-                description: "description",
-                direction: "outgoing",
-                labels: {
-                    key: "value",
-                },
-                links: {
-                    key: {
-                        index: 1.1,
-                        id: "id",
-                    },
-                },
-                name: "name",
-                originId: "originId",
-                status: "deprecated",
-                tagIds: ["tagIds"],
-                targetId: "targetId",
-                technologyIds: ["technologyIds"],
-                viaId: "viaId",
-                handleId: "handleId",
-                createdAt: "2024-01-15T09:30:00Z",
-                createdBy: "user",
-                createdById: "createdById",
-                deletedAt: "2024-01-15T09:30:00Z",
-                deletedBy: "user",
-                deletedById: "deletedById",
-                diagrams: {
-                    key: {
-                        connectionId: "connectionId",
-                        id: "id",
-                        originModelId: "originModelId",
-                        targetModelId: "targetModelId",
-                    },
-                },
-                flows: {
-                    key: {
-                        id: "id",
-                        stepId: "stepId",
-                    },
-                },
-                id: "id",
-                landscapeId: "landscapeId",
-                latestEntityId: "latestEntityId",
-                linked: true,
-                updatedAt: "2024-01-15T09:30:00Z",
-                updatedBy: "user",
-                updatedById: "updatedById",
-                version: 1.1,
-                versionId: "versionId",
-            },
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("upsert (2)", async () => {
@@ -906,7 +898,42 @@ describe("ConnectionsClient", () => {
             environment: server.baseUrl,
         });
         const rawRequestBody = { name: "name", originId: "originId", targetId: "targetId" };
+        const rawResponseBody = { message: "message" };
+
+        server
+            .mockEndpoint()
+            .put("/landscapes/landscapeId/versions/versionId/model/connections/modelConnectionId")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(400)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.model.connections.upsert({
+                landscapeId: "landscapeId",
+                versionId: "versionId",
+                modelConnectionId: "modelConnectionId",
+                body: {
+                    name: "name",
+                    originId: "originId",
+                    targetId: "targetId",
+                },
+            });
+        }).rejects.toThrow(IcePanel.BadRequestError);
+    });
+
+    test("upsert (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+        const rawRequestBody = { name: "name", originId: "originId", targetId: "targetId" };
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .put("/landscapes/landscapeId/versions/versionId/model/connections/modelConnectionId")
@@ -930,7 +957,41 @@ describe("ConnectionsClient", () => {
         }).rejects.toThrow(IcePanel.UnauthorizedError);
     });
 
-    test("upsert (3)", async () => {
+    test("upsert (4)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+        const rawRequestBody = { name: "name", originId: "originId", targetId: "targetId" };
+        const rawResponseBody = { message: "message" };
+
+        server
+            .mockEndpoint()
+            .put("/landscapes/landscapeId/versions/versionId/model/connections/modelConnectionId")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(403)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.model.connections.upsert({
+                landscapeId: "landscapeId",
+                versionId: "versionId",
+                modelConnectionId: "modelConnectionId",
+                body: {
+                    name: "name",
+                    originId: "originId",
+                    targetId: "targetId",
+                },
+            });
+        }).rejects.toThrow(IcePanel.ForbiddenError);
+    });
+
+    test("upsert (5)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -940,6 +1001,7 @@ describe("ConnectionsClient", () => {
         });
         const rawRequestBody = { name: "name", originId: "originId", targetId: "targetId" };
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .put("/landscapes/landscapeId/versions/versionId/model/connections/modelConnectionId")
@@ -963,7 +1025,7 @@ describe("ConnectionsClient", () => {
         }).rejects.toThrow(IcePanel.NotFoundError);
     });
 
-    test("upsert (4)", async () => {
+    test("upsert (6)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -973,6 +1035,7 @@ describe("ConnectionsClient", () => {
         });
         const rawRequestBody = { name: "name", originId: "originId", targetId: "targetId" };
         const rawResponseBody = { message: "message" };
+
         server
             .mockEndpoint()
             .put("/landscapes/landscapeId/versions/versionId/model/connections/modelConnectionId")
@@ -996,7 +1059,7 @@ describe("ConnectionsClient", () => {
         }).rejects.toThrow(IcePanel.ConflictError);
     });
 
-    test("upsert (5)", async () => {
+    test("upsert (7)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -1006,6 +1069,7 @@ describe("ConnectionsClient", () => {
         });
         const rawRequestBody = { name: "name", originId: "originId", targetId: "targetId" };
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .put("/landscapes/landscapeId/versions/versionId/model/connections/modelConnectionId")
@@ -1029,7 +1093,7 @@ describe("ConnectionsClient", () => {
         }).rejects.toThrow(IcePanel.UnprocessableEntityError);
     });
 
-    test("upsert (6)", async () => {
+    test("upsert (8)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -1039,6 +1103,7 @@ describe("ConnectionsClient", () => {
         });
         const rawRequestBody = { name: "name", originId: "originId", targetId: "targetId" };
         const rawResponseBody = { message: "message" };
+
         server
             .mockEndpoint()
             .put("/landscapes/landscapeId/versions/versionId/model/connections/modelConnectionId")
@@ -1062,7 +1127,7 @@ describe("ConnectionsClient", () => {
         }).rejects.toThrow(IcePanel.TooManyRequestsError);
     });
 
-    test("upsert (7)", async () => {
+    test("upsert (9)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -1072,6 +1137,7 @@ describe("ConnectionsClient", () => {
         });
         const rawRequestBody = { name: "name", originId: "originId", targetId: "targetId" };
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .put("/landscapes/landscapeId/versions/versionId/model/connections/modelConnectionId")
@@ -1095,6 +1161,40 @@ describe("ConnectionsClient", () => {
         }).rejects.toThrow(IcePanel.InternalServerError);
     });
 
+    test("upsert (10)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+        const rawRequestBody = { name: "name", originId: "originId", targetId: "targetId" };
+        const rawResponseBody = { key: "value" };
+
+        server
+            .mockEndpoint()
+            .put("/landscapes/landscapeId/versions/versionId/model/connections/modelConnectionId")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(503)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.model.connections.upsert({
+                landscapeId: "landscapeId",
+                versionId: "versionId",
+                modelConnectionId: "modelConnectionId",
+                body: {
+                    name: "name",
+                    originId: "originId",
+                    targetId: "targetId",
+                },
+            });
+        }).rejects.toThrow(IcePanel.ServiceUnavailableError);
+    });
+
     test("delete (1)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
@@ -1105,6 +1205,7 @@ describe("ConnectionsClient", () => {
         });
 
         const rawResponseBody = { commit: 1.1 };
+
         server
             .mockEndpoint()
             .delete("/landscapes/landscapeId/versions/versionId/model/connections/modelConnectionId")
@@ -1118,9 +1219,7 @@ describe("ConnectionsClient", () => {
             versionId: "versionId",
             modelConnectionId: "modelConnectionId",
         });
-        expect(response).toEqual({
-            commit: 1.1,
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("delete (2)", async () => {
@@ -1132,7 +1231,36 @@ describe("ConnectionsClient", () => {
             environment: server.baseUrl,
         });
 
+        const rawResponseBody = { message: "message" };
+
+        server
+            .mockEndpoint()
+            .delete("/landscapes/landscapeId/versions/versionId/model/connections/modelConnectionId")
+            .respondWith()
+            .statusCode(400)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.model.connections.delete({
+                landscapeId: "landscapeId",
+                versionId: "versionId",
+                modelConnectionId: "modelConnectionId",
+            });
+        }).rejects.toThrow(IcePanel.BadRequestError);
+    });
+
+    test("delete (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .delete("/landscapes/landscapeId/versions/versionId/model/connections/modelConnectionId")
@@ -1150,7 +1278,35 @@ describe("ConnectionsClient", () => {
         }).rejects.toThrow(IcePanel.UnauthorizedError);
     });
 
-    test("delete (3)", async () => {
+    test("delete (4)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+
+        const rawResponseBody = { message: "message" };
+
+        server
+            .mockEndpoint()
+            .delete("/landscapes/landscapeId/versions/versionId/model/connections/modelConnectionId")
+            .respondWith()
+            .statusCode(403)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.model.connections.delete({
+                landscapeId: "landscapeId",
+                versionId: "versionId",
+                modelConnectionId: "modelConnectionId",
+            });
+        }).rejects.toThrow(IcePanel.ForbiddenError);
+    });
+
+    test("delete (5)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -1160,6 +1316,7 @@ describe("ConnectionsClient", () => {
         });
 
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .delete("/landscapes/landscapeId/versions/versionId/model/connections/modelConnectionId")
@@ -1177,7 +1334,7 @@ describe("ConnectionsClient", () => {
         }).rejects.toThrow(IcePanel.NotFoundError);
     });
 
-    test("delete (4)", async () => {
+    test("delete (6)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -1187,6 +1344,7 @@ describe("ConnectionsClient", () => {
         });
 
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .delete("/landscapes/landscapeId/versions/versionId/model/connections/modelConnectionId")
@@ -1204,7 +1362,7 @@ describe("ConnectionsClient", () => {
         }).rejects.toThrow(IcePanel.UnprocessableEntityError);
     });
 
-    test("delete (5)", async () => {
+    test("delete (7)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -1214,6 +1372,7 @@ describe("ConnectionsClient", () => {
         });
 
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .delete("/landscapes/landscapeId/versions/versionId/model/connections/modelConnectionId")
@@ -1229,6 +1388,34 @@ describe("ConnectionsClient", () => {
                 modelConnectionId: "modelConnectionId",
             });
         }).rejects.toThrow(IcePanel.InternalServerError);
+    });
+
+    test("delete (8)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+
+        const rawResponseBody = { key: "value" };
+
+        server
+            .mockEndpoint()
+            .delete("/landscapes/landscapeId/versions/versionId/model/connections/modelConnectionId")
+            .respondWith()
+            .statusCode(503)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.model.connections.delete({
+                landscapeId: "landscapeId",
+                versionId: "versionId",
+                modelConnectionId: "modelConnectionId",
+            });
+        }).rejects.toThrow(IcePanel.ServiceUnavailableError);
     });
 
     test("update (1)", async () => {
@@ -1281,6 +1468,7 @@ describe("ConnectionsClient", () => {
                 versionId: "versionId",
             },
         };
+
         server
             .mockEndpoint()
             .patch("/landscapes/landscapeId/versions/versionId/model/connections/modelConnectionId")
@@ -1296,59 +1484,7 @@ describe("ConnectionsClient", () => {
             modelConnectionId: "modelConnectionId",
             body: {},
         });
-        expect(response).toEqual({
-            modelConnection: {
-                commit: 1.1,
-                description: "description",
-                direction: "outgoing",
-                labels: {
-                    key: "value",
-                },
-                links: {
-                    key: {
-                        index: 1.1,
-                        id: "id",
-                    },
-                },
-                name: "name",
-                originId: "originId",
-                status: "deprecated",
-                tagIds: ["tagIds"],
-                targetId: "targetId",
-                technologyIds: ["technologyIds"],
-                viaId: "viaId",
-                handleId: "handleId",
-                createdAt: "2024-01-15T09:30:00Z",
-                createdBy: "user",
-                createdById: "createdById",
-                deletedAt: "2024-01-15T09:30:00Z",
-                deletedBy: "user",
-                deletedById: "deletedById",
-                diagrams: {
-                    key: {
-                        connectionId: "connectionId",
-                        id: "id",
-                        originModelId: "originModelId",
-                        targetModelId: "targetModelId",
-                    },
-                },
-                flows: {
-                    key: {
-                        id: "id",
-                        stepId: "stepId",
-                    },
-                },
-                id: "id",
-                landscapeId: "landscapeId",
-                latestEntityId: "latestEntityId",
-                linked: true,
-                updatedAt: "2024-01-15T09:30:00Z",
-                updatedBy: "user",
-                updatedById: "updatedById",
-                version: 1.1,
-                versionId: "versionId",
-            },
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("update (2)", async () => {
@@ -1360,7 +1496,38 @@ describe("ConnectionsClient", () => {
             environment: server.baseUrl,
         });
         const rawRequestBody = {};
+        const rawResponseBody = { message: "message" };
+
+        server
+            .mockEndpoint()
+            .patch("/landscapes/landscapeId/versions/versionId/model/connections/modelConnectionId")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(400)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.model.connections.update({
+                landscapeId: "landscapeId",
+                versionId: "versionId",
+                modelConnectionId: "modelConnectionId",
+                body: {},
+            });
+        }).rejects.toThrow(IcePanel.BadRequestError);
+    });
+
+    test("update (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+        const rawRequestBody = {};
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .patch("/landscapes/landscapeId/versions/versionId/model/connections/modelConnectionId")
@@ -1380,7 +1547,37 @@ describe("ConnectionsClient", () => {
         }).rejects.toThrow(IcePanel.UnauthorizedError);
     });
 
-    test("update (3)", async () => {
+    test("update (4)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+        const rawRequestBody = {};
+        const rawResponseBody = { message: "message" };
+
+        server
+            .mockEndpoint()
+            .patch("/landscapes/landscapeId/versions/versionId/model/connections/modelConnectionId")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(403)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.model.connections.update({
+                landscapeId: "landscapeId",
+                versionId: "versionId",
+                modelConnectionId: "modelConnectionId",
+                body: {},
+            });
+        }).rejects.toThrow(IcePanel.ForbiddenError);
+    });
+
+    test("update (5)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -1390,6 +1587,7 @@ describe("ConnectionsClient", () => {
         });
         const rawRequestBody = {};
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .patch("/landscapes/landscapeId/versions/versionId/model/connections/modelConnectionId")
@@ -1409,7 +1607,7 @@ describe("ConnectionsClient", () => {
         }).rejects.toThrow(IcePanel.NotFoundError);
     });
 
-    test("update (4)", async () => {
+    test("update (6)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -1419,6 +1617,7 @@ describe("ConnectionsClient", () => {
         });
         const rawRequestBody = {};
         const rawResponseBody = { message: "message" };
+
         server
             .mockEndpoint()
             .patch("/landscapes/landscapeId/versions/versionId/model/connections/modelConnectionId")
@@ -1438,7 +1637,7 @@ describe("ConnectionsClient", () => {
         }).rejects.toThrow(IcePanel.ConflictError);
     });
 
-    test("update (5)", async () => {
+    test("update (7)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -1448,6 +1647,7 @@ describe("ConnectionsClient", () => {
         });
         const rawRequestBody = {};
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .patch("/landscapes/landscapeId/versions/versionId/model/connections/modelConnectionId")
@@ -1467,7 +1667,7 @@ describe("ConnectionsClient", () => {
         }).rejects.toThrow(IcePanel.UnprocessableEntityError);
     });
 
-    test("update (6)", async () => {
+    test("update (8)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -1477,6 +1677,7 @@ describe("ConnectionsClient", () => {
         });
         const rawRequestBody = {};
         const rawResponseBody = { message: "message" };
+
         server
             .mockEndpoint()
             .patch("/landscapes/landscapeId/versions/versionId/model/connections/modelConnectionId")
@@ -1496,7 +1697,7 @@ describe("ConnectionsClient", () => {
         }).rejects.toThrow(IcePanel.TooManyRequestsError);
     });
 
-    test("update (7)", async () => {
+    test("update (9)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -1506,6 +1707,7 @@ describe("ConnectionsClient", () => {
         });
         const rawRequestBody = {};
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .patch("/landscapes/landscapeId/versions/versionId/model/connections/modelConnectionId")
@@ -1525,6 +1727,36 @@ describe("ConnectionsClient", () => {
         }).rejects.toThrow(IcePanel.InternalServerError);
     });
 
+    test("update (10)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+        const rawRequestBody = {};
+        const rawResponseBody = { key: "value" };
+
+        server
+            .mockEndpoint()
+            .patch("/landscapes/landscapeId/versions/versionId/model/connections/modelConnectionId")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(503)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.model.connections.update({
+                landscapeId: "landscapeId",
+                versionId: "versionId",
+                modelConnectionId: "modelConnectionId",
+                body: {},
+            });
+        }).rejects.toThrow(IcePanel.ServiceUnavailableError);
+    });
+
     test("generateDescription (1)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
@@ -1534,7 +1766,8 @@ describe("ConnectionsClient", () => {
             environment: server.baseUrl,
         });
         const rawRequestBody = { type: "caption" };
-        const rawResponseBody = { description: "description", message: "message" };
+        const rawResponseBody = { description: "description" };
+
         server
             .mockEndpoint()
             .post("/landscapes/landscapeId/versions/versionId/model/connections/modelConnectionId/generate-description")
@@ -1550,10 +1783,7 @@ describe("ConnectionsClient", () => {
             modelConnectionId: "modelConnectionId",
             type: "caption",
         });
-        expect(response).toEqual({
-            description: "description",
-            message: "message",
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("generateDescription (2)", async () => {
@@ -1565,7 +1795,38 @@ describe("ConnectionsClient", () => {
             environment: server.baseUrl,
         });
         const rawRequestBody = { type: "caption" };
+        const rawResponseBody = { message: "message" };
+
+        server
+            .mockEndpoint()
+            .post("/landscapes/landscapeId/versions/versionId/model/connections/modelConnectionId/generate-description")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(400)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.model.connections.generateDescription({
+                landscapeId: "landscapeId",
+                versionId: "versionId",
+                modelConnectionId: "modelConnectionId",
+                type: "caption",
+            });
+        }).rejects.toThrow(IcePanel.BadRequestError);
+    });
+
+    test("generateDescription (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+        const rawRequestBody = { type: "caption" };
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .post("/landscapes/landscapeId/versions/versionId/model/connections/modelConnectionId/generate-description")
@@ -1585,7 +1846,37 @@ describe("ConnectionsClient", () => {
         }).rejects.toThrow(IcePanel.UnauthorizedError);
     });
 
-    test("generateDescription (3)", async () => {
+    test("generateDescription (4)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+        const rawRequestBody = { type: "caption" };
+        const rawResponseBody = { message: "message" };
+
+        server
+            .mockEndpoint()
+            .post("/landscapes/landscapeId/versions/versionId/model/connections/modelConnectionId/generate-description")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(403)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.model.connections.generateDescription({
+                landscapeId: "landscapeId",
+                versionId: "versionId",
+                modelConnectionId: "modelConnectionId",
+                type: "caption",
+            });
+        }).rejects.toThrow(IcePanel.ForbiddenError);
+    });
+
+    test("generateDescription (5)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -1595,6 +1886,7 @@ describe("ConnectionsClient", () => {
         });
         const rawRequestBody = { type: "caption" };
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .post("/landscapes/landscapeId/versions/versionId/model/connections/modelConnectionId/generate-description")
@@ -1614,7 +1906,7 @@ describe("ConnectionsClient", () => {
         }).rejects.toThrow(IcePanel.NotFoundError);
     });
 
-    test("generateDescription (4)", async () => {
+    test("generateDescription (6)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -1624,6 +1916,7 @@ describe("ConnectionsClient", () => {
         });
         const rawRequestBody = { type: "caption" };
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .post("/landscapes/landscapeId/versions/versionId/model/connections/modelConnectionId/generate-description")
@@ -1643,7 +1936,7 @@ describe("ConnectionsClient", () => {
         }).rejects.toThrow(IcePanel.UnprocessableEntityError);
     });
 
-    test("generateDescription (5)", async () => {
+    test("generateDescription (7)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -1653,6 +1946,7 @@ describe("ConnectionsClient", () => {
         });
         const rawRequestBody = { type: "caption" };
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .post("/landscapes/landscapeId/versions/versionId/model/connections/modelConnectionId/generate-description")
@@ -1670,5 +1964,35 @@ describe("ConnectionsClient", () => {
                 type: "caption",
             });
         }).rejects.toThrow(IcePanel.InternalServerError);
+    });
+
+    test("generateDescription (8)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+        const rawRequestBody = { type: "caption" };
+        const rawResponseBody = { key: "value" };
+
+        server
+            .mockEndpoint()
+            .post("/landscapes/landscapeId/versions/versionId/model/connections/modelConnectionId/generate-description")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(503)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.model.connections.generateDescription({
+                landscapeId: "landscapeId",
+                versionId: "versionId",
+                modelConnectionId: "modelConnectionId",
+                type: "caption",
+            });
+        }).rejects.toThrow(IcePanel.ServiceUnavailableError);
     });
 });

@@ -2,71 +2,528 @@
 
 import type * as IcePanel from "../index.js";
 
-export const LandscapeActionType = {
+export type Action = IcePanel.OrganizationAction | IcePanel.LandscapeAction;
+
+export const ActionCommentCreateType = {
     CommentCreate: "comment-create",
-    CommentDelete: "comment-delete",
-    CommentReplyCreate: "comment-reply-create",
-    CommentReplyDelete: "comment-reply-delete",
-    CommentReplyUpdate: "comment-reply-update",
-    CommentUpdate: "comment-update",
-    DiagramContentCreate: "diagram-content-create",
-    DiagramContentDelete: "diagram-content-delete",
-    DiagramContentUpdate: "diagram-content-update",
-    DiagramContentView: "diagram-content-view",
-    DiagramCreate: "diagram-create",
-    DiagramDelete: "diagram-delete",
-    DiagramExport: "diagram-export",
-    DiagramGroupCreate: "diagram-group-create",
-    DiagramGroupDelete: "diagram-group-delete",
-    DiagramGroupUpdate: "diagram-group-update",
-    DiagramUpdate: "diagram-update",
-    DomainCreate: "domain-create",
-    DomainDelete: "domain-delete",
-    DomainUpdate: "domain-update",
-    DraftCreate: "draft-create",
-    DraftDelete: "draft-delete",
-    DraftMerge: "draft-merge",
-    DraftTaskCreate: "draft-task-create",
-    DraftUpdate: "draft-update",
-    DraftView: "draft-view",
-    FlowCreate: "flow-create",
-    FlowDelete: "flow-delete",
-    FlowUpdate: "flow-update",
-    FlowView: "flow-view",
-    LandscapeCopy: "landscape-copy",
-    LandscapeCreate: "landscape-create",
-    LandscapeDelete: "landscape-delete",
-    LandscapeDuplicate: "landscape-duplicate",
-    LandscapeExport: "landscape-export",
-    LandscapeUpdate: "landscape-update",
-    ModelConnectionCreate: "model-connection-create",
-    ModelConnectionDelete: "model-connection-delete",
-    ModelConnectionUpdate: "model-connection-update",
-    ModelConnectionsExport: "model-connections-export",
-    ModelObjectCreate: "model-object-create",
-    ModelObjectDelete: "model-object-delete",
-    ModelObjectDependenciesExport: "model-object-dependencies-export",
-    ModelObjectUpdate: "model-object-update",
-    ModelObjectsExport: "model-objects-export",
-    ShareLinkCreate: "share-link-create",
-    ShareLinkDelete: "share-link-delete",
-    ShareLinkUpdate: "share-link-update",
-    TagCreate: "tag-create",
-    TagDelete: "tag-delete",
-    TagGroupCreate: "tag-group-create",
-    TagGroupDelete: "tag-group-delete",
-    TagGroupUpdate: "tag-group-update",
-    TagUpdate: "tag-update",
-    VersionCreate: "version-create",
-    VersionDelete: "version-delete",
-    VersionRevertCreate: "version-revert-create",
 } as const;
-export type LandscapeActionType = (typeof LandscapeActionType)[keyof typeof LandscapeActionType];
+export type ActionCommentCreateType = (typeof ActionCommentCreateType)[keyof typeof ActionCommentCreateType];
+
+export interface ActionCommentCreate {
+    context: IcePanel.ActionCommentCreateContext;
+    id: string;
+    props: IcePanel.CommentRequired;
+    type: IcePanel.ActionCommentCreateType;
+}
+
+export interface ActionCommentCreateContext {
+    domainHandleId?: string | undefined;
+    domainName?: string | undefined;
+    modelFamily?: IcePanel.ActionContextModelObject[] | undefined;
+    targetHandleId?: string | undefined;
+    targetName?: string | undefined;
+}
+
+export const ActionCommentDeleteType = {
+    CommentDelete: "comment-delete",
+} as const;
+export type ActionCommentDeleteType = (typeof ActionCommentDeleteType)[keyof typeof ActionCommentDeleteType];
+
+export interface ActionCommentDelete {
+    context: IcePanel.ActionCommentDeleteContext;
+    id: string;
+    type: IcePanel.ActionCommentDeleteType;
+}
+
+export interface ActionCommentDeleteContext {
+    domainHandleId?: string | undefined;
+    domainName?: string | undefined;
+    modelFamily?: IcePanel.ActionContextModelObject[] | undefined;
+    targetHandleId?: string | undefined;
+    targetName?: string | undefined;
+}
+
+export const ActionCommentReplyCreateType = {
+    CommentReplyCreate: "comment-reply-create",
+} as const;
+export type ActionCommentReplyCreateType =
+    (typeof ActionCommentReplyCreateType)[keyof typeof ActionCommentReplyCreateType];
+
+export interface ActionCommentReplyCreate {
+    context: IcePanel.ActionCommentReplyCreateContext;
+    id: string;
+    props: IcePanel.CommentReplyRequired;
+    type: IcePanel.ActionCommentReplyCreateType;
+}
+
+export interface ActionCommentReplyCreateContext {
+    commentHandleId?: string | undefined;
+    domainHandleId?: string | undefined;
+    domainName?: string | undefined;
+}
+
+export const ActionCommentReplyDeleteType = {
+    CommentReplyDelete: "comment-reply-delete",
+} as const;
+export type ActionCommentReplyDeleteType =
+    (typeof ActionCommentReplyDeleteType)[keyof typeof ActionCommentReplyDeleteType];
+
+export interface ActionCommentReplyDelete {
+    context: IcePanel.ActionCommentReplyDeleteContext;
+    id: string;
+    type: IcePanel.ActionCommentReplyDeleteType;
+}
+
+export interface ActionCommentReplyDeleteContext {
+    commentHandleId?: string | undefined;
+    domainHandleId?: string | undefined;
+    domainName?: string | undefined;
+}
+
+export const ActionCommentReplyUpdateType = {
+    CommentReplyUpdate: "comment-reply-update",
+} as const;
+export type ActionCommentReplyUpdateType =
+    (typeof ActionCommentReplyUpdateType)[keyof typeof ActionCommentReplyUpdateType];
+
+export interface ActionCommentReplyUpdate {
+    context: IcePanel.ActionCommentReplyUpdateContext;
+    id: string;
+    props: IcePanel.CommentReplyPartial;
+    type: IcePanel.ActionCommentReplyUpdateType;
+}
+
+export interface ActionCommentReplyUpdateContext {
+    commentHandleId?: string | undefined;
+    domainHandleId?: string | undefined;
+    domainName?: string | undefined;
+}
+
+export const ActionCommentUpdateType = {
+    CommentUpdate: "comment-update",
+} as const;
+export type ActionCommentUpdateType = (typeof ActionCommentUpdateType)[keyof typeof ActionCommentUpdateType];
+
+export interface ActionCommentUpdate {
+    context: IcePanel.ActionCommentUpdateContext;
+    id: string;
+    props: IcePanel.CommentPartial;
+    type: IcePanel.ActionCommentUpdateType;
+}
+
+export interface ActionCommentUpdateContext {
+    domainHandleId?: string | undefined;
+    domainName?: string | undefined;
+    modelFamily?: IcePanel.ActionContextModelObject[] | undefined;
+    targetHandleId?: string | undefined;
+    targetName?: string | undefined;
+}
+
+export interface ActionContextModelObject {
+    handleId: string;
+    name: string;
+    type: IcePanel.ModelObjectType;
+}
+
+export interface ActionDiagramContentContextComment {
+    commentBodyType: IcePanel.CommentBodyType;
+    commentHandleId: string;
+}
+
+export interface ActionDiagramContentContextConnection {
+    modelHandleId: string | null;
+    modelName: string | null;
+}
+
+export interface ActionDiagramContentContextObject {
+    modelHandleId: string;
+    modelName: string;
+    modelType: IcePanel.ModelObjectType;
+    type: IcePanel.DiagramObjectType;
+}
+
+export const ActionDiagramContentCreateType = {
+    DiagramContentCreate: "diagram-content-create",
+} as const;
+export type ActionDiagramContentCreateType =
+    (typeof ActionDiagramContentCreateType)[keyof typeof ActionDiagramContentCreateType];
+
+export interface ActionDiagramContentCreate {
+    context: IcePanel.ActionDiagramContentCreateContext;
+    id: string;
+    props: IcePanel.DiagramContentRequired;
+    type: IcePanel.ActionDiagramContentCreateType;
+}
+
+export interface ActionDiagramContentCreateContext {
+    comments?: Record<string, IcePanel.ActionDiagramContentContextComment> | undefined;
+    connections?: Record<string, IcePanel.ActionDiagramContentContextConnection> | undefined;
+    domainHandleId?: string | undefined;
+    domainName?: string | undefined;
+    groupHandleId?: string | undefined;
+    groupName?: string | undefined;
+    modelFamily?: IcePanel.ActionContextModelObject[] | undefined;
+    name: string;
+    objects?: Record<string, IcePanel.ActionDiagramContentContextObject> | undefined;
+    type: IcePanel.DiagramType;
+}
+
+export const ActionDiagramContentDeleteType = {
+    DiagramContentDelete: "diagram-content-delete",
+} as const;
+export type ActionDiagramContentDeleteType =
+    (typeof ActionDiagramContentDeleteType)[keyof typeof ActionDiagramContentDeleteType];
+
+export interface ActionDiagramContentDelete {
+    context: IcePanel.ActionDiagramContentDeleteContext;
+    id: string;
+    type: IcePanel.ActionDiagramContentDeleteType;
+}
+
+export interface ActionDiagramContentDeleteContext {
+    domainHandleId?: string | undefined;
+    domainName?: string | undefined;
+    modelFamily?: IcePanel.ActionContextModelObject[] | undefined;
+    name: string;
+    type: IcePanel.DiagramType;
+}
+
+export const ActionDiagramContentUpdateType = {
+    DiagramContentUpdate: "diagram-content-update",
+} as const;
+export type ActionDiagramContentUpdateType =
+    (typeof ActionDiagramContentUpdateType)[keyof typeof ActionDiagramContentUpdateType];
+
+export interface ActionDiagramContentUpdate {
+    context: IcePanel.ActionDiagramContentUpdateContext;
+    id: string;
+    props: IcePanel.DiagramContentPartial;
+    type: IcePanel.ActionDiagramContentUpdateType;
+}
+
+export interface ActionDiagramContentUpdateContext {
+    comments?: Record<string, IcePanel.ActionDiagramContentContextComment> | undefined;
+    connections?: Record<string, IcePanel.ActionDiagramContentContextConnection> | undefined;
+    domainHandleId?: string | undefined;
+    domainName?: string | undefined;
+    groupHandleId?: string | undefined;
+    groupName?: string | undefined;
+    modelFamily?: IcePanel.ActionContextModelObject[] | undefined;
+    name: string;
+    objects?: Record<string, IcePanel.ActionDiagramContentContextObject> | undefined;
+    type: IcePanel.DiagramType;
+}
+
+export const ActionDiagramContentViewType = {
+    DiagramContentView: "diagram-content-view",
+} as const;
+export type ActionDiagramContentViewType =
+    (typeof ActionDiagramContentViewType)[keyof typeof ActionDiagramContentViewType];
+
+export interface ActionDiagramContentView {
+    context: IcePanel.ActionDiagramContentViewContext;
+    id: string;
+    type: IcePanel.ActionDiagramContentViewType;
+}
+
+export interface ActionDiagramContentViewContext {
+    domainHandleId?: string | undefined;
+    domainName?: string | undefined;
+    modelFamily?: IcePanel.ActionContextModelObject[] | undefined;
+    name: string;
+    type: IcePanel.DiagramType;
+}
+
+export const ActionDiagramGroupCreateType = {
+    DiagramGroupCreate: "diagram-group-create",
+} as const;
+export type ActionDiagramGroupCreateType =
+    (typeof ActionDiagramGroupCreateType)[keyof typeof ActionDiagramGroupCreateType];
+
+export interface ActionDiagramGroupCreate {
+    context: IcePanel.ActionDiagramGroupCreateContext;
+    id: string;
+    props: IcePanel.DiagramGroupRequired;
+    type: IcePanel.ActionDiagramGroupCreateType;
+}
+
+export interface ActionDiagramGroupCreateContext {
+    domainHandleId?: string | undefined;
+    domainName?: string | undefined;
+    modelFamily?: IcePanel.ActionContextModelObject[] | undefined;
+}
+
+export const ActionDiagramGroupDeleteType = {
+    DiagramGroupDelete: "diagram-group-delete",
+} as const;
+export type ActionDiagramGroupDeleteType =
+    (typeof ActionDiagramGroupDeleteType)[keyof typeof ActionDiagramGroupDeleteType];
+
+export interface ActionDiagramGroupDelete {
+    context: IcePanel.ActionDiagramGroupDeleteContext;
+    id: string;
+    type: IcePanel.ActionDiagramGroupDeleteType;
+}
+
+export interface ActionDiagramGroupDeleteContext {
+    domainHandleId?: string | undefined;
+    domainName?: string | undefined;
+    modelFamily?: IcePanel.ActionContextModelObject[] | undefined;
+    name: string;
+}
+
+export const ActionDiagramGroupUpdateType = {
+    DiagramGroupUpdate: "diagram-group-update",
+} as const;
+export type ActionDiagramGroupUpdateType =
+    (typeof ActionDiagramGroupUpdateType)[keyof typeof ActionDiagramGroupUpdateType];
+
+export interface ActionDiagramGroupUpdate {
+    context: IcePanel.ActionDiagramGroupUpdateContext;
+    id: string;
+    props: IcePanel.DiagramGroupPartial;
+    type: IcePanel.ActionDiagramGroupUpdateType;
+}
+
+export interface ActionDiagramGroupUpdateContext {
+    domainHandleId?: string | undefined;
+    domainName?: string | undefined;
+    modelFamily?: IcePanel.ActionContextModelObject[] | undefined;
+    name: string;
+}
+
+export const ActionDomainCreateType = {
+    DomainCreate: "domain-create",
+} as const;
+export type ActionDomainCreateType = (typeof ActionDomainCreateType)[keyof typeof ActionDomainCreateType];
+
+export interface ActionDomainCreate {
+    id: string;
+    props: IcePanel.DomainRequired;
+    type: IcePanel.ActionDomainCreateType;
+}
+
+export const ActionDomainDeleteType = {
+    DomainDelete: "domain-delete",
+} as const;
+export type ActionDomainDeleteType = (typeof ActionDomainDeleteType)[keyof typeof ActionDomainDeleteType];
+
+export interface ActionDomainDelete {
+    context: IcePanel.ActionDomainDeleteContext;
+    id: string;
+    type: IcePanel.ActionDomainDeleteType;
+}
+
+export interface ActionDomainDeleteContext {
+    name: string;
+}
+
+export const ActionDomainUpdateType = {
+    DomainUpdate: "domain-update",
+} as const;
+export type ActionDomainUpdateType = (typeof ActionDomainUpdateType)[keyof typeof ActionDomainUpdateType];
+
+export interface ActionDomainUpdate {
+    context: IcePanel.ActionDomainUpdateContext;
+    id: string;
+    props: IcePanel.DomainPartial;
+    type: IcePanel.ActionDomainUpdateType;
+}
+
+export interface ActionDomainUpdateContext {
+    name: string;
+}
+
+export interface ActionFlowContextObject {
+    type: IcePanel.DiagramObjectType;
+}
+
+export const ActionFlowCreateType = {
+    FlowCreate: "flow-create",
+} as const;
+export type ActionFlowCreateType = (typeof ActionFlowCreateType)[keyof typeof ActionFlowCreateType];
+
+export interface ActionFlowCreate {
+    context: IcePanel.ActionFlowCreateContext;
+    id: string;
+    props: IcePanel.FlowRequired;
+    type: IcePanel.ActionFlowCreateType;
+}
+
+export interface ActionFlowCreateContext {
+    diagramHandleId?: string | undefined;
+    diagramName?: string | undefined;
+    diagramType?: IcePanel.DiagramType | undefined;
+    domainHandleId?: string | undefined;
+    domainName?: string | undefined;
+    modelFamily?: IcePanel.ActionContextModelObject[] | undefined;
+}
+
+export const ActionFlowDeleteType = {
+    FlowDelete: "flow-delete",
+} as const;
+export type ActionFlowDeleteType = (typeof ActionFlowDeleteType)[keyof typeof ActionFlowDeleteType];
+
+export interface ActionFlowDelete {
+    context: IcePanel.ActionFlowDeleteContext;
+    id: string;
+    type: IcePanel.ActionFlowDeleteType;
+}
+
+export interface ActionFlowDeleteContext {
+    diagramHandleId?: string | undefined;
+    diagramName?: string | undefined;
+    diagramType?: IcePanel.DiagramType | undefined;
+    domainHandleId?: string | undefined;
+    domainName?: string | undefined;
+    modelFamily?: IcePanel.ActionContextModelObject[] | undefined;
+    name: string;
+}
+
+export const ActionFlowUpdateType = {
+    FlowUpdate: "flow-update",
+} as const;
+export type ActionFlowUpdateType = (typeof ActionFlowUpdateType)[keyof typeof ActionFlowUpdateType];
+
+export interface ActionFlowUpdate {
+    context: IcePanel.ActionFlowUpdateContext;
+    id: string;
+    props: IcePanel.FlowPartial;
+    type: IcePanel.ActionFlowUpdateType;
+}
+
+export interface ActionFlowUpdateContext {
+    diagramHandleId?: string | undefined;
+    diagramName?: string | undefined;
+    diagramType?: IcePanel.DiagramType | undefined;
+    domainHandleId?: string | undefined;
+    domainName?: string | undefined;
+    modelFamily?: IcePanel.ActionContextModelObject[] | undefined;
+    name: string;
+    objects?: Record<string, IcePanel.ActionFlowContextObject> | undefined;
+}
+
+export const ActionFlowViewType = {
+    FlowView: "flow-view",
+} as const;
+export type ActionFlowViewType = (typeof ActionFlowViewType)[keyof typeof ActionFlowViewType];
+
+export interface ActionFlowView {
+    context: IcePanel.ActionFlowViewContext;
+    id: string;
+    type: IcePanel.ActionFlowViewType;
+}
+
+export interface ActionFlowViewContext {
+    diagramHandleId?: string | undefined;
+    diagramName?: string | undefined;
+    diagramType?: IcePanel.DiagramType | undefined;
+    domainHandleId?: string | undefined;
+    domainName?: string | undefined;
+    modelFamily?: IcePanel.ActionContextModelObject[] | undefined;
+    name: string;
+}
+
+export const ActionTagCreateType = {
+    TagCreate: "tag-create",
+} as const;
+export type ActionTagCreateType = (typeof ActionTagCreateType)[keyof typeof ActionTagCreateType];
+
+export interface ActionTagCreate {
+    context: IcePanel.ActionTagCreateContext;
+    id: string;
+    props: IcePanel.TagRequired;
+    type: IcePanel.ActionTagCreateType;
+}
+
+export interface ActionTagCreateContext {
+    groupHandleId?: string | undefined;
+    groupName?: string | undefined;
+}
+
+export const ActionTagDeleteType = {
+    TagDelete: "tag-delete",
+} as const;
+export type ActionTagDeleteType = (typeof ActionTagDeleteType)[keyof typeof ActionTagDeleteType];
+
+export interface ActionTagDelete {
+    context: IcePanel.ActionTagDeleteContext;
+    id: string;
+    type: IcePanel.ActionTagDeleteType;
+}
+
+export interface ActionTagDeleteContext {
+    groupHandleId?: string | undefined;
+    groupName?: string | undefined;
+    name: string;
+}
+
+export const ActionTagGroupCreateType = {
+    TagGroupCreate: "tag-group-create",
+} as const;
+export type ActionTagGroupCreateType = (typeof ActionTagGroupCreateType)[keyof typeof ActionTagGroupCreateType];
+
+export interface ActionTagGroupCreate {
+    id: string;
+    props: IcePanel.TagGroupRequired;
+    type: IcePanel.ActionTagGroupCreateType;
+}
+
+export const ActionTagGroupDeleteType = {
+    TagGroupDelete: "tag-group-delete",
+} as const;
+export type ActionTagGroupDeleteType = (typeof ActionTagGroupDeleteType)[keyof typeof ActionTagGroupDeleteType];
+
+export interface ActionTagGroupDelete {
+    context: IcePanel.ActionTagGroupDeleteContext;
+    id: string;
+    type: IcePanel.ActionTagGroupDeleteType;
+}
+
+export interface ActionTagGroupDeleteContext {
+    name: string;
+}
+
+export const ActionTagGroupUpdateType = {
+    TagGroupUpdate: "tag-group-update",
+} as const;
+export type ActionTagGroupUpdateType = (typeof ActionTagGroupUpdateType)[keyof typeof ActionTagGroupUpdateType];
+
+export interface ActionTagGroupUpdate {
+    context: IcePanel.ActionTagGroupUpdateContext;
+    id: string;
+    props: IcePanel.TagGroupPartial;
+    type: IcePanel.ActionTagGroupUpdateType;
+}
+
+export interface ActionTagGroupUpdateContext {
+    name: string;
+}
+
+export const ActionTagUpdateType = {
+    TagUpdate: "tag-update",
+} as const;
+export type ActionTagUpdateType = (typeof ActionTagUpdateType)[keyof typeof ActionTagUpdateType];
+
+export interface ActionTagUpdate {
+    context: IcePanel.ActionTagUpdateContext;
+    id: string;
+    props: IcePanel.TagPartial;
+    type: IcePanel.ActionTagUpdateType;
+}
+
+export interface ActionTagUpdateContext {
+    groupHandleId?: string | undefined;
+    groupName?: string | undefined;
+    name: string;
+}
 
 export const ActionType = {
     ApiKeyCreate: "api-key-create",
     ApiKeyDelete: "api-key-delete",
     ApiKeyUpdate: "api-key-update",
+    OauthConsentDeny: "oauth-consent-deny",
+    OauthConsentGrant: "oauth-consent-grant",
     OrganizationCreate: "organization-create",
     OrganizationDelete: "organization-delete",
     OrganizationUpdate: "organization-update",
@@ -78,6 +535,9 @@ export const ActionType = {
     TeamCreate: "team-create",
     TeamDelete: "team-delete",
     TeamUpdate: "team-update",
+    UserLogin: "user-login",
+    UserLoginFailed: "user-login-failed",
+    UserLogout: "user-logout",
     CommentCreate: "comment-create",
     CommentDelete: "comment-delete",
     CommentReplyCreate: "comment-reply-create",
@@ -113,6 +573,7 @@ export const ActionType = {
     LandscapeDelete: "landscape-delete",
     LandscapeDuplicate: "landscape-duplicate",
     LandscapeExport: "landscape-export",
+    LandscapeImport: "landscape-import",
     LandscapeUpdate: "landscape-update",
     ModelConnectionCreate: "model-connection-create",
     ModelConnectionDelete: "model-connection-delete",
@@ -137,527 +598,6 @@ export const ActionType = {
     VersionRevertCreate: "version-revert-create",
 } as const;
 export type ActionType = (typeof ActionType)[keyof typeof ActionType];
-
-export interface ActionContextModelObject {
-    handleId: string;
-    name: string;
-    type: IcePanel.ModelObjectType;
-}
-
-export interface ActionCommentCreateContext {
-    domainHandleId?: string;
-    domainName?: string;
-    modelFamily?: IcePanel.ActionContextModelObject[];
-    targetHandleId?: string;
-    targetName?: string;
-}
-
-export const ActionCommentCreateType = {
-    CommentCreate: "comment-create",
-} as const;
-export type ActionCommentCreateType = (typeof ActionCommentCreateType)[keyof typeof ActionCommentCreateType];
-
-export interface ActionCommentCreate {
-    context: IcePanel.ActionCommentCreateContext;
-    id: string;
-    props: IcePanel.CommentRequired;
-    type: IcePanel.ActionCommentCreateType;
-}
-
-export interface ActionCommentUpdateContext {
-    domainHandleId?: string;
-    domainName?: string;
-    modelFamily?: IcePanel.ActionContextModelObject[];
-    targetHandleId?: string;
-    targetName?: string;
-}
-
-export const ActionCommentUpdateType = {
-    CommentUpdate: "comment-update",
-} as const;
-export type ActionCommentUpdateType = (typeof ActionCommentUpdateType)[keyof typeof ActionCommentUpdateType];
-
-export interface ActionCommentUpdate {
-    context: IcePanel.ActionCommentUpdateContext;
-    id: string;
-    props: IcePanel.CommentPartial;
-    type: IcePanel.ActionCommentUpdateType;
-}
-
-export interface ActionCommentDeleteContext {
-    domainHandleId?: string;
-    domainName?: string;
-    modelFamily?: IcePanel.ActionContextModelObject[];
-    targetHandleId?: string;
-    targetName?: string;
-}
-
-export const ActionCommentDeleteType = {
-    CommentDelete: "comment-delete",
-} as const;
-export type ActionCommentDeleteType = (typeof ActionCommentDeleteType)[keyof typeof ActionCommentDeleteType];
-
-export interface ActionCommentDelete {
-    context: IcePanel.ActionCommentDeleteContext;
-    id: string;
-    type: IcePanel.ActionCommentDeleteType;
-}
-
-export interface ActionCommentReplyCreateContext {
-    commentHandleId?: string;
-    domainHandleId?: string;
-    domainName?: string;
-}
-
-export const ActionCommentReplyCreateType = {
-    CommentReplyCreate: "comment-reply-create",
-} as const;
-export type ActionCommentReplyCreateType =
-    (typeof ActionCommentReplyCreateType)[keyof typeof ActionCommentReplyCreateType];
-
-export interface ActionCommentReplyCreate {
-    context: IcePanel.ActionCommentReplyCreateContext;
-    id: string;
-    props: IcePanel.CommentReplyRequired;
-    type: IcePanel.ActionCommentReplyCreateType;
-}
-
-export interface ActionCommentReplyUpdateContext {
-    commentHandleId?: string;
-    domainHandleId?: string;
-    domainName?: string;
-}
-
-export const ActionCommentReplyUpdateType = {
-    CommentReplyUpdate: "comment-reply-update",
-} as const;
-export type ActionCommentReplyUpdateType =
-    (typeof ActionCommentReplyUpdateType)[keyof typeof ActionCommentReplyUpdateType];
-
-export interface ActionCommentReplyUpdate {
-    context: IcePanel.ActionCommentReplyUpdateContext;
-    id: string;
-    props: IcePanel.CommentReplyPartial;
-    type: IcePanel.ActionCommentReplyUpdateType;
-}
-
-export interface ActionCommentReplyDeleteContext {
-    commentHandleId?: string;
-    domainHandleId?: string;
-    domainName?: string;
-}
-
-export const ActionCommentReplyDeleteType = {
-    CommentReplyDelete: "comment-reply-delete",
-} as const;
-export type ActionCommentReplyDeleteType =
-    (typeof ActionCommentReplyDeleteType)[keyof typeof ActionCommentReplyDeleteType];
-
-export interface ActionCommentReplyDelete {
-    context: IcePanel.ActionCommentReplyDeleteContext;
-    id: string;
-    type: IcePanel.ActionCommentReplyDeleteType;
-}
-
-export interface ActionDiagramContentContextComment {
-    commentBodyType: IcePanel.CommentBodyType;
-    commentHandleId: string;
-}
-
-export interface ActionDiagramContentContextConnection {
-    modelHandleId: string | null;
-    modelName: string | null;
-}
-
-export interface ActionDiagramContentContextObject {
-    modelHandleId: string;
-    modelName: string;
-    modelType: IcePanel.ModelObjectType;
-    type: IcePanel.DiagramObjectType;
-}
-
-export interface ActionDiagramContentCreateContext {
-    comments?: Record<string, IcePanel.ActionDiagramContentContextComment>;
-    connections?: Record<string, IcePanel.ActionDiagramContentContextConnection>;
-    domainHandleId?: string;
-    domainName?: string;
-    groupHandleId?: string;
-    groupName?: string;
-    modelFamily?: IcePanel.ActionContextModelObject[];
-    name: string;
-    objects?: Record<string, IcePanel.ActionDiagramContentContextObject>;
-    type: IcePanel.DiagramType;
-}
-
-export const ActionDiagramContentCreateType = {
-    DiagramContentCreate: "diagram-content-create",
-} as const;
-export type ActionDiagramContentCreateType =
-    (typeof ActionDiagramContentCreateType)[keyof typeof ActionDiagramContentCreateType];
-
-export interface ActionDiagramContentCreate {
-    context: IcePanel.ActionDiagramContentCreateContext;
-    id: string;
-    props: IcePanel.DiagramContentRequired;
-    type: IcePanel.ActionDiagramContentCreateType;
-}
-
-export interface ActionDiagramContentUpdateContext {
-    comments?: Record<string, IcePanel.ActionDiagramContentContextComment>;
-    connections?: Record<string, IcePanel.ActionDiagramContentContextConnection>;
-    domainHandleId?: string;
-    domainName?: string;
-    groupHandleId?: string;
-    groupName?: string;
-    modelFamily?: IcePanel.ActionContextModelObject[];
-    name: string;
-    objects?: Record<string, IcePanel.ActionDiagramContentContextObject>;
-    type: IcePanel.DiagramType;
-}
-
-export const ActionDiagramContentUpdateType = {
-    DiagramContentUpdate: "diagram-content-update",
-} as const;
-export type ActionDiagramContentUpdateType =
-    (typeof ActionDiagramContentUpdateType)[keyof typeof ActionDiagramContentUpdateType];
-
-export interface ActionDiagramContentUpdate {
-    context: IcePanel.ActionDiagramContentUpdateContext;
-    id: string;
-    props: IcePanel.DiagramContentPartial;
-    type: IcePanel.ActionDiagramContentUpdateType;
-}
-
-export interface ActionDiagramContentDeleteContext {
-    domainHandleId?: string;
-    domainName?: string;
-    modelFamily?: IcePanel.ActionContextModelObject[];
-    name: string;
-    type: IcePanel.DiagramType;
-}
-
-export const ActionDiagramContentDeleteType = {
-    DiagramContentDelete: "diagram-content-delete",
-} as const;
-export type ActionDiagramContentDeleteType =
-    (typeof ActionDiagramContentDeleteType)[keyof typeof ActionDiagramContentDeleteType];
-
-export interface ActionDiagramContentDelete {
-    context: IcePanel.ActionDiagramContentDeleteContext;
-    id: string;
-    type: IcePanel.ActionDiagramContentDeleteType;
-}
-
-export interface ActionDiagramContentViewContext {
-    domainHandleId?: string;
-    domainName?: string;
-    modelFamily?: IcePanel.ActionContextModelObject[];
-    name: string;
-    type: IcePanel.DiagramType;
-}
-
-export const ActionDiagramContentViewType = {
-    DiagramContentView: "diagram-content-view",
-} as const;
-export type ActionDiagramContentViewType =
-    (typeof ActionDiagramContentViewType)[keyof typeof ActionDiagramContentViewType];
-
-export interface ActionDiagramContentView {
-    context: IcePanel.ActionDiagramContentViewContext;
-    id: string;
-    type: IcePanel.ActionDiagramContentViewType;
-}
-
-export interface ActionDiagramGroupCreateContext {
-    domainHandleId?: string;
-    domainName?: string;
-    modelFamily?: IcePanel.ActionContextModelObject[];
-}
-
-export const ActionDiagramGroupCreateType = {
-    DiagramGroupCreate: "diagram-group-create",
-} as const;
-export type ActionDiagramGroupCreateType =
-    (typeof ActionDiagramGroupCreateType)[keyof typeof ActionDiagramGroupCreateType];
-
-export interface ActionDiagramGroupCreate {
-    context: IcePanel.ActionDiagramGroupCreateContext;
-    id: string;
-    props: IcePanel.DiagramGroupRequired;
-    type: IcePanel.ActionDiagramGroupCreateType;
-}
-
-export interface ActionDiagramGroupUpdateContext {
-    domainHandleId?: string;
-    domainName?: string;
-    modelFamily?: IcePanel.ActionContextModelObject[];
-    name: string;
-}
-
-export const ActionDiagramGroupUpdateType = {
-    DiagramGroupUpdate: "diagram-group-update",
-} as const;
-export type ActionDiagramGroupUpdateType =
-    (typeof ActionDiagramGroupUpdateType)[keyof typeof ActionDiagramGroupUpdateType];
-
-export interface ActionDiagramGroupUpdate {
-    context: IcePanel.ActionDiagramGroupUpdateContext;
-    id: string;
-    props: IcePanel.DiagramGroupPartial;
-    type: IcePanel.ActionDiagramGroupUpdateType;
-}
-
-export interface ActionDiagramGroupDeleteContext {
-    domainHandleId?: string;
-    domainName?: string;
-    modelFamily?: IcePanel.ActionContextModelObject[];
-    name: string;
-}
-
-export const ActionDiagramGroupDeleteType = {
-    DiagramGroupDelete: "diagram-group-delete",
-} as const;
-export type ActionDiagramGroupDeleteType =
-    (typeof ActionDiagramGroupDeleteType)[keyof typeof ActionDiagramGroupDeleteType];
-
-export interface ActionDiagramGroupDelete {
-    context: IcePanel.ActionDiagramGroupDeleteContext;
-    id: string;
-    type: IcePanel.ActionDiagramGroupDeleteType;
-}
-
-export const ActionDomainCreateType = {
-    DomainCreate: "domain-create",
-} as const;
-export type ActionDomainCreateType = (typeof ActionDomainCreateType)[keyof typeof ActionDomainCreateType];
-
-export interface ActionDomainCreate {
-    id: string;
-    props: IcePanel.DomainRequired;
-    type: IcePanel.ActionDomainCreateType;
-}
-
-export interface ActionDomainUpdateContext {
-    name: string;
-}
-
-export const ActionDomainUpdateType = {
-    DomainUpdate: "domain-update",
-} as const;
-export type ActionDomainUpdateType = (typeof ActionDomainUpdateType)[keyof typeof ActionDomainUpdateType];
-
-export interface ActionDomainUpdate {
-    context: IcePanel.ActionDomainUpdateContext;
-    id: string;
-    props: IcePanel.DomainPartial;
-    type: IcePanel.ActionDomainUpdateType;
-}
-
-export interface ActionDomainDeleteContext {
-    name: string;
-}
-
-export const ActionDomainDeleteType = {
-    DomainDelete: "domain-delete",
-} as const;
-export type ActionDomainDeleteType = (typeof ActionDomainDeleteType)[keyof typeof ActionDomainDeleteType];
-
-export interface ActionDomainDelete {
-    context: IcePanel.ActionDomainDeleteContext;
-    id: string;
-    type: IcePanel.ActionDomainDeleteType;
-}
-
-export interface ActionFlowCreateContext {
-    diagramHandleId?: string;
-    diagramName?: string;
-    diagramType?: IcePanel.DiagramType;
-    domainHandleId?: string;
-    domainName?: string;
-    modelFamily?: IcePanel.ActionContextModelObject[];
-}
-
-export const ActionFlowCreateType = {
-    FlowCreate: "flow-create",
-} as const;
-export type ActionFlowCreateType = (typeof ActionFlowCreateType)[keyof typeof ActionFlowCreateType];
-
-export interface ActionFlowCreate {
-    context: IcePanel.ActionFlowCreateContext;
-    id: string;
-    props: IcePanel.FlowRequired;
-    type: IcePanel.ActionFlowCreateType;
-}
-
-export interface ActionFlowContextObject {
-    type: IcePanel.DiagramObjectType;
-}
-
-export interface ActionFlowUpdateContext {
-    diagramHandleId?: string;
-    diagramName?: string;
-    diagramType?: IcePanel.DiagramType;
-    domainHandleId?: string;
-    domainName?: string;
-    modelFamily?: IcePanel.ActionContextModelObject[];
-    name: string;
-    objects?: Record<string, IcePanel.ActionFlowContextObject>;
-}
-
-export const ActionFlowUpdateType = {
-    FlowUpdate: "flow-update",
-} as const;
-export type ActionFlowUpdateType = (typeof ActionFlowUpdateType)[keyof typeof ActionFlowUpdateType];
-
-export interface ActionFlowUpdate {
-    context: IcePanel.ActionFlowUpdateContext;
-    id: string;
-    props: IcePanel.FlowPartial;
-    type: IcePanel.ActionFlowUpdateType;
-}
-
-export interface ActionFlowDeleteContext {
-    diagramHandleId?: string;
-    diagramName?: string;
-    diagramType?: IcePanel.DiagramType;
-    domainHandleId?: string;
-    domainName?: string;
-    modelFamily?: IcePanel.ActionContextModelObject[];
-    name: string;
-}
-
-export const ActionFlowDeleteType = {
-    FlowDelete: "flow-delete",
-} as const;
-export type ActionFlowDeleteType = (typeof ActionFlowDeleteType)[keyof typeof ActionFlowDeleteType];
-
-export interface ActionFlowDelete {
-    context: IcePanel.ActionFlowDeleteContext;
-    id: string;
-    type: IcePanel.ActionFlowDeleteType;
-}
-
-export interface ActionFlowViewContext {
-    diagramHandleId?: string;
-    diagramName?: string;
-    diagramType?: IcePanel.DiagramType;
-    domainHandleId?: string;
-    domainName?: string;
-    modelFamily?: IcePanel.ActionContextModelObject[];
-    name: string;
-}
-
-export const ActionFlowViewType = {
-    FlowView: "flow-view",
-} as const;
-export type ActionFlowViewType = (typeof ActionFlowViewType)[keyof typeof ActionFlowViewType];
-
-export interface ActionFlowView {
-    context: IcePanel.ActionFlowViewContext;
-    id: string;
-    type: IcePanel.ActionFlowViewType;
-}
-
-export interface ActionTagCreateContext {
-    groupHandleId?: string;
-    groupName?: string;
-}
-
-export const ActionTagCreateType = {
-    TagCreate: "tag-create",
-} as const;
-export type ActionTagCreateType = (typeof ActionTagCreateType)[keyof typeof ActionTagCreateType];
-
-export interface ActionTagCreate {
-    context: IcePanel.ActionTagCreateContext;
-    id: string;
-    props: IcePanel.TagRequired;
-    type: IcePanel.ActionTagCreateType;
-}
-
-export interface ActionTagUpdateContext {
-    groupHandleId?: string;
-    groupName?: string;
-    name: string;
-}
-
-export const ActionTagUpdateType = {
-    TagUpdate: "tag-update",
-} as const;
-export type ActionTagUpdateType = (typeof ActionTagUpdateType)[keyof typeof ActionTagUpdateType];
-
-export interface ActionTagUpdate {
-    context: IcePanel.ActionTagUpdateContext;
-    id: string;
-    props: IcePanel.TagPartial;
-    type: IcePanel.ActionTagUpdateType;
-}
-
-export interface ActionTagDeleteContext {
-    groupHandleId?: string;
-    groupName?: string;
-    name: string;
-}
-
-export const ActionTagDeleteType = {
-    TagDelete: "tag-delete",
-} as const;
-export type ActionTagDeleteType = (typeof ActionTagDeleteType)[keyof typeof ActionTagDeleteType];
-
-export interface ActionTagDelete {
-    context: IcePanel.ActionTagDeleteContext;
-    id: string;
-    type: IcePanel.ActionTagDeleteType;
-}
-
-export const ActionTagGroupCreateType = {
-    TagGroupCreate: "tag-group-create",
-} as const;
-export type ActionTagGroupCreateType = (typeof ActionTagGroupCreateType)[keyof typeof ActionTagGroupCreateType];
-
-export interface ActionTagGroupCreate {
-    id: string;
-    props: IcePanel.TagGroupRequired;
-    type: IcePanel.ActionTagGroupCreateType;
-}
-
-export interface ActionTagGroupUpdateContext {
-    name: string;
-}
-
-export const ActionTagGroupUpdateType = {
-    TagGroupUpdate: "tag-group-update",
-} as const;
-export type ActionTagGroupUpdateType = (typeof ActionTagGroupUpdateType)[keyof typeof ActionTagGroupUpdateType];
-
-export interface ActionTagGroupUpdate {
-    context: IcePanel.ActionTagGroupUpdateContext;
-    id: string;
-    props: IcePanel.TagGroupPartial;
-    type: IcePanel.ActionTagGroupUpdateType;
-}
-
-export interface ActionTagGroupDeleteContext {
-    name: string;
-}
-
-export const ActionTagGroupDeleteType = {
-    TagGroupDelete: "tag-group-delete",
-} as const;
-export type ActionTagGroupDeleteType = (typeof ActionTagGroupDeleteType)[keyof typeof ActionTagGroupDeleteType];
-
-export interface ActionTagGroupDelete {
-    context: IcePanel.ActionTagGroupDeleteContext;
-    id: string;
-    type: IcePanel.ActionTagGroupDeleteType;
-}
-
-export type OrganizationAction =
-    | IcePanel.ActionApiKey
-    | IcePanel.ActionOrganization
-    | IcePanel.ActionOrganizationUser
-    | IcePanel.ActionOrganizationUserInvite
-    | IcePanel.ActionTeam;
 
 export type LandscapeAction =
     | IcePanel.ActionCommentCreate
@@ -695,21 +635,96 @@ export type LandscapeAction =
     | IcePanel.ActionTagGroupDelete
     | IcePanel.ActionVersion;
 
-export type Action = IcePanel.OrganizationAction | IcePanel.LandscapeAction;
+export const LandscapeActionType = {
+    CommentCreate: "comment-create",
+    CommentDelete: "comment-delete",
+    CommentReplyCreate: "comment-reply-create",
+    CommentReplyDelete: "comment-reply-delete",
+    CommentReplyUpdate: "comment-reply-update",
+    CommentUpdate: "comment-update",
+    DiagramContentCreate: "diagram-content-create",
+    DiagramContentDelete: "diagram-content-delete",
+    DiagramContentUpdate: "diagram-content-update",
+    DiagramContentView: "diagram-content-view",
+    DiagramCreate: "diagram-create",
+    DiagramDelete: "diagram-delete",
+    DiagramExport: "diagram-export",
+    DiagramGroupCreate: "diagram-group-create",
+    DiagramGroupDelete: "diagram-group-delete",
+    DiagramGroupUpdate: "diagram-group-update",
+    DiagramUpdate: "diagram-update",
+    DomainCreate: "domain-create",
+    DomainDelete: "domain-delete",
+    DomainUpdate: "domain-update",
+    DraftCreate: "draft-create",
+    DraftDelete: "draft-delete",
+    DraftMerge: "draft-merge",
+    DraftTaskCreate: "draft-task-create",
+    DraftUpdate: "draft-update",
+    DraftView: "draft-view",
+    FlowCreate: "flow-create",
+    FlowDelete: "flow-delete",
+    FlowUpdate: "flow-update",
+    FlowView: "flow-view",
+    LandscapeCopy: "landscape-copy",
+    LandscapeCreate: "landscape-create",
+    LandscapeDelete: "landscape-delete",
+    LandscapeDuplicate: "landscape-duplicate",
+    LandscapeExport: "landscape-export",
+    LandscapeImport: "landscape-import",
+    LandscapeUpdate: "landscape-update",
+    ModelConnectionCreate: "model-connection-create",
+    ModelConnectionDelete: "model-connection-delete",
+    ModelConnectionUpdate: "model-connection-update",
+    ModelConnectionsExport: "model-connections-export",
+    ModelObjectCreate: "model-object-create",
+    ModelObjectDelete: "model-object-delete",
+    ModelObjectDependenciesExport: "model-object-dependencies-export",
+    ModelObjectUpdate: "model-object-update",
+    ModelObjectsExport: "model-objects-export",
+    ShareLinkCreate: "share-link-create",
+    ShareLinkDelete: "share-link-delete",
+    ShareLinkUpdate: "share-link-update",
+    TagCreate: "tag-create",
+    TagDelete: "tag-delete",
+    TagGroupCreate: "tag-group-create",
+    TagGroupDelete: "tag-group-delete",
+    TagGroupUpdate: "tag-group-update",
+    TagUpdate: "tag-update",
+    VersionCreate: "version-create",
+    VersionDelete: "version-delete",
+    VersionRevertCreate: "version-revert-create",
+} as const;
+export type LandscapeActionType = (typeof LandscapeActionType)[keyof typeof LandscapeActionType];
 
-export type ActionLogFilterActionTypeNotNot = IcePanel.LandscapeActionType | IcePanel.LandscapeActionType[];
+export type OrganizationAction =
+    | IcePanel.ActionApiKey
+    | IcePanel.ActionOAuth
+    | IcePanel.ActionOrganization
+    | IcePanel.ActionOrganizationUser
+    | IcePanel.ActionOrganizationUserInvite
+    | IcePanel.ActionTeam
+    | IcePanel.ActionUser;
 
-export interface ActionLogFilterActionTypeNot {
-    $not?: IcePanel.ActionLogFilterActionTypeNotNot;
+export interface ActionLog {
+    /** full description of the action that happened */
+    action: IcePanel.Action;
+    /** id of the action and any related ids that were part of the action */
+    actionIds: string[];
+    id: string;
+    landscapeId: string;
+    /** parent action log id that caused this action to happen, eg: update of a diagram caused by a model object delete */
+    parentId: string | null;
+    performedAt: string;
+    performedBy: IcePanel.AuthType;
+    performedByAuthProvider?: string | undefined;
+    performedByClientId?: string | undefined;
+    performedById: string;
+    /** ip address of the user or api key who performed the action */
+    performedByIp?: string | undefined;
+    performedByName?: string | undefined;
+    performedByUserAgent?: string | undefined;
 }
-
-/**
- * type of action that was performed, eg: diagram-content-update or model-object-create
- */
-export type ActionLogFilterActionType =
-    | IcePanel.LandscapeActionType
-    | IcePanel.LandscapeActionType[]
-    | IcePanel.ActionLogFilterActionTypeNot;
 
 export const ActionLogFilterOrder = {
     Asc: "asc",
@@ -726,57 +741,56 @@ export type ActionLogFilterPerformedById = string | string[];
 
 export interface ActionLogFilter {
     /** id of the entity to lookup, eg: id of the tag being created, or id of the model object being updated */
-    actionId?: string;
-    actionType?: IcePanel.ActionLogFilterActionType;
-    endAtDate?: string;
-    endAtId?: string;
-    endBeforeDate?: string;
-    endBeforeId?: string;
+    actionId?: string | undefined;
+    actionType?: IcePanel.ActionLogFilterActionType | undefined;
+    endAtDate?: string | undefined;
+    endAtId?: string | undefined;
+    endBeforeDate?: string | undefined;
+    endBeforeId?: string | undefined;
     /** include actions from objects inside the context, eg: update of a model connection that is connected to a model object */
-    includeActionsInContext?: boolean;
-    limit?: number;
-    order?: IcePanel.ActionLogFilterOrder;
-    performedBy?: IcePanel.ActionLogFilterPerformedBy;
+    includeActionsInContext?: boolean | undefined;
+    limit?: number | undefined;
+    order?: IcePanel.ActionLogFilterOrder | undefined;
+    performedBy?: IcePanel.ActionLogFilterPerformedBy | undefined;
     /** id of the user or api key who performed the action */
-    performedById?: IcePanel.ActionLogFilterPerformedById;
-    startAfterDate?: string;
-    startAfterId?: string;
-    startAtDate?: string;
-    startAtId?: string;
+    performedById?: IcePanel.ActionLogFilterPerformedById | undefined;
+    startAfterDate?: string | undefined;
+    startAfterId?: string | undefined;
+    startAtDate?: string | undefined;
+    startAtId?: string | undefined;
 }
 
-export const ActionLogImportance = {
-    Low: "low",
-    Medium: "medium",
-    High: "high",
-} as const;
-export type ActionLogImportance = (typeof ActionLogImportance)[keyof typeof ActionLogImportance];
+export type ActionLogFilterActionTypeNotNot = IcePanel.LandscapeActionType | IcePanel.LandscapeActionType[];
 
-export interface ActionLog {
-    /** full description of the action that happened */
-    action: IcePanel.Action;
-    /** id of the action and any related ids that were part of the action */
-    actionIds: string[];
+export interface ActionLogFilterActionTypeNot {
+    $not?: IcePanel.ActionLogFilterActionTypeNotNot | undefined;
+}
+
+/**
+ * type of action that was performed, eg: diagram-content-update or model-object-create
+ */
+export type ActionLogFilterActionType =
+    | IcePanel.LandscapeActionType
+    | IcePanel.LandscapeActionType[]
+    | IcePanel.ActionLogFilterActionTypeNot;
+
+export interface ActionLogStatsContributor {
+    contributedAt: string;
+    count: number;
     id: string;
-    /** importance of the action log, eg: medium for tags created */
-    importance: IcePanel.ActionLogImportance;
-    landscapeId: string;
-    /** parent action log id that caused this action to happen, eg: update of a diagram caused by a model object delete */
-    parentId: string | null;
-    performedAt: string;
-    performedBy: IcePanel.AuthType;
-    performedById: string;
-    performedByName?: string;
+    name?: string | undefined;
+    type: IcePanel.AuthType;
 }
 
-export const ActionLogStatsPeriod = {
-    Day: "day",
-    Week: "week",
-    Month: "month",
-    Year: "year",
-    All: "all",
-} as const;
-export type ActionLogStatsPeriod = (typeof ActionLogStatsPeriod)[keyof typeof ActionLogStatsPeriod];
+export interface ActionLogStatsDateByEntity {
+    date: string;
+    entities: Record<string, IcePanel.ActionLogStatsItemByEntity>;
+}
+
+export interface ActionLogStatsDateByType {
+    actions: Record<string, IcePanel.ActionLogStatsItemByType>;
+    date: string;
+}
 
 /**
  * type of action that was performed, eg: diagram-content-update or model-object-create
@@ -797,29 +811,14 @@ export type ActionLogStatsFilterPerformedById = string | string[];
 
 export interface ActionLogStatsFilter {
     /** type of action that was performed, eg: diagram-content-update or model-object-create */
-    actionType?: IcePanel.ActionLogStatsFilterActionType;
-    endAtDate?: string;
+    actionType?: IcePanel.ActionLogStatsFilterActionType | undefined;
+    endAtDate?: string | undefined;
     /** id of the entity to lookup, eg: id of the tag being created, or id of the model object being updated */
-    entityId?: IcePanel.ActionLogStatsFilterEntityId;
-    performedBy?: IcePanel.ActionLogStatsFilterPerformedBy;
+    entityId?: IcePanel.ActionLogStatsFilterEntityId | undefined;
+    performedBy?: IcePanel.ActionLogStatsFilterPerformedBy | undefined;
     /** id of the user or api key who performed the action */
-    performedById?: IcePanel.ActionLogStatsFilterPerformedById;
-    startAtDate?: string;
-}
-
-export interface ActionLogStatsContributor {
-    contributedAt: string;
-    count: number;
-    id: string;
-    name?: string;
-    type: IcePanel.AuthType;
-}
-
-export interface ActionLogStatsItemByType {
-    contributors: Record<string, IcePanel.ActionLogStatsContributor>;
-    count: number;
-    /** type of action that was performed, eg: diagram-content-update or model-object-create */
-    type: IcePanel.LandscapeActionType;
+    performedById?: IcePanel.ActionLogStatsFilterPerformedById | undefined;
+    startAtDate?: string | undefined;
 }
 
 export interface ActionLogStatsItemByEntity {
@@ -829,14 +828,17 @@ export interface ActionLogStatsItemByEntity {
     entityId: string;
 }
 
-export interface ActionLogStatsDateByType {
-    actions: Record<string, IcePanel.ActionLogStatsItemByType>;
-    date: string;
+export interface ActionLogStatsItemByType {
+    contributors: Record<string, IcePanel.ActionLogStatsContributor>;
+    count: number;
+    /** type of action that was performed, eg: diagram-content-update or model-object-create */
+    type: IcePanel.LandscapeActionType;
 }
 
-export interface ActionLogStatsDateByEntity {
-    date: string;
-    entities: Record<string, IcePanel.ActionLogStatsItemByEntity>;
+export interface ActionLogStatsListByEntity {
+    contributors: Record<string, IcePanel.ActionLogStatsContributor>;
+    dates: IcePanel.ActionLogStatsDateByEntity[];
+    totalCount: number;
 }
 
 export interface ActionLogStatsListByType {
@@ -845,11 +847,16 @@ export interface ActionLogStatsListByType {
     totalCount: number;
 }
 
-export interface ActionLogStatsListByEntity {
-    contributors: Record<string, IcePanel.ActionLogStatsContributor>;
-    dates: IcePanel.ActionLogStatsDateByEntity[];
-    totalCount: number;
-}
+export const ActionLogStatsPeriod = {
+    Day: "day",
+    Week: "week",
+    Month: "month",
+    Year: "year",
+    All: "all",
+} as const;
+export type ActionLogStatsPeriod = (typeof ActionLogStatsPeriod)[keyof typeof ActionLogStatsPeriod];
+
+export type ActionApiKey = IcePanel.ActionApiKeyCreate | IcePanel.ActionApiKeyUpdate | IcePanel.ActionApiKeyDelete;
 
 export interface ActionApiKeyContext {
     name: string;
@@ -866,6 +873,17 @@ export interface ActionApiKeyCreate {
     type: IcePanel.ActionApiKeyCreateType;
 }
 
+export const ActionApiKeyDeleteType = {
+    ApiKeyDelete: "api-key-delete",
+} as const;
+export type ActionApiKeyDeleteType = (typeof ActionApiKeyDeleteType)[keyof typeof ActionApiKeyDeleteType];
+
+export interface ActionApiKeyDelete {
+    context: IcePanel.ActionApiKeyContext;
+    id: string;
+    type: IcePanel.ActionApiKeyDeleteType;
+}
+
 export const ActionApiKeyUpdateType = {
     ApiKeyUpdate: "api-key-update",
 } as const;
@@ -878,26 +896,11 @@ export interface ActionApiKeyUpdate {
     type: IcePanel.ActionApiKeyUpdateType;
 }
 
-export const ActionApiKeyDeleteType = {
-    ApiKeyDelete: "api-key-delete",
-} as const;
-export type ActionApiKeyDeleteType = (typeof ActionApiKeyDeleteType)[keyof typeof ActionApiKeyDeleteType];
-
-export interface ActionApiKeyDelete {
-    context: IcePanel.ActionApiKeyContext;
-    id: string;
-    type: IcePanel.ActionApiKeyDeleteType;
-}
-
-export type ActionApiKey = IcePanel.ActionApiKeyCreate | IcePanel.ActionApiKeyUpdate | IcePanel.ActionApiKeyDelete;
-
-export interface ActionDiagramCreateContext {
-    domainHandleId?: string;
-    domainName?: string;
-    groupHandleId?: string;
-    groupName?: string;
-    modelFamily?: IcePanel.ActionContextModelObject[];
-}
+export type ActionDiagram =
+    | IcePanel.ActionDiagramCreate
+    | IcePanel.ActionDiagramUpdate
+    | IcePanel.ActionDiagramExport
+    | IcePanel.ActionDiagramDelete;
 
 export const ActionDiagramCreateType = {
     DiagramCreate: "diagram-create",
@@ -911,43 +914,31 @@ export interface ActionDiagramCreate {
     type: IcePanel.ActionDiagramCreateType;
 }
 
-export interface ActionDiagramUpdateContext {
-    domainHandleId?: string;
-    domainName?: string;
-    groupHandleId?: string;
-    groupName?: string;
-    modelFamily?: IcePanel.ActionContextModelObject[];
+export interface ActionDiagramCreateContext {
+    domainHandleId?: string | undefined;
+    domainName?: string | undefined;
+    groupHandleId?: string | undefined;
+    groupName?: string | undefined;
+    modelFamily?: IcePanel.ActionContextModelObject[] | undefined;
+}
+
+export const ActionDiagramDeleteType = {
+    DiagramDelete: "diagram-delete",
+} as const;
+export type ActionDiagramDeleteType = (typeof ActionDiagramDeleteType)[keyof typeof ActionDiagramDeleteType];
+
+export interface ActionDiagramDelete {
+    context: IcePanel.ActionDiagramDeleteContext;
+    id: string;
+    type: IcePanel.ActionDiagramDeleteType;
+}
+
+export interface ActionDiagramDeleteContext {
+    domainHandleId?: string | undefined;
+    domainName?: string | undefined;
+    modelFamily?: IcePanel.ActionContextModelObject[] | undefined;
     name: string;
     type: IcePanel.DiagramType;
-}
-
-export const ActionDiagramUpdateType = {
-    DiagramUpdate: "diagram-update",
-} as const;
-export type ActionDiagramUpdateType = (typeof ActionDiagramUpdateType)[keyof typeof ActionDiagramUpdateType];
-
-export interface ActionDiagramUpdate {
-    context: IcePanel.ActionDiagramUpdateContext;
-    id: string;
-    props: IcePanel.DiagramPartial;
-    type: IcePanel.ActionDiagramUpdateType;
-}
-
-export interface ActionDiagramExportContext {
-    diagramName: string;
-    diagramType: IcePanel.DiagramType;
-    draftHandleId?: string;
-    draftName?: string;
-    flowHandleId?: string;
-    flowName?: string;
-    versionName: string;
-}
-
-export interface ActionDiagramExportProps {
-    bucketPath: string;
-    filename: string;
-    options?: IcePanel.DiagramExportImageOptions;
-    versionId: string;
 }
 
 export const ActionDiagramExportType = {
@@ -962,35 +953,51 @@ export interface ActionDiagramExport {
     type: IcePanel.ActionDiagramExportType;
 }
 
-export interface ActionDiagramDeleteContext {
-    domainHandleId?: string;
-    domainName?: string;
-    modelFamily?: IcePanel.ActionContextModelObject[];
+export interface ActionDiagramExportContext {
+    diagramName: string;
+    diagramType: IcePanel.DiagramType;
+    draftHandleId?: string | undefined;
+    draftName?: string | undefined;
+    flowHandleId?: string | undefined;
+    flowName?: string | undefined;
+    versionName: string;
+}
+
+export interface ActionDiagramExportProps {
+    bucketPath: string;
+    filename: string;
+    options?: IcePanel.DiagramExportImageOptions | undefined;
+    versionId: string;
+}
+
+export const ActionDiagramUpdateType = {
+    DiagramUpdate: "diagram-update",
+} as const;
+export type ActionDiagramUpdateType = (typeof ActionDiagramUpdateType)[keyof typeof ActionDiagramUpdateType];
+
+export interface ActionDiagramUpdate {
+    context: IcePanel.ActionDiagramUpdateContext;
+    id: string;
+    props: IcePanel.DiagramPartial;
+    type: IcePanel.ActionDiagramUpdateType;
+}
+
+export interface ActionDiagramUpdateContext {
+    domainHandleId?: string | undefined;
+    domainName?: string | undefined;
+    groupHandleId?: string | undefined;
+    groupName?: string | undefined;
+    modelFamily?: IcePanel.ActionContextModelObject[] | undefined;
     name: string;
     type: IcePanel.DiagramType;
 }
 
-export const ActionDiagramDeleteType = {
-    DiagramDelete: "diagram-delete",
-} as const;
-export type ActionDiagramDeleteType = (typeof ActionDiagramDeleteType)[keyof typeof ActionDiagramDeleteType];
-
-export interface ActionDiagramDelete {
-    context: IcePanel.ActionDiagramDeleteContext;
-    id: string;
-    type: IcePanel.ActionDiagramDeleteType;
-}
-
-export type ActionDiagram =
-    | IcePanel.ActionDiagramCreate
-    | IcePanel.ActionDiagramUpdate
-    | IcePanel.ActionDiagramExport
-    | IcePanel.ActionDiagramDelete;
-
-export interface ActionDraftCreateContext {
-    name: string;
-    versionName?: string;
-}
+export type ActionDraft =
+    | IcePanel.ActionDraftCreate
+    | IcePanel.ActionDraftUpdate
+    | IcePanel.ActionDraftView
+    | IcePanel.ActionDraftMerge
+    | IcePanel.ActionDraftDelete;
 
 export const ActionDraftCreateType = {
     DraftCreate: "draft-create",
@@ -1000,12 +1007,44 @@ export type ActionDraftCreateType = (typeof ActionDraftCreateType)[keyof typeof 
 export interface ActionDraftCreate {
     context: IcePanel.ActionDraftCreateContext;
     id: string;
-    ids?: string[];
+    ids?: string[] | undefined;
     props: IcePanel.DraftRequired;
     type: IcePanel.ActionDraftCreateType;
 }
 
-export interface ActionDraftUpdateContext {
+export interface ActionDraftCreateContext {
+    name: string;
+    versionName?: string | undefined;
+}
+
+export const ActionDraftDeleteType = {
+    DraftDelete: "draft-delete",
+} as const;
+export type ActionDraftDeleteType = (typeof ActionDraftDeleteType)[keyof typeof ActionDraftDeleteType];
+
+export interface ActionDraftDelete {
+    context: IcePanel.ActionDraftDeleteContext;
+    id: string;
+    type: IcePanel.ActionDraftDeleteType;
+}
+
+export interface ActionDraftDeleteContext {
+    name: string;
+    versionName?: string | undefined;
+}
+
+export const ActionDraftMergeType = {
+    DraftMerge: "draft-merge",
+} as const;
+export type ActionDraftMergeType = (typeof ActionDraftMergeType)[keyof typeof ActionDraftMergeType];
+
+export interface ActionDraftMerge {
+    context: IcePanel.ActionDraftMergeContext;
+    id: string;
+    type: IcePanel.ActionDraftMergeType;
+}
+
+export interface ActionDraftMergeContext {
     name: string;
 }
 
@@ -1021,7 +1060,7 @@ export interface ActionDraftUpdate {
     type: IcePanel.ActionDraftUpdateType;
 }
 
-export interface ActionDraftViewContext {
+export interface ActionDraftUpdateContext {
     name: string;
 }
 
@@ -1036,46 +1075,8 @@ export interface ActionDraftView {
     type: IcePanel.ActionDraftViewType;
 }
 
-export interface ActionDraftMergeContext {
+export interface ActionDraftViewContext {
     name: string;
-}
-
-export const ActionDraftMergeType = {
-    DraftMerge: "draft-merge",
-} as const;
-export type ActionDraftMergeType = (typeof ActionDraftMergeType)[keyof typeof ActionDraftMergeType];
-
-export interface ActionDraftMerge {
-    context: IcePanel.ActionDraftMergeContext;
-    id: string;
-    type: IcePanel.ActionDraftMergeType;
-}
-
-export interface ActionDraftDeleteContext {
-    name: string;
-    versionName?: string;
-}
-
-export const ActionDraftDeleteType = {
-    DraftDelete: "draft-delete",
-} as const;
-export type ActionDraftDeleteType = (typeof ActionDraftDeleteType)[keyof typeof ActionDraftDeleteType];
-
-export interface ActionDraftDelete {
-    context: IcePanel.ActionDraftDeleteContext;
-    id: string;
-    type: IcePanel.ActionDraftDeleteType;
-}
-
-export type ActionDraft =
-    | IcePanel.ActionDraftCreate
-    | IcePanel.ActionDraftUpdate
-    | IcePanel.ActionDraftView
-    | IcePanel.ActionDraftMerge
-    | IcePanel.ActionDraftDelete;
-
-export interface ActionDraftTaskCreateContext {
-    draftName: string;
 }
 
 export const ActionDraftTaskCreateType = {
@@ -1090,65 +1091,18 @@ export interface ActionDraftTaskCreate {
     type: IcePanel.ActionDraftTaskCreateType;
 }
 
-export interface ActionLandscapeCreateContext {
-    backstageImport?: boolean;
-    name: string;
-    structurizrImport?: boolean;
+export interface ActionDraftTaskCreateContext {
+    draftName: string;
 }
 
-export const ActionLandscapeCreateType = {
-    LandscapeCreate: "landscape-create",
-} as const;
-export type ActionLandscapeCreateType = (typeof ActionLandscapeCreateType)[keyof typeof ActionLandscapeCreateType];
-
-export interface ActionLandscapeCreate {
-    context: IcePanel.ActionLandscapeCreateContext;
-    id: string;
-    type: IcePanel.ActionLandscapeCreateType;
-}
-
-export interface ActionLandscapeUpdateContext {
-    name: string;
-}
-
-export const ActionLandscapeUpdateType = {
-    LandscapeUpdate: "landscape-update",
-} as const;
-export type ActionLandscapeUpdateType = (typeof ActionLandscapeUpdateType)[keyof typeof ActionLandscapeUpdateType];
-
-export interface ActionLandscapeUpdate {
-    context: IcePanel.ActionLandscapeUpdateContext;
-    id: string;
-    props: IcePanel.LandscapePartial;
-    type: IcePanel.ActionLandscapeUpdateType;
-}
-
-export interface ActionLandscapeDuplicateContext {
-    name: string;
-    targetOrganizationName?: string;
-}
-
-export interface ActionLandscapeDuplicateProps {
-    targetOrganizationId?: string;
-}
-
-export const ActionLandscapeDuplicateType = {
-    LandscapeDuplicate: "landscape-duplicate",
-} as const;
-export type ActionLandscapeDuplicateType =
-    (typeof ActionLandscapeDuplicateType)[keyof typeof ActionLandscapeDuplicateType];
-
-export interface ActionLandscapeDuplicate {
-    context: IcePanel.ActionLandscapeDuplicateContext;
-    id: string;
-    props: IcePanel.ActionLandscapeDuplicateProps;
-    type: IcePanel.ActionLandscapeDuplicateType;
-}
-
-export interface ActionLandscapeCopyContext {
-    name: string;
-    targetLandscapeName: string;
-}
+export type ActionLandscape =
+    | IcePanel.ActionLandscapeCreate
+    | IcePanel.ActionLandscapeUpdate
+    | IcePanel.ActionLandscapeDuplicate
+    | IcePanel.ActionLandscapeCopy
+    | IcePanel.ActionLandscapeDelete
+    | IcePanel.ActionLandscapeExport
+    | IcePanel.ActionLandscapeImport;
 
 export interface ActionLandscapeCopyProps {
     targetLandscapeId: string;
@@ -1166,8 +1120,26 @@ export interface ActionLandscapeCopy {
     type: IcePanel.ActionLandscapeCopyType;
 }
 
-export interface ActionLandscapeDeleteContext {
+export interface ActionLandscapeCopyContext {
     name: string;
+    targetLandscapeName: string;
+}
+
+export const ActionLandscapeCreateType = {
+    LandscapeCreate: "landscape-create",
+} as const;
+export type ActionLandscapeCreateType = (typeof ActionLandscapeCreateType)[keyof typeof ActionLandscapeCreateType];
+
+export interface ActionLandscapeCreate {
+    context: IcePanel.ActionLandscapeCreateContext;
+    id: string;
+    type: IcePanel.ActionLandscapeCreateType;
+}
+
+export interface ActionLandscapeCreateContext {
+    backstageImport?: boolean | undefined;
+    name: string;
+    structurizrImport?: boolean | undefined;
 }
 
 export const ActionLandscapeDeleteType = {
@@ -1181,28 +1153,30 @@ export interface ActionLandscapeDelete {
     type: IcePanel.ActionLandscapeDeleteType;
 }
 
-export interface ActionLandscapeExportContext {
-    draftHandleId?: string;
-    draftName?: string;
-    filterDiagramHandleId?: string;
-    filterDiagramName?: string;
-    filterDiagramType?: IcePanel.DiagramType;
-    filterFlowHandleId?: string;
-    filterFlowName?: string;
-    filterModelObjectHandleId?: string;
-    filterModelObjectName?: string;
-    filterModelObjectType?: IcePanel.ModelObjectType;
-    landscapeName: string;
-    versionName: string;
+export interface ActionLandscapeDeleteContext {
+    name: string;
 }
 
-export interface ActionLandscapeExportProps {
-    bucketPath: string;
-    filename: string;
-    filter?: IcePanel.LandscapeExportFilter;
-    options?: IcePanel.LandscapeExportOptions;
-    type: IcePanel.LandscapeExportType;
-    versionId: string;
+export const ActionLandscapeDuplicateType = {
+    LandscapeDuplicate: "landscape-duplicate",
+} as const;
+export type ActionLandscapeDuplicateType =
+    (typeof ActionLandscapeDuplicateType)[keyof typeof ActionLandscapeDuplicateType];
+
+export interface ActionLandscapeDuplicate {
+    context: IcePanel.ActionLandscapeDuplicateContext;
+    id: string;
+    props: IcePanel.ActionLandscapeDuplicateProps;
+    type: IcePanel.ActionLandscapeDuplicateType;
+}
+
+export interface ActionLandscapeDuplicateContext {
+    name: string;
+    targetOrganizationName?: string | undefined;
+}
+
+export interface ActionLandscapeDuplicateProps {
+    targetOrganizationId?: string | undefined;
 }
 
 export const ActionLandscapeExportType = {
@@ -1217,23 +1191,79 @@ export interface ActionLandscapeExport {
     type: IcePanel.ActionLandscapeExportType;
 }
 
-export type ActionLandscape =
-    | IcePanel.ActionLandscapeCreate
-    | IcePanel.ActionLandscapeUpdate
-    | IcePanel.ActionLandscapeDuplicate
-    | IcePanel.ActionLandscapeCopy
-    | IcePanel.ActionLandscapeDelete
-    | IcePanel.ActionLandscapeExport;
-
-export interface ActionModelConnectionCreateContext {
-    domainHandleId?: string;
-    domainName?: string;
-    originModelFamily?: IcePanel.ActionContextModelObject[];
-    tagNames?: Record<string, string>;
-    targetModelFamily?: IcePanel.ActionContextModelObject[];
-    technologyNames?: Record<string, string>;
-    viaModelFamily?: IcePanel.ActionContextModelObject[];
+export interface ActionLandscapeExportContext {
+    draftHandleId?: string | undefined;
+    draftName?: string | undefined;
+    filterDiagramHandleId?: string | undefined;
+    filterDiagramName?: string | undefined;
+    filterDiagramType?: IcePanel.DiagramType | undefined;
+    filterFlowHandleId?: string | undefined;
+    filterFlowName?: string | undefined;
+    filterModelObjectHandleId?: string | undefined;
+    filterModelObjectName?: string | undefined;
+    filterModelObjectType?: IcePanel.ModelObjectType | undefined;
+    landscapeName: string;
+    versionName: string;
 }
+
+export interface ActionLandscapeExportProps {
+    bucketPath: string;
+    filename: string;
+    filter?: IcePanel.LandscapeExportFilter | undefined;
+    options?: IcePanel.LandscapeExportOptions | undefined;
+    type: IcePanel.LandscapeExportType;
+    versionId: string;
+}
+
+export const ActionLandscapeImportType = {
+    LandscapeImport: "landscape-import",
+} as const;
+export type ActionLandscapeImportType = (typeof ActionLandscapeImportType)[keyof typeof ActionLandscapeImportType];
+
+export interface ActionLandscapeImport {
+    context: IcePanel.ActionLandscapeImportContext;
+    id: string;
+    props: IcePanel.ActionLandscapeImportProps;
+    type: IcePanel.ActionLandscapeImportType;
+}
+
+export interface ActionLandscapeImportContext {
+    landscapeName: string;
+    versionName: string;
+}
+
+export interface ActionLandscapeImportProps {
+    bucketPath: string;
+    modelConnectionCount: number;
+    modelObjectCount: number;
+    modelObjectTypeCount: Record<string, number>;
+    prune?: boolean | undefined;
+    tagCount: number;
+    tagGroupCount: number;
+    versionId: string;
+}
+
+export const ActionLandscapeUpdateType = {
+    LandscapeUpdate: "landscape-update",
+} as const;
+export type ActionLandscapeUpdateType = (typeof ActionLandscapeUpdateType)[keyof typeof ActionLandscapeUpdateType];
+
+export interface ActionLandscapeUpdate {
+    context: IcePanel.ActionLandscapeUpdateContext;
+    id: string;
+    props: IcePanel.LandscapePartial;
+    type: IcePanel.ActionLandscapeUpdateType;
+}
+
+export interface ActionLandscapeUpdateContext {
+    name: string;
+}
+
+export type ActionModelConnection =
+    | IcePanel.ActionModelConnectionCreate
+    | IcePanel.ActionModelConnectionUpdate
+    | IcePanel.ActionModelConnectionsExport
+    | IcePanel.ActionModelConnectionDelete;
 
 export const ActionModelConnectionCreateType = {
     ModelConnectionCreate: "model-connection-create",
@@ -1248,15 +1278,37 @@ export interface ActionModelConnectionCreate {
     type: IcePanel.ActionModelConnectionCreateType;
 }
 
-export interface ActionModelConnectionUpdateContext {
-    domainHandleId?: string;
-    domainName?: string;
+export interface ActionModelConnectionCreateContext {
+    domainHandleId?: string | undefined;
+    domainName?: string | undefined;
+    originModelFamily?: IcePanel.ActionContextModelObject[] | undefined;
+    tagNames?: Record<string, string> | undefined;
+    targetModelFamily?: IcePanel.ActionContextModelObject[] | undefined;
+    technologyNames?: Record<string, string> | undefined;
+    viaModelFamily?: IcePanel.ActionContextModelObject[] | undefined;
+}
+
+export const ActionModelConnectionDeleteType = {
+    ModelConnectionDelete: "model-connection-delete",
+} as const;
+export type ActionModelConnectionDeleteType =
+    (typeof ActionModelConnectionDeleteType)[keyof typeof ActionModelConnectionDeleteType];
+
+export interface ActionModelConnectionDelete {
+    context: IcePanel.ActionModelConnectionDeleteContext;
+    id: string;
+    type: IcePanel.ActionModelConnectionDeleteType;
+}
+
+export interface ActionModelConnectionDeleteContext {
+    domainHandleId?: string | undefined;
+    domainName?: string | undefined;
     name: string;
-    originModelFamily?: IcePanel.ActionContextModelObject[];
-    tagNames?: Record<string, string>;
-    targetModelFamily?: IcePanel.ActionContextModelObject[];
-    technologyNames?: Record<string, string>;
-    viaModelFamily?: IcePanel.ActionContextModelObject[];
+    originModelFamily?: IcePanel.ActionContextModelObject[] | undefined;
+    tagNames?: Record<string, string> | undefined;
+    targetModelFamily?: IcePanel.ActionContextModelObject[] | undefined;
+    technologyNames?: Record<string, string> | undefined;
+    viaModelFamily?: IcePanel.ActionContextModelObject[] | undefined;
 }
 
 export const ActionModelConnectionUpdateType = {
@@ -1270,6 +1322,30 @@ export interface ActionModelConnectionUpdate {
     id: string;
     props: IcePanel.ModelConnectionPartial;
     type: IcePanel.ActionModelConnectionUpdateType;
+}
+
+export interface ActionModelConnectionUpdateContext {
+    domainHandleId?: string | undefined;
+    domainName?: string | undefined;
+    name: string;
+    originModelFamily?: IcePanel.ActionContextModelObject[] | undefined;
+    tagNames?: Record<string, string> | undefined;
+    targetModelFamily?: IcePanel.ActionContextModelObject[] | undefined;
+    technologyNames?: Record<string, string> | undefined;
+    viaModelFamily?: IcePanel.ActionContextModelObject[] | undefined;
+}
+
+export const ActionModelConnectionsExportType = {
+    ModelConnectionsExport: "model-connections-export",
+} as const;
+export type ActionModelConnectionsExportType =
+    (typeof ActionModelConnectionsExportType)[keyof typeof ActionModelConnectionsExportType];
+
+export interface ActionModelConnectionsExport {
+    context: IcePanel.ActionModelConnectionsExportContext;
+    id: string;
+    props: IcePanel.ActionModelConnectionsExportProps;
+    type: IcePanel.ActionModelConnectionsExportType;
 }
 
 export interface ActionModelConnectionsExportContext {
@@ -1288,57 +1364,12 @@ export interface ActionModelConnectionsExportProps {
     versionId: string;
 }
 
-export const ActionModelConnectionsExportType = {
-    ModelConnectionsExport: "model-connections-export",
-} as const;
-export type ActionModelConnectionsExportType =
-    (typeof ActionModelConnectionsExportType)[keyof typeof ActionModelConnectionsExportType];
-
-export interface ActionModelConnectionsExport {
-    context: IcePanel.ActionModelConnectionsExportContext;
-    id: string;
-    props: IcePanel.ActionModelConnectionsExportProps;
-    type: IcePanel.ActionModelConnectionsExportType;
-}
-
-export interface ActionModelConnectionDeleteContext {
-    domainHandleId?: string;
-    domainName?: string;
-    name: string;
-    originModelFamily?: IcePanel.ActionContextModelObject[];
-    tagNames?: Record<string, string>;
-    targetModelFamily?: IcePanel.ActionContextModelObject[];
-    technologyNames?: Record<string, string>;
-    viaModelFamily?: IcePanel.ActionContextModelObject[];
-}
-
-export const ActionModelConnectionDeleteType = {
-    ModelConnectionDelete: "model-connection-delete",
-} as const;
-export type ActionModelConnectionDeleteType =
-    (typeof ActionModelConnectionDeleteType)[keyof typeof ActionModelConnectionDeleteType];
-
-export interface ActionModelConnectionDelete {
-    context: IcePanel.ActionModelConnectionDeleteContext;
-    id: string;
-    type: IcePanel.ActionModelConnectionDeleteType;
-}
-
-export type ActionModelConnection =
-    | IcePanel.ActionModelConnectionCreate
-    | IcePanel.ActionModelConnectionUpdate
-    | IcePanel.ActionModelConnectionsExport
-    | IcePanel.ActionModelConnectionDelete;
-
-export interface ActionModelObjectCreateContext {
-    domainHandleId?: string;
-    domainName?: string;
-    groupNames?: Record<string, string>;
-    modelFamily?: IcePanel.ActionContextModelObject[];
-    tagNames?: Record<string, string>;
-    teamNames?: Record<string, string>;
-    technologyNames?: Record<string, string>;
-}
+export type ActionModelObject =
+    | IcePanel.ActionModelObjectCreate
+    | IcePanel.ActionModelObjectUpdate
+    | IcePanel.ActionModelObjectDependenciesExport
+    | IcePanel.ActionModelObjectsExport
+    | IcePanel.ActionModelObjectDelete;
 
 export const ActionModelObjectCreateType = {
     ModelObjectCreate: "model-object-create",
@@ -1353,35 +1384,57 @@ export interface ActionModelObjectCreate {
     type: IcePanel.ActionModelObjectCreateType;
 }
 
-export interface ActionModelObjectUpdateContext {
-    domainHandleId?: string;
-    domainName?: string;
-    groupNames?: Record<string, string>;
-    modelFamily?: IcePanel.ActionContextModelObject[];
+export interface ActionModelObjectCreateContext {
+    domainHandleId?: string | undefined;
+    domainName?: string | undefined;
+    groupNames?: Record<string, string> | undefined;
+    modelFamily?: IcePanel.ActionContextModelObject[] | undefined;
+    tagNames?: Record<string, string> | undefined;
+    teamNames?: Record<string, string> | undefined;
+    technologyNames?: Record<string, string> | undefined;
+}
+
+export const ActionModelObjectDeleteType = {
+    ModelObjectDelete: "model-object-delete",
+} as const;
+export type ActionModelObjectDeleteType =
+    (typeof ActionModelObjectDeleteType)[keyof typeof ActionModelObjectDeleteType];
+
+export interface ActionModelObjectDelete {
+    context: IcePanel.ActionModelObjectDeleteContext;
+    id: string;
+    type: IcePanel.ActionModelObjectDeleteType;
+}
+
+export interface ActionModelObjectDeleteContext {
+    domainHandleId?: string | undefined;
+    domainName?: string | undefined;
+    groupNames?: Record<string, string> | undefined;
+    modelFamily?: IcePanel.ActionContextModelObject[] | undefined;
     name: string;
-    tagNames?: Record<string, string>;
-    teamNames?: Record<string, string>;
-    technologyNames?: Record<string, string>;
+    tagNames?: Record<string, string> | undefined;
+    teamNames?: Record<string, string> | undefined;
+    technologyNames?: Record<string, string> | undefined;
     type: IcePanel.ModelObjectType;
 }
 
-export const ActionModelObjectUpdateType = {
-    ModelObjectUpdate: "model-object-update",
+export const ActionModelObjectDependenciesExportType = {
+    ModelObjectDependenciesExport: "model-object-dependencies-export",
 } as const;
-export type ActionModelObjectUpdateType =
-    (typeof ActionModelObjectUpdateType)[keyof typeof ActionModelObjectUpdateType];
+export type ActionModelObjectDependenciesExportType =
+    (typeof ActionModelObjectDependenciesExportType)[keyof typeof ActionModelObjectDependenciesExportType];
 
-export interface ActionModelObjectUpdate {
-    context: IcePanel.ActionModelObjectUpdateContext;
+export interface ActionModelObjectDependenciesExport {
+    context: IcePanel.ActionModelObjectDependenciesExportContext;
     id: string;
-    props: IcePanel.ModelObjectPartial;
-    type: IcePanel.ActionModelObjectUpdateType;
+    props: IcePanel.ActionModelObjectDependenciesExportProps;
+    type: IcePanel.ActionModelObjectDependenciesExportType;
 }
 
 export interface ActionModelObjectDependenciesExportContext {
-    domainHandleId?: string;
-    domainName?: string;
-    modelFamily?: IcePanel.ActionContextModelObject[];
+    domainHandleId?: string | undefined;
+    domainName?: string | undefined;
+    modelFamily?: IcePanel.ActionContextModelObject[] | undefined;
     name: string;
     type: IcePanel.ModelObjectType;
     versionName: string;
@@ -1398,17 +1451,42 @@ export interface ActionModelObjectDependenciesExportProps {
     versionId: string;
 }
 
-export const ActionModelObjectDependenciesExportType = {
-    ModelObjectDependenciesExport: "model-object-dependencies-export",
+export const ActionModelObjectUpdateType = {
+    ModelObjectUpdate: "model-object-update",
 } as const;
-export type ActionModelObjectDependenciesExportType =
-    (typeof ActionModelObjectDependenciesExportType)[keyof typeof ActionModelObjectDependenciesExportType];
+export type ActionModelObjectUpdateType =
+    (typeof ActionModelObjectUpdateType)[keyof typeof ActionModelObjectUpdateType];
 
-export interface ActionModelObjectDependenciesExport {
-    context: IcePanel.ActionModelObjectDependenciesExportContext;
+export interface ActionModelObjectUpdate {
+    context: IcePanel.ActionModelObjectUpdateContext;
     id: string;
-    props: IcePanel.ActionModelObjectDependenciesExportProps;
-    type: IcePanel.ActionModelObjectDependenciesExportType;
+    props: IcePanel.ModelObjectPartial;
+    type: IcePanel.ActionModelObjectUpdateType;
+}
+
+export interface ActionModelObjectUpdateContext {
+    domainHandleId?: string | undefined;
+    domainName?: string | undefined;
+    groupNames?: Record<string, string> | undefined;
+    modelFamily?: IcePanel.ActionContextModelObject[] | undefined;
+    name: string;
+    tagNames?: Record<string, string> | undefined;
+    teamNames?: Record<string, string> | undefined;
+    technologyNames?: Record<string, string> | undefined;
+    type: IcePanel.ModelObjectType;
+}
+
+export const ActionModelObjectsExportType = {
+    ModelObjectsExport: "model-objects-export",
+} as const;
+export type ActionModelObjectsExportType =
+    (typeof ActionModelObjectsExportType)[keyof typeof ActionModelObjectsExportType];
+
+export interface ActionModelObjectsExport {
+    context: IcePanel.ActionModelObjectsExportContext;
+    id: string;
+    props: IcePanel.ActionModelObjectsExportProps;
+    type: IcePanel.ActionModelObjectsExportType;
 }
 
 export interface ActionModelObjectsExportContext {
@@ -1427,53 +1505,44 @@ export interface ActionModelObjectsExportProps {
     versionId: string;
 }
 
-export const ActionModelObjectsExportType = {
-    ModelObjectsExport: "model-objects-export",
+export type ActionOAuth = IcePanel.ActionOAuthConsentDeny | IcePanel.ActionOAuthConsentGrant;
+
+export const ActionOAuthConsentDenyType = {
+    OauthConsentDeny: "oauth-consent-deny",
 } as const;
-export type ActionModelObjectsExportType =
-    (typeof ActionModelObjectsExportType)[keyof typeof ActionModelObjectsExportType];
+export type ActionOAuthConsentDenyType = (typeof ActionOAuthConsentDenyType)[keyof typeof ActionOAuthConsentDenyType];
 
-export interface ActionModelObjectsExport {
-    context: IcePanel.ActionModelObjectsExportContext;
+export interface ActionOAuthConsentDeny {
     id: string;
-    props: IcePanel.ActionModelObjectsExportProps;
-    type: IcePanel.ActionModelObjectsExportType;
+    props: IcePanel.ActionOAuthConsentDenyProps;
+    type: IcePanel.ActionOAuthConsentDenyType;
 }
 
-export interface ActionModelObjectDeleteContext {
-    domainHandleId?: string;
-    domainName?: string;
-    groupNames?: Record<string, string>;
-    modelFamily?: IcePanel.ActionContextModelObject[];
-    name: string;
-    tagNames?: Record<string, string>;
-    teamNames?: Record<string, string>;
-    technologyNames?: Record<string, string>;
-    type: IcePanel.ModelObjectType;
+export interface ActionOAuthConsentDenyProps {
+    clientName: string;
 }
 
-export const ActionModelObjectDeleteType = {
-    ModelObjectDelete: "model-object-delete",
+export const ActionOAuthConsentGrantType = {
+    OauthConsentGrant: "oauth-consent-grant",
 } as const;
-export type ActionModelObjectDeleteType =
-    (typeof ActionModelObjectDeleteType)[keyof typeof ActionModelObjectDeleteType];
+export type ActionOAuthConsentGrantType =
+    (typeof ActionOAuthConsentGrantType)[keyof typeof ActionOAuthConsentGrantType];
 
-export interface ActionModelObjectDelete {
-    context: IcePanel.ActionModelObjectDeleteContext;
+export interface ActionOAuthConsentGrant {
     id: string;
-    type: IcePanel.ActionModelObjectDeleteType;
+    props: IcePanel.ActionOAuthConsentGrantProps;
+    type: IcePanel.ActionOAuthConsentGrantType;
 }
 
-export type ActionModelObject =
-    | IcePanel.ActionModelObjectCreate
-    | IcePanel.ActionModelObjectUpdate
-    | IcePanel.ActionModelObjectDependenciesExport
-    | IcePanel.ActionModelObjectsExport
-    | IcePanel.ActionModelObjectDelete;
-
-export interface ActionOrganizationCreateContext {
-    name: string;
+export interface ActionOAuthConsentGrantProps {
+    clientName: string;
+    landscapeId: string;
 }
+
+export type ActionOrganization =
+    | IcePanel.ActionOrganizationCreate
+    | IcePanel.ActionOrganizationUpdate
+    | IcePanel.ActionOrganizationDelete;
 
 export const ActionOrganizationCreateType = {
     OrganizationCreate: "organization-create",
@@ -1488,7 +1557,23 @@ export interface ActionOrganizationCreate {
     type: IcePanel.ActionOrganizationCreateType;
 }
 
-export interface ActionOrganizationUpdateContext {
+export interface ActionOrganizationCreateContext {
+    name: string;
+}
+
+export const ActionOrganizationDeleteType = {
+    OrganizationDelete: "organization-delete",
+} as const;
+export type ActionOrganizationDeleteType =
+    (typeof ActionOrganizationDeleteType)[keyof typeof ActionOrganizationDeleteType];
+
+export interface ActionOrganizationDelete {
+    context: IcePanel.ActionOrganizationDeleteContext;
+    id: string;
+    type: IcePanel.ActionOrganizationDeleteType;
+}
+
+export interface ActionOrganizationDeleteContext {
     name: string;
 }
 
@@ -1505,32 +1590,14 @@ export interface ActionOrganizationUpdate {
     type: IcePanel.ActionOrganizationUpdateType;
 }
 
-export interface ActionOrganizationDeleteContext {
+export interface ActionOrganizationUpdateContext {
     name: string;
 }
 
-export const ActionOrganizationDeleteType = {
-    OrganizationDelete: "organization-delete",
-} as const;
-export type ActionOrganizationDeleteType =
-    (typeof ActionOrganizationDeleteType)[keyof typeof ActionOrganizationDeleteType];
-
-export interface ActionOrganizationDelete {
-    context: IcePanel.ActionOrganizationDeleteContext;
-    id: string;
-    type: IcePanel.ActionOrganizationDeleteType;
-}
-
-export type ActionOrganization =
-    | IcePanel.ActionOrganizationCreate
-    | IcePanel.ActionOrganizationUpdate
-    | IcePanel.ActionOrganizationDelete;
-
-export interface ActionOrganizationUserAddContext {
-    email: string;
-    landscapeNames?: Record<string, string>;
-    name?: string;
-}
+export type ActionOrganizationUser =
+    | IcePanel.ActionOrganizationUserAdd
+    | IcePanel.ActionOrganizationUserUpdate
+    | IcePanel.ActionOrganizationUserRemove;
 
 export const ActionOrganizationUserAddType = {
     OrganizationUserAdd: "organization-user-add",
@@ -1545,10 +1612,30 @@ export interface ActionOrganizationUserAdd {
     type: IcePanel.ActionOrganizationUserAddType;
 }
 
-export interface ActionOrganizationUserUpdateContext {
+export interface ActionOrganizationUserAddContext {
     email: string;
-    landscapeNames?: Record<string, string>;
-    name?: string;
+    landscapeNames?: Record<string, string> | undefined;
+    name?: string | undefined;
+}
+
+export const ActionOrganizationUserRemoveType = {
+    OrganizationUserRemove: "organization-user-remove",
+} as const;
+export type ActionOrganizationUserRemoveType =
+    (typeof ActionOrganizationUserRemoveType)[keyof typeof ActionOrganizationUserRemoveType];
+
+export interface ActionOrganizationUserRemove {
+    context: IcePanel.ActionOrganizationUserRemoveContext;
+    id: string;
+    type: IcePanel.ActionOrganizationUserRemoveType;
+}
+
+export interface ActionOrganizationUserRemoveContext {
+    email: string;
+    landscapeNames?: Record<string, string> | undefined;
+    landscapePermissions?: Record<string, boolean> | undefined;
+    name?: string | undefined;
+    permission: IcePanel.PermissionType;
 }
 
 export const ActionOrganizationUserUpdateType = {
@@ -1564,34 +1651,15 @@ export interface ActionOrganizationUserUpdate {
     type: IcePanel.ActionOrganizationUserUpdateType;
 }
 
-export interface ActionOrganizationUserRemoveContext {
+export interface ActionOrganizationUserUpdateContext {
     email: string;
-    landscapeNames?: Record<string, string>;
-    landscapePermissions?: Record<string, boolean>;
-    name?: string;
-    permission: IcePanel.PermissionType;
+    landscapeNames?: Record<string, string> | undefined;
+    name?: string | undefined;
 }
 
-export const ActionOrganizationUserRemoveType = {
-    OrganizationUserRemove: "organization-user-remove",
-} as const;
-export type ActionOrganizationUserRemoveType =
-    (typeof ActionOrganizationUserRemoveType)[keyof typeof ActionOrganizationUserRemoveType];
-
-export interface ActionOrganizationUserRemove {
-    context: IcePanel.ActionOrganizationUserRemoveContext;
-    id: string;
-    type: IcePanel.ActionOrganizationUserRemoveType;
-}
-
-export type ActionOrganizationUser =
-    | IcePanel.ActionOrganizationUserAdd
-    | IcePanel.ActionOrganizationUserUpdate
-    | IcePanel.ActionOrganizationUserRemove;
-
-export interface ActionOrganizationUserInviteCreateContext {
-    landscapeNames?: Record<string, string>;
-}
+export type ActionOrganizationUserInvite =
+    | IcePanel.ActionOrganizationUserInviteCreate
+    | IcePanel.ActionOrganizationUserInviteRevoke;
 
 export const ActionOrganizationUserInviteCreateType = {
     OrganizationUserInviteCreate: "organization-user-invite-create",
@@ -1606,10 +1674,8 @@ export interface ActionOrganizationUserInviteCreate {
     type: IcePanel.ActionOrganizationUserInviteCreateType;
 }
 
-export interface ActionOrganizationUserInviteRevokeContext {
-    email: string;
-    landscapeNames?: Record<string, string>;
-    permission: IcePanel.PermissionType;
+export interface ActionOrganizationUserInviteCreateContext {
+    landscapeNames?: Record<string, string> | undefined;
 }
 
 export const ActionOrganizationUserInviteRevokeType = {
@@ -1624,16 +1690,16 @@ export interface ActionOrganizationUserInviteRevoke {
     type: IcePanel.ActionOrganizationUserInviteRevokeType;
 }
 
-export type ActionOrganizationUserInvite =
-    | IcePanel.ActionOrganizationUserInviteCreate
-    | IcePanel.ActionOrganizationUserInviteRevoke;
-
-export interface ActionShareLinkCreateContext {
-    draftHandleId?: string | null;
-    draftName?: string;
-    versionModelHandleId: string | null;
-    versionName: string;
+export interface ActionOrganizationUserInviteRevokeContext {
+    email: string;
+    landscapeNames?: Record<string, string> | undefined;
+    permission: IcePanel.PermissionType;
 }
+
+export type ActionShareLink =
+    | IcePanel.ActionShareLinkCreate
+    | IcePanel.ActionShareLinkUpdate
+    | IcePanel.ActionShareLinkDelete;
 
 export const ActionShareLinkCreateType = {
     ShareLinkCreate: "share-link-create",
@@ -1647,9 +1713,27 @@ export interface ActionShareLinkCreate {
     type: IcePanel.ActionShareLinkCreateType;
 }
 
-export interface ActionShareLinkUpdateContext {
-    draftHandleId?: string | null;
-    draftName?: string;
+export interface ActionShareLinkCreateContext {
+    draftHandleId?: (string | null) | undefined;
+    draftName?: string | undefined;
+    versionModelHandleId: string | null;
+    versionName: string;
+}
+
+export const ActionShareLinkDeleteType = {
+    ShareLinkDelete: "share-link-delete",
+} as const;
+export type ActionShareLinkDeleteType = (typeof ActionShareLinkDeleteType)[keyof typeof ActionShareLinkDeleteType];
+
+export interface ActionShareLinkDelete {
+    context: IcePanel.ActionShareLinkDeleteContext;
+    id: string;
+    type: IcePanel.ActionShareLinkDeleteType;
+}
+
+export interface ActionShareLinkDeleteContext {
+    draftHandleId?: (string | null) | undefined;
+    draftName?: string | undefined;
     shortId: string;
     versionModelHandleId: string | null;
     versionName: string;
@@ -1671,33 +1755,15 @@ export interface ActionShareLinkUpdate {
     type: IcePanel.ActionShareLinkUpdateType;
 }
 
-export interface ActionShareLinkDeleteContext {
-    draftHandleId?: string | null;
-    draftName?: string;
+export interface ActionShareLinkUpdateContext {
+    draftHandleId?: (string | null) | undefined;
+    draftName?: string | undefined;
     shortId: string;
     versionModelHandleId: string | null;
     versionName: string;
 }
 
-export const ActionShareLinkDeleteType = {
-    ShareLinkDelete: "share-link-delete",
-} as const;
-export type ActionShareLinkDeleteType = (typeof ActionShareLinkDeleteType)[keyof typeof ActionShareLinkDeleteType];
-
-export interface ActionShareLinkDelete {
-    context: IcePanel.ActionShareLinkDeleteContext;
-    id: string;
-    type: IcePanel.ActionShareLinkDeleteType;
-}
-
-export type ActionShareLink =
-    | IcePanel.ActionShareLinkCreate
-    | IcePanel.ActionShareLinkUpdate
-    | IcePanel.ActionShareLinkDelete;
-
-export interface ActionTeamCreateContext {
-    userNames?: Record<string, string>;
-}
+export type ActionTeam = IcePanel.ActionTeamCreate | IcePanel.ActionTeamUpdate | IcePanel.ActionTeamDelete;
 
 export const ActionTeamCreateType = {
     TeamCreate: "team-create",
@@ -1711,9 +1777,24 @@ export interface ActionTeamCreate {
     type: IcePanel.ActionTeamCreateType;
 }
 
-export interface ActionTeamUpdateContext {
+export interface ActionTeamCreateContext {
+    userNames?: Record<string, string> | undefined;
+}
+
+export const ActionTeamDeleteType = {
+    TeamDelete: "team-delete",
+} as const;
+export type ActionTeamDeleteType = (typeof ActionTeamDeleteType)[keyof typeof ActionTeamDeleteType];
+
+export interface ActionTeamDelete {
+    context: IcePanel.ActionTeamDeleteContext;
+    id: string;
+    type: IcePanel.ActionTeamDeleteType;
+}
+
+export interface ActionTeamDeleteContext {
     name: string;
-    userNames?: Record<string, string>;
+    userNames?: Record<string, string> | undefined;
 }
 
 export const ActionTeamUpdateType = {
@@ -1728,29 +1809,53 @@ export interface ActionTeamUpdate {
     type: IcePanel.ActionTeamUpdateType;
 }
 
-export interface ActionTeamDeleteContext {
+export interface ActionTeamUpdateContext {
     name: string;
-    userNames?: Record<string, string>;
+    userNames?: Record<string, string> | undefined;
 }
 
-export const ActionTeamDeleteType = {
-    TeamDelete: "team-delete",
+export type ActionUser = IcePanel.ActionUserLogin | IcePanel.ActionUserLoginFailed | IcePanel.ActionUserLogout;
+
+export const ActionUserLoginType = {
+    UserLogin: "user-login",
 } as const;
-export type ActionTeamDeleteType = (typeof ActionTeamDeleteType)[keyof typeof ActionTeamDeleteType];
+export type ActionUserLoginType = (typeof ActionUserLoginType)[keyof typeof ActionUserLoginType];
 
-export interface ActionTeamDelete {
-    context: IcePanel.ActionTeamDeleteContext;
+export interface ActionUserLogin {
     id: string;
-    type: IcePanel.ActionTeamDeleteType;
+    type: IcePanel.ActionUserLoginType;
 }
 
-export type ActionTeam = IcePanel.ActionTeamCreate | IcePanel.ActionTeamUpdate | IcePanel.ActionTeamDelete;
+export const ActionUserLoginFailedType = {
+    UserLoginFailed: "user-login-failed",
+} as const;
+export type ActionUserLoginFailedType = (typeof ActionUserLoginFailedType)[keyof typeof ActionUserLoginFailedType];
 
-export interface ActionVersionCreateContext {
-    domainHandleId?: string;
-    domainName?: string;
-    modelFamily?: IcePanel.ActionContextModelObject[];
+export interface ActionUserLoginFailed {
+    id: string;
+    props: IcePanel.ActionUserLoginFailedProps;
+    type: IcePanel.ActionUserLoginFailedType;
 }
+
+export interface ActionUserLoginFailedProps {
+    code: string;
+    message: string;
+}
+
+export const ActionUserLogoutType = {
+    UserLogout: "user-logout",
+} as const;
+export type ActionUserLogoutType = (typeof ActionUserLogoutType)[keyof typeof ActionUserLogoutType];
+
+export interface ActionUserLogout {
+    id: string;
+    type: IcePanel.ActionUserLogoutType;
+}
+
+export type ActionVersion =
+    | IcePanel.ActionVersionCreate
+    | IcePanel.ActionVersionDelete
+    | IcePanel.ActionVersionRevertCreate;
 
 export const ActionVersionCreateType = {
     VersionCreate: "version-create",
@@ -1764,11 +1869,10 @@ export interface ActionVersionCreate {
     type: IcePanel.ActionVersionCreateType;
 }
 
-export interface ActionVersionDeleteContext {
-    domainHandleId?: string;
-    domainName?: string;
-    modelFamily?: IcePanel.ActionContextModelObject[];
-    versionName: string;
+export interface ActionVersionCreateContext {
+    domainHandleId?: string | undefined;
+    domainName?: string | undefined;
+    modelFamily?: IcePanel.ActionContextModelObject[] | undefined;
 }
 
 export const ActionVersionDeleteType = {
@@ -1780,6 +1884,13 @@ export interface ActionVersionDelete {
     context: IcePanel.ActionVersionDeleteContext;
     id: string;
     type: IcePanel.ActionVersionDeleteType;
+}
+
+export interface ActionVersionDeleteContext {
+    domainHandleId?: string | undefined;
+    domainName?: string | undefined;
+    modelFamily?: IcePanel.ActionContextModelObject[] | undefined;
+    versionName: string;
 }
 
 export interface ActionVersionRevertContext {
@@ -1799,14 +1910,9 @@ export interface ActionVersionRevertCreate {
     type: IcePanel.ActionVersionRevertCreateType;
 }
 
-export type ActionVersion =
-    | IcePanel.ActionVersionCreate
-    | IcePanel.ActionVersionDelete
-    | IcePanel.ActionVersionRevertCreate;
-
 export interface ApiKeyPartial {
-    name?: string;
-    permission?: IcePanel.PermissionType;
+    name?: string | undefined;
+    permission?: IcePanel.PermissionType | undefined;
 }
 
 export interface ApiKeyRequired {
@@ -1825,22 +1931,6 @@ export const CatalogProviderNullable = {
     Supabase: "supabase",
 } as const;
 export type CatalogProviderNullable = (typeof CatalogProviderNullable)[keyof typeof CatalogProviderNullable];
-
-export const CatalogTechnologyTypeNullable = {
-    DataStorage: "data-storage",
-    Deployment: "deployment",
-    FrameworkLibrary: "framework-library",
-    Gateway: "gateway",
-    Other: "other",
-    Language: "language",
-    MessageBroker: "message-broker",
-    Network: "network",
-    Protocol: "protocol",
-    Runtime: "runtime",
-    ServiceTool: "service-tool",
-} as const;
-export type CatalogTechnologyTypeNullable =
-    (typeof CatalogTechnologyTypeNullable)[keyof typeof CatalogTechnologyTypeNullable];
 
 export const CatalogRestriction = {
     Actor: "actor",
@@ -1864,21 +1954,65 @@ export const CatalogRestrictionNullable = {
 } as const;
 export type CatalogRestrictionNullable = (typeof CatalogRestrictionNullable)[keyof typeof CatalogRestrictionNullable];
 
-export const CatalogTechnologyStatus = {
-    Approved: "approved",
-    PendingReview: "pending-review",
-    Rejected: "rejected",
-} as const;
-export type CatalogTechnologyStatus = (typeof CatalogTechnologyStatus)[keyof typeof CatalogTechnologyStatus];
+export interface CatalogTechnology {
+    category?: string | undefined;
+    /** Technology color used in diagrams */
+    color: IcePanel.TagColor;
+    deprecatedAt?: string | undefined;
+    /** Technical description for the technology, avoid marketing language */
+    description?: string | undefined;
+    /** Documentation or readme url */
+    docsUrl?: string | undefined;
+    /** Icon that only works on dark backgrounds */
+    iconUrlDark: string | null;
+    /** Icon that only works on light backgrounds */
+    iconUrlLight: string | null;
+    /** Long verbose name */
+    name: string;
+    /** Short one or two word name to show in places with limited space */
+    nameShort?: string | undefined;
+    /** Service provider that provides this technology */
+    provider: IcePanel.CatalogProviderNullable | null;
+    /** If rejected, detail description of why */
+    rejectionMessage?: string | undefined;
+    /** If rejected, the reason why */
+    rejectionReason?: IcePanel.CatalogTechnologyReviewRejectionReason | undefined;
+    /** Restriction on which model object or connections this technology can be added to */
+    restrictions: IcePanel.CatalogRestriction[] | null;
+    /** Current status of the technology, including pending review, approved, and rejected. Approved technologies are visible to all users. Set to null to make the technology private. */
+    status?: (IcePanel.CatalogTechnologyStatusNullable | null) | undefined;
+    /** Type or category of technology */
+    type: IcePanel.CatalogTechnologyTypeNullable | null;
+    /** Release notes or changelog url */
+    updatesUrl?: string | undefined;
+    /** Landing page website url */
+    websiteUrl?: string | undefined;
+    awsXmlSelector?: string | undefined;
+    azureUpdatesKeyword?: string | undefined;
+    createdAt: string;
+    createdBy: IcePanel.AuthType;
+    createdById: string;
+    /** URL path name for the technology, used by stackfeed */
+    defaultSlug?: string | undefined;
+    deletedAt?: string | undefined;
+    deletedBy?: IcePanel.AuthType | undefined;
+    deletedById?: string | undefined;
+    /** Whether the technology is disabled and not visible to users */
+    disabled: boolean;
+    /** Use either iconUrlDark or iconUrlLight */
+    iconUrl: string | null;
+    id: string;
+    /** Organization that owns this technology, or null if its publicly accessible */
+    organizationId: string | null;
+    /** Current and historical url path names used for the technology, used by stackfeed */
+    slugs?: string[] | undefined;
+    updatedAt: string;
+    updatedBy: IcePanel.AuthType;
+    updatedById: string;
+    updatesXmlUrl?: string | undefined;
+}
 
-export const CatalogTechnologyReviewRejectionReason = {
-    Duplicate: "duplicate",
-    Incomplete: "incomplete",
-    Invalid: "invalid",
-    Other: "other",
-} as const;
-export type CatalogTechnologyReviewRejectionReason =
-    (typeof CatalogTechnologyReviewRejectionReason)[keyof typeof CatalogTechnologyReviewRejectionReason];
+export type CatalogTechnologyFilterName = string | string[];
 
 export type CatalogTechnologyFilterProvider =
     | IcePanel.CatalogProviderNullable
@@ -1897,164 +2031,122 @@ export type CatalogTechnologyFilterType =
     | (IcePanel.CatalogTechnologyTypeNullable | null)[];
 
 export interface CatalogTechnologyFilter {
-    provider?: IcePanel.CatalogTechnologyFilterProvider;
-    restrictions?: IcePanel.CatalogTechnologyFilterRestrictions;
-    status?: IcePanel.CatalogTechnologyFilterStatus;
-    type?: IcePanel.CatalogTechnologyFilterType;
+    name?: IcePanel.CatalogTechnologyFilterName | undefined;
+    provider?: IcePanel.CatalogTechnologyFilterProvider | undefined;
+    restrictions?: IcePanel.CatalogTechnologyFilterRestrictions | undefined;
+    status?: IcePanel.CatalogTechnologyFilterStatus | undefined;
+    type?: IcePanel.CatalogTechnologyFilterType | undefined;
 }
 
 export interface CatalogTechnologyPartial {
-    category?: string;
+    category?: string | undefined;
     /** Technology color used in diagrams */
-    color?: IcePanel.TagColor;
-    deprecatedAt?: string;
+    color?: IcePanel.TagColor | undefined;
+    deprecatedAt?: string | undefined;
     /** Technical description for the technology, avoid marketing language */
-    description?: string;
+    description?: string | undefined;
     /** Documentation or readme url */
-    docsUrl?: string;
+    docsUrl?: string | undefined;
     /** Icon that only works on dark backgrounds */
-    iconUrlDark?: string | null;
+    iconUrlDark?: (string | null) | undefined;
     /** Icon that only works on light backgrounds */
-    iconUrlLight?: string | null;
+    iconUrlLight?: (string | null) | undefined;
     /** Long verbose name */
-    name?: string;
+    name?: string | undefined;
     /** Short one or two word name to show in places with limited space */
-    nameShort?: string;
+    nameShort?: string | undefined;
     /** Service provider that provides this technology */
-    provider?: IcePanel.CatalogProviderNullable | null;
+    provider?: (IcePanel.CatalogProviderNullable | null) | undefined;
     /** If rejected, detail description of why */
-    rejectionMessage?: string;
+    rejectionMessage?: string | undefined;
     /** If rejected, the reason why */
-    rejectionReason?: IcePanel.CatalogTechnologyReviewRejectionReason;
+    rejectionReason?: IcePanel.CatalogTechnologyReviewRejectionReason | undefined;
     /** Restriction on which model object or connections this technology can be added to */
-    restrictions?: IcePanel.CatalogRestriction[] | null;
-    /** Current status of the technology, including pending review, approved, and rejected. Approved technologies are visible to all users. */
-    status?: IcePanel.CatalogTechnologyStatus;
+    restrictions?: (IcePanel.CatalogRestriction[] | null) | undefined;
+    /** Current status of the technology, including pending review, approved, and rejected. Approved technologies are visible to all users. Set to null to make the technology private. */
+    status?: (IcePanel.CatalogTechnologyStatusNullable | null) | undefined;
     /** Type or category of technology */
-    type?: IcePanel.CatalogTechnologyTypeNullable | null;
+    type?: (IcePanel.CatalogTechnologyTypeNullable | null) | undefined;
     /** Release notes or changelog url */
-    updatesUrl?: string;
+    updatesUrl?: string | undefined;
     /** Landing page website url */
-    websiteUrl?: string;
+    websiteUrl?: string | undefined;
 }
 
 export interface CatalogTechnologyRequired {
-    category?: string;
+    category?: string | undefined;
     /** Technology color used in diagrams */
     color: IcePanel.TagColor;
-    deprecatedAt?: string;
+    deprecatedAt?: string | undefined;
     /** Technical description for the technology, avoid marketing language */
-    description?: string;
+    description?: string | undefined;
     /** Documentation or readme url */
-    docsUrl?: string;
+    docsUrl?: string | undefined;
     /** Icon that only works on dark backgrounds */
-    iconUrlDark?: string | null;
+    iconUrlDark?: (string | null) | undefined;
     /** Icon that only works on light backgrounds */
-    iconUrlLight?: string | null;
+    iconUrlLight?: (string | null) | undefined;
     /** Long verbose name */
     name: string;
     /** Short one or two word name to show in places with limited space */
-    nameShort?: string;
+    nameShort?: string | undefined;
     /** Service provider that provides this technology */
     provider: IcePanel.CatalogProviderNullable | null;
     /** If rejected, detail description of why */
-    rejectionMessage?: string;
+    rejectionMessage?: string | undefined;
     /** If rejected, the reason why */
-    rejectionReason?: IcePanel.CatalogTechnologyReviewRejectionReason;
+    rejectionReason?: IcePanel.CatalogTechnologyReviewRejectionReason | undefined;
     /** Restriction on which model object or connections this technology can be added to */
     restrictions: IcePanel.CatalogRestriction[] | null;
-    /** Current status of the technology, including pending review, approved, and rejected. Approved technologies are visible to all users. */
-    status?: IcePanel.CatalogTechnologyStatus;
+    /** Current status of the technology, including pending review, approved, and rejected. Approved technologies are visible to all users. Set to null to make the technology private. */
+    status?: (IcePanel.CatalogTechnologyStatusNullable | null) | undefined;
     /** Type or category of technology */
     type: IcePanel.CatalogTechnologyTypeNullable | null;
     /** Release notes or changelog url */
-    updatesUrl?: string;
+    updatesUrl?: string | undefined;
     /** Landing page website url */
-    websiteUrl?: string;
+    websiteUrl?: string | undefined;
 }
 
-export interface CatalogTechnology {
-    category?: string;
-    /** Technology color used in diagrams */
-    color: IcePanel.TagColor;
-    deprecatedAt?: string;
-    /** Technical description for the technology, avoid marketing language */
-    description?: string;
-    /** Documentation or readme url */
-    docsUrl?: string;
-    /** Icon that only works on dark backgrounds */
-    iconUrlDark: string | null;
-    /** Icon that only works on light backgrounds */
-    iconUrlLight: string | null;
-    /** Long verbose name */
-    name: string;
-    /** Short one or two word name to show in places with limited space */
-    nameShort?: string;
-    /** Service provider that provides this technology */
-    provider: IcePanel.CatalogProviderNullable | null;
-    /** If rejected, detail description of why */
-    rejectionMessage?: string;
-    /** If rejected, the reason why */
-    rejectionReason?: IcePanel.CatalogTechnologyReviewRejectionReason;
-    /** Restriction on which model object or connections this technology can be added to */
-    restrictions: IcePanel.CatalogRestriction[] | null;
-    /** Current status of the technology, including pending review, approved, and rejected. Approved technologies are visible to all users. */
-    status?: IcePanel.CatalogTechnologyStatus;
-    /** Type or category of technology */
-    type: IcePanel.CatalogTechnologyTypeNullable | null;
-    /** Release notes or changelog url */
-    updatesUrl?: string;
-    /** Landing page website url */
-    websiteUrl?: string;
-    awsXmlSelector?: string;
-    azureUpdatesKeyword?: string;
-    createdAt: string;
-    createdBy: IcePanel.AuthType;
-    createdById: string;
-    /** URL path name for the technology, used by stackfeed */
-    defaultSlug?: string;
-    deletedAt?: string;
-    deletedBy?: IcePanel.AuthType;
-    deletedById?: string;
-    /** Whether the technology is disabled and not visible to users */
-    disabled: boolean;
-    /** Use either iconUrlDark or iconUrlLight */
-    iconUrl: string | null;
-    id: string;
-    /** Organization that owns this technology, or null if its publicly accessible */
-    organizationId: string | null;
-    /** Current and historical url path names used for the technology, used by stackfeed */
-    slugs?: string[];
-    updatedAt: string;
-    updatedBy: IcePanel.AuthType;
-    updatedById: string;
-    updatesXmlUrl?: string;
-}
+export const CatalogTechnologyReviewRejectionReason = {
+    Duplicate: "duplicate",
+    Incomplete: "incomplete",
+    Invalid: "invalid",
+    Other: "other",
+} as const;
+export type CatalogTechnologyReviewRejectionReason =
+    (typeof CatalogTechnologyReviewRejectionReason)[keyof typeof CatalogTechnologyReviewRejectionReason];
 
-export interface CommentDiagram {
-    commentId: string;
-    id: string;
-}
+export const CatalogTechnologyStatus = {
+    Approved: "approved",
+    PendingReview: "pending-review",
+    Rejected: "rejected",
+} as const;
+export type CatalogTechnologyStatus = (typeof CatalogTechnologyStatus)[keyof typeof CatalogTechnologyStatus];
 
-export interface CommentPartial {
-    body?: IcePanel.CommentBody;
-    commit?: number;
-    mentionedUserIds?: string[];
-}
+export const CatalogTechnologyStatusNullable = {
+    Approved: "approved",
+    PendingReview: "pending-review",
+    Rejected: "rejected",
+} as const;
+export type CatalogTechnologyStatusNullable =
+    (typeof CatalogTechnologyStatusNullable)[keyof typeof CatalogTechnologyStatusNullable];
 
-export interface CommentRequired {
-    body: IcePanel.CommentBody;
-    commit?: number;
-    mentionedUserIds?: string[];
-    handleId?: string;
-}
-
-export interface CommentUpsert {
-    body: IcePanel.CommentBody;
-    commit?: number;
-    mentionedUserIds?: string[];
-    handleId?: string;
-}
+export const CatalogTechnologyTypeNullable = {
+    DataStorage: "data-storage",
+    Deployment: "deployment",
+    FrameworkLibrary: "framework-library",
+    Gateway: "gateway",
+    Other: "other",
+    Language: "language",
+    MessageBroker: "message-broker",
+    Network: "network",
+    Protocol: "protocol",
+    Runtime: "runtime",
+    ServiceTool: "service-tool",
+} as const;
+export type CatalogTechnologyTypeNullable =
+    (typeof CatalogTechnologyTypeNullable)[keyof typeof CatalogTechnologyTypeNullable];
 
 export interface Comment {
     body: IcePanel.CommentBody;
@@ -2064,13 +2156,13 @@ export interface Comment {
     createdAt: string;
     createdBy: IcePanel.AuthType;
     createdById: string;
-    deletedAt?: string;
-    deletedBy?: IcePanel.AuthType;
-    deletedById?: string;
+    deletedAt?: string | undefined;
+    deletedBy?: IcePanel.AuthType | undefined;
+    deletedById?: string | undefined;
     diagrams: Record<string, IcePanel.CommentDiagram>;
     id: string;
     landscapeId: string;
-    latestEntityId?: string;
+    latestEntityId?: string | undefined;
     replyCount: number;
     updatedAt: string;
     updatedBy: IcePanel.AuthType;
@@ -2079,86 +2171,55 @@ export interface Comment {
     versionId: string;
 }
 
-export const CommentBodyType = {
+export interface CommentDiagram {
+    commentId: string;
+    id: string;
+}
+
+export interface CommentPartial {
+    body?: IcePanel.CommentBody | undefined;
+    commit?: number | undefined;
+    mentionedUserIds?: string[] | undefined;
+}
+
+export interface CommentRequired {
+    body: IcePanel.CommentBody;
+    commit?: number | undefined;
+    mentionedUserIds?: string[] | undefined;
+    handleId?: string | undefined;
+}
+
+export interface CommentUpsert {
+    body: IcePanel.CommentBody;
+    commit?: number | undefined;
+    mentionedUserIds?: string[] | undefined;
+    handleId?: string | undefined;
+}
+
+export type CommentBody =
+    | IcePanel.CommentBodyQuestion
+    | IcePanel.CommentBodyInaccuracy
+    | IcePanel.CommentBodyIdea
+    | IcePanel.CommentBodyNewQuestion
+    | IcePanel.CommentBodyNewInaccuracy
+    | IcePanel.CommentBodyNewIdea;
+
+export const CommentBodyIdeaStatus = {
+    Active: "active",
+    Dismissed: "dismissed",
+} as const;
+export type CommentBodyIdeaStatus = (typeof CommentBodyIdeaStatus)[keyof typeof CommentBodyIdeaStatus];
+
+export const CommentBodyIdeaType = {
     Idea: "idea",
-    Inaccurate: "inaccurate",
-    NewIdea: "new-idea",
-    NewInaccurate: "new-inaccurate",
-    NewQuestion: "new-question",
-    Question: "question",
 } as const;
-export type CommentBodyType = (typeof CommentBodyType)[keyof typeof CommentBodyType];
+export type CommentBodyIdeaType = (typeof CommentBodyIdeaType)[keyof typeof CommentBodyIdeaType];
 
-export const CommentBodyNewIdeaStatus = {
-    Create: "create",
-} as const;
-export type CommentBodyNewIdeaStatus = (typeof CommentBodyNewIdeaStatus)[keyof typeof CommentBodyNewIdeaStatus];
-
-export const CommentBodyNewIdeaType = {
-    NewIdea: "new-idea",
-} as const;
-export type CommentBodyNewIdeaType = (typeof CommentBodyNewIdeaType)[keyof typeof CommentBodyNewIdeaType];
-
-export interface CommentBodyNewIdea {
+export interface CommentBodyIdea {
     content: string;
-    showContentPreview?: boolean;
-    status: IcePanel.CommentBodyNewIdeaStatus;
-    type: IcePanel.CommentBodyNewIdeaType;
-}
-
-export const CommentBodyNewQuestionStatus = {
-    Create: "create",
-} as const;
-export type CommentBodyNewQuestionStatus =
-    (typeof CommentBodyNewQuestionStatus)[keyof typeof CommentBodyNewQuestionStatus];
-
-export const CommentBodyNewQuestionType = {
-    NewQuestion: "new-question",
-} as const;
-export type CommentBodyNewQuestionType = (typeof CommentBodyNewQuestionType)[keyof typeof CommentBodyNewQuestionType];
-
-export interface CommentBodyNewQuestion {
-    content: string;
-    showContentPreview?: boolean;
-    status: IcePanel.CommentBodyNewQuestionStatus;
-    type: IcePanel.CommentBodyNewQuestionType;
-}
-
-export const CommentBodyNewInaccuracyStatus = {
-    Create: "create",
-} as const;
-export type CommentBodyNewInaccuracyStatus =
-    (typeof CommentBodyNewInaccuracyStatus)[keyof typeof CommentBodyNewInaccuracyStatus];
-
-export const CommentBodyNewInaccuracyType = {
-    NewInaccurate: "new-inaccurate",
-} as const;
-export type CommentBodyNewInaccuracyType =
-    (typeof CommentBodyNewInaccuracyType)[keyof typeof CommentBodyNewInaccuracyType];
-
-export interface CommentBodyNewInaccuracy {
-    content: string;
-    showContentPreview?: boolean;
-    status: IcePanel.CommentBodyNewInaccuracyStatus;
-    type: IcePanel.CommentBodyNewInaccuracyType;
-}
-
-export const CommentBodyQuestionStatus = {
-    Open: "open",
-    Resolved: "resolved",
-} as const;
-export type CommentBodyQuestionStatus = (typeof CommentBodyQuestionStatus)[keyof typeof CommentBodyQuestionStatus];
-
-export const CommentBodyQuestionType = {
-    Question: "question",
-} as const;
-export type CommentBodyQuestionType = (typeof CommentBodyQuestionType)[keyof typeof CommentBodyQuestionType];
-
-export interface CommentBodyQuestion {
-    content: string;
-    showContentPreview?: boolean;
-    status: IcePanel.CommentBodyQuestionStatus;
-    type: IcePanel.CommentBodyQuestionType;
+    showContentPreview?: boolean | undefined;
+    status: IcePanel.CommentBodyIdeaStatus;
+    type: IcePanel.CommentBodyIdeaType;
 }
 
 export const CommentBodyInaccuracyStatus = {
@@ -2175,51 +2236,92 @@ export type CommentBodyInaccuracyType = (typeof CommentBodyInaccuracyType)[keyof
 
 export interface CommentBodyInaccuracy {
     content: string;
-    showContentPreview?: boolean;
+    showContentPreview?: boolean | undefined;
     status: IcePanel.CommentBodyInaccuracyStatus;
     type: IcePanel.CommentBodyInaccuracyType;
 }
 
-export const CommentBodyIdeaStatus = {
-    Active: "active",
-    Dismissed: "dismissed",
+export const CommentBodyNewIdeaStatus = {
+    Create: "create",
 } as const;
-export type CommentBodyIdeaStatus = (typeof CommentBodyIdeaStatus)[keyof typeof CommentBodyIdeaStatus];
+export type CommentBodyNewIdeaStatus = (typeof CommentBodyNewIdeaStatus)[keyof typeof CommentBodyNewIdeaStatus];
 
-export const CommentBodyIdeaType = {
+export const CommentBodyNewIdeaType = {
+    NewIdea: "new-idea",
+} as const;
+export type CommentBodyNewIdeaType = (typeof CommentBodyNewIdeaType)[keyof typeof CommentBodyNewIdeaType];
+
+export interface CommentBodyNewIdea {
+    content: string;
+    showContentPreview?: boolean | undefined;
+    status: IcePanel.CommentBodyNewIdeaStatus;
+    type: IcePanel.CommentBodyNewIdeaType;
+}
+
+export const CommentBodyNewInaccuracyStatus = {
+    Create: "create",
+} as const;
+export type CommentBodyNewInaccuracyStatus =
+    (typeof CommentBodyNewInaccuracyStatus)[keyof typeof CommentBodyNewInaccuracyStatus];
+
+export const CommentBodyNewInaccuracyType = {
+    NewInaccurate: "new-inaccurate",
+} as const;
+export type CommentBodyNewInaccuracyType =
+    (typeof CommentBodyNewInaccuracyType)[keyof typeof CommentBodyNewInaccuracyType];
+
+export interface CommentBodyNewInaccuracy {
+    content: string;
+    showContentPreview?: boolean | undefined;
+    status: IcePanel.CommentBodyNewInaccuracyStatus;
+    type: IcePanel.CommentBodyNewInaccuracyType;
+}
+
+export const CommentBodyNewQuestionStatus = {
+    Create: "create",
+} as const;
+export type CommentBodyNewQuestionStatus =
+    (typeof CommentBodyNewQuestionStatus)[keyof typeof CommentBodyNewQuestionStatus];
+
+export const CommentBodyNewQuestionType = {
+    NewQuestion: "new-question",
+} as const;
+export type CommentBodyNewQuestionType = (typeof CommentBodyNewQuestionType)[keyof typeof CommentBodyNewQuestionType];
+
+export interface CommentBodyNewQuestion {
+    content: string;
+    showContentPreview?: boolean | undefined;
+    status: IcePanel.CommentBodyNewQuestionStatus;
+    type: IcePanel.CommentBodyNewQuestionType;
+}
+
+export const CommentBodyQuestionStatus = {
+    Open: "open",
+    Resolved: "resolved",
+} as const;
+export type CommentBodyQuestionStatus = (typeof CommentBodyQuestionStatus)[keyof typeof CommentBodyQuestionStatus];
+
+export const CommentBodyQuestionType = {
+    Question: "question",
+} as const;
+export type CommentBodyQuestionType = (typeof CommentBodyQuestionType)[keyof typeof CommentBodyQuestionType];
+
+export interface CommentBodyQuestion {
+    content: string;
+    showContentPreview?: boolean | undefined;
+    status: IcePanel.CommentBodyQuestionStatus;
+    type: IcePanel.CommentBodyQuestionType;
+}
+
+export const CommentBodyType = {
     Idea: "idea",
+    Inaccurate: "inaccurate",
+    NewIdea: "new-idea",
+    NewInaccurate: "new-inaccurate",
+    NewQuestion: "new-question",
+    Question: "question",
 } as const;
-export type CommentBodyIdeaType = (typeof CommentBodyIdeaType)[keyof typeof CommentBodyIdeaType];
-
-export interface CommentBodyIdea {
-    content: string;
-    showContentPreview?: boolean;
-    status: IcePanel.CommentBodyIdeaStatus;
-    type: IcePanel.CommentBodyIdeaType;
-}
-
-export type CommentBody =
-    | IcePanel.CommentBodyQuestion
-    | IcePanel.CommentBodyInaccuracy
-    | IcePanel.CommentBodyIdea
-    | IcePanel.CommentBodyNewQuestion
-    | IcePanel.CommentBodyNewInaccuracy
-    | IcePanel.CommentBodyNewIdea;
-
-export interface CommentReplyPartial {
-    content?: string;
-    mentionedUserIds?: string[];
-}
-
-export interface CommentReplyRequired {
-    content: string;
-    mentionedUserIds?: string[];
-}
-
-export interface CommentReplyUpsert {
-    content: string;
-    mentionedUserIds?: string[];
-}
+export type CommentBodyType = (typeof CommentBodyType)[keyof typeof CommentBodyType];
 
 export interface CommentReply {
     content: string;
@@ -2228,16 +2330,89 @@ export interface CommentReply {
     createdAt: string;
     createdBy: IcePanel.AuthType;
     createdById: string;
-    deletedAt?: string;
-    deletedBy?: IcePanel.AuthType;
-    deletedById?: string;
+    deletedAt?: string | undefined;
+    deletedBy?: IcePanel.AuthType | undefined;
+    deletedById?: string | undefined;
     id: string;
     landscapeId: string;
-    latestEntityId?: string;
+    latestEntityId?: string | undefined;
     updatedAt: string;
     updatedBy: IcePanel.AuthType;
     updatedById: string;
     versionId: string;
+}
+
+export interface CommentReplyPartial {
+    content?: string | undefined;
+    mentionedUserIds?: string[] | undefined;
+}
+
+export interface CommentReplyRequired {
+    content: string;
+    mentionedUserIds?: string[] | undefined;
+}
+
+export interface CommentReplyUpsert {
+    content: string;
+    mentionedUserIds?: string[] | undefined;
+}
+
+export interface Diagram {
+    commit: number;
+    description?: string | undefined;
+    groupId: string | null;
+    index: number;
+    labels: Record<string, string>;
+    /** model object id this object belongs to */
+    modelId: string;
+    name: string;
+    parentId: string | null;
+    pinned: boolean;
+    pinnedAt?: string | undefined;
+    pinnedIndex?: number | undefined;
+    status: IcePanel.DiagramStatus;
+    zoomOverrides?: (IcePanel.DiagramZoomOverridesNullable | null) | undefined;
+    handleId: string;
+    type: IcePanel.DiagramType;
+    commentCount: number;
+    connectionCount: number;
+    createdAt: string;
+    createdBy: IcePanel.AuthType;
+    createdById: string;
+    deletedAt?: string | undefined;
+    deletedBy?: IcePanel.AuthType | undefined;
+    deletedById?: string | undefined;
+    id: string;
+    landscapeId: string;
+    latestEntityId?: string | undefined;
+    objectCount: IcePanel.DiagramObjectCount;
+    updatedAt: string;
+    updatedBy: IcePanel.AuthType;
+    updatedById: string;
+    version: number;
+    versionId: string;
+}
+
+export interface DiagramCreate {
+    commit?: number | undefined;
+    description?: string | undefined;
+    groupId?: (string | null) | undefined;
+    index: number;
+    labels?: Record<string, string> | undefined;
+    /** model object id this object belongs to */
+    modelId: string;
+    name: string;
+    parentId?: (string | null) | undefined;
+    pinned?: boolean | undefined;
+    pinnedAt?: string | undefined;
+    pinnedIndex?: number | undefined;
+    status?: IcePanel.DiagramStatus | undefined;
+    zoomOverrides?: (IcePanel.DiagramZoomOverridesNullable | null) | undefined;
+    handleId?: string | undefined;
+    type: IcePanel.DiagramType;
+    comments?: Record<string, IcePanel.DiagramComment> | undefined;
+    connections?: Record<string, IcePanel.DiagramConnection> | undefined;
+    objects?: Record<string, IcePanel.DiagramObject> | undefined;
 }
 
 export type DiagramFilterHandleId = string | string[];
@@ -2248,15 +2423,56 @@ export type DiagramFilterType = IcePanel.DiagramType | IcePanel.DiagramType[];
 
 export interface DiagramFilter {
     /** Filter diagrams that contain no objects */
-    empty?: boolean;
-    handleId?: IcePanel.DiagramFilterHandleId;
-    labels?: Record<string, string>;
-    modelId?: string;
-    name?: string;
-    pinned?: boolean;
-    status?: IcePanel.DiagramFilterStatus;
-    type?: IcePanel.DiagramFilterType;
+    empty?: boolean | undefined;
+    handleId?: IcePanel.DiagramFilterHandleId | undefined;
+    labels?: Record<string, string> | undefined;
+    modelId?: string | undefined;
+    name?: string | undefined;
+    pinned?: boolean | undefined;
+    status?: IcePanel.DiagramFilterStatus | undefined;
+    type?: IcePanel.DiagramFilterType | undefined;
 }
+
+export interface DiagramPartial {
+    commit?: number | undefined;
+    description?: string | undefined;
+    groupId?: (string | null) | undefined;
+    index?: number | undefined;
+    labels?: Record<string, string> | undefined;
+    /** model object id this object belongs to */
+    modelId?: string | undefined;
+    name?: string | undefined;
+    parentId?: (string | null) | undefined;
+    pinned?: boolean | undefined;
+    pinnedAt?: string | undefined;
+    pinnedIndex?: number | undefined;
+    status?: IcePanel.DiagramStatus | undefined;
+    zoomOverrides?: (IcePanel.DiagramZoomOverridesNullable | null) | undefined;
+}
+
+export interface DiagramRequired {
+    commit?: number | undefined;
+    description?: string | undefined;
+    groupId?: (string | null) | undefined;
+    index: number;
+    labels?: Record<string, string> | undefined;
+    /** model object id this object belongs to */
+    modelId: string;
+    name: string;
+    parentId?: (string | null) | undefined;
+    pinned?: boolean | undefined;
+    pinnedAt?: string | undefined;
+    pinnedIndex?: number | undefined;
+    status?: IcePanel.DiagramStatus | undefined;
+    zoomOverrides?: (IcePanel.DiagramZoomOverridesNullable | null) | undefined;
+    handleId?: string | undefined;
+    type: IcePanel.DiagramType;
+}
+
+export const DiagramStatus = {
+    Current: "current",
+} as const;
+export type DiagramStatus = (typeof DiagramStatus)[keyof typeof DiagramStatus];
 
 export interface DiagramThumbnail {
     createdAt: string;
@@ -2278,45 +2494,45 @@ export const DiagramType = {
 } as const;
 export type DiagramType = (typeof DiagramType)[keyof typeof DiagramType];
 
-export const DiagramStatus = {
-    Current: "current",
-} as const;
-export type DiagramStatus = (typeof DiagramStatus)[keyof typeof DiagramStatus];
-
-export interface DiagramPartial {
-    commit?: number;
-    description?: string;
-    groupId?: string | null;
-    index?: number;
-    labels?: Record<string, string>;
-    /** model object id this object belongs to */
-    modelId?: string;
-    name?: string;
-    parentId?: string | null;
-    pinned?: boolean;
-    pinnedAt?: string;
-    pinnedIndex?: number;
-    status?: IcePanel.DiagramStatus;
-    zoomOverrides?: IcePanel.DiagramZoomOverridesNullable | null;
+export interface DiagramContentPartialComments {
+    $add?: Record<string, IcePanel.DiagramComment> | undefined;
+    $remove?: string[] | undefined;
+    $replace?: Record<string, IcePanel.DiagramComment> | undefined;
+    $update?: Record<string, IcePanel.DiagramCommentPartial> | undefined;
 }
 
-export interface DiagramRequired {
-    commit?: number;
-    description?: string;
-    groupId?: string | null;
-    index: number;
-    labels?: Record<string, string>;
+export interface DiagramContentPartialConnections {
+    $add?: Record<string, IcePanel.DiagramConnection> | undefined;
+    $remove?: string[] | undefined;
+    $replace?: Record<string, IcePanel.DiagramConnection> | undefined;
+    $update?: Record<string, IcePanel.DiagramConnectionPartial> | undefined;
+}
+
+export interface DiagramContentPartialObjects {
+    $add?: Record<string, IcePanel.DiagramObject> | undefined;
+    $remove?: string[] | undefined;
+    $replace?: Record<string, IcePanel.DiagramObject> | undefined;
+    $update?: Record<string, IcePanel.DiagramObjectPartial> | undefined;
+}
+
+export interface DiagramUpsert {
+    commit?: number | undefined;
+    description?: string | undefined;
+    groupId?: (string | null) | undefined;
+    index?: number | undefined;
+    labels?: Record<string, string> | undefined;
     /** model object id this object belongs to */
-    modelId: string;
-    name: string;
-    parentId?: string | null;
-    pinned?: boolean;
-    pinnedAt?: string;
-    pinnedIndex?: number;
-    status?: IcePanel.DiagramStatus;
-    zoomOverrides?: IcePanel.DiagramZoomOverridesNullable | null;
-    handleId?: string;
-    type: IcePanel.DiagramType;
+    modelId?: string | undefined;
+    name?: string | undefined;
+    parentId?: (string | null) | undefined;
+    pinned?: boolean | undefined;
+    pinnedAt?: string | undefined;
+    pinnedIndex?: number | undefined;
+    status?: IcePanel.DiagramStatus | undefined;
+    zoomOverrides?: (IcePanel.DiagramZoomOverridesNullable | null) | undefined;
+    comments?: IcePanel.DiagramContentPartialComments | undefined;
+    connections?: IcePanel.DiagramContentPartialConnections | undefined;
+    objects?: IcePanel.DiagramContentPartialObjects | undefined;
 }
 
 /**
@@ -2326,193 +2542,18 @@ export type DiagramZoomOverrides = Record<string, string>;
 
 export type DiagramZoomOverridesNullable = IcePanel.DiagramZoomOverrides | null;
 
-export interface DiagramContentPartialComments {
-    $add?: Record<string, IcePanel.DiagramComment>;
-    $remove?: string[];
-    $replace?: Record<string, IcePanel.DiagramComment>;
-    $update?: Record<string, IcePanel.DiagramCommentPartial>;
-}
-
-export interface DiagramContentPartialConnections {
-    $add?: Record<string, IcePanel.DiagramConnection>;
-    $remove?: string[];
-    $replace?: Record<string, IcePanel.DiagramConnection>;
-    $update?: Record<string, IcePanel.DiagramConnectionPartial>;
-}
-
-export interface DiagramContentPartialObjects {
-    $add?: Record<string, IcePanel.DiagramObject>;
-    $remove?: string[];
-    $replace?: Record<string, IcePanel.DiagramObject>;
-    $update?: Record<string, IcePanel.DiagramObjectPartial>;
-}
-
-export interface DiagramUpsert {
-    commit?: number;
-    description?: string;
-    groupId?: string | null;
-    index?: number;
-    labels?: Record<string, string>;
-    /** model object id this object belongs to */
-    modelId?: string;
-    name?: string;
-    parentId?: string | null;
-    pinned?: boolean;
-    pinnedAt?: string;
-    pinnedIndex?: number;
-    status?: IcePanel.DiagramStatus;
-    zoomOverrides?: IcePanel.DiagramZoomOverridesNullable | null;
-    comments?: IcePanel.DiagramContentPartialComments;
-    connections?: IcePanel.DiagramContentPartialConnections;
-    objects?: IcePanel.DiagramContentPartialObjects;
-}
-
-export interface Diagram {
-    commit: number;
-    description: string;
-    groupId: string | null;
-    index: number;
-    labels: Record<string, string>;
-    /** model object id this object belongs to */
-    modelId: string;
-    name: string;
-    parentId: string | null;
-    pinned: boolean;
-    pinnedAt?: string;
-    pinnedIndex?: number;
-    status: IcePanel.DiagramStatus;
-    zoomOverrides?: IcePanel.DiagramZoomOverridesNullable | null;
-    handleId: string;
-    type: IcePanel.DiagramType;
-    commentCount: number;
-    connectionCount: number;
-    createdAt: string;
-    createdBy: IcePanel.AuthType;
-    createdById: string;
-    deletedAt?: string;
-    deletedBy?: IcePanel.AuthType;
-    deletedById?: string;
+export interface DiagramComment {
+    commentId: string;
     id: string;
-    landscapeId: string;
-    latestEntityId?: string;
-    objectCount: IcePanel.DiagramObjectCount;
-    updatedAt: string;
-    updatedBy: IcePanel.AuthType;
-    updatedById: string;
-    version: number;
-    versionId: string;
-}
-
-export interface DiagramCreate {
-    commit?: number;
-    description?: string;
-    groupId?: string | null;
-    index: number;
-    labels?: Record<string, string>;
-    /** model object id this object belongs to */
-    modelId: string;
-    name: string;
-    parentId?: string | null;
-    pinned?: boolean;
-    pinnedAt?: string;
-    pinnedIndex?: number;
-    status?: IcePanel.DiagramStatus;
-    zoomOverrides?: IcePanel.DiagramZoomOverridesNullable | null;
-    handleId?: string;
-    type: IcePanel.DiagramType;
-    comments?: Record<string, IcePanel.DiagramComment>;
-    connections?: Record<string, IcePanel.DiagramConnection>;
-    objects?: Record<string, IcePanel.DiagramObject>;
-}
-
-export const DiagramObjectShape = {
-    Area: "area",
-    Box: "box",
-} as const;
-export type DiagramObjectShape = (typeof DiagramObjectShape)[keyof typeof DiagramObjectShape];
-
-export const DiagramObjectType = {
-    Actor: "actor",
-    App: "app",
-    Group: "group",
-    Component: "component",
-    Store: "store",
-    System: "system",
-} as const;
-export type DiagramObjectType = (typeof DiagramObjectType)[keyof typeof DiagramObjectType];
-
-export interface DiagramObjectCount {
-    actor: number;
-    app: number;
-    group: number;
-    component: number;
-    store: number;
-    system: number;
-    area: number;
-    box: number;
-}
-
-export const DiagramObjectConnector = {
-    TopLeft: "top-left",
-    TopCenter: "top-center",
-    TopRight: "top-right",
-    RightTop: "right-top",
-    RightMiddle: "right-middle",
-    RightBottom: "right-bottom",
-    BottomRight: "bottom-right",
-    BottomCenter: "bottom-center",
-    BottomLeft: "bottom-left",
-    LeftBottom: "left-bottom",
-    LeftMiddle: "left-middle",
-    LeftTop: "left-top",
-} as const;
-export type DiagramObjectConnector = (typeof DiagramObjectConnector)[keyof typeof DiagramObjectConnector];
-
-export interface DiagramObjectPartial {
-    height?: number;
-    id?: string;
-    modelId?: string;
-    shape?: IcePanel.DiagramObjectShape;
-    type?: IcePanel.DiagramObjectType;
-    width?: number;
-    x?: number;
-    y?: number;
-}
-
-export interface DiagramObject {
-    height: number;
-    id: string;
-    modelId: string;
-    shape: IcePanel.DiagramObjectShape;
-    type: IcePanel.DiagramObjectType;
-    width: number;
     x: number;
     y: number;
 }
 
-export const LineShape = {
-    Curved: "curved",
-    Straight: "straight",
-    Square: "square",
-} as const;
-export type LineShape = (typeof LineShape)[keyof typeof LineShape];
-
-export interface DiagramConnectionPartialPointsItem {
-    x: number;
-    y: number;
-}
-
-export interface DiagramConnectionPartial {
-    id?: string;
-    /** The percentage along the line where the label should be placed */
-    labelPosition?: number;
-    lineShape?: IcePanel.LineShape;
-    modelId?: string | null;
-    originConnector?: IcePanel.DiagramObjectConnector | null;
-    originId?: string | null;
-    points?: IcePanel.DiagramConnectionPartialPointsItem[];
-    targetConnector?: IcePanel.DiagramObjectConnector | null;
-    targetId?: string | null;
+export interface DiagramCommentPartial {
+    commentId?: string | undefined;
+    id?: string | undefined;
+    x?: number | undefined;
+    y?: number | undefined;
 }
 
 export interface DiagramConnectionPointsItem {
@@ -2533,32 +2574,22 @@ export interface DiagramConnection {
     targetId: string | null;
 }
 
-export interface DiagramCommentPartial {
-    commentId?: string;
-    id?: string;
-    x?: number;
-    y?: number;
-}
-
-export interface DiagramComment {
-    commentId: string;
-    id: string;
+export interface DiagramConnectionPartialPointsItem {
     x: number;
     y: number;
 }
 
-export interface DiagramContentPartial {
-    comments?: IcePanel.DiagramContentPartialComments;
-    commit?: number;
-    connections?: IcePanel.DiagramContentPartialConnections;
-    objects?: IcePanel.DiagramContentPartialObjects;
-}
-
-export interface DiagramContentRequired {
-    comments?: Record<string, IcePanel.DiagramComment>;
-    commit?: number;
-    connections?: Record<string, IcePanel.DiagramConnection>;
-    objects?: Record<string, IcePanel.DiagramObject>;
+export interface DiagramConnectionPartial {
+    id?: string | undefined;
+    /** The percentage along the line where the label should be placed */
+    labelPosition?: number | undefined;
+    lineShape?: IcePanel.LineShape | undefined;
+    modelId?: (string | null) | undefined;
+    originConnector?: (IcePanel.DiagramObjectConnector | null) | undefined;
+    originId?: (string | null) | undefined;
+    points?: IcePanel.DiagramConnectionPartialPointsItem[] | undefined;
+    targetConnector?: (IcePanel.DiagramObjectConnector | null) | undefined;
+    targetId?: (string | null) | undefined;
 }
 
 export interface DiagramContent {
@@ -2569,14 +2600,14 @@ export interface DiagramContent {
     createdAt: string;
     createdBy: IcePanel.AuthType;
     createdById: string;
-    deletedAt?: string;
-    deletedBy?: IcePanel.AuthType;
-    deletedById?: string;
+    deletedAt?: string | undefined;
+    deletedBy?: IcePanel.AuthType | undefined;
+    deletedById?: string | undefined;
     groupId: string | null;
     handleId: string;
     id: string;
     landscapeId: string;
-    latestEntityId?: string;
+    latestEntityId?: string | undefined;
     modelId: string;
     name: string;
     status: IcePanel.DiagramStatus;
@@ -2586,9 +2617,113 @@ export interface DiagramContent {
     updatedById: string;
     version: number;
     versionId: string;
-    viewedAt?: string;
-    viewedBy?: IcePanel.AuthType;
-    viewedById?: string;
+    viewedAt?: string | undefined;
+    viewedBy?: IcePanel.AuthType | undefined;
+    viewedById?: string | undefined;
+}
+
+export interface DiagramContentPartial {
+    comments?: IcePanel.DiagramContentPartialComments | undefined;
+    commit?: number | undefined;
+    connections?: IcePanel.DiagramContentPartialConnections | undefined;
+    objects?: IcePanel.DiagramContentPartialObjects | undefined;
+}
+
+export interface DiagramContentRequired {
+    comments?: Record<string, IcePanel.DiagramComment> | undefined;
+    commit?: number | undefined;
+    connections?: Record<string, IcePanel.DiagramConnection> | undefined;
+    objects?: Record<string, IcePanel.DiagramObject> | undefined;
+}
+
+export interface DiagramObject {
+    height: number;
+    id: string;
+    modelId: string;
+    shape: IcePanel.DiagramObjectShape;
+    type: IcePanel.DiagramObjectType;
+    width: number;
+    x: number;
+    y: number;
+}
+
+export const DiagramObjectConnector = {
+    TopLeft: "top-left",
+    TopCenter: "top-center",
+    TopRight: "top-right",
+    RightTop: "right-top",
+    RightMiddle: "right-middle",
+    RightBottom: "right-bottom",
+    BottomRight: "bottom-right",
+    BottomCenter: "bottom-center",
+    BottomLeft: "bottom-left",
+    LeftBottom: "left-bottom",
+    LeftMiddle: "left-middle",
+    LeftTop: "left-top",
+} as const;
+export type DiagramObjectConnector = (typeof DiagramObjectConnector)[keyof typeof DiagramObjectConnector];
+
+export interface DiagramObjectCount {
+    actor: number;
+    app: number;
+    group: number;
+    component: number;
+    store: number;
+    system: number;
+    area: number;
+    box: number;
+}
+
+export interface DiagramObjectPartial {
+    height?: number | undefined;
+    id?: string | undefined;
+    modelId?: string | undefined;
+    shape?: IcePanel.DiagramObjectShape | undefined;
+    type?: IcePanel.DiagramObjectType | undefined;
+    width?: number | undefined;
+    x?: number | undefined;
+    y?: number | undefined;
+}
+
+export const DiagramObjectShape = {
+    Area: "area",
+    Box: "box",
+} as const;
+export type DiagramObjectShape = (typeof DiagramObjectShape)[keyof typeof DiagramObjectShape];
+
+export const DiagramObjectType = {
+    Actor: "actor",
+    App: "app",
+    Group: "group",
+    Component: "component",
+    Store: "store",
+    System: "system",
+} as const;
+export type DiagramObjectType = (typeof DiagramObjectType)[keyof typeof DiagramObjectType];
+
+export const LineShape = {
+    Curved: "curved",
+    Straight: "straight",
+    Square: "square",
+} as const;
+export type LineShape = (typeof LineShape)[keyof typeof LineShape];
+
+export interface DiagramExportImage {
+    completedAt?: string | undefined;
+    createdAt: string;
+    deleteAt: string;
+    diagramId: string;
+    error: string | null;
+    fileUrls: IcePanel.DiagramExportImageFileUrls;
+    id: string;
+    landscapeId: string;
+    options: IcePanel.DiagramExportImageOptions;
+    versionId: string;
+}
+
+export interface DiagramExportImageFileUrls {
+    png: string;
+    svg: string;
 }
 
 export const DiagramExportImageOptionsTab = {
@@ -2602,68 +2737,17 @@ export type DiagramExportImageOptionsTab =
 
 export interface DiagramExportImageOptions {
     /** Fetch and apply draft tasks before producing the export */
-    draftId?: string;
-    flowId?: string;
-    flowPathIds?: string[];
-    focusIds?: string[];
-    groupId?: string;
-    hideIds?: string[];
-    pinIds?: string[];
-    tab?: IcePanel.DiagramExportImageOptionsTab;
-    theme?: IcePanel.Theme;
-}
-
-export interface DiagramExportImageFileUrls {
-    png: string;
-    svg: string;
-}
-
-export interface DiagramExportImage {
-    completedAt?: string;
-    createdAt: string;
-    deleteAt: string;
-    diagramId: string;
-    error: string | null;
-    fileUrls: IcePanel.DiagramExportImageFileUrls;
-    id: string;
-    landscapeId: string;
-    options: IcePanel.DiagramExportImageOptions;
-    versionId: string;
-}
-
-export type DiagramGroupFilterHandleId = string | string[];
-
-export interface DiagramGroupFilter {
-    handleId?: IcePanel.DiagramGroupFilterHandleId;
-    labels?: Record<string, string>;
-    modelId?: string;
-    name?: string;
-}
-
-export interface DiagramGroupPartial {
-    commit?: number;
-    index?: number;
-    labels?: Record<string, string>;
-    modelId?: string;
-    name?: string;
-}
-
-export interface DiagramGroupRequired {
-    commit?: number;
-    index?: number;
-    labels?: Record<string, string>;
-    modelId: string;
-    name: string;
-    handleId?: string;
-}
-
-export interface DiagramGroupUpsert {
-    commit?: number;
-    index?: number;
-    labels?: Record<string, string>;
-    modelId: string;
-    name: string;
-    handleId?: string;
+    draftId?: string | undefined;
+    flowId?: string | undefined;
+    flowPathIds?: string[] | undefined;
+    focusIds?: string[] | undefined;
+    groupId?: string | undefined;
+    hideIds?: string[] | undefined;
+    /** Maximum pixel width for the exported PNG. The image will be scaled down if the diagram exceeds this width. Defaults to no limit (up to 10240px). */
+    maxWidth?: number | undefined;
+    pinIds?: string[] | undefined;
+    tab?: IcePanel.DiagramExportImageOptionsTab | undefined;
+    theme?: IcePanel.Theme | undefined;
 }
 
 export interface DiagramGroup {
@@ -2676,12 +2760,12 @@ export interface DiagramGroup {
     createdAt: string;
     createdBy: IcePanel.AuthType;
     createdById: string;
-    deletedAt?: string;
-    deletedBy?: IcePanel.AuthType;
-    deletedById?: string;
+    deletedAt?: string | undefined;
+    deletedBy?: IcePanel.AuthType | undefined;
+    deletedById?: string | undefined;
     id: string;
     landscapeId: string;
-    latestEntityId?: string;
+    latestEntityId?: string | undefined;
     updatedAt: string;
     updatedBy: IcePanel.AuthType;
     updatedById: string;
@@ -2689,35 +2773,39 @@ export interface DiagramGroup {
     versionId: string;
 }
 
-export type DomainFilterHandleId = string | string[];
+export type DiagramGroupFilterHandleId = string | string[];
 
-export interface DomainFilter {
-    handleId?: IcePanel.DomainFilterHandleId;
-    labels?: Record<string, string>;
-    name?: string;
+export interface DiagramGroupFilter {
+    handleId?: IcePanel.DiagramGroupFilterHandleId | undefined;
+    labels?: Record<string, string> | undefined;
+    modelId?: string | undefined;
+    name?: string | undefined;
 }
 
-export interface DomainPartial {
-    commit?: number;
-    index?: number;
-    labels?: Record<string, string>;
-    name?: string;
+export interface DiagramGroupPartial {
+    commit?: number | undefined;
+    index?: number | undefined;
+    labels?: Record<string, string> | undefined;
+    modelId?: string | undefined;
+    name?: string | undefined;
 }
 
-export interface DomainRequired {
-    commit?: number;
-    index?: number;
-    labels?: Record<string, string>;
+export interface DiagramGroupRequired {
+    commit?: number | undefined;
+    index?: number | undefined;
+    labels?: Record<string, string> | undefined;
+    modelId: string;
     name: string;
-    handleId?: string;
+    handleId?: string | undefined;
 }
 
-export interface DomainUpsert {
-    commit?: number;
-    index?: number;
-    labels?: Record<string, string>;
+export interface DiagramGroupUpsert {
+    commit?: number | undefined;
+    index?: number | undefined;
+    labels?: Record<string, string> | undefined;
+    modelId: string;
     name: string;
-    handleId?: string;
+    handleId?: string | undefined;
 }
 
 export interface Domain {
@@ -2729,12 +2817,12 @@ export interface Domain {
     createdAt: string;
     createdBy: IcePanel.AuthType;
     createdById: string;
-    deletedAt?: string;
-    deletedBy?: IcePanel.AuthType;
-    deletedById?: string;
+    deletedAt?: string | undefined;
+    deletedBy?: IcePanel.AuthType | undefined;
+    deletedById?: string | undefined;
     id: string;
     landscapeId: string;
-    latestEntityId?: string;
+    latestEntityId?: string | undefined;
     updatedAt: string;
     updatedBy: IcePanel.AuthType;
     updatedById: string;
@@ -2742,12 +2830,68 @@ export interface Domain {
     versionId: string;
 }
 
-export const DraftStatus = {
-    InProgress: "in-progress",
-    Merged: "merged",
-    Archived: "archived",
-} as const;
-export type DraftStatus = (typeof DraftStatus)[keyof typeof DraftStatus];
+export type DomainFilterHandleId = string | string[];
+
+export interface DomainFilter {
+    handleId?: IcePanel.DomainFilterHandleId | undefined;
+    labels?: Record<string, string> | undefined;
+    name?: string | undefined;
+}
+
+export interface DomainPartial {
+    commit?: number | undefined;
+    index?: number | undefined;
+    labels?: Record<string, string> | undefined;
+    name?: string | undefined;
+}
+
+export interface DomainRequired {
+    commit?: number | undefined;
+    index?: number | undefined;
+    labels?: Record<string, string> | undefined;
+    name: string;
+    handleId?: string | undefined;
+}
+
+export interface DomainUpsert {
+    commit?: number | undefined;
+    index?: number | undefined;
+    labels?: Record<string, string> | undefined;
+    name: string;
+    handleId?: string | undefined;
+}
+
+export interface Draft {
+    changeSummary?: IcePanel.DraftChangeSummary | undefined;
+    commit: number;
+    handleId: string;
+    labels: Record<string, string>;
+    name: string;
+    status: IcePanel.DraftStatus;
+    summaryDirtiedAt?: string | undefined;
+    createdAt: string;
+    createdBy: IcePanel.AuthType;
+    createdById: string;
+    deletedAt?: string | undefined;
+    deletedBy?: IcePanel.AuthType | undefined;
+    deletedById?: string | undefined;
+    headVersionId?: string | undefined;
+    id: string;
+    landscapeId: string;
+    latestEntityId?: string | undefined;
+    mergedAt?: string | undefined;
+    mergedBy?: IcePanel.AuthType | undefined;
+    mergedById?: string | undefined;
+    originVersionId: string;
+    updatedAt: string;
+    updatedBy: IcePanel.AuthType;
+    updatedById: string;
+    version: number;
+    versionId: string;
+    viewedAt?: string | undefined;
+    viewedBy?: IcePanel.AuthType | undefined;
+    viewedById?: string | undefined;
+}
 
 export interface DraftChangeSummary {
     createdAt: string;
@@ -2758,464 +2902,36 @@ export interface DraftChangeSummary {
 export type DraftFilterStatus = IcePanel.DraftStatus | IcePanel.DraftStatus[];
 
 export interface DraftFilter {
-    name?: string;
-    status?: IcePanel.DraftFilterStatus;
+    name?: string | undefined;
+    status?: IcePanel.DraftFilterStatus | undefined;
 }
 
 export interface DraftPartial {
-    changeSummary?: IcePanel.DraftChangeSummary;
-    commit?: number;
-    handleId?: string;
-    labels?: Record<string, string>;
-    name?: string;
-    status?: IcePanel.DraftStatus;
-    summaryDirtiedAt?: string;
+    changeSummary?: IcePanel.DraftChangeSummary | undefined;
+    commit?: number | undefined;
+    handleId?: string | undefined;
+    labels?: Record<string, string> | undefined;
+    name?: string | undefined;
+    status?: IcePanel.DraftStatus | undefined;
+    summaryDirtiedAt?: string | undefined;
 }
 
 export interface DraftRequired {
-    changeSummary?: IcePanel.DraftChangeSummary;
-    commit?: number;
-    handleId?: string;
-    labels?: Record<string, string>;
+    changeSummary?: IcePanel.DraftChangeSummary | undefined;
+    commit?: number | undefined;
+    handleId?: string | undefined;
+    labels?: Record<string, string> | undefined;
     name: string;
     status: IcePanel.DraftStatus;
-    summaryDirtiedAt?: string;
+    summaryDirtiedAt?: string | undefined;
 }
 
-export interface Draft {
-    changeSummary?: IcePanel.DraftChangeSummary;
-    commit: number;
-    handleId: string;
-    labels: Record<string, string>;
-    name: string;
-    status: IcePanel.DraftStatus;
-    summaryDirtiedAt?: string;
-    createdAt: string;
-    createdBy: IcePanel.AuthType;
-    createdById: string;
-    deletedAt?: string;
-    deletedBy?: IcePanel.AuthType;
-    deletedById?: string;
-    id: string;
-    landscapeId: string;
-    latestEntityId?: string;
-    mergedAt?: string;
-    mergedBy?: IcePanel.AuthType;
-    mergedById?: string;
-    originVersionId: string;
-    updatedAt: string;
-    updatedBy: IcePanel.AuthType;
-    updatedById: string;
-    version: number;
-    versionId: string;
-    viewedAt?: string;
-    viewedBy?: IcePanel.AuthType;
-    viewedById?: string;
-}
-
-export type DraftTaskCommentCreateProps = IcePanel.CommentRequired;
-
-export const DraftTaskCommentCreateType = {
-    DraftCommentCreate: "draft-comment-create",
+export const DraftStatus = {
+    InProgress: "in-progress",
+    Merged: "merged",
+    Archived: "archived",
 } as const;
-export type DraftTaskCommentCreateType = (typeof DraftTaskCommentCreateType)[keyof typeof DraftTaskCommentCreateType];
-
-export interface DraftTaskCommentCreate {
-    entityId: string;
-    props: IcePanel.DraftTaskCommentCreateProps;
-    type: IcePanel.DraftTaskCommentCreateType;
-}
-
-export type DraftTaskCommentUpdateProps = IcePanel.CommentPartial;
-
-export const DraftTaskCommentUpdateType = {
-    DraftCommentUpdate: "draft-comment-update",
-} as const;
-export type DraftTaskCommentUpdateType = (typeof DraftTaskCommentUpdateType)[keyof typeof DraftTaskCommentUpdateType];
-
-export interface DraftTaskCommentUpdate {
-    entityId: string;
-    props: IcePanel.DraftTaskCommentUpdateProps;
-    snapshot: IcePanel.DraftTaskCommentUpdateProps;
-    type: IcePanel.DraftTaskCommentUpdateType;
-}
-
-export const DraftTaskCommentDeleteType = {
-    DraftCommentDelete: "draft-comment-delete",
-} as const;
-export type DraftTaskCommentDeleteType = (typeof DraftTaskCommentDeleteType)[keyof typeof DraftTaskCommentDeleteType];
-
-export interface DraftTaskCommentDelete {
-    entityId: string;
-    type: IcePanel.DraftTaskCommentDeleteType;
-}
-
-export type DraftTaskCommentReplyCreateProps = IcePanel.CommentReplyRequired;
-
-export const DraftTaskCommentReplyCreateType = {
-    DraftCommentReplyCreate: "draft-comment-reply-create",
-} as const;
-export type DraftTaskCommentReplyCreateType =
-    (typeof DraftTaskCommentReplyCreateType)[keyof typeof DraftTaskCommentReplyCreateType];
-
-export interface DraftTaskCommentReplyCreate {
-    commentId: string;
-    entityId: string;
-    props: IcePanel.DraftTaskCommentReplyCreateProps;
-    type: IcePanel.DraftTaskCommentReplyCreateType;
-}
-
-export type DraftTaskCommentReplyUpdateProps = IcePanel.CommentReplyPartial;
-
-export const DraftTaskCommentReplyUpdateType = {
-    DraftCommentReplyUpdate: "draft-comment-reply-update",
-} as const;
-export type DraftTaskCommentReplyUpdateType =
-    (typeof DraftTaskCommentReplyUpdateType)[keyof typeof DraftTaskCommentReplyUpdateType];
-
-export interface DraftTaskCommentReplyUpdate {
-    commentId: string;
-    entityId: string;
-    props: IcePanel.DraftTaskCommentReplyUpdateProps;
-    snapshot: IcePanel.DraftTaskCommentReplyUpdateProps;
-    type: IcePanel.DraftTaskCommentReplyUpdateType;
-}
-
-export const DraftTaskCommentReplyDeleteType = {
-    DraftCommentReplyDelete: "draft-comment-reply-delete",
-} as const;
-export type DraftTaskCommentReplyDeleteType =
-    (typeof DraftTaskCommentReplyDeleteType)[keyof typeof DraftTaskCommentReplyDeleteType];
-
-export interface DraftTaskCommentReplyDelete {
-    commentId: string;
-    entityId: string;
-    type: IcePanel.DraftTaskCommentReplyDeleteType;
-}
-
-export interface DraftTaskDiagramCreateProps {
-    commit?: number;
-    description?: string;
-    groupId?: string | null;
-    index: number;
-    labels?: Record<string, string>;
-    /** model object id this object belongs to */
-    modelId: string;
-    name: string;
-    parentId?: string | null;
-    pinned?: boolean;
-    pinnedAt?: string;
-    pinnedIndex?: number;
-    status?: IcePanel.DiagramStatus;
-    zoomOverrides?: IcePanel.DiagramZoomOverridesNullable | null;
-    handleId?: string;
-    type: IcePanel.DiagramType;
-    comments?: Record<string, IcePanel.DiagramComment>;
-    connections?: Record<string, IcePanel.DiagramConnection>;
-    objects?: Record<string, IcePanel.DiagramObject>;
-}
-
-export const DraftTaskDiagramCreateType = {
-    DraftDiagramCreate: "draft-diagram-create",
-} as const;
-export type DraftTaskDiagramCreateType = (typeof DraftTaskDiagramCreateType)[keyof typeof DraftTaskDiagramCreateType];
-
-export interface DraftTaskDiagramCreate {
-    entityId: string;
-    props: IcePanel.DraftTaskDiagramCreateProps;
-    type: IcePanel.DraftTaskDiagramCreateType;
-}
-
-export interface DraftTaskDiagramUpdateProps {
-    commit?: number;
-    description?: string;
-    groupId?: string | null;
-    index?: number;
-    labels?: Record<string, string>;
-    /** model object id this object belongs to */
-    modelId?: string;
-    name?: string;
-    parentId?: string | null;
-    pinned?: boolean;
-    pinnedAt?: string;
-    pinnedIndex?: number;
-    status?: IcePanel.DiagramStatus;
-    zoomOverrides?: IcePanel.DiagramZoomOverridesNullable | null;
-    comments?: IcePanel.DiagramContentPartialComments;
-    connections?: IcePanel.DiagramContentPartialConnections;
-    objects?: IcePanel.DiagramContentPartialObjects;
-}
-
-export const DraftTaskDiagramUpdateType = {
-    DraftDiagramUpdate: "draft-diagram-update",
-} as const;
-export type DraftTaskDiagramUpdateType = (typeof DraftTaskDiagramUpdateType)[keyof typeof DraftTaskDiagramUpdateType];
-
-export interface DraftTaskDiagramUpdate {
-    entityId: string;
-    props: IcePanel.DraftTaskDiagramUpdateProps;
-    snapshot: IcePanel.DraftTaskDiagramUpdateProps;
-    type: IcePanel.DraftTaskDiagramUpdateType;
-}
-
-export const DraftTaskDiagramDeleteType = {
-    DraftDiagramDelete: "draft-diagram-delete",
-} as const;
-export type DraftTaskDiagramDeleteType = (typeof DraftTaskDiagramDeleteType)[keyof typeof DraftTaskDiagramDeleteType];
-
-export interface DraftTaskDiagramDelete {
-    entityId: string;
-    type: IcePanel.DraftTaskDiagramDeleteType;
-}
-
-export type DraftTaskDiagramContentUpdateProps = IcePanel.DiagramContentPartial;
-
-export const DraftTaskDiagramContentUpdateType = {
-    DraftDiagramContentUpdate: "draft-diagram-content-update",
-} as const;
-export type DraftTaskDiagramContentUpdateType =
-    (typeof DraftTaskDiagramContentUpdateType)[keyof typeof DraftTaskDiagramContentUpdateType];
-
-export interface DraftTaskDiagramContentUpdate {
-    entityId: string;
-    props: IcePanel.DraftTaskDiagramContentUpdateProps;
-    snapshot: IcePanel.DraftTaskDiagramContentUpdateProps;
-    type: IcePanel.DraftTaskDiagramContentUpdateType;
-}
-
-export type DraftTaskDiagramGroupCreateProps = IcePanel.DiagramGroupRequired;
-
-export const DraftTaskDiagramGroupCreateType = {
-    DraftDiagramGroupCreate: "draft-diagram-group-create",
-} as const;
-export type DraftTaskDiagramGroupCreateType =
-    (typeof DraftTaskDiagramGroupCreateType)[keyof typeof DraftTaskDiagramGroupCreateType];
-
-export interface DraftTaskDiagramGroupCreate {
-    entityId: string;
-    props: IcePanel.DraftTaskDiagramGroupCreateProps;
-    type: IcePanel.DraftTaskDiagramGroupCreateType;
-}
-
-export type DraftTaskDiagramGroupUpdateProps = IcePanel.DiagramGroupPartial;
-
-export const DraftTaskDiagramGroupUpdateType = {
-    DraftDiagramGroupUpdate: "draft-diagram-group-update",
-} as const;
-export type DraftTaskDiagramGroupUpdateType =
-    (typeof DraftTaskDiagramGroupUpdateType)[keyof typeof DraftTaskDiagramGroupUpdateType];
-
-export interface DraftTaskDiagramGroupUpdate {
-    entityId: string;
-    props: IcePanel.DraftTaskDiagramGroupUpdateProps;
-    snapshot: IcePanel.DraftTaskDiagramGroupUpdateProps;
-    type: IcePanel.DraftTaskDiagramGroupUpdateType;
-}
-
-export const DraftTaskDiagramGroupDeleteType = {
-    DraftDiagramGroupDelete: "draft-diagram-group-delete",
-} as const;
-export type DraftTaskDiagramGroupDeleteType =
-    (typeof DraftTaskDiagramGroupDeleteType)[keyof typeof DraftTaskDiagramGroupDeleteType];
-
-export interface DraftTaskDiagramGroupDelete {
-    entityId: string;
-    type: IcePanel.DraftTaskDiagramGroupDeleteType;
-}
-
-export type DraftTaskModelObjectCreateProps = IcePanel.ModelObjectRequired;
-
-export const DraftTaskModelObjectCreateType = {
-    DraftModelObjectCreate: "draft-model-object-create",
-} as const;
-export type DraftTaskModelObjectCreateType =
-    (typeof DraftTaskModelObjectCreateType)[keyof typeof DraftTaskModelObjectCreateType];
-
-export interface DraftTaskModelObjectCreate {
-    entityId: string;
-    props: IcePanel.DraftTaskModelObjectCreateProps;
-    type: IcePanel.DraftTaskModelObjectCreateType;
-}
-
-export type DraftTaskModelObjectUpdateProps = IcePanel.ModelObjectPartial;
-
-export const DraftTaskModelObjectUpdateType = {
-    DraftModelObjectUpdate: "draft-model-object-update",
-} as const;
-export type DraftTaskModelObjectUpdateType =
-    (typeof DraftTaskModelObjectUpdateType)[keyof typeof DraftTaskModelObjectUpdateType];
-
-export interface DraftTaskModelObjectUpdate {
-    entityId: string;
-    props: IcePanel.DraftTaskModelObjectUpdateProps;
-    snapshot: IcePanel.DraftTaskModelObjectUpdateProps;
-    type: IcePanel.DraftTaskModelObjectUpdateType;
-}
-
-export const DraftTaskModelObjectDeleteType = {
-    DraftModelObjectDelete: "draft-model-object-delete",
-} as const;
-export type DraftTaskModelObjectDeleteType =
-    (typeof DraftTaskModelObjectDeleteType)[keyof typeof DraftTaskModelObjectDeleteType];
-
-export interface DraftTaskModelObjectDelete {
-    entityId: string;
-    type: IcePanel.DraftTaskModelObjectDeleteType;
-}
-
-export type DraftTaskModelConnectionCreateProps = IcePanel.ModelConnectionRequired;
-
-export const DraftTaskModelConnectionCreateType = {
-    DraftModelConnectionCreate: "draft-model-connection-create",
-} as const;
-export type DraftTaskModelConnectionCreateType =
-    (typeof DraftTaskModelConnectionCreateType)[keyof typeof DraftTaskModelConnectionCreateType];
-
-export interface DraftTaskModelConnectionCreate {
-    entityId: string;
-    props: IcePanel.DraftTaskModelConnectionCreateProps;
-    type: IcePanel.DraftTaskModelConnectionCreateType;
-}
-
-export type DraftTaskModelConnectionUpdateProps = IcePanel.ModelConnectionPartial;
-
-export const DraftTaskModelConnectionUpdateType = {
-    DraftModelConnectionUpdate: "draft-model-connection-update",
-} as const;
-export type DraftTaskModelConnectionUpdateType =
-    (typeof DraftTaskModelConnectionUpdateType)[keyof typeof DraftTaskModelConnectionUpdateType];
-
-export interface DraftTaskModelConnectionUpdate {
-    entityId: string;
-    props: IcePanel.DraftTaskModelConnectionUpdateProps;
-    snapshot: IcePanel.DraftTaskModelConnectionUpdateProps;
-    type: IcePanel.DraftTaskModelConnectionUpdateType;
-}
-
-export const DraftTaskModelConnectionDeleteType = {
-    DraftModelConnectionDelete: "draft-model-connection-delete",
-} as const;
-export type DraftTaskModelConnectionDeleteType =
-    (typeof DraftTaskModelConnectionDeleteType)[keyof typeof DraftTaskModelConnectionDeleteType];
-
-export interface DraftTaskModelConnectionDelete {
-    entityId: string;
-    type: IcePanel.DraftTaskModelConnectionDeleteType;
-}
-
-export type DraftTaskFlowCreateProps = IcePanel.FlowRequired;
-
-export const DraftTaskFlowCreateType = {
-    DraftFlowCreate: "draft-flow-create",
-} as const;
-export type DraftTaskFlowCreateType = (typeof DraftTaskFlowCreateType)[keyof typeof DraftTaskFlowCreateType];
-
-export interface DraftTaskFlowCreate {
-    entityId: string;
-    props: IcePanel.DraftTaskFlowCreateProps;
-    type: IcePanel.DraftTaskFlowCreateType;
-}
-
-export type DraftTaskFlowUpdateProps = IcePanel.FlowPartial;
-
-export const DraftTaskFlowUpdateType = {
-    DraftFlowUpdate: "draft-flow-update",
-} as const;
-export type DraftTaskFlowUpdateType = (typeof DraftTaskFlowUpdateType)[keyof typeof DraftTaskFlowUpdateType];
-
-export interface DraftTaskFlowUpdate {
-    entityId: string;
-    props: IcePanel.DraftTaskFlowUpdateProps;
-    snapshot: IcePanel.DraftTaskFlowUpdateProps;
-    type: IcePanel.DraftTaskFlowUpdateType;
-}
-
-export const DraftTaskFlowDeleteType = {
-    DraftFlowDelete: "draft-flow-delete",
-} as const;
-export type DraftTaskFlowDeleteType = (typeof DraftTaskFlowDeleteType)[keyof typeof DraftTaskFlowDeleteType];
-
-export interface DraftTaskFlowDelete {
-    entityId: string;
-    type: IcePanel.DraftTaskFlowDeleteType;
-}
-
-export type DraftTaskTagCreateProps = IcePanel.TagRequired;
-
-export const DraftTaskTagCreateType = {
-    DraftTagCreate: "draft-tag-create",
-} as const;
-export type DraftTaskTagCreateType = (typeof DraftTaskTagCreateType)[keyof typeof DraftTaskTagCreateType];
-
-export interface DraftTaskTagCreate {
-    entityId: string;
-    props: IcePanel.DraftTaskTagCreateProps;
-    type: IcePanel.DraftTaskTagCreateType;
-}
-
-export type DraftTaskTagUpdateProps = IcePanel.TagPartial;
-
-export const DraftTaskTagUpdateType = {
-    DraftTagUpdate: "draft-tag-update",
-} as const;
-export type DraftTaskTagUpdateType = (typeof DraftTaskTagUpdateType)[keyof typeof DraftTaskTagUpdateType];
-
-export interface DraftTaskTagUpdate {
-    entityId: string;
-    props: IcePanel.DraftTaskTagUpdateProps;
-    snapshot: IcePanel.DraftTaskTagUpdateProps;
-    type: IcePanel.DraftTaskTagUpdateType;
-}
-
-export const DraftTaskTagDeleteType = {
-    DraftTagDelete: "draft-tag-delete",
-} as const;
-export type DraftTaskTagDeleteType = (typeof DraftTaskTagDeleteType)[keyof typeof DraftTaskTagDeleteType];
-
-export interface DraftTaskTagDelete {
-    entityId: string;
-    type: IcePanel.DraftTaskTagDeleteType;
-}
-
-export type DraftTaskTagGroupCreateProps = IcePanel.TagGroupRequired;
-
-export const DraftTaskTagGroupCreateType = {
-    DraftTagGroupCreate: "draft-tag-group-create",
-} as const;
-export type DraftTaskTagGroupCreateType =
-    (typeof DraftTaskTagGroupCreateType)[keyof typeof DraftTaskTagGroupCreateType];
-
-export interface DraftTaskTagGroupCreate {
-    entityId: string;
-    props: IcePanel.DraftTaskTagGroupCreateProps;
-    type: IcePanel.DraftTaskTagGroupCreateType;
-}
-
-export type DraftTaskTagGroupUpdateProps = IcePanel.TagGroupPartial;
-
-export const DraftTaskTagGroupUpdateType = {
-    DraftTagGroupUpdate: "draft-tag-group-update",
-} as const;
-export type DraftTaskTagGroupUpdateType =
-    (typeof DraftTaskTagGroupUpdateType)[keyof typeof DraftTaskTagGroupUpdateType];
-
-export interface DraftTaskTagGroupUpdate {
-    entityId: string;
-    props: IcePanel.DraftTaskTagGroupUpdateProps;
-    snapshot: IcePanel.DraftTaskTagGroupUpdateProps;
-    type: IcePanel.DraftTaskTagGroupUpdateType;
-}
-
-export const DraftTaskTagGroupDeleteType = {
-    DraftTagGroupDelete: "draft-tag-group-delete",
-} as const;
-export type DraftTaskTagGroupDeleteType =
-    (typeof DraftTaskTagGroupDeleteType)[keyof typeof DraftTaskTagGroupDeleteType];
-
-export interface DraftTaskTagGroupDelete {
-    entityId: string;
-    type: IcePanel.DraftTaskTagGroupDeleteType;
-}
+export type DraftStatus = (typeof DraftStatus)[keyof typeof DraftStatus];
 
 export type DraftTask =
     | IcePanel.DraftTaskCommentCreate
@@ -3247,19 +2963,490 @@ export type DraftTask =
     | IcePanel.DraftTaskTagGroupUpdate
     | IcePanel.DraftTaskTagGroupDelete;
 
+export const DraftTaskCommentCreateType = {
+    DraftCommentCreate: "draft-comment-create",
+} as const;
+export type DraftTaskCommentCreateType = (typeof DraftTaskCommentCreateType)[keyof typeof DraftTaskCommentCreateType];
+
+export interface DraftTaskCommentCreate {
+    entityId: string;
+    props: IcePanel.DraftTaskCommentCreateProps;
+    type: IcePanel.DraftTaskCommentCreateType;
+}
+
+export type DraftTaskCommentCreateProps = IcePanel.CommentRequired;
+
+export const DraftTaskCommentDeleteType = {
+    DraftCommentDelete: "draft-comment-delete",
+} as const;
+export type DraftTaskCommentDeleteType = (typeof DraftTaskCommentDeleteType)[keyof typeof DraftTaskCommentDeleteType];
+
+export interface DraftTaskCommentDelete {
+    entityId: string;
+    type: IcePanel.DraftTaskCommentDeleteType;
+}
+
+export const DraftTaskCommentReplyCreateType = {
+    DraftCommentReplyCreate: "draft-comment-reply-create",
+} as const;
+export type DraftTaskCommentReplyCreateType =
+    (typeof DraftTaskCommentReplyCreateType)[keyof typeof DraftTaskCommentReplyCreateType];
+
+export interface DraftTaskCommentReplyCreate {
+    commentId: string;
+    entityId: string;
+    props: IcePanel.DraftTaskCommentReplyCreateProps;
+    type: IcePanel.DraftTaskCommentReplyCreateType;
+}
+
+export type DraftTaskCommentReplyCreateProps = IcePanel.CommentReplyRequired;
+
+export const DraftTaskCommentReplyDeleteType = {
+    DraftCommentReplyDelete: "draft-comment-reply-delete",
+} as const;
+export type DraftTaskCommentReplyDeleteType =
+    (typeof DraftTaskCommentReplyDeleteType)[keyof typeof DraftTaskCommentReplyDeleteType];
+
+export interface DraftTaskCommentReplyDelete {
+    commentId: string;
+    entityId: string;
+    type: IcePanel.DraftTaskCommentReplyDeleteType;
+}
+
+export const DraftTaskCommentReplyUpdateType = {
+    DraftCommentReplyUpdate: "draft-comment-reply-update",
+} as const;
+export type DraftTaskCommentReplyUpdateType =
+    (typeof DraftTaskCommentReplyUpdateType)[keyof typeof DraftTaskCommentReplyUpdateType];
+
+export interface DraftTaskCommentReplyUpdate {
+    commentId: string;
+    entityId: string;
+    props: IcePanel.DraftTaskCommentReplyUpdateProps;
+    snapshot: IcePanel.DraftTaskCommentReplyUpdateProps;
+    type: IcePanel.DraftTaskCommentReplyUpdateType;
+}
+
+export type DraftTaskCommentReplyUpdateProps = IcePanel.CommentReplyPartial;
+
+export const DraftTaskCommentUpdateType = {
+    DraftCommentUpdate: "draft-comment-update",
+} as const;
+export type DraftTaskCommentUpdateType = (typeof DraftTaskCommentUpdateType)[keyof typeof DraftTaskCommentUpdateType];
+
+export interface DraftTaskCommentUpdate {
+    entityId: string;
+    props: IcePanel.DraftTaskCommentUpdateProps;
+    snapshot: IcePanel.DraftTaskCommentUpdateProps;
+    type: IcePanel.DraftTaskCommentUpdateType;
+}
+
+export type DraftTaskCommentUpdateProps = IcePanel.CommentPartial;
+
+export const DraftTaskDiagramContentUpdateType = {
+    DraftDiagramContentUpdate: "draft-diagram-content-update",
+} as const;
+export type DraftTaskDiagramContentUpdateType =
+    (typeof DraftTaskDiagramContentUpdateType)[keyof typeof DraftTaskDiagramContentUpdateType];
+
+export interface DraftTaskDiagramContentUpdate {
+    entityId: string;
+    props: IcePanel.DraftTaskDiagramContentUpdateProps;
+    snapshot: IcePanel.DraftTaskDiagramContentUpdateProps;
+    type: IcePanel.DraftTaskDiagramContentUpdateType;
+}
+
+export type DraftTaskDiagramContentUpdateProps = IcePanel.DiagramContentPartial;
+
+export const DraftTaskDiagramCreateType = {
+    DraftDiagramCreate: "draft-diagram-create",
+} as const;
+export type DraftTaskDiagramCreateType = (typeof DraftTaskDiagramCreateType)[keyof typeof DraftTaskDiagramCreateType];
+
+export interface DraftTaskDiagramCreate {
+    entityId: string;
+    props: IcePanel.DraftTaskDiagramCreateProps;
+    type: IcePanel.DraftTaskDiagramCreateType;
+}
+
+export interface DraftTaskDiagramCreateProps {
+    commit?: number | undefined;
+    description?: string | undefined;
+    groupId?: (string | null) | undefined;
+    index: number;
+    labels?: Record<string, string> | undefined;
+    /** model object id this object belongs to */
+    modelId: string;
+    name: string;
+    parentId?: (string | null) | undefined;
+    pinned?: boolean | undefined;
+    pinnedAt?: string | undefined;
+    pinnedIndex?: number | undefined;
+    status?: IcePanel.DiagramStatus | undefined;
+    zoomOverrides?: (IcePanel.DiagramZoomOverridesNullable | null) | undefined;
+    handleId?: string | undefined;
+    type: IcePanel.DiagramType;
+    comments?: Record<string, IcePanel.DiagramComment> | undefined;
+    connections?: Record<string, IcePanel.DiagramConnection> | undefined;
+    objects?: Record<string, IcePanel.DiagramObject> | undefined;
+}
+
+export const DraftTaskDiagramDeleteType = {
+    DraftDiagramDelete: "draft-diagram-delete",
+} as const;
+export type DraftTaskDiagramDeleteType = (typeof DraftTaskDiagramDeleteType)[keyof typeof DraftTaskDiagramDeleteType];
+
+export interface DraftTaskDiagramDelete {
+    entityId: string;
+    type: IcePanel.DraftTaskDiagramDeleteType;
+}
+
+export const DraftTaskDiagramGroupCreateType = {
+    DraftDiagramGroupCreate: "draft-diagram-group-create",
+} as const;
+export type DraftTaskDiagramGroupCreateType =
+    (typeof DraftTaskDiagramGroupCreateType)[keyof typeof DraftTaskDiagramGroupCreateType];
+
+export interface DraftTaskDiagramGroupCreate {
+    entityId: string;
+    props: IcePanel.DraftTaskDiagramGroupCreateProps;
+    type: IcePanel.DraftTaskDiagramGroupCreateType;
+}
+
+export type DraftTaskDiagramGroupCreateProps = IcePanel.DiagramGroupRequired;
+
+export const DraftTaskDiagramGroupDeleteType = {
+    DraftDiagramGroupDelete: "draft-diagram-group-delete",
+} as const;
+export type DraftTaskDiagramGroupDeleteType =
+    (typeof DraftTaskDiagramGroupDeleteType)[keyof typeof DraftTaskDiagramGroupDeleteType];
+
+export interface DraftTaskDiagramGroupDelete {
+    entityId: string;
+    type: IcePanel.DraftTaskDiagramGroupDeleteType;
+}
+
+export const DraftTaskDiagramGroupUpdateType = {
+    DraftDiagramGroupUpdate: "draft-diagram-group-update",
+} as const;
+export type DraftTaskDiagramGroupUpdateType =
+    (typeof DraftTaskDiagramGroupUpdateType)[keyof typeof DraftTaskDiagramGroupUpdateType];
+
+export interface DraftTaskDiagramGroupUpdate {
+    entityId: string;
+    props: IcePanel.DraftTaskDiagramGroupUpdateProps;
+    snapshot: IcePanel.DraftTaskDiagramGroupUpdateProps;
+    type: IcePanel.DraftTaskDiagramGroupUpdateType;
+}
+
+export type DraftTaskDiagramGroupUpdateProps = IcePanel.DiagramGroupPartial;
+
+export const DraftTaskDiagramUpdateType = {
+    DraftDiagramUpdate: "draft-diagram-update",
+} as const;
+export type DraftTaskDiagramUpdateType = (typeof DraftTaskDiagramUpdateType)[keyof typeof DraftTaskDiagramUpdateType];
+
+export interface DraftTaskDiagramUpdate {
+    entityId: string;
+    props: IcePanel.DraftTaskDiagramUpdateProps;
+    snapshot: IcePanel.DraftTaskDiagramUpdateProps;
+    type: IcePanel.DraftTaskDiagramUpdateType;
+}
+
+export interface DraftTaskDiagramUpdateProps {
+    commit?: number | undefined;
+    description?: string | undefined;
+    groupId?: (string | null) | undefined;
+    index?: number | undefined;
+    labels?: Record<string, string> | undefined;
+    /** model object id this object belongs to */
+    modelId?: string | undefined;
+    name?: string | undefined;
+    parentId?: (string | null) | undefined;
+    pinned?: boolean | undefined;
+    pinnedAt?: string | undefined;
+    pinnedIndex?: number | undefined;
+    status?: IcePanel.DiagramStatus | undefined;
+    zoomOverrides?: (IcePanel.DiagramZoomOverridesNullable | null) | undefined;
+    comments?: IcePanel.DiagramContentPartialComments | undefined;
+    connections?: IcePanel.DiagramContentPartialConnections | undefined;
+    objects?: IcePanel.DiagramContentPartialObjects | undefined;
+}
+
+export const DraftTaskFlowCreateType = {
+    DraftFlowCreate: "draft-flow-create",
+} as const;
+export type DraftTaskFlowCreateType = (typeof DraftTaskFlowCreateType)[keyof typeof DraftTaskFlowCreateType];
+
+export interface DraftTaskFlowCreate {
+    entityId: string;
+    props: IcePanel.DraftTaskFlowCreateProps;
+    type: IcePanel.DraftTaskFlowCreateType;
+}
+
+export type DraftTaskFlowCreateProps = IcePanel.FlowRequired;
+
+export const DraftTaskFlowDeleteType = {
+    DraftFlowDelete: "draft-flow-delete",
+} as const;
+export type DraftTaskFlowDeleteType = (typeof DraftTaskFlowDeleteType)[keyof typeof DraftTaskFlowDeleteType];
+
+export interface DraftTaskFlowDelete {
+    entityId: string;
+    type: IcePanel.DraftTaskFlowDeleteType;
+}
+
+export const DraftTaskFlowUpdateType = {
+    DraftFlowUpdate: "draft-flow-update",
+} as const;
+export type DraftTaskFlowUpdateType = (typeof DraftTaskFlowUpdateType)[keyof typeof DraftTaskFlowUpdateType];
+
+export interface DraftTaskFlowUpdate {
+    entityId: string;
+    props: IcePanel.DraftTaskFlowUpdateProps;
+    snapshot: IcePanel.DraftTaskFlowUpdateProps;
+    type: IcePanel.DraftTaskFlowUpdateType;
+}
+
+export type DraftTaskFlowUpdateProps = IcePanel.FlowPartial;
+
+export const DraftTaskModelConnectionCreateType = {
+    DraftModelConnectionCreate: "draft-model-connection-create",
+} as const;
+export type DraftTaskModelConnectionCreateType =
+    (typeof DraftTaskModelConnectionCreateType)[keyof typeof DraftTaskModelConnectionCreateType];
+
+export interface DraftTaskModelConnectionCreate {
+    entityId: string;
+    props: IcePanel.DraftTaskModelConnectionCreateProps;
+    type: IcePanel.DraftTaskModelConnectionCreateType;
+}
+
+export type DraftTaskModelConnectionCreateProps = IcePanel.ModelConnectionRequired;
+
+export const DraftTaskModelConnectionDeleteType = {
+    DraftModelConnectionDelete: "draft-model-connection-delete",
+} as const;
+export type DraftTaskModelConnectionDeleteType =
+    (typeof DraftTaskModelConnectionDeleteType)[keyof typeof DraftTaskModelConnectionDeleteType];
+
+export interface DraftTaskModelConnectionDelete {
+    entityId: string;
+    type: IcePanel.DraftTaskModelConnectionDeleteType;
+}
+
+export const DraftTaskModelConnectionUpdateType = {
+    DraftModelConnectionUpdate: "draft-model-connection-update",
+} as const;
+export type DraftTaskModelConnectionUpdateType =
+    (typeof DraftTaskModelConnectionUpdateType)[keyof typeof DraftTaskModelConnectionUpdateType];
+
+export interface DraftTaskModelConnectionUpdate {
+    entityId: string;
+    props: IcePanel.DraftTaskModelConnectionUpdateProps;
+    snapshot: IcePanel.DraftTaskModelConnectionUpdateProps;
+    type: IcePanel.DraftTaskModelConnectionUpdateType;
+}
+
+export type DraftTaskModelConnectionUpdateProps = IcePanel.ModelConnectionPartial;
+
+export const DraftTaskModelObjectCreateType = {
+    DraftModelObjectCreate: "draft-model-object-create",
+} as const;
+export type DraftTaskModelObjectCreateType =
+    (typeof DraftTaskModelObjectCreateType)[keyof typeof DraftTaskModelObjectCreateType];
+
+export interface DraftTaskModelObjectCreate {
+    entityId: string;
+    props: IcePanel.DraftTaskModelObjectCreateProps;
+    type: IcePanel.DraftTaskModelObjectCreateType;
+}
+
+export type DraftTaskModelObjectCreateProps = IcePanel.ModelObjectRequired;
+
+export const DraftTaskModelObjectDeleteType = {
+    DraftModelObjectDelete: "draft-model-object-delete",
+} as const;
+export type DraftTaskModelObjectDeleteType =
+    (typeof DraftTaskModelObjectDeleteType)[keyof typeof DraftTaskModelObjectDeleteType];
+
+export interface DraftTaskModelObjectDelete {
+    entityId: string;
+    type: IcePanel.DraftTaskModelObjectDeleteType;
+}
+
+export const DraftTaskModelObjectUpdateType = {
+    DraftModelObjectUpdate: "draft-model-object-update",
+} as const;
+export type DraftTaskModelObjectUpdateType =
+    (typeof DraftTaskModelObjectUpdateType)[keyof typeof DraftTaskModelObjectUpdateType];
+
+export interface DraftTaskModelObjectUpdate {
+    entityId: string;
+    props: IcePanel.DraftTaskModelObjectUpdateProps;
+    snapshot: IcePanel.DraftTaskModelObjectUpdateProps;
+    type: IcePanel.DraftTaskModelObjectUpdateType;
+}
+
+export type DraftTaskModelObjectUpdateProps = IcePanel.ModelObjectPartial;
+
 export interface DraftTaskRequired {
-    commit?: number;
+    commit?: number | undefined;
     task: IcePanel.DraftTask;
+}
+
+export const DraftTaskTagCreateType = {
+    DraftTagCreate: "draft-tag-create",
+} as const;
+export type DraftTaskTagCreateType = (typeof DraftTaskTagCreateType)[keyof typeof DraftTaskTagCreateType];
+
+export interface DraftTaskTagCreate {
+    entityId: string;
+    props: IcePanel.DraftTaskTagCreateProps;
+    type: IcePanel.DraftTaskTagCreateType;
+}
+
+export type DraftTaskTagCreateProps = IcePanel.TagRequired;
+
+export const DraftTaskTagDeleteType = {
+    DraftTagDelete: "draft-tag-delete",
+} as const;
+export type DraftTaskTagDeleteType = (typeof DraftTaskTagDeleteType)[keyof typeof DraftTaskTagDeleteType];
+
+export interface DraftTaskTagDelete {
+    entityId: string;
+    type: IcePanel.DraftTaskTagDeleteType;
+}
+
+export const DraftTaskTagGroupCreateType = {
+    DraftTagGroupCreate: "draft-tag-group-create",
+} as const;
+export type DraftTaskTagGroupCreateType =
+    (typeof DraftTaskTagGroupCreateType)[keyof typeof DraftTaskTagGroupCreateType];
+
+export interface DraftTaskTagGroupCreate {
+    entityId: string;
+    props: IcePanel.DraftTaskTagGroupCreateProps;
+    type: IcePanel.DraftTaskTagGroupCreateType;
+}
+
+export type DraftTaskTagGroupCreateProps = IcePanel.TagGroupRequired;
+
+export const DraftTaskTagGroupDeleteType = {
+    DraftTagGroupDelete: "draft-tag-group-delete",
+} as const;
+export type DraftTaskTagGroupDeleteType =
+    (typeof DraftTaskTagGroupDeleteType)[keyof typeof DraftTaskTagGroupDeleteType];
+
+export interface DraftTaskTagGroupDelete {
+    entityId: string;
+    type: IcePanel.DraftTaskTagGroupDeleteType;
+}
+
+export const DraftTaskTagGroupUpdateType = {
+    DraftTagGroupUpdate: "draft-tag-group-update",
+} as const;
+export type DraftTaskTagGroupUpdateType =
+    (typeof DraftTaskTagGroupUpdateType)[keyof typeof DraftTaskTagGroupUpdateType];
+
+export interface DraftTaskTagGroupUpdate {
+    entityId: string;
+    props: IcePanel.DraftTaskTagGroupUpdateProps;
+    snapshot: IcePanel.DraftTaskTagGroupUpdateProps;
+    type: IcePanel.DraftTaskTagGroupUpdateType;
+}
+
+export type DraftTaskTagGroupUpdateProps = IcePanel.TagGroupPartial;
+
+export const DraftTaskTagUpdateType = {
+    DraftTagUpdate: "draft-tag-update",
+} as const;
+export type DraftTaskTagUpdateType = (typeof DraftTaskTagUpdateType)[keyof typeof DraftTaskTagUpdateType];
+
+export interface DraftTaskTagUpdate {
+    entityId: string;
+    props: IcePanel.DraftTaskTagUpdateProps;
+    snapshot: IcePanel.DraftTaskTagUpdateProps;
+    type: IcePanel.DraftTaskTagUpdateType;
+}
+
+export type DraftTaskTagUpdateProps = IcePanel.TagPartial;
+
+export interface Flow {
+    commit: number;
+    index: number;
+    labels: Record<string, string>;
+    name: string;
+    pinned: boolean;
+    pinnedAt?: string | undefined;
+    pinnedIndex?: number | undefined;
+    showAllSteps: boolean;
+    showConnectionNames: boolean;
+    steps: Record<string, IcePanel.FlowStep>;
+    diagramId: string;
+    handleId: string;
+    createdAt: string;
+    createdBy: IcePanel.AuthType;
+    createdById: string;
+    deletedAt?: string | undefined;
+    deletedBy?: IcePanel.AuthType | undefined;
+    deletedById?: string | undefined;
+    id: string;
+    landscapeId: string;
+    latestEntityId?: string | undefined;
+    updatedAt: string;
+    updatedBy: IcePanel.AuthType;
+    updatedById: string;
+    version: number;
+    versionId: string;
+    viewedAt?: string | undefined;
+    viewedBy?: IcePanel.AuthType | undefined;
+    viewedById?: string | undefined;
 }
 
 export type FlowFilterHandleId = string | string[];
 
 export interface FlowFilter {
-    diagramId?: string;
-    handleId?: IcePanel.FlowFilterHandleId;
-    labels?: Record<string, string>;
-    name?: string;
-    pinned?: boolean;
+    diagramId?: string | undefined;
+    handleId?: IcePanel.FlowFilterHandleId | undefined;
+    labels?: Record<string, string> | undefined;
+    name?: string | undefined;
+    pinned?: boolean | undefined;
+}
+
+export interface FlowPartialSteps {
+    $add?: Record<string, IcePanel.FlowStep> | undefined;
+    $remove?: string[] | undefined;
+    $replace?: Record<string, IcePanel.FlowStep> | undefined;
+    $update?: Record<string, IcePanel.FlowStepPartial> | undefined;
+}
+
+export interface FlowPartial {
+    commit?: number | undefined;
+    index?: number | undefined;
+    labels?: Record<string, string> | undefined;
+    name?: string | undefined;
+    pinned?: boolean | undefined;
+    pinnedAt?: string | undefined;
+    pinnedIndex?: number | undefined;
+    showAllSteps?: boolean | undefined;
+    showConnectionNames?: boolean | undefined;
+    steps?: IcePanel.FlowPartialSteps | undefined;
+}
+
+export interface FlowRequired {
+    commit?: number | undefined;
+    index?: number | undefined;
+    labels?: Record<string, string> | undefined;
+    name: string;
+    pinned?: boolean | undefined;
+    pinnedAt?: string | undefined;
+    pinnedIndex?: number | undefined;
+    showAllSteps?: boolean | undefined;
+    showConnectionNames?: boolean | undefined;
+    steps?: Record<string, IcePanel.FlowStep> | undefined;
+    diagramId: string;
+    handleId?: string | undefined;
 }
 
 export interface FlowThumbnail {
@@ -3274,74 +3461,7 @@ export interface FlowThumbnail {
     url: string;
 }
 
-export interface FlowPartialSteps {
-    $add?: Record<string, IcePanel.FlowStep>;
-    $remove?: string[];
-    $replace?: Record<string, IcePanel.FlowStep>;
-    $update?: Record<string, IcePanel.FlowStepPartial>;
-}
-
-export interface FlowPartial {
-    commit?: number;
-    index?: number;
-    labels?: Record<string, string>;
-    name?: string;
-    pinned?: boolean;
-    pinnedAt?: string;
-    pinnedIndex?: number;
-    showAllSteps?: boolean;
-    showConnectionNames?: boolean;
-    steps?: IcePanel.FlowPartialSteps;
-}
-
-export interface FlowRequired {
-    commit?: number;
-    index?: number;
-    labels?: Record<string, string>;
-    name: string;
-    pinned?: boolean;
-    pinnedAt?: string;
-    pinnedIndex?: number;
-    showAllSteps?: boolean;
-    showConnectionNames?: boolean;
-    steps?: Record<string, IcePanel.FlowStep>;
-    diagramId: string;
-    handleId?: string;
-}
-
-export interface Flow {
-    commit: number;
-    index: number;
-    labels: Record<string, string>;
-    name: string;
-    pinned: boolean;
-    pinnedAt?: string;
-    pinnedIndex?: number;
-    showAllSteps: boolean;
-    showConnectionNames: boolean;
-    steps: Record<string, IcePanel.FlowStep>;
-    diagramId: string;
-    handleId: string;
-    createdAt: string;
-    createdBy: IcePanel.AuthType;
-    createdById: string;
-    deletedAt?: string;
-    deletedBy?: IcePanel.AuthType;
-    deletedById?: string;
-    id: string;
-    landscapeId: string;
-    latestEntityId?: string;
-    updatedAt: string;
-    updatedBy: IcePanel.AuthType;
-    updatedById: string;
-    version: number;
-    versionId: string;
-    viewedAt?: string;
-    viewedBy?: IcePanel.AuthType;
-    viewedById?: string;
-}
-
-/** Type of flow step - deprecated values: reply */
+/** Enum representing the types of flow steps */
 export const FlowStepType = {
     AlternatePath: "alternate-path",
     Subflow: "subflow",
@@ -3355,15 +3475,22 @@ export const FlowStepType = {
 } as const;
 export type FlowStepType = (typeof FlowStepType)[keyof typeof FlowStepType];
 
-export interface FlowStepPath {
+export interface FlowStep {
+    /** Descriptive name for the flow step */
+    description: string;
+    /** Long description for the flow step */
+    detailedDescription?: string | undefined;
+    flowId: string | null;
     id: string;
     index: number;
-    name: string;
+    originId: string | null;
+    parentId: string | null;
+    paths: IcePanel.FlowStepPathsNullable | null;
+    targetId: string | null;
+    /** Type of flow step - deprecated values: reply */
+    type: IcePanel.FlowStepType | null;
+    viaId: string | null;
 }
-
-export type FlowStepPaths = Record<string, IcePanel.FlowStepPath>;
-
-export type FlowStepPathsNullable = IcePanel.FlowStepPaths | null;
 
 /** Type of flow step - deprecated values: reply */
 export const FlowStepPartialType = {
@@ -3381,48 +3508,30 @@ export type FlowStepPartialType = (typeof FlowStepPartialType)[keyof typeof Flow
 
 export interface FlowStepPartial {
     /** Descriptive name for the flow step */
-    description?: string;
+    description?: string | undefined;
     /** Long description for the flow step */
-    detailedDescription?: string;
-    flowId?: string | null;
-    id?: string;
-    index?: number;
-    originId?: string | null;
-    parentId?: string | null;
-    paths?: IcePanel.FlowStepPathsNullable | null;
-    targetId?: string | null;
+    detailedDescription?: string | undefined;
+    flowId?: (string | null) | undefined;
+    id?: string | undefined;
+    index?: number | undefined;
+    originId?: (string | null) | undefined;
+    parentId?: (string | null) | undefined;
+    paths?: (IcePanel.FlowStepPathsNullable | null) | undefined;
+    targetId?: (string | null) | undefined;
     /** Type of flow step - deprecated values: reply */
-    type?: IcePanel.FlowStepPartialType | null;
-    viaId?: string | null;
+    type?: (IcePanel.FlowStepPartialType | null) | undefined;
+    viaId?: (string | null) | undefined;
 }
 
-export interface FlowStep {
-    /** Descriptive name for the flow step */
-    description: string;
-    /** Long description for the flow step */
-    detailedDescription?: string;
-    flowId: string | null;
+export interface FlowStepPath {
     id: string;
     index: number;
-    originId: string | null;
-    parentId: string | null;
-    paths: IcePanel.FlowStepPathsNullable | null;
-    targetId: string | null;
-    /** Type of flow step - deprecated values: reply */
-    type: IcePanel.FlowStepType | null;
-    viaId: string | null;
-}
-
-export interface LandscapePartial {
-    name?: string;
-    organizationId?: string;
-    scheduledVersions?: boolean;
-}
-
-export interface LandscapeRequired {
     name: string;
-    scheduledVersions?: boolean;
 }
+
+export type FlowStepPaths = Record<string, IcePanel.FlowStepPath>;
+
+export type FlowStepPathsNullable = IcePanel.FlowStepPaths | null;
 
 export interface Landscape {
     name: string;
@@ -3437,14 +3546,47 @@ export interface Landscape {
     updatedById: string;
 }
 
-export const LandscapeExportType = {
-    Pdf: "pdf",
-    Markdown: "markdown",
-    Html: "html",
-    Llms: "llms",
-    Json: "json",
-} as const;
-export type LandscapeExportType = (typeof LandscapeExportType)[keyof typeof LandscapeExportType];
+export interface LandscapePartial {
+    name?: string | undefined;
+    organizationId?: string | undefined;
+    scheduledVersions?: boolean | undefined;
+}
+
+export interface LandscapeRequired {
+    name: string;
+    scheduledVersions?: boolean | undefined;
+}
+
+export interface LandscapeExport {
+    completedAt?: string | undefined;
+    createdAt: string;
+    deleteAt: string;
+    error: string | null;
+    fileUrl: string | null;
+    filter?: IcePanel.LandscapeExportFilter | undefined;
+    id: string;
+    landscapeId: string;
+    options?: IcePanel.LandscapeExportOptions | undefined;
+    type: IcePanel.LandscapeExportType;
+    versionId: string;
+}
+
+export interface LandscapeExportFilter {
+    diagramId?: string | undefined;
+    flowId?: string | undefined;
+    /** Whether or not to include diagrams in PDF exports, defaults to true */
+    includeDiagrams?: boolean | undefined;
+    /** Whether or not to include flows in PDF exports, defaults to true */
+    includeFlows?: boolean | undefined;
+    modelObjectId?: string | undefined;
+}
+
+export interface LandscapeExportOptions {
+    /** Fetch and apply draft tasks before producing the export */
+    draftId?: string | undefined;
+    /** Orientation to use when exporting to PDF */
+    orientation?: IcePanel.LandscapeExportOrientation | undefined;
+}
 
 export const LandscapeExportOrientation = {
     Portrait: "portrait",
@@ -3452,35 +3594,111 @@ export const LandscapeExportOrientation = {
 } as const;
 export type LandscapeExportOrientation = (typeof LandscapeExportOrientation)[keyof typeof LandscapeExportOrientation];
 
-export interface LandscapeExportFilter {
-    diagramId?: string;
-    flowId?: string;
-    /** Whether or not to include diagrams in PDF exports, defaults to true */
-    includeDiagrams?: boolean;
-    /** Whether or not to include flows in PDF exports, defaults to true */
-    includeFlows?: boolean;
-    modelObjectId?: string;
-}
+export const LandscapeExportType = {
+    Pdf: "pdf",
+    Markdown: "markdown",
+    Html: "html",
+    Llms: "llms",
+    Json: "json",
+    ObjectCsv: "object-csv",
+    ConnectionCsv: "connection-csv",
+} as const;
+export type LandscapeExportType = (typeof LandscapeExportType)[keyof typeof LandscapeExportType];
 
-export interface LandscapeExportOptions {
-    /** Fetch and apply draft tasks before producing the export */
-    draftId?: string;
-    /** Orientation to use when exporting to PDF */
-    orientation?: IcePanel.LandscapeExportOrientation;
-}
-
-export interface LandscapeExport {
-    completedAt?: string;
+export interface LandscapeImport {
+    completedAt?: string | undefined;
     createdAt: string;
+    createdBy: IcePanel.AuthType;
+    createdById: string;
     deleteAt: string;
-    error: string | null;
-    fileUrl: string | null;
-    filter?: IcePanel.LandscapeExportFilter;
+    errors?: IcePanel.LandscapeImportError[] | undefined;
     id: string;
     landscapeId: string;
-    options?: IcePanel.LandscapeExportOptions;
-    type: IcePanel.LandscapeExportType;
+    /** When enabled, entities that are missing from the import will be deleted. */
+    prune?: boolean | undefined;
+    status: IcePanel.LandscapeImportStatus;
     versionId: string;
+}
+
+export interface LandscapeImportError {
+    code?: string | undefined;
+    /** The id of the entity where the error occurred */
+    entityId?: string | undefined;
+    /** The not using the standard id format, this will be the original import identifier */
+    entityOriginalId?: string | undefined;
+    entityType?: IcePanel.ImportEntityType | undefined;
+    message: string;
+}
+
+export const LandscapeImportStatus = {
+    InProgress: "in-progress",
+    Completed: "completed",
+    Error: "error",
+} as const;
+export type LandscapeImportStatus = (typeof LandscapeImportStatus)[keyof typeof LandscapeImportStatus];
+
+export interface ModelConnection {
+    commit: number;
+    description?: string | undefined;
+    direction: IcePanel.ModelConnectionDirectionNullable | null;
+    labels: Record<string, string>;
+    links: Record<string, IcePanel.RealityLink>;
+    name: string;
+    /** Model object that initiates the connection */
+    originId: string;
+    status: IcePanel.ModelConnectionStatus;
+    /** Tag IDs assigned to this model */
+    tagIds: string[];
+    /** Model object that receives the message */
+    targetId: string;
+    /** Technology IDs assigned to this model */
+    technologyIds: string[];
+    /** Model object that facilitates the connection, such as a Kafka topic, or RabbitMQ queue */
+    viaId: string | null;
+    handleId: string;
+    createdAt: string;
+    createdBy: IcePanel.AuthType;
+    createdById: string;
+    deletedAt?: string | undefined;
+    deletedBy?: IcePanel.AuthType | undefined;
+    deletedById?: string | undefined;
+    diagrams: Record<string, IcePanel.ModelConnectionDiagram>;
+    flows: Record<string, IcePanel.ModelConnectionFlow>;
+    id: string;
+    landscapeId: string;
+    latestEntityId?: string | undefined;
+    linked: boolean;
+    updatedAt: string;
+    updatedBy: IcePanel.AuthType;
+    updatedById: string;
+    version: number;
+    versionId: string;
+}
+
+export interface ModelConnectionDiagram {
+    connectionId: string;
+    id: string;
+    originModelId: string;
+    targetModelId: string;
+}
+
+export const ModelConnectionDirection = {
+    Outgoing: "outgoing",
+    Bidirectional: "bidirectional",
+} as const;
+export type ModelConnectionDirection = (typeof ModelConnectionDirection)[keyof typeof ModelConnectionDirection];
+
+export type ModelConnectionDirectionNullable = IcePanel.ModelConnectionDirection | null;
+
+export const ModelConnectionExpandKey = {
+    Technologies: "technologies",
+    Tags: "tags",
+} as const;
+export type ModelConnectionExpandKey = (typeof ModelConnectionExpandKey)[keyof typeof ModelConnectionExpandKey];
+
+export interface ModelConnectionExpanded extends IcePanel.ModelConnection {
+    tags?: Record<string, IcePanel.TagExport> | undefined;
+    technologies?: Record<string, IcePanel.TechnologyExport> | undefined;
 }
 
 export type ModelConnectionFilterHandleId =
@@ -3526,40 +3744,17 @@ export type ModelConnectionFilterViaId =
     | string[];
 
 export interface ModelConnectionFilter {
-    direction?: IcePanel.ModelConnectionDirection;
-    handleId?: IcePanel.ModelConnectionFilterHandleId;
-    labels?: Record<string, string>;
-    linked?: boolean;
-    name?: string;
-    originId?: IcePanel.ModelConnectionFilterOriginId;
-    status?: IcePanel.ModelConnectionFilterStatus;
-    tagIds?: IcePanel.ModelConnectionFilterTagIds;
-    targetId?: IcePanel.ModelConnectionFilterTargetId;
-    technologyIds?: IcePanel.ModelConnectionFilterTechnologyIds;
-    viaId?: IcePanel.ModelConnectionFilterViaId;
-}
-
-export const ModelConnectionDirection = {
-    Outgoing: "outgoing",
-    Bidirectional: "bidirectional",
-} as const;
-export type ModelConnectionDirection = (typeof ModelConnectionDirection)[keyof typeof ModelConnectionDirection];
-
-export type ModelConnectionDirectionNullable = IcePanel.ModelConnectionDirection | null;
-
-export const ModelConnectionStatus = {
-    Deprecated: "deprecated",
-    Future: "future",
-    Live: "live",
-    Removed: "removed",
-} as const;
-export type ModelConnectionStatus = (typeof ModelConnectionStatus)[keyof typeof ModelConnectionStatus];
-
-export interface ModelConnectionDiagram {
-    connectionId: string;
-    id: string;
-    originModelId: string;
-    targetModelId: string;
+    direction?: IcePanel.ModelConnectionDirection | undefined;
+    handleId?: IcePanel.ModelConnectionFilterHandleId | undefined;
+    labels?: Record<string, string> | undefined;
+    linked?: boolean | undefined;
+    name?: string | undefined;
+    originId?: IcePanel.ModelConnectionFilterOriginId | undefined;
+    status?: IcePanel.ModelConnectionFilterStatus | undefined;
+    tagIds?: IcePanel.ModelConnectionFilterTagIds | undefined;
+    targetId?: IcePanel.ModelConnectionFilterTargetId | undefined;
+    technologyIds?: IcePanel.ModelConnectionFilterTechnologyIds | undefined;
+    viaId?: IcePanel.ModelConnectionFilterViaId | undefined;
 }
 
 export interface ModelConnectionFlow {
@@ -3568,10 +3763,10 @@ export interface ModelConnectionFlow {
 }
 
 export interface ModelConnectionPartialLinks {
-    $add?: Record<string, IcePanel.RealityLinkRequired>;
-    $remove?: string[];
-    $replace?: Record<string, IcePanel.RealityLinkRequired>;
-    $update?: Record<string, IcePanel.RealityLinkPartial>;
+    $add?: Record<string, IcePanel.RealityLinkRequired> | undefined;
+    $remove?: string[] | undefined;
+    $replace?: Record<string, IcePanel.RealityLinkRequired> | undefined;
+    $update?: Record<string, IcePanel.RealityLinkPartial> | undefined;
 }
 
 /**
@@ -3579,9 +3774,9 @@ export interface ModelConnectionPartialLinks {
  */
 export interface ModelConnectionPartialTagIdsAdd {
     /** Append tag IDs to the list */
-    $add?: string[];
+    $add?: string[] | undefined;
     /** Remove tag IDs from the list */
-    $remove?: string[];
+    $remove?: string[] | undefined;
 }
 
 export type ModelConnectionPartialTagIds =
@@ -3597,9 +3792,9 @@ export type ModelConnectionPartialTagIds =
  */
 export interface ModelConnectionPartialTechnologyIdsAdd {
     /** Append technology IDs to the list */
-    $add?: string[];
+    $add?: string[] | undefined;
     /** Remove technology IDs from the list */
-    $remove?: string[];
+    $remove?: string[] | undefined;
 }
 
 export type ModelConnectionPartialTechnologyIds =
@@ -3611,96 +3806,144 @@ export type ModelConnectionPartialTechnologyIds =
     | IcePanel.ModelConnectionPartialTechnologyIdsAdd;
 
 export interface ModelConnectionPartial {
-    commit?: number;
-    description?: string;
-    direction?: IcePanel.ModelConnectionDirectionNullable | null;
-    labels?: Record<string, string>;
-    links?: IcePanel.ModelConnectionPartialLinks;
-    name?: string;
+    commit?: number | undefined;
+    description?: string | undefined;
+    direction?: (IcePanel.ModelConnectionDirectionNullable | null) | undefined;
+    labels?: Record<string, string> | undefined;
+    links?: IcePanel.ModelConnectionPartialLinks | undefined;
+    name?: string | undefined;
     /** Model object that initiates the connection */
-    originId?: string;
-    status?: IcePanel.ModelConnectionStatus;
-    tagIds?: IcePanel.ModelConnectionPartialTagIds;
+    originId?: string | undefined;
+    status?: IcePanel.ModelConnectionStatus | undefined;
+    tagIds?: IcePanel.ModelConnectionPartialTagIds | undefined;
     /** Model object that receives the message */
-    targetId?: string;
-    technologyIds?: IcePanel.ModelConnectionPartialTechnologyIds;
+    targetId?: string | undefined;
+    technologyIds?: IcePanel.ModelConnectionPartialTechnologyIds | undefined;
     /** Model object that facilitates the connection, such as a Kafka topic, or RabbitMQ queue */
-    viaId?: string | null;
+    viaId?: (string | null) | undefined;
 }
 
 export interface ModelConnectionRequired {
-    commit?: number;
-    description?: string;
+    commit?: number | undefined;
+    description?: string | undefined;
     direction: IcePanel.ModelConnectionDirectionNullable | null;
-    labels?: Record<string, string>;
-    links?: Record<string, IcePanel.RealityLinkRequired>;
+    labels?: Record<string, string> | undefined;
+    links?: Record<string, IcePanel.RealityLinkRequired> | undefined;
     name: string;
     /** Model object that initiates the connection */
     originId: string;
-    status?: IcePanel.ModelConnectionStatus;
+    status?: IcePanel.ModelConnectionStatus | undefined;
     /** Tag IDs assigned to this model */
-    tagIds?: string[];
+    tagIds?: string[] | undefined;
     /** Model object that receives the message */
     targetId: string;
     /** Technology IDs assigned to this model */
-    technologyIds?: string[];
+    technologyIds?: string[] | undefined;
     /** Model object that facilitates the connection, such as a Kafka topic, or RabbitMQ queue */
-    viaId?: string | null;
-    handleId?: string;
+    viaId?: (string | null) | undefined;
+    handleId?: string | undefined;
 }
+
+export const ModelConnectionStatus = {
+    Deprecated: "deprecated",
+    Future: "future",
+    Live: "live",
+    Removed: "removed",
+} as const;
+export type ModelConnectionStatus = (typeof ModelConnectionStatus)[keyof typeof ModelConnectionStatus];
 
 export interface ModelConnectionUpsert {
-    commit?: number;
-    description?: string;
+    commit?: number | undefined;
+    description?: string | undefined;
     direction: IcePanel.ModelConnectionDirectionNullable | null;
-    labels?: Record<string, string>;
-    links?: Record<string, IcePanel.RealityLinkRequired>;
+    labels?: Record<string, string> | undefined;
+    links?: Record<string, IcePanel.RealityLinkRequired> | undefined;
     name: string;
     /** Model object that initiates the connection */
     originId: string;
-    status?: IcePanel.ModelConnectionStatus;
+    status?: IcePanel.ModelConnectionStatus | undefined;
     /** Tag IDs assigned to this model */
-    tagIds?: string[];
+    tagIds?: string[] | undefined;
     /** Model object that receives the message */
     targetId: string;
     /** Technology IDs assigned to this model */
-    technologyIds?: string[];
+    technologyIds?: string[] | undefined;
     /** Model object that facilitates the connection, such as a Kafka topic, or RabbitMQ queue */
-    viaId?: string | null;
-    handleId?: string;
+    viaId?: (string | null) | undefined;
+    handleId?: string | undefined;
 }
 
-export interface ModelConnection {
+/**
+ * Array of model object IDs to return dependency data for. Non-existent IDs are silently ignored.
+ */
+export type ModelDependenciesFilterObjectIds = string | string[];
+
+/**
+ * Filter dependency objects to those matching any of the given tag IDs.
+ */
+export type ModelDependenciesFilterTagIds = string | string[];
+
+/**
+ * Filter dependency objects to those matching any of the given technology IDs.
+ */
+export type ModelDependenciesFilterTechnologyIds = string | string[];
+
+export interface ModelDependenciesFilter {
+    /** Array of model object IDs to return dependency data for. Non-existent IDs are silently ignored. */
+    objectIds?: IcePanel.ModelDependenciesFilterObjectIds | undefined;
+    /** Key-value label pairs used to select objects. Objects matching any of the provided pairs are returned (OR semantics). */
+    objectLabels?: Record<string, string> | undefined;
+    /** Filter dependency objects to those matching any of the given tag IDs. */
+    tagIds?: IcePanel.ModelDependenciesFilterTagIds | undefined;
+    /** Filter dependency objects to those matching any of the given technology IDs. */
+    technologyIds?: IcePanel.ModelDependenciesFilterTechnologyIds | undefined;
+}
+
+export interface ModelObject {
+    /** Short summary of the object shown as the display description */
+    caption?: string | undefined;
     commit: number;
-    description?: string;
-    direction: IcePanel.ModelConnectionDirectionNullable | null;
+    description?: string | undefined;
+    external: boolean;
+    /** IDs of the groups this model object belongs to */
+    groupIds: string[];
+    icon: IcePanel.ModelObjectIconNullable | null;
+    /** Generic key value store used for creating custom integrations */
     labels: Record<string, string>;
     links: Record<string, IcePanel.RealityLink>;
     name: string;
-    /** Model object that initiates the connection */
-    originId: string;
-    status: IcePanel.ModelConnectionStatus;
+    /** Parent model object ID, null for the root level model object */
+    parentId: string | null;
+    status: IcePanel.ModelObjectStatus;
     /** Tag IDs assigned to this model */
     tagIds: string[];
-    /** Model object that receives the message */
-    targetId: string;
+    /** Team IDs that own this model object, does not propergate up or down */
+    teamIds: string[];
+    /** Model object (+child diagram, diagram groups and flows) can only be edited by owners and admins */
+    teamOnlyEditing: boolean;
     /** Technology IDs assigned to this model */
     technologyIds: string[];
-    /** Model object that facilitates the connection, such as a Kafka topic, or RabbitMQ queue */
-    viaId: string | null;
+    type: IcePanel.ModelObjectType;
+    domainId: string;
     handleId: string;
+    /** Child diagram IDs */
+    childDiagramIds: string[];
+    /** Child model object IDs, only one level down */
+    childIds: string[];
     createdAt: string;
     createdBy: IcePanel.AuthType;
     createdById: string;
-    deletedAt?: string;
-    deletedBy?: IcePanel.AuthType;
-    deletedById?: string;
-    diagrams: Record<string, IcePanel.ModelConnectionDiagram>;
-    flows: Record<string, IcePanel.ModelConnectionFlow>;
+    deletedAt?: string | undefined;
+    deletedBy?: IcePanel.AuthType | undefined;
+    deletedById?: string | undefined;
+    diagrams: Record<string, IcePanel.ModelObjectDiagram>;
+    flows: Record<string, IcePanel.ModelObjectFlow>;
     id: string;
     landscapeId: string;
-    latestEntityId?: string;
+    latestEntityId?: string | undefined;
     linked: boolean;
+    /** Parent model object IDs for the whole hierarchy, ending with the root model object */
+    parentIds: string[];
     updatedAt: string;
     updatedBy: IcePanel.AuthType;
     updatedById: string;
@@ -3708,15 +3951,25 @@ export interface ModelConnection {
     versionId: string;
 }
 
-export const ModelConnectionExpandKey = {
-    Technologies: "technologies",
-    Tags: "tags",
-} as const;
-export type ModelConnectionExpandKey = (typeof ModelConnectionExpandKey)[keyof typeof ModelConnectionExpandKey];
+export interface ModelObjectDiagram {
+    id: string;
+    objectId: string;
+}
 
-export interface ModelConnectionExpanded extends IcePanel.ModelConnection {
-    tags?: Record<string, IcePanel.TagExport>;
-    technologies?: Record<string, IcePanel.TechnologyExport>;
+export const ModelObjectExpandKey = {
+    Domain: "domain",
+    Flows: "flows",
+    Tags: "tags",
+    Technologies: "technologies",
+} as const;
+export type ModelObjectExpandKey = (typeof ModelObjectExpandKey)[keyof typeof ModelObjectExpandKey];
+
+export interface ModelObjectExpanded extends IcePanel.ModelObject {
+    domain?: IcePanel.DomainExport | undefined;
+    /** Expanded flow exports keyed by flow ID. */
+    flowsExpanded?: Record<string, IcePanel.FlowExport> | undefined;
+    tags?: Record<string, IcePanel.TagExport> | undefined;
+    technologies?: Record<string, IcePanel.TechnologyExport> | undefined;
 }
 
 export type ModelObjectFilterDomainId =
@@ -3768,59 +4021,22 @@ export type ModelObjectFilterType =
     | IcePanel.ModelObjectType[];
 
 export interface ModelObjectFilter {
-    domainId?: IcePanel.ModelObjectFilterDomainId;
-    external?: boolean;
-    groupIds?: IcePanel.ModelObjectFilterGroupIds;
-    handleId?: IcePanel.ModelObjectFilterHandleId;
-    labels?: Record<string, string>;
-    linked?: boolean;
-    name?: string;
+    domainId?: IcePanel.ModelObjectFilterDomainId | undefined;
+    external?: boolean | undefined;
+    groupIds?: IcePanel.ModelObjectFilterGroupIds | undefined;
+    handleId?: IcePanel.ModelObjectFilterHandleId | undefined;
+    labels?: Record<string, string> | undefined;
+    linked?: boolean | undefined;
+    name?: string | undefined;
     /** Filter objects with this parent id */
-    parentId?: string | null;
+    parentId?: (string | null) | undefined;
     /** Filter objects or child objects with this parent id */
-    parentIds?: string;
-    status?: IcePanel.ModelObjectFilterStatus;
-    tagIds?: IcePanel.ModelObjectFilterTagIds;
-    teamIds?: IcePanel.ModelObjectFilterTeamIds;
-    technologyIds?: IcePanel.ModelObjectFilterTechnologyIds;
-    type?: IcePanel.ModelObjectFilterType;
-}
-
-export const ModelObjectType = {
-    Actor: "actor",
-    App: "app",
-    Component: "component",
-    Group: "group",
-    Root: "root",
-    Store: "store",
-    System: "system",
-} as const;
-export type ModelObjectType = (typeof ModelObjectType)[keyof typeof ModelObjectType];
-
-export const ModelObjectStatus = {
-    Deprecated: "deprecated",
-    Future: "future",
-    Live: "live",
-    Removed: "removed",
-} as const;
-export type ModelObjectStatus = (typeof ModelObjectStatus)[keyof typeof ModelObjectStatus];
-
-export interface ModelObjectIcon {
-    catalogTechnologyId: string;
-    name: string;
-    /** Use either urlDark or urlLight */
-    url?: string;
-    /** Icon that only works on dark backgrounds */
-    urlDark?: string;
-    /** Icon that only works on light backgrounds */
-    urlLight?: string;
-}
-
-export type ModelObjectIconNullable = IcePanel.ModelObjectIcon | null;
-
-export interface ModelObjectDiagram {
-    id: string;
-    objectId: string;
+    parentIds?: string | undefined;
+    status?: IcePanel.ModelObjectFilterStatus | undefined;
+    tagIds?: IcePanel.ModelObjectFilterTagIds | undefined;
+    teamIds?: IcePanel.ModelObjectFilterTeamIds | undefined;
+    technologyIds?: IcePanel.ModelObjectFilterTechnologyIds | undefined;
+    type?: IcePanel.ModelObjectFilterType | undefined;
 }
 
 export interface ModelObjectFlow {
@@ -3828,14 +4044,27 @@ export interface ModelObjectFlow {
     stepId: string;
 }
 
+export interface ModelObjectIcon {
+    catalogTechnologyId: string;
+    name: string;
+    /** Use either urlDark or urlLight */
+    url?: string | undefined;
+    /** Icon that only works on dark backgrounds */
+    urlDark?: string | undefined;
+    /** Icon that only works on light backgrounds */
+    urlLight?: string | undefined;
+}
+
+export type ModelObjectIconNullable = IcePanel.ModelObjectIcon | null;
+
 /**
  * Update individual group ids
  */
 export interface ModelObjectPartialGroupIdsAdd {
     /** Append group ids to the list */
-    $add?: string[];
+    $add?: string[] | undefined;
     /** Remove group ids from the list */
-    $remove?: string[];
+    $remove?: string[] | undefined;
 }
 
 export type ModelObjectPartialGroupIds =
@@ -3847,10 +4076,10 @@ export type ModelObjectPartialGroupIds =
     | IcePanel.ModelObjectPartialGroupIdsAdd;
 
 export interface ModelObjectPartialLinks {
-    $add?: Record<string, IcePanel.RealityLinkRequired>;
-    $remove?: string[];
-    $replace?: Record<string, IcePanel.RealityLinkRequired>;
-    $update?: Record<string, IcePanel.RealityLinkPartial>;
+    $add?: Record<string, IcePanel.RealityLinkRequired> | undefined;
+    $remove?: string[] | undefined;
+    $replace?: Record<string, IcePanel.RealityLinkRequired> | undefined;
+    $update?: Record<string, IcePanel.RealityLinkPartial> | undefined;
 }
 
 /**
@@ -3858,9 +4087,9 @@ export interface ModelObjectPartialLinks {
  */
 export interface ModelObjectPartialTagIdsAdd {
     /** Append tag ids to the list */
-    $add?: string[];
+    $add?: string[] | undefined;
     /** Remove tag ids from the list */
-    $remove?: string[];
+    $remove?: string[] | undefined;
 }
 
 export type ModelObjectPartialTagIds =
@@ -3876,9 +4105,9 @@ export type ModelObjectPartialTagIds =
  */
 export interface ModelObjectPartialTeamIdsAdd {
     /** Append team ids to the list */
-    $add?: string[];
+    $add?: string[] | undefined;
     /** Remove team ids from the list */
-    $remove?: string[];
+    $remove?: string[] | undefined;
 }
 
 export type ModelObjectPartialTeamIds =
@@ -3894,9 +4123,9 @@ export type ModelObjectPartialTeamIds =
  */
 export interface ModelObjectPartialTechnologyIdsAdd {
     /** Append technology ids to the list */
-    $add?: string[];
+    $add?: string[] | undefined;
     /** Remove technology ids from the list */
-    $remove?: string[];
+    $remove?: string[] | undefined;
 }
 
 export type ModelObjectPartialTechnologyIds =
@@ -3909,148 +4138,195 @@ export type ModelObjectPartialTechnologyIds =
 
 export interface ModelObjectPartial {
     /** Short summary of the object shown as the display description */
-    caption?: string;
-    commit?: number;
-    description?: string;
-    external?: boolean;
-    groupIds?: IcePanel.ModelObjectPartialGroupIds;
-    icon?: IcePanel.ModelObjectIconNullable | null;
+    caption?: string | undefined;
+    commit?: number | undefined;
+    description?: string | undefined;
+    external?: boolean | undefined;
+    groupIds?: IcePanel.ModelObjectPartialGroupIds | undefined;
+    icon?: (IcePanel.ModelObjectIconNullable | null) | undefined;
     /** Generic key value store used for creating custom integrations */
-    labels?: Record<string, string>;
-    links?: IcePanel.ModelObjectPartialLinks;
-    name?: string;
+    labels?: Record<string, string> | undefined;
+    links?: IcePanel.ModelObjectPartialLinks | undefined;
+    name?: string | undefined;
     /** Parent model object ID, null for the root level model object */
-    parentId?: string | null;
-    status?: IcePanel.ModelObjectStatus;
-    tagIds?: IcePanel.ModelObjectPartialTagIds;
-    teamIds?: IcePanel.ModelObjectPartialTeamIds;
+    parentId?: (string | null) | undefined;
+    status?: IcePanel.ModelObjectStatus | undefined;
+    tagIds?: IcePanel.ModelObjectPartialTagIds | undefined;
+    teamIds?: IcePanel.ModelObjectPartialTeamIds | undefined;
     /** Model object (+child diagram, diagram groups and flows) can only be edited by owners and admins */
-    teamOnlyEditing?: boolean;
-    technologyIds?: IcePanel.ModelObjectPartialTechnologyIds;
-    type?: IcePanel.ModelObjectType;
+    teamOnlyEditing?: boolean | undefined;
+    technologyIds?: IcePanel.ModelObjectPartialTechnologyIds | undefined;
+    type?: IcePanel.ModelObjectType | undefined;
 }
 
 export interface ModelObjectRequired {
     /** Short summary of the object shown as the display description */
-    caption?: string;
-    commit?: number;
-    description?: string;
-    external?: boolean;
+    caption?: string | undefined;
+    commit?: number | undefined;
+    description?: string | undefined;
+    external?: boolean | undefined;
     /** IDs of the groups this model object belongs to */
-    groupIds?: string[];
-    icon?: IcePanel.ModelObjectIconNullable | null;
+    groupIds?: string[] | undefined;
+    icon?: (IcePanel.ModelObjectIconNullable | null) | undefined;
     /** Generic key value store used for creating custom integrations */
-    labels?: Record<string, string>;
-    links?: Record<string, IcePanel.RealityLinkRequired>;
+    labels?: Record<string, string> | undefined;
+    links?: Record<string, IcePanel.RealityLinkRequired> | undefined;
     name: string;
     /** Parent model object ID, null for the root level model object */
     parentId: string | null;
-    status?: IcePanel.ModelObjectStatus;
+    status?: IcePanel.ModelObjectStatus | undefined;
     /** Tag IDs assigned to this model */
-    tagIds?: string[];
+    tagIds?: string[] | undefined;
     /** Team IDs that own this model object, does not propergate up or down */
-    teamIds?: string[];
+    teamIds?: string[] | undefined;
     /** Model object (+child diagram, diagram groups and flows) can only be edited by owners and admins */
-    teamOnlyEditing?: boolean;
+    teamOnlyEditing?: boolean | undefined;
     /** Technology IDs assigned to this model */
-    technologyIds?: string[];
+    technologyIds?: string[] | undefined;
     type: IcePanel.ModelObjectType;
-    domainId?: string;
-    handleId?: string;
+    domainId?: string | undefined;
+    handleId?: string | undefined;
 }
+
+export const ModelObjectStatus = {
+    Deprecated: "deprecated",
+    Future: "future",
+    Live: "live",
+    Removed: "removed",
+} as const;
+export type ModelObjectStatus = (typeof ModelObjectStatus)[keyof typeof ModelObjectStatus];
+
+export const ModelObjectType = {
+    Actor: "actor",
+    App: "app",
+    Component: "component",
+    Group: "group",
+    Root: "root",
+    Store: "store",
+    System: "system",
+} as const;
+export type ModelObjectType = (typeof ModelObjectType)[keyof typeof ModelObjectType];
 
 export interface ModelObjectUpsert {
     /** Short summary of the object shown as the display description */
-    caption?: string;
-    commit?: number;
-    description?: string;
-    external?: boolean;
+    caption?: string | undefined;
+    commit?: number | undefined;
+    description?: string | undefined;
+    external?: boolean | undefined;
     /** IDs of the groups this model object belongs to */
-    groupIds?: string[];
-    icon?: IcePanel.ModelObjectIconNullable | null;
+    groupIds?: string[] | undefined;
+    icon?: (IcePanel.ModelObjectIconNullable | null) | undefined;
     /** Generic key value store used for creating custom integrations */
-    labels?: Record<string, string>;
-    links?: Record<string, IcePanel.RealityLinkRequired>;
+    labels?: Record<string, string> | undefined;
+    links?: Record<string, IcePanel.RealityLinkRequired> | undefined;
     name: string;
     /** Parent model object ID, null for the root level model object */
     parentId: string | null;
-    status?: IcePanel.ModelObjectStatus;
+    status?: IcePanel.ModelObjectStatus | undefined;
     /** Tag IDs assigned to this model */
-    tagIds?: string[];
+    tagIds?: string[] | undefined;
     /** Team IDs that own this model object, does not propergate up or down */
-    teamIds?: string[];
+    teamIds?: string[] | undefined;
     /** Model object (+child diagram, diagram groups and flows) can only be edited by owners and admins */
-    teamOnlyEditing?: boolean;
+    teamOnlyEditing?: boolean | undefined;
     /** Technology IDs assigned to this model */
-    technologyIds?: string[];
+    technologyIds?: string[] | undefined;
     type: IcePanel.ModelObjectType;
-    domainId?: string;
-    handleId?: string;
+    domainId?: string | undefined;
+    handleId?: string | undefined;
 }
 
-export interface ModelObject {
-    /** Short summary of the object shown as the display description */
-    caption?: string;
-    commit: number;
-    description?: string;
-    external: boolean;
-    /** IDs of the groups this model object belongs to */
-    groupIds: string[];
-    icon: IcePanel.ModelObjectIconNullable | null;
-    /** Generic key value store used for creating custom integrations */
-    labels: Record<string, string>;
-    links: Record<string, IcePanel.RealityLink>;
+export interface Organization {
+    aiFeatures?: IcePanel.OrganizationAiFeatures | undefined;
+    /** Whether to enable all AI features for the organization */
+    aiFeaturesEnabled?: boolean | undefined;
+    aiModel?: IcePanel.OrganizationAiModel | undefined;
+    billingCurrency?: IcePanel.OrganizationBillingCurrency | undefined;
+    billingCycle?: IcePanel.OrganizationBillingCycle | undefined;
+    billingEmail?: string | undefined;
+    experiments?: Record<string, boolean> | undefined;
+    language?: IcePanel.OrganizationLanguage | undefined;
+    lineShapeDefault: IcePanel.LineShape;
     name: string;
-    /** Parent model object ID, null for the root level model object */
-    parentId: string | null;
-    status: IcePanel.ModelObjectStatus;
-    /** Tag IDs assigned to this model */
-    tagIds: string[];
-    /** Team IDs that own this model object, does not propergate up or down */
-    teamIds: string[];
-    /** Model object (+child diagram, diagram groups and flows) can only be edited by owners and admins */
-    teamOnlyEditing: boolean;
-    /** Technology IDs assigned to this model */
-    technologyIds: string[];
-    type: IcePanel.ModelObjectType;
-    domainId: string;
-    handleId: string;
-    /** Child diagram IDs */
-    childDiagramIds: string[];
-    /** Child model object IDs, only one level down */
-    childIds: string[];
+    /** Whether OAuth connections can make changes to landscape data */
+    oauthLandscapeWriteEnabled: boolean;
+    shareLinkAuthDomains: string[] | null;
+    shareLinksEnabled: boolean;
+    autoInviteDomains: string[];
+    billingCollectionMethod?: IcePanel.OrganizationCollectionMethod | undefined;
+    billingMonthlyCost?: number | undefined;
+    billingPaymentMethod: boolean;
+    cancelAt?: string | undefined;
+    canceledAt?: string | undefined;
     createdAt: string;
     createdBy: IcePanel.AuthType;
     createdById: string;
-    deletedAt?: string;
-    deletedBy?: IcePanel.AuthType;
-    deletedById?: string;
-    diagrams: Record<string, IcePanel.ModelObjectDiagram>;
-    flows: Record<string, IcePanel.ModelObjectFlow>;
     id: string;
-    landscapeId: string;
-    latestEntityId?: string;
-    linked: boolean;
-    /** Parent model object IDs for the whole hierarchy, ending with the root model object */
-    parentIds: string[];
+    plan: IcePanel.OrganizationPlan;
+    planEndsAt?: string | undefined;
+    seats: number;
+    status: IcePanel.OrganizationStatus;
+    trialEndsAt?: string | undefined;
     updatedAt: string;
     updatedBy: IcePanel.AuthType;
     updatedById: string;
-    version: number;
-    versionId: string;
+    userIds: string[];
+    users: Record<string, IcePanel.OrganizationUser>;
 }
 
-export const ModelObjectExpandKey = {
-    Domain: "domain",
-    Technologies: "technologies",
-    Tags: "tags",
-} as const;
-export type ModelObjectExpandKey = (typeof ModelObjectExpandKey)[keyof typeof ModelObjectExpandKey];
+/**
+ * AI features that are enabled for the organization
+ */
+export interface OrganizationAiFeatures {
+    /** Whether to enable detailed descriptions for objects, connections, and diagrams */
+    generateDetailedDescriptions?: boolean | undefined;
+    /** Whether to enable display descriptions for objects */
+    generateDisplayDescriptions?: boolean | undefined;
+    /** Whether to enable draft summaries for diagrams */
+    generateDraftSummary?: boolean | undefined;
+    /** Whether to enable object summaries for objects and connections in the right click context menu */
+    generateObjectSummary?: boolean | undefined;
+}
 
-export interface ModelObjectExpanded extends IcePanel.ModelObject {
-    domain?: IcePanel.DomainExport;
-    tags?: Record<string, IcePanel.TagExport>;
-    technologies?: Record<string, IcePanel.TechnologyExport>;
+export const OrganizationAiModel = {
+    Gpt5: "gpt-5",
+    Gpt5Mini: "gpt-5-mini",
+    Gpt5Nano: "gpt-5-nano",
+} as const;
+export type OrganizationAiModel = (typeof OrganizationAiModel)[keyof typeof OrganizationAiModel];
+
+export const OrganizationCollectionMethod = {
+    Charge: "charge",
+    Invoice: "invoice",
+} as const;
+export type OrganizationCollectionMethod =
+    (typeof OrganizationCollectionMethod)[keyof typeof OrganizationCollectionMethod];
+
+export const OrganizationLanguage = {
+    EnUs: "en-US",
+    EnGb: "en-GB",
+    FrFr: "fr-FR",
+    EsEs: "es-ES",
+    Es419: "es-419",
+} as const;
+export type OrganizationLanguage = (typeof OrganizationLanguage)[keyof typeof OrganizationLanguage];
+
+export interface OrganizationPartial {
+    aiFeatures?: IcePanel.OrganizationAiFeatures | undefined;
+    /** Whether to enable all AI features for the organization */
+    aiFeaturesEnabled?: boolean | undefined;
+    aiModel?: IcePanel.OrganizationAiModel | undefined;
+    billingCurrency?: IcePanel.OrganizationBillingCurrency | undefined;
+    billingCycle?: IcePanel.OrganizationBillingCycle | undefined;
+    billingEmail?: string | undefined;
+    experiments?: Record<string, boolean> | undefined;
+    language?: IcePanel.OrganizationLanguage | undefined;
+    lineShapeDefault?: IcePanel.LineShape | undefined;
+    name?: string | undefined;
+    /** Whether OAuth connections can make changes to landscape data */
+    oauthLandscapeWriteEnabled?: boolean | undefined;
+    shareLinkAuthDomains?: (string[] | null) | undefined;
+    shareLinksEnabled?: boolean | undefined;
 }
 
 export const OrganizationPlan = {
@@ -4063,12 +4339,23 @@ export const OrganizationPlan = {
 } as const;
 export type OrganizationPlan = (typeof OrganizationPlan)[keyof typeof OrganizationPlan];
 
-export const OrganizationCollectionMethod = {
-    Charge: "charge",
-    Invoice: "invoice",
-} as const;
-export type OrganizationCollectionMethod =
-    (typeof OrganizationCollectionMethod)[keyof typeof OrganizationCollectionMethod];
+export interface OrganizationRequired {
+    aiFeatures?: IcePanel.OrganizationAiFeatures | undefined;
+    /** Whether to enable all AI features for the organization */
+    aiFeaturesEnabled?: boolean | undefined;
+    aiModel?: IcePanel.OrganizationAiModel | undefined;
+    billingCurrency?: IcePanel.OrganizationBillingCurrency | undefined;
+    billingCycle?: IcePanel.OrganizationBillingCycle | undefined;
+    billingEmail?: string | undefined;
+    experiments?: Record<string, boolean> | undefined;
+    language?: IcePanel.OrganizationLanguage | undefined;
+    lineShapeDefault?: IcePanel.LineShape | undefined;
+    name: string;
+    /** Whether OAuth connections can make changes to landscape data */
+    oauthLandscapeWriteEnabled?: boolean | undefined;
+    shareLinkAuthDomains?: (string[] | null) | undefined;
+    shareLinksEnabled?: boolean | undefined;
+}
 
 export const OrganizationStatus = {
     Active: "active",
@@ -4082,103 +4369,16 @@ export const OrganizationStatus = {
 } as const;
 export type OrganizationStatus = (typeof OrganizationStatus)[keyof typeof OrganizationStatus];
 
-export const OrganizationLanguage = {
-    EnUs: "en-US",
-    EnGb: "en-GB",
-    FrFr: "fr-FR",
-    EsEs: "es-ES",
-    Es419: "es-419",
-} as const;
-export type OrganizationLanguage = (typeof OrganizationLanguage)[keyof typeof OrganizationLanguage];
-
 export interface OrganizationUser {
-    landscapePermissions?: Record<string, boolean>;
+    landscapePermissions?: Record<string, boolean> | undefined;
     permission: IcePanel.PermissionType;
 }
 
 export interface OrganizationUserInfo {
     email: string;
-    jobRole?: string;
+    jobRole?: string | undefined;
     lastActiveAt: string;
-    name?: string;
-}
-
-/**
- * AI features that are enabled for the organization
- */
-export interface OrganizationAiFeatures {
-    /** Whether to enable detailed descriptions for objects, connections, and diagrams */
-    generateDetailedDescriptions?: boolean;
-    /** Whether to enable display descriptions for objects */
-    generateDisplayDescriptions?: boolean;
-    /** Whether to enable draft summaries for diagrams */
-    generateDraftSummary?: boolean;
-    /** Whether to enable object summaries for objects and connections in the right click context menu */
-    generateObjectSummary?: boolean;
-}
-
-export interface OrganizationPartial {
-    aiFeatures?: IcePanel.OrganizationAiFeatures;
-    /** Whether to enable all AI features for the organization */
-    aiFeaturesEnabled?: boolean;
-    billingCurrency?: IcePanel.OrganizationBillingCurrency;
-    billingCycle?: IcePanel.OrganizationBillingCycle;
-    billingEmail?: string;
-    experiments?: Record<string, boolean>;
-    language?: IcePanel.OrganizationLanguage;
-    lineShapeDefault?: IcePanel.LineShape;
-    name?: string;
-    shareLinkAuthDomains?: string[] | null;
-    shareLinksEnabled?: boolean;
-}
-
-export interface OrganizationRequired {
-    aiFeatures?: IcePanel.OrganizationAiFeatures;
-    /** Whether to enable all AI features for the organization */
-    aiFeaturesEnabled?: boolean;
-    billingCurrency?: IcePanel.OrganizationBillingCurrency;
-    billingCycle?: IcePanel.OrganizationBillingCycle;
-    billingEmail?: string;
-    experiments?: Record<string, boolean>;
-    language?: IcePanel.OrganizationLanguage;
-    lineShapeDefault?: IcePanel.LineShape;
-    name: string;
-    shareLinkAuthDomains?: string[] | null;
-    shareLinksEnabled?: boolean;
-}
-
-export interface Organization {
-    aiFeatures?: IcePanel.OrganizationAiFeatures;
-    /** Whether to enable all AI features for the organization */
-    aiFeaturesEnabled?: boolean;
-    billingCurrency?: IcePanel.OrganizationBillingCurrency;
-    billingCycle?: IcePanel.OrganizationBillingCycle;
-    billingEmail?: string;
-    experiments?: Record<string, boolean>;
-    language?: IcePanel.OrganizationLanguage;
-    lineShapeDefault: IcePanel.LineShape;
-    name: string;
-    shareLinkAuthDomains: string[] | null;
-    shareLinksEnabled: boolean;
-    autoInviteDomains: string[];
-    billingCollectionMethod?: IcePanel.OrganizationCollectionMethod;
-    billingPaymentMethod: boolean;
-    cancelAt?: string;
-    canceledAt?: string;
-    createdAt: string;
-    createdBy: IcePanel.AuthType;
-    createdById: string;
-    id: string;
-    plan: IcePanel.OrganizationPlan;
-    planEndsAt?: string;
-    seats: number;
-    status: IcePanel.OrganizationStatus;
-    trialEndsAt?: string;
-    updatedAt: string;
-    updatedBy: IcePanel.AuthType;
-    updatedById: string;
-    userIds: string[];
-    users: Record<string, IcePanel.OrganizationUser>;
+    name?: string | undefined;
 }
 
 export const OrganizationBillingCurrency = {
@@ -4196,19 +4396,25 @@ export const OrganizationBillingCycle = {
 } as const;
 export type OrganizationBillingCycle = (typeof OrganizationBillingCycle)[keyof typeof OrganizationBillingCycle];
 
-export type OrganizationLogFilterActionTypeNotNot = IcePanel.ActionType | IcePanel.ActionType[];
-
-export interface OrganizationLogFilterActionTypeNot {
-    $not?: IcePanel.OrganizationLogFilterActionTypeNotNot;
+export interface OrganizationLog {
+    /** full description of the action that happened */
+    action: IcePanel.Action;
+    /** id of the action and any related ids that were part of the action */
+    actionIds: string[];
+    id: string;
+    landscapeId?: string | undefined;
+    /** parent action log id that caused this action to happen, eg: update of a diagram caused by a model object delete */
+    parentId: string | null;
+    performedAt: string;
+    performedBy: IcePanel.AuthType;
+    performedByAuthProvider?: string | undefined;
+    performedByClientId?: string | undefined;
+    performedById: string;
+    /** ip address of the user or api key who performed the action */
+    performedByIp?: string | undefined;
+    performedByName?: string | undefined;
+    performedByUserAgent?: string | undefined;
 }
-
-/**
- * type of action that was performed, eg: diagram-content-update or model-object-create
- */
-export type OrganizationLogFilterActionType =
-    | IcePanel.ActionType
-    | IcePanel.ActionType[]
-    | IcePanel.OrganizationLogFilterActionTypeNot;
 
 export const OrganizationLogFilterOrder = {
     Asc: "asc",
@@ -4225,38 +4431,42 @@ export type OrganizationLogFilterPerformedById = string | string[];
 
 export interface OrganizationLogFilter {
     /** id of the entity to lookup, eg: id of the tag being created, or id of the model object being updated */
-    actionId?: string;
-    actionType?: IcePanel.OrganizationLogFilterActionType;
-    endAtDate?: string;
-    endAtId?: string;
-    endBeforeDate?: string;
-    endBeforeId?: string;
+    actionId?: string | undefined;
+    actionType?: IcePanel.OrganizationLogFilterActionType | undefined;
+    endAtDate?: string | undefined;
+    endAtId?: string | undefined;
+    endBeforeDate?: string | undefined;
+    endBeforeId?: string | undefined;
     /** include actions from objects inside the context, eg: update of a model connection that is connected to a model object */
-    includeActionsInContext?: boolean;
-    limit?: number;
-    order?: IcePanel.OrganizationLogFilterOrder;
-    performedBy?: IcePanel.OrganizationLogFilterPerformedBy;
+    includeActionsInContext?: boolean | undefined;
+    limit?: number | undefined;
+    order?: IcePanel.OrganizationLogFilterOrder | undefined;
+    performedBy?: IcePanel.OrganizationLogFilterPerformedBy | undefined;
     /** id of the user or api key who performed the action */
-    performedById?: IcePanel.OrganizationLogFilterPerformedById;
-    startAfterDate?: string;
-    startAfterId?: string;
-    startAtDate?: string;
-    startAtId?: string;
+    performedById?: IcePanel.OrganizationLogFilterPerformedById | undefined;
+    startAfterDate?: string | undefined;
+    startAfterId?: string | undefined;
+    startAtDate?: string | undefined;
+    startAtId?: string | undefined;
 }
 
-export interface OrganizationLog {
-    /** full description of the action that happened */
-    action: IcePanel.Action;
-    /** id of the action and any related ids that were part of the action */
-    actionIds: string[];
-    id: string;
-    landscapeId?: string;
-    /** parent action log id that caused this action to happen, eg: update of a diagram caused by a model object delete */
-    parentId: string | null;
-    performedAt: string;
-    performedBy: IcePanel.AuthType;
-    performedById: string;
-    performedByName?: string;
+export type OrganizationLogFilterActionTypeNotNot = IcePanel.ActionType | IcePanel.ActionType[];
+
+export interface OrganizationLogFilterActionTypeNot {
+    $not?: IcePanel.OrganizationLogFilterActionTypeNotNot | undefined;
+}
+
+/**
+ * type of action that was performed, eg: diagram-content-update or model-object-create
+ */
+export type OrganizationLogFilterActionType =
+    | IcePanel.ActionType
+    | IcePanel.ActionType[]
+    | IcePanel.OrganizationLogFilterActionTypeNot;
+
+export interface OrganizationLogStatsDateByType {
+    actions: Record<string, IcePanel.OrganizationLogStatsItemByType>;
+    date: string;
 }
 
 /**
@@ -4278,14 +4488,14 @@ export type OrganizationLogStatsFilterPerformedById = string | string[];
 
 export interface OrganizationLogStatsFilter {
     /** type of action that was performed, eg: diagram-content-update or model-object-create */
-    actionType?: IcePanel.OrganizationLogStatsFilterActionType;
-    endAtDate?: string;
+    actionType?: IcePanel.OrganizationLogStatsFilterActionType | undefined;
+    endAtDate?: string | undefined;
     /** id of the entity to lookup, eg: id of the tag being created, or id of the model object being updated */
-    entityId?: IcePanel.OrganizationLogStatsFilterEntityId;
-    performedBy?: IcePanel.OrganizationLogStatsFilterPerformedBy;
+    entityId?: IcePanel.OrganizationLogStatsFilterEntityId | undefined;
+    performedBy?: IcePanel.OrganizationLogStatsFilterPerformedBy | undefined;
     /** id of the user or api key who performed the action */
-    performedById?: IcePanel.OrganizationLogStatsFilterPerformedById;
-    startAtDate?: string;
+    performedById?: IcePanel.OrganizationLogStatsFilterPerformedById | undefined;
+    startAtDate?: string | undefined;
 }
 
 export interface OrganizationLogStatsItemByType {
@@ -4295,61 +4505,40 @@ export interface OrganizationLogStatsItemByType {
     type: IcePanel.ActionType;
 }
 
-export interface OrganizationLogStatsDateByType {
-    actions: Record<string, IcePanel.OrganizationLogStatsItemByType>;
-    date: string;
-}
-
 export interface OrganizationLogStatsListByType {
     contributors: Record<string, IcePanel.ActionLogStatsContributor>;
     dates: IcePanel.OrganizationLogStatsDateByType[];
     totalCount: number;
 }
 
-export interface OrganizationUserInviteRequired {
-    email: string;
-    expiresAt: string;
-    landscapePermissions?: Record<string, boolean>;
-    permission: IcePanel.PermissionType;
-}
-
 export interface OrganizationUserInvite {
     email: string;
     expiresAt: string;
-    landscapePermissions?: Record<string, boolean>;
+    landscapePermissions?: Record<string, boolean> | undefined;
     permission: IcePanel.PermissionType;
     createdAt: string;
     createdBy: IcePanel.AuthType;
     createdById: string;
     id: string;
     organizationId: string;
-    revokedAt?: string;
-    revokedBy?: IcePanel.AuthType;
-    revokedById?: string;
-    usedAt?: string;
-    usedByUserId?: string;
+    revokedAt?: string | undefined;
+    revokedBy?: IcePanel.AuthType | undefined;
+    revokedById?: string | undefined;
+    usedAt?: string | undefined;
+    usedByUserId?: string | undefined;
 }
 
-export interface ShareLinkStats {
-    totalVisitorCount: number;
-    viewedAt?: string;
-}
-
-export interface ShareLinkPartial {
-    password?: string;
-    protected?: boolean;
-}
-
-export interface ShareLinkRequired {
-    password?: string;
-    protected: boolean;
-    draftId?: string | null;
+export interface OrganizationUserInviteRequired {
+    email: string;
+    expiresAt: string;
+    landscapePermissions?: Record<string, boolean> | undefined;
+    permission: IcePanel.PermissionType;
 }
 
 export interface ShareLink {
-    password?: string;
+    password?: string | undefined;
     protected: boolean;
-    draftId?: string | null;
+    draftId?: (string | null) | undefined;
     createdAt: string;
     createdBy: IcePanel.AuthType;
     createdById: string;
@@ -4362,13 +4551,46 @@ export interface ShareLink {
     versionId: string;
 }
 
-export type TagFilterHandleId = string | string[];
+export interface ShareLinkPartial {
+    password?: string | undefined;
+    protected?: boolean | undefined;
+}
 
-export interface TagFilter {
-    groupId?: string;
-    handleId?: IcePanel.TagFilterHandleId;
-    labels?: Record<string, string>;
-    name?: string;
+export interface ShareLinkRequired {
+    password?: string | undefined;
+    protected: boolean;
+    draftId?: (string | null) | undefined;
+}
+
+export interface ShareLinkStats {
+    totalVisitorCount: number;
+    viewedAt?: string | undefined;
+}
+
+export interface Tag {
+    color: IcePanel.TagColor;
+    commit: number;
+    groupId: string;
+    index: number;
+    labels: Record<string, string>;
+    name: string;
+    handleId: string;
+    createdAt: string;
+    createdBy: IcePanel.AuthType;
+    createdById: string;
+    deletedAt?: string | undefined;
+    deletedBy?: IcePanel.AuthType | undefined;
+    deletedById?: string | undefined;
+    id: string;
+    landscapeId: string;
+    latestEntityId?: string | undefined;
+    modelConnectionIds: string[];
+    modelObjectIds: string[];
+    updatedAt: string;
+    updatedBy: IcePanel.AuthType;
+    updatedById: string;
+    version: number;
+    versionId: string;
 }
 
 export const TagColor = {
@@ -4387,39 +4609,47 @@ export const TagColor = {
 } as const;
 export type TagColor = (typeof TagColor)[keyof typeof TagColor];
 
+export type TagFilterHandleId = string | string[];
+
+export interface TagFilter {
+    groupId?: string | undefined;
+    handleId?: IcePanel.TagFilterHandleId | undefined;
+    labels?: Record<string, string> | undefined;
+    name?: string | undefined;
+}
+
 export interface TagPartial {
-    color?: IcePanel.TagColor;
-    commit?: number;
-    groupId?: string;
-    index?: number;
-    labels?: Record<string, string>;
-    name?: string;
+    color?: IcePanel.TagColor | undefined;
+    commit?: number | undefined;
+    groupId?: string | undefined;
+    index?: number | undefined;
+    labels?: Record<string, string> | undefined;
+    name?: string | undefined;
 }
 
 export interface TagRequired {
     color: IcePanel.TagColor;
-    commit?: number;
+    commit?: number | undefined;
     groupId: string;
     index: number;
-    labels?: Record<string, string>;
+    labels?: Record<string, string> | undefined;
     name: string;
-    handleId?: string;
+    handleId?: string | undefined;
 }
 
 export interface TagUpsert {
     color: IcePanel.TagColor;
-    commit?: number;
+    commit?: number | undefined;
     groupId: string;
     index: number;
-    labels?: Record<string, string>;
+    labels?: Record<string, string> | undefined;
     name: string;
-    handleId?: string;
+    handleId?: string | undefined;
 }
 
-export interface Tag {
-    color: IcePanel.TagColor;
+export interface TagGroup {
     commit: number;
-    groupId: string;
+    icon: IcePanel.TagGroupIcon;
     index: number;
     labels: Record<string, string>;
     name: string;
@@ -4427,14 +4657,12 @@ export interface Tag {
     createdAt: string;
     createdBy: IcePanel.AuthType;
     createdById: string;
-    deletedAt?: string;
-    deletedBy?: IcePanel.AuthType;
-    deletedById?: string;
+    deletedAt?: string | undefined;
+    deletedBy?: IcePanel.AuthType | undefined;
+    deletedById?: string | undefined;
     id: string;
     landscapeId: string;
-    latestEntityId?: string;
-    modelConnectionIds: string[];
-    modelObjectIds: string[];
+    latestEntityId?: string | undefined;
     updatedAt: string;
     updatedBy: IcePanel.AuthType;
     updatedById: string;
@@ -4445,9 +4673,9 @@ export interface Tag {
 export type TagGroupFilterHandleId = string | string[];
 
 export interface TagGroupFilter {
-    handleId?: IcePanel.TagGroupFilterHandleId;
-    labels?: Record<string, string>;
-    name?: string;
+    handleId?: IcePanel.TagGroupFilterHandleId | undefined;
+    labels?: Record<string, string> | undefined;
+    name?: string | undefined;
 }
 
 export const TagGroupIcon = {
@@ -4485,64 +4713,29 @@ export const TagGroupIcon = {
 export type TagGroupIcon = (typeof TagGroupIcon)[keyof typeof TagGroupIcon];
 
 export interface TagGroupPartial {
-    commit?: number;
-    icon?: IcePanel.TagGroupIcon;
-    index?: number;
-    labels?: Record<string, string>;
-    name?: string;
+    commit?: number | undefined;
+    icon?: IcePanel.TagGroupIcon | undefined;
+    index?: number | undefined;
+    labels?: Record<string, string> | undefined;
+    name?: string | undefined;
 }
 
 export interface TagGroupRequired {
-    commit?: number;
+    commit?: number | undefined;
     icon: IcePanel.TagGroupIcon;
     index: number;
-    labels?: Record<string, string>;
+    labels?: Record<string, string> | undefined;
     name: string;
-    handleId?: string;
+    handleId?: string | undefined;
 }
 
 export interface TagGroupUpsert {
-    commit?: number;
+    commit?: number | undefined;
     icon: IcePanel.TagGroupIcon;
     index: number;
-    labels?: Record<string, string>;
+    labels?: Record<string, string> | undefined;
     name: string;
-    handleId?: string;
-}
-
-export interface TagGroup {
-    commit: number;
-    icon: IcePanel.TagGroupIcon;
-    index: number;
-    labels: Record<string, string>;
-    name: string;
-    handleId: string;
-    createdAt: string;
-    createdBy: IcePanel.AuthType;
-    createdById: string;
-    deletedAt?: string;
-    deletedBy?: IcePanel.AuthType;
-    deletedById?: string;
-    id: string;
-    landscapeId: string;
-    latestEntityId?: string;
-    updatedAt: string;
-    updatedBy: IcePanel.AuthType;
-    updatedById: string;
-    version: number;
-    versionId: string;
-}
-
-export interface TeamPartial {
-    color?: IcePanel.TagColor;
-    name?: string;
-    userIds?: string[];
-}
-
-export interface TeamRequired {
-    color?: IcePanel.TagColor;
-    name: string;
-    userIds?: string[];
+    handleId?: string | undefined;
 }
 
 export interface Team {
@@ -4560,27 +4753,26 @@ export interface Team {
     updatedById: string;
 }
 
-export interface VersionPartial {
-    modelHandleId?: string | null;
-    name?: string;
-    notes?: string;
+export interface TeamPartial {
+    color?: IcePanel.TagColor | undefined;
+    name?: string | undefined;
+    userIds?: string[] | undefined;
 }
 
-export interface VersionRequired {
-    modelHandleId: string | null;
+export interface TeamRequired {
+    color?: IcePanel.TagColor | undefined;
     name: string;
-    notes: string;
+    userIds?: string[] | undefined;
 }
 
 export interface Version {
     modelHandleId: string | null;
     name: string;
     notes: string;
-    completedAt?: string;
+    completedAt?: string | undefined;
     createdAt: string;
     createdBy: IcePanel.AuthType;
     createdById: string;
-    diagramHandleIds: string[];
     id: string;
     landscapeId: string;
     tags: string[];
@@ -4589,13 +4781,23 @@ export interface Version {
     updatedById: string;
 }
 
-export interface VersionRevertPartial {
-    notes?: string;
+export type VersionFilterTag = string | string[];
+
+export interface VersionFilter {
+    name?: string | undefined;
+    tag?: IcePanel.VersionFilterTag | undefined;
 }
 
-export interface VersionRevertRequired {
+export interface VersionRequired {
+    modelHandleId: string | null;
+    name: string;
     notes: string;
-    versionId: string;
+}
+
+export interface VersionUpdate {
+    modelHandleId?: (string | null) | undefined;
+    name?: string | undefined;
+    notes?: string | undefined;
 }
 
 export interface VersionRevert {
@@ -4604,12 +4806,20 @@ export interface VersionRevert {
     createdAt: string;
     createdBy: IcePanel.AuthType;
     createdById: string;
-    diagramHandleIds: string[];
     id: string;
     landscapeId: string;
     updatedAt: string;
     updatedBy: IcePanel.AuthType;
     updatedById: string;
+}
+
+export interface VersionRevertPartial {
+    notes?: string | undefined;
+}
+
+export interface VersionRevertRequired {
+    notes: string;
+    versionId: string;
 }
 
 export const AiDescriptionType = {
@@ -4635,26 +4845,9 @@ export const PermissionType = {
 export type PermissionType = (typeof PermissionType)[keyof typeof PermissionType];
 
 export interface Error_ {
-    code?: string;
-    errors?: string[];
+    code?: string | undefined;
+    errors?: string[] | undefined;
     message: string;
-}
-
-export interface TechnologyExport {
-    color: IcePanel.TagColor;
-    description?: string;
-    docsUrl?: string;
-    /** Use either iconUrlDark or iconUrlLight */
-    iconUrl?: string;
-    iconUrlDark?: string;
-    iconUrlLight?: string;
-    id: string;
-    name: string;
-    nameShort?: string;
-    provider: IcePanel.CatalogProviderNullable | null;
-    type: IcePanel.CatalogTechnologyTypeNullable | null;
-    updatesUrl?: string;
-    websiteUrl?: string;
 }
 
 export interface DomainExport {
@@ -4662,11 +4855,31 @@ export interface DomainExport {
     name: string;
 }
 
+export interface FlowExport {
+    id: string;
+    name: string;
+    showConnectionNames: boolean;
+    steps: Record<string, IcePanel.FlowStepExport>;
+}
+
+export interface FlowStepExport {
+    /** Descriptive name for the flow step */
+    description: string;
+    /** Long description for the flow step */
+    detailedDescription?: string | undefined;
+    id: string;
+    index: number;
+    originId: string;
+    targetId: string;
+    type: IcePanel.FlowStepType;
+    viaId: string;
+}
+
 export interface ModelConnectionExport {
     description: string;
     direction: IcePanel.ModelConnectionDirectionNullable | null;
     id: string;
-    links?: Record<string, IcePanel.RealityLink>;
+    links?: Record<string, IcePanel.RealityLink> | undefined;
     name: string;
     originId: string;
     status: IcePanel.ModelConnectionStatus;
@@ -4674,6 +4887,13 @@ export interface ModelConnectionExport {
     targetId: string;
     technologyIds: string[];
     viaId: string | null;
+}
+
+export interface ModelObjectDependenciesExport {
+    incomingConnectionObjects: Record<string, IcePanel.ModelObjectExport[]>;
+    incomingConnections: IcePanel.ModelConnectionExport[];
+    outgoingConnectionObjects: Record<string, IcePanel.ModelObjectExport[]>;
+    outgoingConnections: IcePanel.ModelConnectionExport[];
 }
 
 export interface ModelObjectExport {
@@ -4691,306 +4911,147 @@ export interface ModelObjectExport {
     status: IcePanel.ModelObjectStatus;
     tagIds: string[];
     teamIds: string[];
-    technologies?: Record<string, IcePanel.TechnologyExport>;
+    technologies?: Record<string, IcePanel.TechnologyExport> | undefined;
     technologyIds: string[];
     type: IcePanel.ModelObjectType;
 }
 
 export interface TagExport {
-    color: string;
+    color: IcePanel.TagColor;
     groupId: string;
     id: string;
     name: string;
 }
 
-export interface ModelObjectDependenciesExport {
-    incomingConnectionObjects: Record<string, IcePanel.ModelObjectExport[]>;
-    incomingConnections: IcePanel.ModelConnectionExport[];
-    outgoingConnectionObjects: Record<string, IcePanel.ModelObjectExport[]>;
-    outgoingConnections: IcePanel.ModelConnectionExport[];
+export interface TechnologyExport {
+    color: IcePanel.TagColor;
+    description?: string | undefined;
+    docsUrl?: string | undefined;
+    /** Use either iconUrlDark or iconUrlLight */
+    iconUrl?: string | undefined;
+    iconUrlDark?: string | undefined;
+    iconUrlLight?: string | undefined;
+    id: string;
+    name: string;
+    nameShort?: string | undefined;
+    provider: IcePanel.CatalogProviderNullable | null;
+    type: IcePanel.CatalogTechnologyTypeNullable | null;
+    updatesUrl?: string | undefined;
+    websiteUrl?: string | undefined;
 }
 
-export const RealityConnectorUrlType = {
-    Url: "url",
+export const ImportEntityType = {
+    ModelObject: "model-object",
+    ModelConnection: "model-connection",
+    Tag: "tag",
+    TagGroup: "tag-group",
 } as const;
-export type RealityConnectorUrlType = (typeof RealityConnectorUrlType)[keyof typeof RealityConnectorUrlType];
+export type ImportEntityType = (typeof ImportEntityType)[keyof typeof ImportEntityType];
 
-export interface RealityConnectorUrl {
-    type: IcePanel.RealityConnectorUrlType;
+export interface ImportIcon {
+    technologyId: string;
+}
+
+export type ImportIconNullable = IcePanel.ImportIcon | null;
+
+export interface ImportLink {
+    /** Friendly name for the link set by the user */
+    customName?: string | undefined;
+    /** Random 20 character identifier */
+    id?: string | undefined;
+    /** Accessible link URL when not using a connector */
     url: string;
 }
 
-export const RealityConnectorAzureDevopsRepoType = {
-    AzureDevopsRepo: "azure-devops-repo",
+export const ImportModelObjectType = {
+    Domain: "domain",
+    Actor: "actor",
+    App: "app",
+    Component: "component",
+    Group: "group",
+    Store: "store",
+    System: "system",
 } as const;
-export type RealityConnectorAzureDevopsRepoType =
-    (typeof RealityConnectorAzureDevopsRepoType)[keyof typeof RealityConnectorAzureDevopsRepoType];
+export type ImportModelObjectType = (typeof ImportModelObjectType)[keyof typeof ImportModelObjectType];
 
-export interface RealityConnectorAzureDevopsRepo {
-    accountName: string;
-    projectId: string;
-    repositoryId: string;
-    type: IcePanel.RealityConnectorAzureDevopsRepoType;
+export interface LandscapeImportData {
+    modelConnections?: IcePanel.ModelConnectionImport[] | undefined;
+    modelObjects?: IcePanel.ModelObjectImport[] | undefined;
+    /** The namespace of the import, used for seperate operations when using multiple import sources */
+    namespace?: string | undefined;
+    tagGroups?: IcePanel.TagGroupImport[] | undefined;
+    tags?: IcePanel.TagImport[] | undefined;
 }
 
-export const RealityConnectorAzureDevopsBranchType = {
-    AzureDevopsBranch: "azure-devops-branch",
-} as const;
-export type RealityConnectorAzureDevopsBranchType =
-    (typeof RealityConnectorAzureDevopsBranchType)[keyof typeof RealityConnectorAzureDevopsBranchType];
-
-export interface RealityConnectorAzureDevopsBranch {
-    accountName: string;
-    branchName: string;
-    projectId: string;
-    repositoryId: string;
-    type: IcePanel.RealityConnectorAzureDevopsBranchType;
+export interface ModelConnectionImport {
+    /** Detailed description */
+    description?: string | undefined;
+    direction: IcePanel.ModelConnectionDirection;
+    id: string;
+    labels?: Record<string, string> | undefined;
+    links?: IcePanel.ImportLink[] | undefined;
+    name: string;
+    /** Model object that initiates the connection */
+    originId: string;
+    status?: IcePanel.ModelConnectionStatus | undefined;
+    /** Tag IDs assigned to this model */
+    tagIds?: string[] | undefined;
+    /** Model object that receives the message */
+    targetId: string;
+    /** Technology IDs assigned to this model */
+    technologyIds?: string[] | undefined;
+    /** Model object that facilitates the connection, such as a Kafka topic, or RabbitMQ queue */
+    viaId?: string | undefined;
 }
 
-export const RealityConnectorAzureDevopsFolderType = {
-    AzureDevopsFolder: "azure-devops-folder",
-} as const;
-export type RealityConnectorAzureDevopsFolderType =
-    (typeof RealityConnectorAzureDevopsFolderType)[keyof typeof RealityConnectorAzureDevopsFolderType];
-
-export interface RealityConnectorAzureDevopsFolder {
-    accountName: string;
-    branchName: string;
-    path: string;
-    projectId: string;
-    repositoryId: string;
-    type: IcePanel.RealityConnectorAzureDevopsFolderType;
+export interface ModelObjectImport {
+    /** Display description */
+    caption?: string | undefined;
+    /** Detailed description */
+    description?: string | undefined;
+    /** Whether the model object is an external service */
+    external?: boolean | undefined;
+    groupIds?: string[] | undefined;
+    icon?: (IcePanel.ImportIconNullable | null) | undefined;
+    id: string;
+    labels?: Record<string, string> | undefined;
+    links?: IcePanel.ImportLink[] | undefined;
+    name: string;
+    /**
+     * Parent model object ID, must follow the IcePanel hierarchy.
+     *
+     * Domain: parent must be missing/null
+     *
+     * Actor/System: parent must be a domain
+     *
+     * Group: parent must be a domain or another group
+     *
+     * App/Store: parent must be a system
+     *
+     * Component: parent must be an app or store
+     */
+    parentId?: (string | null) | undefined;
+    status?: IcePanel.ModelObjectStatus | undefined;
+    tagIds?: string[] | undefined;
+    teamIds?: string[] | undefined;
+    technologyIds?: string[] | undefined;
+    type: IcePanel.ImportModelObjectType;
 }
 
-export const RealityConnectorAzureDevopsFileType = {
-    AzureDevopsFile: "azure-devops-file",
-} as const;
-export type RealityConnectorAzureDevopsFileType =
-    (typeof RealityConnectorAzureDevopsFileType)[keyof typeof RealityConnectorAzureDevopsFileType];
-
-export interface RealityConnectorAzureDevopsFile {
-    accountName: string;
-    branchName: string;
-    path: string;
-    projectId: string;
-    repositoryId: string;
-    type: IcePanel.RealityConnectorAzureDevopsFileType;
+export interface TagGroupImport {
+    icon: IcePanel.TagGroupIcon;
+    id: string;
+    labels?: Record<string, string> | undefined;
+    name: string;
 }
 
-export const RealityConnectorBitbucketRepoType = {
-    BitbucketRepo: "bitbucket-repo",
-} as const;
-export type RealityConnectorBitbucketRepoType =
-    (typeof RealityConnectorBitbucketRepoType)[keyof typeof RealityConnectorBitbucketRepoType];
-
-export interface RealityConnectorBitbucketRepo {
-    projectId: string;
-    repositoryId: string;
-    type: IcePanel.RealityConnectorBitbucketRepoType;
-    workspaceId: string;
-}
-
-export const RealityConnectorBitbucketBranchType = {
-    BitbucketBranch: "bitbucket-branch",
-} as const;
-export type RealityConnectorBitbucketBranchType =
-    (typeof RealityConnectorBitbucketBranchType)[keyof typeof RealityConnectorBitbucketBranchType];
-
-export interface RealityConnectorBitbucketBranch {
-    branchName: string;
-    projectId: string;
-    repositoryId: string;
-    type: IcePanel.RealityConnectorBitbucketBranchType;
-    workspaceId: string;
-}
-
-export const RealityConnectorBitbucketFolderType = {
-    BitbucketFolder: "bitbucket-folder",
-} as const;
-export type RealityConnectorBitbucketFolderType =
-    (typeof RealityConnectorBitbucketFolderType)[keyof typeof RealityConnectorBitbucketFolderType];
-
-export interface RealityConnectorBitbucketFolder {
-    branchName: string;
-    path: string;
-    projectId: string;
-    repositoryId: string;
-    type: IcePanel.RealityConnectorBitbucketFolderType;
-    workspaceId: string;
-}
-
-export const RealityConnectorBitbucketFileType = {
-    BitbucketFile: "bitbucket-file",
-} as const;
-export type RealityConnectorBitbucketFileType =
-    (typeof RealityConnectorBitbucketFileType)[keyof typeof RealityConnectorBitbucketFileType];
-
-export interface RealityConnectorBitbucketFile {
-    branchName: string;
-    path: string;
-    projectId: string;
-    repositoryId: string;
-    type: IcePanel.RealityConnectorBitbucketFileType;
-    workspaceId: string;
-}
-
-export const RealityConnectorBitbucketServerRepoType = {
-    BitbucketServerRepo: "bitbucket-server-repo",
-} as const;
-export type RealityConnectorBitbucketServerRepoType =
-    (typeof RealityConnectorBitbucketServerRepoType)[keyof typeof RealityConnectorBitbucketServerRepoType];
-
-export interface RealityConnectorBitbucketServerRepo {
-    projectId: number;
-    repositoryId: number;
-    serverUrl: string;
-    type: IcePanel.RealityConnectorBitbucketServerRepoType;
-}
-
-export const RealityConnectorBitbucketServerBranchType = {
-    BitbucketServerBranch: "bitbucket-server-branch",
-} as const;
-export type RealityConnectorBitbucketServerBranchType =
-    (typeof RealityConnectorBitbucketServerBranchType)[keyof typeof RealityConnectorBitbucketServerBranchType];
-
-export interface RealityConnectorBitbucketServerBranch {
-    branchName: string;
-    projectId: number;
-    repositoryId: number;
-    serverUrl: string;
-    type: IcePanel.RealityConnectorBitbucketServerBranchType;
-}
-
-export const RealityConnectorBitbucketServerFolderType = {
-    BitbucketServerFolder: "bitbucket-server-folder",
-} as const;
-export type RealityConnectorBitbucketServerFolderType =
-    (typeof RealityConnectorBitbucketServerFolderType)[keyof typeof RealityConnectorBitbucketServerFolderType];
-
-export interface RealityConnectorBitbucketServerFolder {
-    branchName: string;
-    path: string;
-    projectId: number;
-    repositoryId: number;
-    serverUrl: string;
-    type: IcePanel.RealityConnectorBitbucketServerFolderType;
-}
-
-export const RealityConnectorBitbucketServerFileType = {
-    BitbucketServerFile: "bitbucket-server-file",
-} as const;
-export type RealityConnectorBitbucketServerFileType =
-    (typeof RealityConnectorBitbucketServerFileType)[keyof typeof RealityConnectorBitbucketServerFileType];
-
-export interface RealityConnectorBitbucketServerFile {
-    branchName: string;
-    path: string;
-    projectId: number;
-    repositoryId: number;
-    serverUrl: string;
-    type: IcePanel.RealityConnectorBitbucketServerFileType;
-}
-
-export const RealityConnectorGithubRepoType = {
-    GithubRepo: "github-repo",
-} as const;
-export type RealityConnectorGithubRepoType =
-    (typeof RealityConnectorGithubRepoType)[keyof typeof RealityConnectorGithubRepoType];
-
-export interface RealityConnectorGithubRepo {
-    ownerId: number;
-    repositoryId: number;
-    type: IcePanel.RealityConnectorGithubRepoType;
-}
-
-export const RealityConnectorGithubBranchType = {
-    GithubBranch: "github-branch",
-} as const;
-export type RealityConnectorGithubBranchType =
-    (typeof RealityConnectorGithubBranchType)[keyof typeof RealityConnectorGithubBranchType];
-
-export interface RealityConnectorGithubBranch {
-    branchName: string;
-    ownerId: number;
-    repositoryId: number;
-    type: IcePanel.RealityConnectorGithubBranchType;
-}
-
-export const RealityConnectorGithubFolderType = {
-    GithubFolder: "github-folder",
-} as const;
-export type RealityConnectorGithubFolderType =
-    (typeof RealityConnectorGithubFolderType)[keyof typeof RealityConnectorGithubFolderType];
-
-export interface RealityConnectorGithubFolder {
-    branchName: string;
-    ownerId: number;
-    path: string;
-    repositoryId: number;
-    type: IcePanel.RealityConnectorGithubFolderType;
-}
-
-export const RealityConnectorGithubFileType = {
-    GithubFile: "github-file",
-} as const;
-export type RealityConnectorGithubFileType =
-    (typeof RealityConnectorGithubFileType)[keyof typeof RealityConnectorGithubFileType];
-
-export interface RealityConnectorGithubFile {
-    branchName: string;
-    ownerId: number;
-    path: string;
-    repositoryId: number;
-    type: IcePanel.RealityConnectorGithubFileType;
-}
-
-export const RealityConnectorGitlabRepoType = {
-    GitlabRepo: "gitlab-repo",
-} as const;
-export type RealityConnectorGitlabRepoType =
-    (typeof RealityConnectorGitlabRepoType)[keyof typeof RealityConnectorGitlabRepoType];
-
-export interface RealityConnectorGitlabRepo {
-    projectId: number;
-    type: IcePanel.RealityConnectorGitlabRepoType;
-}
-
-export const RealityConnectorGitlabBranchType = {
-    GitlabBranch: "gitlab-branch",
-} as const;
-export type RealityConnectorGitlabBranchType =
-    (typeof RealityConnectorGitlabBranchType)[keyof typeof RealityConnectorGitlabBranchType];
-
-export interface RealityConnectorGitlabBranch {
-    branchName: string;
-    projectId: number;
-    type: IcePanel.RealityConnectorGitlabBranchType;
-}
-
-export const RealityConnectorGitlabFolderType = {
-    GitlabFolder: "gitlab-folder",
-} as const;
-export type RealityConnectorGitlabFolderType =
-    (typeof RealityConnectorGitlabFolderType)[keyof typeof RealityConnectorGitlabFolderType];
-
-export interface RealityConnectorGitlabFolder {
-    branchName: string;
-    path: string;
-    projectId: number;
-    type: IcePanel.RealityConnectorGitlabFolderType;
-}
-
-export const RealityConnectorGitlabFileType = {
-    GitlabFile: "gitlab-file",
-} as const;
-export type RealityConnectorGitlabFileType =
-    (typeof RealityConnectorGitlabFileType)[keyof typeof RealityConnectorGitlabFileType];
-
-export interface RealityConnectorGitlabFile {
-    branchName: string;
-    path: string;
-    projectId: number;
-    type: IcePanel.RealityConnectorGitlabFileType;
+export interface TagImport {
+    color: IcePanel.TagColor;
+    /** Parent tag group ID */
+    groupId: string;
+    id: string;
+    labels?: Record<string, string> | undefined;
+    name: string;
 }
 
 export type RealityConnector =
@@ -5016,54 +5077,343 @@ export type RealityConnector =
     | IcePanel.RealityConnectorGitlabFolder
     | IcePanel.RealityConnectorGitlabFile;
 
+export const RealityConnectorAzureDevopsBranchType = {
+    AzureDevopsBranch: "azure-devops-branch",
+} as const;
+export type RealityConnectorAzureDevopsBranchType =
+    (typeof RealityConnectorAzureDevopsBranchType)[keyof typeof RealityConnectorAzureDevopsBranchType];
+
+export interface RealityConnectorAzureDevopsBranch {
+    accountName: string;
+    branchName: string;
+    projectId: string;
+    repositoryId: string;
+    type: IcePanel.RealityConnectorAzureDevopsBranchType;
+}
+
+export const RealityConnectorAzureDevopsFileType = {
+    AzureDevopsFile: "azure-devops-file",
+} as const;
+export type RealityConnectorAzureDevopsFileType =
+    (typeof RealityConnectorAzureDevopsFileType)[keyof typeof RealityConnectorAzureDevopsFileType];
+
+export interface RealityConnectorAzureDevopsFile {
+    accountName: string;
+    branchName: string;
+    path: string;
+    projectId: string;
+    repositoryId: string;
+    type: IcePanel.RealityConnectorAzureDevopsFileType;
+}
+
+export const RealityConnectorAzureDevopsFolderType = {
+    AzureDevopsFolder: "azure-devops-folder",
+} as const;
+export type RealityConnectorAzureDevopsFolderType =
+    (typeof RealityConnectorAzureDevopsFolderType)[keyof typeof RealityConnectorAzureDevopsFolderType];
+
+export interface RealityConnectorAzureDevopsFolder {
+    accountName: string;
+    branchName: string;
+    path: string;
+    projectId: string;
+    repositoryId: string;
+    type: IcePanel.RealityConnectorAzureDevopsFolderType;
+}
+
+export const RealityConnectorAzureDevopsRepoType = {
+    AzureDevopsRepo: "azure-devops-repo",
+} as const;
+export type RealityConnectorAzureDevopsRepoType =
+    (typeof RealityConnectorAzureDevopsRepoType)[keyof typeof RealityConnectorAzureDevopsRepoType];
+
+export interface RealityConnectorAzureDevopsRepo {
+    accountName: string;
+    projectId: string;
+    repositoryId: string;
+    type: IcePanel.RealityConnectorAzureDevopsRepoType;
+}
+
+export const RealityConnectorBitbucketBranchType = {
+    BitbucketBranch: "bitbucket-branch",
+} as const;
+export type RealityConnectorBitbucketBranchType =
+    (typeof RealityConnectorBitbucketBranchType)[keyof typeof RealityConnectorBitbucketBranchType];
+
+export interface RealityConnectorBitbucketBranch {
+    branchName: string;
+    projectId: string;
+    repositoryId: string;
+    type: IcePanel.RealityConnectorBitbucketBranchType;
+    workspaceId: string;
+}
+
+export const RealityConnectorBitbucketFileType = {
+    BitbucketFile: "bitbucket-file",
+} as const;
+export type RealityConnectorBitbucketFileType =
+    (typeof RealityConnectorBitbucketFileType)[keyof typeof RealityConnectorBitbucketFileType];
+
+export interface RealityConnectorBitbucketFile {
+    branchName: string;
+    path: string;
+    projectId: string;
+    repositoryId: string;
+    type: IcePanel.RealityConnectorBitbucketFileType;
+    workspaceId: string;
+}
+
+export const RealityConnectorBitbucketFolderType = {
+    BitbucketFolder: "bitbucket-folder",
+} as const;
+export type RealityConnectorBitbucketFolderType =
+    (typeof RealityConnectorBitbucketFolderType)[keyof typeof RealityConnectorBitbucketFolderType];
+
+export interface RealityConnectorBitbucketFolder {
+    branchName: string;
+    path: string;
+    projectId: string;
+    repositoryId: string;
+    type: IcePanel.RealityConnectorBitbucketFolderType;
+    workspaceId: string;
+}
+
+export const RealityConnectorBitbucketRepoType = {
+    BitbucketRepo: "bitbucket-repo",
+} as const;
+export type RealityConnectorBitbucketRepoType =
+    (typeof RealityConnectorBitbucketRepoType)[keyof typeof RealityConnectorBitbucketRepoType];
+
+export interface RealityConnectorBitbucketRepo {
+    projectId: string;
+    repositoryId: string;
+    type: IcePanel.RealityConnectorBitbucketRepoType;
+    workspaceId: string;
+}
+
+export const RealityConnectorBitbucketServerBranchType = {
+    BitbucketServerBranch: "bitbucket-server-branch",
+} as const;
+export type RealityConnectorBitbucketServerBranchType =
+    (typeof RealityConnectorBitbucketServerBranchType)[keyof typeof RealityConnectorBitbucketServerBranchType];
+
+export interface RealityConnectorBitbucketServerBranch {
+    branchName: string;
+    projectId: number;
+    repositoryId: number;
+    serverUrl: string;
+    type: IcePanel.RealityConnectorBitbucketServerBranchType;
+}
+
+export const RealityConnectorBitbucketServerFileType = {
+    BitbucketServerFile: "bitbucket-server-file",
+} as const;
+export type RealityConnectorBitbucketServerFileType =
+    (typeof RealityConnectorBitbucketServerFileType)[keyof typeof RealityConnectorBitbucketServerFileType];
+
+export interface RealityConnectorBitbucketServerFile {
+    branchName: string;
+    path: string;
+    projectId: number;
+    repositoryId: number;
+    serverUrl: string;
+    type: IcePanel.RealityConnectorBitbucketServerFileType;
+}
+
+export const RealityConnectorBitbucketServerFolderType = {
+    BitbucketServerFolder: "bitbucket-server-folder",
+} as const;
+export type RealityConnectorBitbucketServerFolderType =
+    (typeof RealityConnectorBitbucketServerFolderType)[keyof typeof RealityConnectorBitbucketServerFolderType];
+
+export interface RealityConnectorBitbucketServerFolder {
+    branchName: string;
+    path: string;
+    projectId: number;
+    repositoryId: number;
+    serverUrl: string;
+    type: IcePanel.RealityConnectorBitbucketServerFolderType;
+}
+
+export const RealityConnectorBitbucketServerRepoType = {
+    BitbucketServerRepo: "bitbucket-server-repo",
+} as const;
+export type RealityConnectorBitbucketServerRepoType =
+    (typeof RealityConnectorBitbucketServerRepoType)[keyof typeof RealityConnectorBitbucketServerRepoType];
+
+export interface RealityConnectorBitbucketServerRepo {
+    projectId: number;
+    repositoryId: number;
+    serverUrl: string;
+    type: IcePanel.RealityConnectorBitbucketServerRepoType;
+}
+
+export const RealityConnectorGithubBranchType = {
+    GithubBranch: "github-branch",
+} as const;
+export type RealityConnectorGithubBranchType =
+    (typeof RealityConnectorGithubBranchType)[keyof typeof RealityConnectorGithubBranchType];
+
+export interface RealityConnectorGithubBranch {
+    branchName: string;
+    ownerId: number;
+    repositoryId: number;
+    type: IcePanel.RealityConnectorGithubBranchType;
+}
+
+export const RealityConnectorGithubFileType = {
+    GithubFile: "github-file",
+} as const;
+export type RealityConnectorGithubFileType =
+    (typeof RealityConnectorGithubFileType)[keyof typeof RealityConnectorGithubFileType];
+
+export interface RealityConnectorGithubFile {
+    branchName: string;
+    ownerId: number;
+    path: string;
+    repositoryId: number;
+    type: IcePanel.RealityConnectorGithubFileType;
+}
+
+export const RealityConnectorGithubFolderType = {
+    GithubFolder: "github-folder",
+} as const;
+export type RealityConnectorGithubFolderType =
+    (typeof RealityConnectorGithubFolderType)[keyof typeof RealityConnectorGithubFolderType];
+
+export interface RealityConnectorGithubFolder {
+    branchName: string;
+    ownerId: number;
+    path: string;
+    repositoryId: number;
+    type: IcePanel.RealityConnectorGithubFolderType;
+}
+
+export const RealityConnectorGithubRepoType = {
+    GithubRepo: "github-repo",
+} as const;
+export type RealityConnectorGithubRepoType =
+    (typeof RealityConnectorGithubRepoType)[keyof typeof RealityConnectorGithubRepoType];
+
+export interface RealityConnectorGithubRepo {
+    ownerId: number;
+    repositoryId: number;
+    type: IcePanel.RealityConnectorGithubRepoType;
+}
+
+export const RealityConnectorGitlabBranchType = {
+    GitlabBranch: "gitlab-branch",
+} as const;
+export type RealityConnectorGitlabBranchType =
+    (typeof RealityConnectorGitlabBranchType)[keyof typeof RealityConnectorGitlabBranchType];
+
+export interface RealityConnectorGitlabBranch {
+    branchName: string;
+    projectId: number;
+    type: IcePanel.RealityConnectorGitlabBranchType;
+}
+
+export const RealityConnectorGitlabFileType = {
+    GitlabFile: "gitlab-file",
+} as const;
+export type RealityConnectorGitlabFileType =
+    (typeof RealityConnectorGitlabFileType)[keyof typeof RealityConnectorGitlabFileType];
+
+export interface RealityConnectorGitlabFile {
+    branchName: string;
+    path: string;
+    projectId: number;
+    type: IcePanel.RealityConnectorGitlabFileType;
+}
+
+export const RealityConnectorGitlabFolderType = {
+    GitlabFolder: "gitlab-folder",
+} as const;
+export type RealityConnectorGitlabFolderType =
+    (typeof RealityConnectorGitlabFolderType)[keyof typeof RealityConnectorGitlabFolderType];
+
+export interface RealityConnectorGitlabFolder {
+    branchName: string;
+    path: string;
+    projectId: number;
+    type: IcePanel.RealityConnectorGitlabFolderType;
+}
+
+export const RealityConnectorGitlabRepoType = {
+    GitlabRepo: "gitlab-repo",
+} as const;
+export type RealityConnectorGitlabRepoType =
+    (typeof RealityConnectorGitlabRepoType)[keyof typeof RealityConnectorGitlabRepoType];
+
+export interface RealityConnectorGitlabRepo {
+    projectId: number;
+    type: IcePanel.RealityConnectorGitlabRepoType;
+}
+
+export const RealityConnectorUrlType = {
+    Url: "url",
+} as const;
+export type RealityConnectorUrlType = (typeof RealityConnectorUrlType)[keyof typeof RealityConnectorUrlType];
+
+export interface RealityConnectorUrl {
+    type: IcePanel.RealityConnectorUrlType;
+    url: string;
+}
+
+export interface RealityLink {
+    /** Resolve the connector from a publicly accessible URL */
+    connectionResolveUrl?: string | undefined;
+    /** Links this to a resource in reality, if set periodic checks are performed and the status is updated */
+    connector?: IcePanel.RealityConnector | undefined;
+    /** Friendly name for the link set by the user */
+    customName?: (string | null) | undefined;
+    index: number;
+    /** URL pointing to the resource in reality, resolved from the last sync */
+    url?: string | undefined;
+    /** Error message that was received during the last sync */
+    errorMessage?: string | undefined;
+    /** Random 20 character identifier */
+    id: string;
+    /** Friendly name describing the resource in reality, resolved from the last sync */
+    name?: string | undefined;
+    /** Response that was received from the last sync with reality */
+    status?: IcePanel.RealityLinkStatus | undefined;
+}
+
+export interface RealityLinkPartial {
+    /** Resolve the connector from a publicly accessible URL */
+    connectionResolveUrl?: string | undefined;
+    /** Links this to a resource in reality, if set periodic checks are performed and the status is updated */
+    connector?: IcePanel.RealityConnector | undefined;
+    /** Friendly name for the link set by the user */
+    customName?: (string | null) | undefined;
+    index?: number | undefined;
+    /** Accessible link URL when not using a connector */
+    url?: string | undefined;
+}
+
+export interface RealityLinkRequired {
+    /** Resolve the connector from a publicly accessible URL */
+    connectionResolveUrl?: string | undefined;
+    /** Links this to a resource in reality, if set periodic checks are performed and the status is updated */
+    connector?: IcePanel.RealityConnector | undefined;
+    /** Friendly name for the link set by the user */
+    customName?: (string | null) | undefined;
+    index?: number | undefined;
+    /** Accessible link URL when not using a connector */
+    url?: string | undefined;
+}
+
 export const RealityLinkStatus = {
     Valid: "valid",
     Invalid: "invalid",
 } as const;
 export type RealityLinkStatus = (typeof RealityLinkStatus)[keyof typeof RealityLinkStatus];
 
-export interface RealityLinkPartial {
-    /** Resolve the connector from a publicly accessible URL */
-    connectionResolveUrl?: string;
-    /** Links this to a resource in reality, if set periodic checks are performed and the status is updated */
-    connector?: IcePanel.RealityConnector;
-    /** Friendly name for the link set by the user */
-    customName?: string | null;
-    index?: number;
-    /** Accessible link URL when not using a connector */
-    url?: string;
-}
+export type SearchFilterType = IcePanel.SearchIndexType | IcePanel.SearchIndexType[];
 
-export interface RealityLinkRequired {
-    /** Resolve the connector from a publicly accessible URL */
-    connectionResolveUrl?: string;
-    /** Links this to a resource in reality, if set periodic checks are performed and the status is updated */
-    connector?: IcePanel.RealityConnector;
-    /** Friendly name for the link set by the user */
-    customName?: string | null;
-    index?: number;
-    /** Accessible link URL when not using a connector */
-    url?: string;
-}
-
-export interface RealityLink {
-    /** Resolve the connector from a publicly accessible URL */
-    connectionResolveUrl?: string;
-    /** Links this to a resource in reality, if set periodic checks are performed and the status is updated */
-    connector?: IcePanel.RealityConnector;
-    /** Friendly name for the link set by the user */
-    customName?: string | null;
-    index: number;
-    /** URL pointing to the resource in reality, resolved from the last sync */
-    url?: string;
-    /** Error message that was received during the last sync */
-    errorMessage?: string;
-    /** Random 20 character identifier */
-    id: string;
-    /** Friendly name describing the resource in reality, resolved from the last sync */
-    name?: string;
-    /** Response that was received from the last sync with reality */
-    status?: IcePanel.RealityLinkStatus;
+export interface SearchFilter {
+    type?: IcePanel.SearchFilterType | undefined;
 }
 
 export const SearchIndexType = {
@@ -5082,21 +5432,15 @@ export const SearchIndexType = {
 } as const;
 export type SearchIndexType = (typeof SearchIndexType)[keyof typeof SearchIndexType];
 
-export type SearchFilterType = IcePanel.SearchIndexType | IcePanel.SearchIndexType[];
-
-export interface SearchFilter {
-    type?: IcePanel.SearchFilterType;
-}
-
-export type SearchResultData = IcePanel.ModelObject | IcePanel.ModelConnection | IcePanel.Diagram | IcePanel.Flow;
-
 export interface SearchResult {
-    data?: IcePanel.SearchResultData;
+    data?: IcePanel.SearchResultData | undefined;
     id: string;
     name: string;
     score: number;
     type: IcePanel.SearchIndexType;
 }
+
+export type SearchResultData = IcePanel.ModelObject | IcePanel.ModelConnection | IcePanel.Diagram | IcePanel.Flow;
 
 export const Theme = {
     Light: "light",

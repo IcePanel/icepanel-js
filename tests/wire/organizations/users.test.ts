@@ -26,6 +26,7 @@ describe("UsersClient", () => {
                 },
             },
         };
+
         server
             .mockEndpoint()
             .get("/organizations/organizationId/users")
@@ -37,20 +38,7 @@ describe("UsersClient", () => {
         const response = await client.organizations.users.list({
             organizationId: "organizationId",
         });
-        expect(response).toEqual({
-            organizationUsers: {
-                key: {
-                    email: "email",
-                    jobRole: "jobRole",
-                    lastActiveAt: "2024-01-15T09:30:00Z",
-                    name: "name",
-                    landscapePermissions: {
-                        key: true,
-                    },
-                    permission: "billing",
-                },
-            },
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("list (2)", async () => {
@@ -62,7 +50,34 @@ describe("UsersClient", () => {
             environment: server.baseUrl,
         });
 
+        const rawResponseBody = { message: "message" };
+
+        server
+            .mockEndpoint()
+            .get("/organizations/organizationId/users")
+            .respondWith()
+            .statusCode(400)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.organizations.users.list({
+                organizationId: "organizationId",
+            });
+        }).rejects.toThrow(IcePanel.BadRequestError);
+    });
+
+    test("list (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .get("/organizations/organizationId/users")
@@ -78,7 +93,33 @@ describe("UsersClient", () => {
         }).rejects.toThrow(IcePanel.UnauthorizedError);
     });
 
-    test("list (3)", async () => {
+    test("list (4)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+
+        const rawResponseBody = { message: "message" };
+
+        server
+            .mockEndpoint()
+            .get("/organizations/organizationId/users")
+            .respondWith()
+            .statusCode(403)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.organizations.users.list({
+                organizationId: "organizationId",
+            });
+        }).rejects.toThrow(IcePanel.ForbiddenError);
+    });
+
+    test("list (5)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -88,6 +129,7 @@ describe("UsersClient", () => {
         });
 
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .get("/organizations/organizationId/users")
@@ -103,7 +145,7 @@ describe("UsersClient", () => {
         }).rejects.toThrow(IcePanel.NotFoundError);
     });
 
-    test("list (4)", async () => {
+    test("list (6)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -113,6 +155,7 @@ describe("UsersClient", () => {
         });
 
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .get("/organizations/organizationId/users")
@@ -128,7 +171,7 @@ describe("UsersClient", () => {
         }).rejects.toThrow(IcePanel.UnprocessableEntityError);
     });
 
-    test("list (5)", async () => {
+    test("list (7)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -138,6 +181,7 @@ describe("UsersClient", () => {
         });
 
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .get("/organizations/organizationId/users")
@@ -163,6 +207,7 @@ describe("UsersClient", () => {
         });
 
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .delete("/organizations/organizationId/users/userId")
@@ -175,9 +220,7 @@ describe("UsersClient", () => {
             organizationId: "organizationId",
             userId: "userId",
         });
-        expect(response).toEqual({
-            key: "value",
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("delete (2)", async () => {
@@ -190,6 +233,7 @@ describe("UsersClient", () => {
         });
 
         const rawResponseBody = { message: "message" };
+
         server
             .mockEndpoint()
             .delete("/organizations/organizationId/users/userId")
@@ -216,6 +260,7 @@ describe("UsersClient", () => {
         });
 
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .delete("/organizations/organizationId/users/userId")
@@ -241,7 +286,35 @@ describe("UsersClient", () => {
             environment: server.baseUrl,
         });
 
+        const rawResponseBody = { message: "message" };
+
+        server
+            .mockEndpoint()
+            .delete("/organizations/organizationId/users/userId")
+            .respondWith()
+            .statusCode(403)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.organizations.users.delete({
+                organizationId: "organizationId",
+                userId: "userId",
+            });
+        }).rejects.toThrow(IcePanel.ForbiddenError);
+    });
+
+    test("delete (5)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .delete("/organizations/organizationId/users/userId")
@@ -258,7 +331,7 @@ describe("UsersClient", () => {
         }).rejects.toThrow(IcePanel.NotFoundError);
     });
 
-    test("delete (5)", async () => {
+    test("delete (6)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -268,6 +341,7 @@ describe("UsersClient", () => {
         });
 
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .delete("/organizations/organizationId/users/userId")
@@ -284,7 +358,7 @@ describe("UsersClient", () => {
         }).rejects.toThrow(IcePanel.UnprocessableEntityError);
     });
 
-    test("delete (6)", async () => {
+    test("delete (7)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -294,6 +368,7 @@ describe("UsersClient", () => {
         });
 
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .delete("/organizations/organizationId/users/userId")
@@ -310,6 +385,33 @@ describe("UsersClient", () => {
         }).rejects.toThrow(IcePanel.InternalServerError);
     });
 
+    test("delete (8)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+
+        const rawResponseBody = { key: "value" };
+
+        server
+            .mockEndpoint()
+            .delete("/organizations/organizationId/users/userId")
+            .respondWith()
+            .statusCode(503)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.organizations.users.delete({
+                organizationId: "organizationId",
+                userId: "userId",
+            });
+        }).rejects.toThrow(IcePanel.ServiceUnavailableError);
+    });
+
     test("update (1)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
@@ -320,6 +422,7 @@ describe("UsersClient", () => {
         });
         const rawRequestBody = { permission: "billing" };
         const rawResponseBody = { organizationUser: { landscapePermissions: { key: true }, permission: "billing" } };
+
         server
             .mockEndpoint()
             .patch("/organizations/organizationId/users/userId")
@@ -336,14 +439,7 @@ describe("UsersClient", () => {
                 permission: "billing",
             },
         });
-        expect(response).toEqual({
-            organizationUser: {
-                landscapePermissions: {
-                    key: true,
-                },
-                permission: "billing",
-            },
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("update (2)", async () => {
@@ -356,6 +452,7 @@ describe("UsersClient", () => {
         });
         const rawRequestBody = { permission: "billing" };
         const rawResponseBody = { message: "message" };
+
         server
             .mockEndpoint()
             .patch("/organizations/organizationId/users/userId")
@@ -386,6 +483,7 @@ describe("UsersClient", () => {
         });
         const rawRequestBody = { permission: "billing" };
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .patch("/organizations/organizationId/users/userId")
@@ -415,7 +513,39 @@ describe("UsersClient", () => {
             environment: server.baseUrl,
         });
         const rawRequestBody = { permission: "billing" };
+        const rawResponseBody = { message: "message" };
+
+        server
+            .mockEndpoint()
+            .patch("/organizations/organizationId/users/userId")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(403)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.organizations.users.update({
+                organizationId: "organizationId",
+                userId: "userId",
+                body: {
+                    permission: "billing",
+                },
+            });
+        }).rejects.toThrow(IcePanel.ForbiddenError);
+    });
+
+    test("update (5)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+        const rawRequestBody = { permission: "billing" };
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .patch("/organizations/organizationId/users/userId")
@@ -436,7 +566,7 @@ describe("UsersClient", () => {
         }).rejects.toThrow(IcePanel.NotFoundError);
     });
 
-    test("update (5)", async () => {
+    test("update (6)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -446,6 +576,7 @@ describe("UsersClient", () => {
         });
         const rawRequestBody = { permission: "billing" };
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .patch("/organizations/organizationId/users/userId")
@@ -466,7 +597,7 @@ describe("UsersClient", () => {
         }).rejects.toThrow(IcePanel.UnprocessableEntityError);
     });
 
-    test("update (6)", async () => {
+    test("update (7)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -476,6 +607,7 @@ describe("UsersClient", () => {
         });
         const rawRequestBody = { permission: "billing" };
         const rawResponseBody = { message: "message" };
+
         server
             .mockEndpoint()
             .patch("/organizations/organizationId/users/userId")
@@ -496,7 +628,7 @@ describe("UsersClient", () => {
         }).rejects.toThrow(IcePanel.TooManyRequestsError);
     });
 
-    test("update (7)", async () => {
+    test("update (8)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -506,6 +638,7 @@ describe("UsersClient", () => {
         });
         const rawRequestBody = { permission: "billing" };
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .patch("/organizations/organizationId/users/userId")
@@ -524,5 +657,36 @@ describe("UsersClient", () => {
                 },
             });
         }).rejects.toThrow(IcePanel.InternalServerError);
+    });
+
+    test("update (9)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+        const rawRequestBody = { permission: "billing" };
+        const rawResponseBody = { key: "value" };
+
+        server
+            .mockEndpoint()
+            .patch("/organizations/organizationId/users/userId")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(503)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.organizations.users.update({
+                organizationId: "organizationId",
+                userId: "userId",
+                body: {
+                    permission: "billing",
+                },
+            });
+        }).rejects.toThrow(IcePanel.ServiceUnavailableError);
     });
 });

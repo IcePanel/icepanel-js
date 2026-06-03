@@ -86,6 +86,7 @@ describe("ExportClient", () => {
                 },
             ],
         };
+
         server
             .mockEndpoint()
             .get("/landscapes/landscapeId/versions/versionId/model/objects/modelObjectId/dependencies/export/json")
@@ -99,98 +100,7 @@ describe("ExportClient", () => {
             versionId: "versionId",
             modelObjectId: "modelObjectId",
         });
-        expect(response).toEqual({
-            incomingConnectionObjects: {
-                key: [
-                    {
-                        caption: "caption",
-                        description: "description",
-                        domainId: "domainId",
-                        external: true,
-                        groupIds: ["groupIds"],
-                        id: "id",
-                        links: {
-                            key: {
-                                index: 1.1,
-                                id: "id",
-                            },
-                        },
-                        name: "name",
-                        parentIds: ["parentIds"],
-                        status: "deprecated",
-                        tagIds: ["tagIds"],
-                        teamIds: ["teamIds"],
-                        technologyIds: ["technologyIds"],
-                        type: "actor",
-                    },
-                ],
-            },
-            incomingConnections: [
-                {
-                    description: "description",
-                    direction: "outgoing",
-                    id: "id",
-                    links: {
-                        key: {
-                            index: 1.1,
-                            id: "id",
-                        },
-                    },
-                    name: "name",
-                    originId: "originId",
-                    status: "deprecated",
-                    tagIds: ["tagIds"],
-                    targetId: "targetId",
-                    technologyIds: ["technologyIds"],
-                    viaId: "viaId",
-                },
-            ],
-            outgoingConnectionObjects: {
-                key: [
-                    {
-                        caption: "caption",
-                        description: "description",
-                        domainId: "domainId",
-                        external: true,
-                        groupIds: ["groupIds"],
-                        id: "id",
-                        links: {
-                            key: {
-                                index: 1.1,
-                                id: "id",
-                            },
-                        },
-                        name: "name",
-                        parentIds: ["parentIds"],
-                        status: "deprecated",
-                        tagIds: ["tagIds"],
-                        teamIds: ["teamIds"],
-                        technologyIds: ["technologyIds"],
-                        type: "actor",
-                    },
-                ],
-            },
-            outgoingConnections: [
-                {
-                    description: "description",
-                    direction: "outgoing",
-                    id: "id",
-                    links: {
-                        key: {
-                            index: 1.1,
-                            id: "id",
-                        },
-                    },
-                    name: "name",
-                    originId: "originId",
-                    status: "deprecated",
-                    tagIds: ["tagIds"],
-                    targetId: "targetId",
-                    technologyIds: ["technologyIds"],
-                    viaId: "viaId",
-                },
-            ],
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("dependenciesJson (2)", async () => {
@@ -202,7 +112,36 @@ describe("ExportClient", () => {
             environment: server.baseUrl,
         });
 
+        const rawResponseBody = { message: "message" };
+
+        server
+            .mockEndpoint()
+            .get("/landscapes/landscapeId/versions/versionId/model/objects/modelObjectId/dependencies/export/json")
+            .respondWith()
+            .statusCode(400)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.model.objects.export.dependenciesJson({
+                landscapeId: "landscapeId",
+                versionId: "versionId",
+                modelObjectId: "modelObjectId",
+            });
+        }).rejects.toThrow(IcePanel.BadRequestError);
+    });
+
+    test("dependenciesJson (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .get("/landscapes/landscapeId/versions/versionId/model/objects/modelObjectId/dependencies/export/json")
@@ -220,7 +159,35 @@ describe("ExportClient", () => {
         }).rejects.toThrow(IcePanel.UnauthorizedError);
     });
 
-    test("dependenciesJson (3)", async () => {
+    test("dependenciesJson (4)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+
+        const rawResponseBody = { message: "message" };
+
+        server
+            .mockEndpoint()
+            .get("/landscapes/landscapeId/versions/versionId/model/objects/modelObjectId/dependencies/export/json")
+            .respondWith()
+            .statusCode(403)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.model.objects.export.dependenciesJson({
+                landscapeId: "landscapeId",
+                versionId: "versionId",
+                modelObjectId: "modelObjectId",
+            });
+        }).rejects.toThrow(IcePanel.ForbiddenError);
+    });
+
+    test("dependenciesJson (5)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -230,6 +197,7 @@ describe("ExportClient", () => {
         });
 
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .get("/landscapes/landscapeId/versions/versionId/model/objects/modelObjectId/dependencies/export/json")
@@ -247,7 +215,7 @@ describe("ExportClient", () => {
         }).rejects.toThrow(IcePanel.NotFoundError);
     });
 
-    test("dependenciesJson (4)", async () => {
+    test("dependenciesJson (6)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -257,6 +225,7 @@ describe("ExportClient", () => {
         });
 
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .get("/landscapes/landscapeId/versions/versionId/model/objects/modelObjectId/dependencies/export/json")
@@ -274,7 +243,7 @@ describe("ExportClient", () => {
         }).rejects.toThrow(IcePanel.UnprocessableEntityError);
     });
 
-    test("dependenciesJson (5)", async () => {
+    test("dependenciesJson (7)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -284,6 +253,7 @@ describe("ExportClient", () => {
         });
 
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .get("/landscapes/landscapeId/versions/versionId/model/objects/modelObjectId/dependencies/export/json")
