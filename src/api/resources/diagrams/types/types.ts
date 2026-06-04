@@ -17,7 +17,7 @@ export interface DiagramsGetResponse {
 
 export interface DiagramsUpsertResponse {
     diagram: IcePanel.Diagram;
-    diagramContent?: IcePanel.DiagramContent;
+    diagramContent?: IcePanel.DiagramContent | undefined;
 }
 
 export interface DiagramsDeleteResponse {
@@ -26,7 +26,7 @@ export interface DiagramsDeleteResponse {
 
 export interface DiagramsUpdateResponse {
     diagram: IcePanel.Diagram;
-    diagramContent?: IcePanel.DiagramContent;
+    diagramContent?: IcePanel.DiagramContent | undefined;
 }
 
 export interface DiagramsListThumbnailsResponse {

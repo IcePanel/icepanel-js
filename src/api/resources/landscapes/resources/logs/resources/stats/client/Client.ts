@@ -31,7 +31,9 @@ export class StatsClient {
      * @param {IcePanel.ActionLogStatsByTypeRequest} request
      * @param {StatsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link IcePanel.BadRequestError}
      * @throws {@link IcePanel.UnauthorizedError}
+     * @throws {@link IcePanel.ForbiddenError}
      * @throws {@link IcePanel.NotFoundError}
      * @throws {@link IcePanel.UnprocessableEntityError}
      * @throws {@link IcePanel.InternalServerError}
@@ -53,15 +55,10 @@ export class StatsClient {
         requestOptions?: StatsClient.RequestOptions,
     ): Promise<core.WithRawResponse<IcePanel.ActionLogStatsListByType>> {
         const { landscapeId, filter, period } = request;
-        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
-        if (filter != null) {
-            _queryParams.filter = filter;
-        }
-
-        if (period != null) {
-            _queryParams.period = period;
-        }
-
+        const _queryParams: Record<string, unknown> = {
+            filter,
+            period: period != null ? period : undefined,
+        };
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
@@ -77,7 +74,11 @@ export class StatsClient {
             ),
             method: "GET",
             headers: _headers,
-            queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            queryString: core.url
+                .queryBuilder()
+                .addMany(_queryParams)
+                .mergeAdditional(requestOptions?.queryParams)
+                .build(),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             withCredentials: true,
@@ -91,8 +92,12 @@ export class StatsClient {
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
+                case 400:
+                    throw new IcePanel.BadRequestError(_response.error.body as IcePanel.Error_, _response.rawResponse);
                 case 401:
                     throw new IcePanel.UnauthorizedError(_response.error.body as unknown, _response.rawResponse);
+                case 403:
+                    throw new IcePanel.ForbiddenError(_response.error.body as IcePanel.Error_, _response.rawResponse);
                 case 404:
                     throw new IcePanel.NotFoundError(_response.error.body as unknown, _response.rawResponse);
                 case 422:
@@ -122,7 +127,9 @@ export class StatsClient {
      * @param {IcePanel.ActionLogStatsByEntityRequest} request
      * @param {StatsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link IcePanel.BadRequestError}
      * @throws {@link IcePanel.UnauthorizedError}
+     * @throws {@link IcePanel.ForbiddenError}
      * @throws {@link IcePanel.NotFoundError}
      * @throws {@link IcePanel.UnprocessableEntityError}
      * @throws {@link IcePanel.InternalServerError}
@@ -144,15 +151,10 @@ export class StatsClient {
         requestOptions?: StatsClient.RequestOptions,
     ): Promise<core.WithRawResponse<IcePanel.ActionLogStatsListByEntity>> {
         const { landscapeId, filter, period } = request;
-        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
-        if (filter != null) {
-            _queryParams.filter = filter;
-        }
-
-        if (period != null) {
-            _queryParams.period = period;
-        }
-
+        const _queryParams: Record<string, unknown> = {
+            filter,
+            period: period != null ? period : undefined,
+        };
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
@@ -168,7 +170,11 @@ export class StatsClient {
             ),
             method: "GET",
             headers: _headers,
-            queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            queryString: core.url
+                .queryBuilder()
+                .addMany(_queryParams)
+                .mergeAdditional(requestOptions?.queryParams)
+                .build(),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             withCredentials: true,
@@ -182,8 +188,12 @@ export class StatsClient {
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
+                case 400:
+                    throw new IcePanel.BadRequestError(_response.error.body as IcePanel.Error_, _response.rawResponse);
                 case 401:
                     throw new IcePanel.UnauthorizedError(_response.error.body as unknown, _response.rawResponse);
+                case 403:
+                    throw new IcePanel.ForbiddenError(_response.error.body as IcePanel.Error_, _response.rawResponse);
                 case 404:
                     throw new IcePanel.NotFoundError(_response.error.body as unknown, _response.rawResponse);
                 case 422:

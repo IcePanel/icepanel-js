@@ -32,6 +32,7 @@ describe("TeamsClient", () => {
                 },
             ],
         };
+
         server
             .mockEndpoint()
             .get("/organizations/organizationId/teams")
@@ -43,24 +44,7 @@ describe("TeamsClient", () => {
         const response = await client.teams.list({
             organizationId: "organizationId",
         });
-        expect(response).toEqual({
-            teams: [
-                {
-                    color: "blue",
-                    name: "name",
-                    userIds: ["userIds"],
-                    createdAt: "2024-01-15T09:30:00Z",
-                    createdBy: "user",
-                    createdById: "createdById",
-                    id: "id",
-                    modelObjectHandleIds: ["modelObjectHandleIds"],
-                    organizationId: "organizationId",
-                    updatedAt: "2024-01-15T09:30:00Z",
-                    updatedBy: "user",
-                    updatedById: "updatedById",
-                },
-            ],
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("list (2)", async () => {
@@ -72,7 +56,34 @@ describe("TeamsClient", () => {
             environment: server.baseUrl,
         });
 
+        const rawResponseBody = { message: "message" };
+
+        server
+            .mockEndpoint()
+            .get("/organizations/organizationId/teams")
+            .respondWith()
+            .statusCode(400)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.teams.list({
+                organizationId: "organizationId",
+            });
+        }).rejects.toThrow(IcePanel.BadRequestError);
+    });
+
+    test("list (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .get("/organizations/organizationId/teams")
@@ -88,7 +99,33 @@ describe("TeamsClient", () => {
         }).rejects.toThrow(IcePanel.UnauthorizedError);
     });
 
-    test("list (3)", async () => {
+    test("list (4)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+
+        const rawResponseBody = { message: "message" };
+
+        server
+            .mockEndpoint()
+            .get("/organizations/organizationId/teams")
+            .respondWith()
+            .statusCode(403)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.teams.list({
+                organizationId: "organizationId",
+            });
+        }).rejects.toThrow(IcePanel.ForbiddenError);
+    });
+
+    test("list (5)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -98,6 +135,7 @@ describe("TeamsClient", () => {
         });
 
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .get("/organizations/organizationId/teams")
@@ -113,7 +151,7 @@ describe("TeamsClient", () => {
         }).rejects.toThrow(IcePanel.NotFoundError);
     });
 
-    test("list (4)", async () => {
+    test("list (6)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -123,6 +161,7 @@ describe("TeamsClient", () => {
         });
 
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .get("/organizations/organizationId/teams")
@@ -138,7 +177,7 @@ describe("TeamsClient", () => {
         }).rejects.toThrow(IcePanel.UnprocessableEntityError);
     });
 
-    test("list (5)", async () => {
+    test("list (7)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -148,6 +187,7 @@ describe("TeamsClient", () => {
         });
 
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .get("/organizations/organizationId/teams")
@@ -188,6 +228,7 @@ describe("TeamsClient", () => {
                 updatedById: "updatedById",
             },
         };
+
         server
             .mockEndpoint()
             .post("/organizations/organizationId/teams")
@@ -203,22 +244,7 @@ describe("TeamsClient", () => {
                 name: "name",
             },
         });
-        expect(response).toEqual({
-            team: {
-                color: "blue",
-                name: "name",
-                userIds: ["userIds"],
-                createdAt: "2024-01-15T09:30:00Z",
-                createdBy: "user",
-                createdById: "createdById",
-                id: "id",
-                modelObjectHandleIds: ["modelObjectHandleIds"],
-                organizationId: "organizationId",
-                updatedAt: "2024-01-15T09:30:00Z",
-                updatedBy: "user",
-                updatedById: "updatedById",
-            },
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("create (2)", async () => {
@@ -230,7 +256,38 @@ describe("TeamsClient", () => {
             environment: server.baseUrl,
         });
         const rawRequestBody = { name: "name" };
+        const rawResponseBody = { message: "message" };
+
+        server
+            .mockEndpoint()
+            .post("/organizations/organizationId/teams")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(400)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.teams.create({
+                organizationId: "organizationId",
+                body: {
+                    name: "name",
+                },
+            });
+        }).rejects.toThrow(IcePanel.BadRequestError);
+    });
+
+    test("create (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+        const rawRequestBody = { name: "name" };
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .post("/organizations/organizationId/teams")
@@ -250,7 +307,7 @@ describe("TeamsClient", () => {
         }).rejects.toThrow(IcePanel.UnauthorizedError);
     });
 
-    test("create (3)", async () => {
+    test("create (4)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -260,6 +317,7 @@ describe("TeamsClient", () => {
         });
         const rawRequestBody = { name: "name" };
         const rawResponseBody = { message: "message" };
+
         server
             .mockEndpoint()
             .post("/organizations/organizationId/teams")
@@ -279,7 +337,7 @@ describe("TeamsClient", () => {
         }).rejects.toThrow(IcePanel.ForbiddenError);
     });
 
-    test("create (4)", async () => {
+    test("create (5)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -289,6 +347,7 @@ describe("TeamsClient", () => {
         });
         const rawRequestBody = { name: "name" };
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .post("/organizations/organizationId/teams")
@@ -308,7 +367,7 @@ describe("TeamsClient", () => {
         }).rejects.toThrow(IcePanel.NotFoundError);
     });
 
-    test("create (5)", async () => {
+    test("create (6)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -318,6 +377,7 @@ describe("TeamsClient", () => {
         });
         const rawRequestBody = { name: "name" };
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .post("/organizations/organizationId/teams")
@@ -337,7 +397,7 @@ describe("TeamsClient", () => {
         }).rejects.toThrow(IcePanel.UnprocessableEntityError);
     });
 
-    test("create (6)", async () => {
+    test("create (7)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -347,6 +407,7 @@ describe("TeamsClient", () => {
         });
         const rawRequestBody = { name: "name" };
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .post("/organizations/organizationId/teams")
@@ -364,6 +425,36 @@ describe("TeamsClient", () => {
                 },
             });
         }).rejects.toThrow(IcePanel.InternalServerError);
+    });
+
+    test("create (8)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+        const rawRequestBody = { name: "name" };
+        const rawResponseBody = { key: "value" };
+
+        server
+            .mockEndpoint()
+            .post("/organizations/organizationId/teams")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(503)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.teams.create({
+                organizationId: "organizationId",
+                body: {
+                    name: "name",
+                },
+            });
+        }).rejects.toThrow(IcePanel.ServiceUnavailableError);
     });
 
     test("get (1)", async () => {
@@ -391,6 +482,7 @@ describe("TeamsClient", () => {
                 updatedById: "updatedById",
             },
         };
+
         server
             .mockEndpoint()
             .get("/organizations/organizationId/teams/teamId")
@@ -403,22 +495,7 @@ describe("TeamsClient", () => {
             organizationId: "organizationId",
             teamId: "teamId",
         });
-        expect(response).toEqual({
-            team: {
-                color: "blue",
-                name: "name",
-                userIds: ["userIds"],
-                createdAt: "2024-01-15T09:30:00Z",
-                createdBy: "user",
-                createdById: "createdById",
-                id: "id",
-                modelObjectHandleIds: ["modelObjectHandleIds"],
-                organizationId: "organizationId",
-                updatedAt: "2024-01-15T09:30:00Z",
-                updatedBy: "user",
-                updatedById: "updatedById",
-            },
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("get (2)", async () => {
@@ -430,7 +507,35 @@ describe("TeamsClient", () => {
             environment: server.baseUrl,
         });
 
+        const rawResponseBody = { message: "message" };
+
+        server
+            .mockEndpoint()
+            .get("/organizations/organizationId/teams/teamId")
+            .respondWith()
+            .statusCode(400)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.teams.get({
+                organizationId: "organizationId",
+                teamId: "teamId",
+            });
+        }).rejects.toThrow(IcePanel.BadRequestError);
+    });
+
+    test("get (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .get("/organizations/organizationId/teams/teamId")
@@ -447,7 +552,34 @@ describe("TeamsClient", () => {
         }).rejects.toThrow(IcePanel.UnauthorizedError);
     });
 
-    test("get (3)", async () => {
+    test("get (4)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+
+        const rawResponseBody = { message: "message" };
+
+        server
+            .mockEndpoint()
+            .get("/organizations/organizationId/teams/teamId")
+            .respondWith()
+            .statusCode(403)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.teams.get({
+                organizationId: "organizationId",
+                teamId: "teamId",
+            });
+        }).rejects.toThrow(IcePanel.ForbiddenError);
+    });
+
+    test("get (5)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -457,6 +589,7 @@ describe("TeamsClient", () => {
         });
 
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .get("/organizations/organizationId/teams/teamId")
@@ -473,7 +606,7 @@ describe("TeamsClient", () => {
         }).rejects.toThrow(IcePanel.NotFoundError);
     });
 
-    test("get (4)", async () => {
+    test("get (6)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -483,6 +616,7 @@ describe("TeamsClient", () => {
         });
 
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .get("/organizations/organizationId/teams/teamId")
@@ -509,6 +643,7 @@ describe("TeamsClient", () => {
         });
 
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .delete("/organizations/organizationId/teams/teamId")
@@ -521,9 +656,7 @@ describe("TeamsClient", () => {
             organizationId: "organizationId",
             teamId: "teamId",
         });
-        expect(response).toEqual({
-            key: "value",
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("delete (2)", async () => {
@@ -535,7 +668,35 @@ describe("TeamsClient", () => {
             environment: server.baseUrl,
         });
 
+        const rawResponseBody = { message: "message" };
+
+        server
+            .mockEndpoint()
+            .delete("/organizations/organizationId/teams/teamId")
+            .respondWith()
+            .statusCode(400)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.teams.delete({
+                organizationId: "organizationId",
+                teamId: "teamId",
+            });
+        }).rejects.toThrow(IcePanel.BadRequestError);
+    });
+
+    test("delete (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .delete("/organizations/organizationId/teams/teamId")
@@ -552,7 +713,7 @@ describe("TeamsClient", () => {
         }).rejects.toThrow(IcePanel.UnauthorizedError);
     });
 
-    test("delete (3)", async () => {
+    test("delete (4)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -562,6 +723,7 @@ describe("TeamsClient", () => {
         });
 
         const rawResponseBody = { message: "message" };
+
         server
             .mockEndpoint()
             .delete("/organizations/organizationId/teams/teamId")
@@ -578,7 +740,7 @@ describe("TeamsClient", () => {
         }).rejects.toThrow(IcePanel.ForbiddenError);
     });
 
-    test("delete (4)", async () => {
+    test("delete (5)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -588,6 +750,7 @@ describe("TeamsClient", () => {
         });
 
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .delete("/organizations/organizationId/teams/teamId")
@@ -604,7 +767,7 @@ describe("TeamsClient", () => {
         }).rejects.toThrow(IcePanel.NotFoundError);
     });
 
-    test("delete (5)", async () => {
+    test("delete (6)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -614,6 +777,7 @@ describe("TeamsClient", () => {
         });
 
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .delete("/organizations/organizationId/teams/teamId")
@@ -630,7 +794,7 @@ describe("TeamsClient", () => {
         }).rejects.toThrow(IcePanel.UnprocessableEntityError);
     });
 
-    test("delete (6)", async () => {
+    test("delete (7)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -640,6 +804,7 @@ describe("TeamsClient", () => {
         });
 
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .delete("/organizations/organizationId/teams/teamId")
@@ -654,6 +819,33 @@ describe("TeamsClient", () => {
                 teamId: "teamId",
             });
         }).rejects.toThrow(IcePanel.InternalServerError);
+    });
+
+    test("delete (8)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+
+        const rawResponseBody = { key: "value" };
+
+        server
+            .mockEndpoint()
+            .delete("/organizations/organizationId/teams/teamId")
+            .respondWith()
+            .statusCode(503)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.teams.delete({
+                organizationId: "organizationId",
+                teamId: "teamId",
+            });
+        }).rejects.toThrow(IcePanel.ServiceUnavailableError);
     });
 
     test("update (1)", async () => {
@@ -681,6 +873,7 @@ describe("TeamsClient", () => {
                 updatedById: "updatedById",
             },
         };
+
         server
             .mockEndpoint()
             .patch("/organizations/organizationId/teams/teamId")
@@ -695,22 +888,7 @@ describe("TeamsClient", () => {
             teamId: "teamId",
             body: {},
         });
-        expect(response).toEqual({
-            team: {
-                color: "blue",
-                name: "name",
-                userIds: ["userIds"],
-                createdAt: "2024-01-15T09:30:00Z",
-                createdBy: "user",
-                createdById: "createdById",
-                id: "id",
-                modelObjectHandleIds: ["modelObjectHandleIds"],
-                organizationId: "organizationId",
-                updatedAt: "2024-01-15T09:30:00Z",
-                updatedBy: "user",
-                updatedById: "updatedById",
-            },
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("update (2)", async () => {
@@ -723,6 +901,7 @@ describe("TeamsClient", () => {
         });
         const rawRequestBody = {};
         const rawResponseBody = { message: "message" };
+
         server
             .mockEndpoint()
             .patch("/organizations/organizationId/teams/teamId")
@@ -751,6 +930,7 @@ describe("TeamsClient", () => {
         });
         const rawRequestBody = {};
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .patch("/organizations/organizationId/teams/teamId")
@@ -779,6 +959,7 @@ describe("TeamsClient", () => {
         });
         const rawRequestBody = {};
         const rawResponseBody = { message: "message" };
+
         server
             .mockEndpoint()
             .patch("/organizations/organizationId/teams/teamId")
@@ -807,6 +988,7 @@ describe("TeamsClient", () => {
         });
         const rawRequestBody = {};
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .patch("/organizations/organizationId/teams/teamId")
@@ -835,6 +1017,7 @@ describe("TeamsClient", () => {
         });
         const rawRequestBody = {};
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .patch("/organizations/organizationId/teams/teamId")
@@ -863,6 +1046,7 @@ describe("TeamsClient", () => {
         });
         const rawRequestBody = {};
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .patch("/organizations/organizationId/teams/teamId")
@@ -879,6 +1063,35 @@ describe("TeamsClient", () => {
                 body: {},
             });
         }).rejects.toThrow(IcePanel.InternalServerError);
+    });
+
+    test("update (8)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+        const rawRequestBody = {};
+        const rawResponseBody = { key: "value" };
+
+        server
+            .mockEndpoint()
+            .patch("/organizations/organizationId/teams/teamId")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(503)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.teams.update({
+                organizationId: "organizationId",
+                teamId: "teamId",
+                body: {},
+            });
+        }).rejects.toThrow(IcePanel.ServiceUnavailableError);
     });
 
     test("listLandscapes (1)", async () => {
@@ -906,6 +1119,7 @@ describe("TeamsClient", () => {
                 },
             ],
         };
+
         server
             .mockEndpoint()
             .get("/organizations/organizationId/teams/teamId/landscapes")
@@ -918,22 +1132,7 @@ describe("TeamsClient", () => {
             organizationId: "organizationId",
             teamId: "teamId",
         });
-        expect(response).toEqual({
-            landscapes: [
-                {
-                    name: "name",
-                    scheduledVersions: true,
-                    organizationId: "organizationId",
-                    createdAt: "2024-01-15T09:30:00Z",
-                    createdBy: "user",
-                    createdById: "createdById",
-                    id: "id",
-                    updatedAt: "2024-01-15T09:30:00Z",
-                    updatedBy: "user",
-                    updatedById: "updatedById",
-                },
-            ],
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("listLandscapes (2)", async () => {
@@ -945,7 +1144,35 @@ describe("TeamsClient", () => {
             environment: server.baseUrl,
         });
 
+        const rawResponseBody = { message: "message" };
+
+        server
+            .mockEndpoint()
+            .get("/organizations/organizationId/teams/teamId/landscapes")
+            .respondWith()
+            .statusCode(400)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.teams.listLandscapes({
+                organizationId: "organizationId",
+                teamId: "teamId",
+            });
+        }).rejects.toThrow(IcePanel.BadRequestError);
+    });
+
+    test("listLandscapes (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .get("/organizations/organizationId/teams/teamId/landscapes")
@@ -962,7 +1189,7 @@ describe("TeamsClient", () => {
         }).rejects.toThrow(IcePanel.UnauthorizedError);
     });
 
-    test("listLandscapes (3)", async () => {
+    test("listLandscapes (4)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -972,6 +1199,7 @@ describe("TeamsClient", () => {
         });
 
         const rawResponseBody = { message: "message" };
+
         server
             .mockEndpoint()
             .get("/organizations/organizationId/teams/teamId/landscapes")
@@ -988,7 +1216,7 @@ describe("TeamsClient", () => {
         }).rejects.toThrow(IcePanel.ForbiddenError);
     });
 
-    test("listLandscapes (4)", async () => {
+    test("listLandscapes (5)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -998,6 +1226,7 @@ describe("TeamsClient", () => {
         });
 
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .get("/organizations/organizationId/teams/teamId/landscapes")
@@ -1014,7 +1243,7 @@ describe("TeamsClient", () => {
         }).rejects.toThrow(IcePanel.NotFoundError);
     });
 
-    test("listLandscapes (5)", async () => {
+    test("listLandscapes (6)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -1024,6 +1253,7 @@ describe("TeamsClient", () => {
         });
 
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .get("/organizations/organizationId/teams/teamId/landscapes")
@@ -1087,6 +1317,7 @@ describe("TeamsClient", () => {
                 ],
             },
         };
+
         server
             .mockEndpoint()
             .get("/organizations/organizationId/teams/teamId/model/objects")
@@ -1099,61 +1330,7 @@ describe("TeamsClient", () => {
             organizationId: "organizationId",
             teamId: "teamId",
         });
-        expect(response).toEqual({
-            landscapeModelObjects: {
-                key: [
-                    {
-                        commit: 1.1,
-                        external: true,
-                        groupIds: ["groupIds"],
-                        labels: {
-                            key: "value",
-                        },
-                        links: {
-                            key: {
-                                index: 1.1,
-                                id: "id",
-                            },
-                        },
-                        name: "name",
-                        status: "deprecated",
-                        tagIds: ["tagIds"],
-                        teamIds: ["teamIds"],
-                        teamOnlyEditing: true,
-                        technologyIds: ["technologyIds"],
-                        type: "actor",
-                        domainId: "domainId",
-                        handleId: "handleId",
-                        childDiagramIds: ["childDiagramIds"],
-                        childIds: ["childIds"],
-                        createdAt: "2024-01-15T09:30:00Z",
-                        createdBy: "user",
-                        createdById: "createdById",
-                        diagrams: {
-                            key: {
-                                id: "id",
-                                objectId: "objectId",
-                            },
-                        },
-                        flows: {
-                            key: {
-                                id: "id",
-                                stepId: "stepId",
-                            },
-                        },
-                        id: "id",
-                        landscapeId: "landscapeId",
-                        linked: true,
-                        parentIds: ["parentIds"],
-                        updatedAt: "2024-01-15T09:30:00Z",
-                        updatedBy: "user",
-                        updatedById: "updatedById",
-                        version: 1.1,
-                        versionId: "versionId",
-                    },
-                ],
-            },
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("listModelObjects (2)", async () => {
@@ -1165,7 +1342,35 @@ describe("TeamsClient", () => {
             environment: server.baseUrl,
         });
 
+        const rawResponseBody = { message: "message" };
+
+        server
+            .mockEndpoint()
+            .get("/organizations/organizationId/teams/teamId/model/objects")
+            .respondWith()
+            .statusCode(400)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.teams.listModelObjects({
+                organizationId: "organizationId",
+                teamId: "teamId",
+            });
+        }).rejects.toThrow(IcePanel.BadRequestError);
+    });
+
+    test("listModelObjects (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .get("/organizations/organizationId/teams/teamId/model/objects")
@@ -1182,7 +1387,7 @@ describe("TeamsClient", () => {
         }).rejects.toThrow(IcePanel.UnauthorizedError);
     });
 
-    test("listModelObjects (3)", async () => {
+    test("listModelObjects (4)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -1192,6 +1397,7 @@ describe("TeamsClient", () => {
         });
 
         const rawResponseBody = { message: "message" };
+
         server
             .mockEndpoint()
             .get("/organizations/organizationId/teams/teamId/model/objects")
@@ -1208,7 +1414,7 @@ describe("TeamsClient", () => {
         }).rejects.toThrow(IcePanel.ForbiddenError);
     });
 
-    test("listModelObjects (4)", async () => {
+    test("listModelObjects (5)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -1218,6 +1424,7 @@ describe("TeamsClient", () => {
         });
 
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .get("/organizations/organizationId/teams/teamId/model/objects")
@@ -1234,7 +1441,7 @@ describe("TeamsClient", () => {
         }).rejects.toThrow(IcePanel.NotFoundError);
     });
 
-    test("listModelObjects (5)", async () => {
+    test("listModelObjects (6)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -1244,6 +1451,7 @@ describe("TeamsClient", () => {
         });
 
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .get("/organizations/organizationId/teams/teamId/model/objects")
@@ -1260,7 +1468,7 @@ describe("TeamsClient", () => {
         }).rejects.toThrow(IcePanel.UnprocessableEntityError);
     });
 
-    test("listModelObjects (6)", async () => {
+    test("listModelObjects (7)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -1270,6 +1478,7 @@ describe("TeamsClient", () => {
         });
 
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .get("/organizations/organizationId/teams/teamId/model/objects")

@@ -22,7 +22,6 @@ describe("RevertsClient", () => {
                     createdAt: "2024-01-15T09:30:00Z",
                     createdBy: "user",
                     createdById: "createdById",
-                    diagramHandleIds: ["diagramHandleIds"],
                     id: "id",
                     landscapeId: "landscapeId",
                     updatedAt: "2024-01-15T09:30:00Z",
@@ -31,6 +30,7 @@ describe("RevertsClient", () => {
                 },
             ],
         };
+
         server
             .mockEndpoint()
             .get("/landscapes/landscapeId/version/reverts")
@@ -42,23 +42,7 @@ describe("RevertsClient", () => {
         const response = await client.versions.reverts.list({
             landscapeId: "landscapeId",
         });
-        expect(response).toEqual({
-            versionReverts: [
-                {
-                    notes: "notes",
-                    versionId: "versionId",
-                    createdAt: "2024-01-15T09:30:00Z",
-                    createdBy: "user",
-                    createdById: "createdById",
-                    diagramHandleIds: ["diagramHandleIds"],
-                    id: "id",
-                    landscapeId: "landscapeId",
-                    updatedAt: "2024-01-15T09:30:00Z",
-                    updatedBy: "user",
-                    updatedById: "updatedById",
-                },
-            ],
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("list (2)", async () => {
@@ -70,7 +54,34 @@ describe("RevertsClient", () => {
             environment: server.baseUrl,
         });
 
+        const rawResponseBody = { message: "message" };
+
+        server
+            .mockEndpoint()
+            .get("/landscapes/landscapeId/version/reverts")
+            .respondWith()
+            .statusCode(400)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.versions.reverts.list({
+                landscapeId: "landscapeId",
+            });
+        }).rejects.toThrow(IcePanel.BadRequestError);
+    });
+
+    test("list (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .get("/landscapes/landscapeId/version/reverts")
@@ -86,7 +97,33 @@ describe("RevertsClient", () => {
         }).rejects.toThrow(IcePanel.UnauthorizedError);
     });
 
-    test("list (3)", async () => {
+    test("list (4)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+
+        const rawResponseBody = { message: "message" };
+
+        server
+            .mockEndpoint()
+            .get("/landscapes/landscapeId/version/reverts")
+            .respondWith()
+            .statusCode(403)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.versions.reverts.list({
+                landscapeId: "landscapeId",
+            });
+        }).rejects.toThrow(IcePanel.ForbiddenError);
+    });
+
+    test("list (5)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -96,6 +133,7 @@ describe("RevertsClient", () => {
         });
 
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .get("/landscapes/landscapeId/version/reverts")
@@ -111,7 +149,7 @@ describe("RevertsClient", () => {
         }).rejects.toThrow(IcePanel.NotFoundError);
     });
 
-    test("list (4)", async () => {
+    test("list (6)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -121,6 +159,7 @@ describe("RevertsClient", () => {
         });
 
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .get("/landscapes/landscapeId/version/reverts")
@@ -136,7 +175,7 @@ describe("RevertsClient", () => {
         }).rejects.toThrow(IcePanel.UnprocessableEntityError);
     });
 
-    test("list (5)", async () => {
+    test("list (7)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -146,6 +185,7 @@ describe("RevertsClient", () => {
         });
 
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .get("/landscapes/landscapeId/version/reverts")
@@ -177,7 +217,6 @@ describe("RevertsClient", () => {
                 createdAt: "2024-01-15T09:30:00Z",
                 createdBy: "user",
                 createdById: "createdById",
-                diagramHandleIds: ["diagramHandleIds"],
                 id: "id",
                 landscapeId: "landscapeId",
                 updatedAt: "2024-01-15T09:30:00Z",
@@ -185,6 +224,7 @@ describe("RevertsClient", () => {
                 updatedById: "updatedById",
             },
         };
+
         server
             .mockEndpoint()
             .post("/landscapes/landscapeId/version/reverts")
@@ -201,21 +241,7 @@ describe("RevertsClient", () => {
                 versionId: "versionId",
             },
         });
-        expect(response).toEqual({
-            versionRevert: {
-                notes: "notes",
-                versionId: "versionId",
-                createdAt: "2024-01-15T09:30:00Z",
-                createdBy: "user",
-                createdById: "createdById",
-                diagramHandleIds: ["diagramHandleIds"],
-                id: "id",
-                landscapeId: "landscapeId",
-                updatedAt: "2024-01-15T09:30:00Z",
-                updatedBy: "user",
-                updatedById: "updatedById",
-            },
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("create (2)", async () => {
@@ -227,7 +253,39 @@ describe("RevertsClient", () => {
             environment: server.baseUrl,
         });
         const rawRequestBody = { notes: "strawberry", versionId: "versionId" };
+        const rawResponseBody = { message: "message" };
+
+        server
+            .mockEndpoint()
+            .post("/landscapes/landscapeId/version/reverts")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(400)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.versions.reverts.create({
+                landscapeId: "landscapeId",
+                body: {
+                    notes: "strawberry",
+                    versionId: "versionId",
+                },
+            });
+        }).rejects.toThrow(IcePanel.BadRequestError);
+    });
+
+    test("create (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+        const rawRequestBody = { notes: "strawberry", versionId: "versionId" };
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .post("/landscapes/landscapeId/version/reverts")
@@ -248,7 +306,7 @@ describe("RevertsClient", () => {
         }).rejects.toThrow(IcePanel.UnauthorizedError);
     });
 
-    test("create (3)", async () => {
+    test("create (4)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -258,6 +316,7 @@ describe("RevertsClient", () => {
         });
         const rawRequestBody = { notes: "strawberry", versionId: "versionId" };
         const rawResponseBody = { message: "message" };
+
         server
             .mockEndpoint()
             .post("/landscapes/landscapeId/version/reverts")
@@ -278,7 +337,7 @@ describe("RevertsClient", () => {
         }).rejects.toThrow(IcePanel.ForbiddenError);
     });
 
-    test("create (4)", async () => {
+    test("create (5)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -288,6 +347,7 @@ describe("RevertsClient", () => {
         });
         const rawRequestBody = { notes: "strawberry", versionId: "versionId" };
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .post("/landscapes/landscapeId/version/reverts")
@@ -308,7 +368,7 @@ describe("RevertsClient", () => {
         }).rejects.toThrow(IcePanel.NotFoundError);
     });
 
-    test("create (5)", async () => {
+    test("create (6)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -318,6 +378,7 @@ describe("RevertsClient", () => {
         });
         const rawRequestBody = { notes: "strawberry", versionId: "versionId" };
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .post("/landscapes/landscapeId/version/reverts")
@@ -338,7 +399,7 @@ describe("RevertsClient", () => {
         }).rejects.toThrow(IcePanel.UnprocessableEntityError);
     });
 
-    test("create (6)", async () => {
+    test("create (7)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -348,6 +409,7 @@ describe("RevertsClient", () => {
         });
         const rawRequestBody = { notes: "strawberry", versionId: "versionId" };
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .post("/landscapes/landscapeId/version/reverts")
@@ -368,6 +430,37 @@ describe("RevertsClient", () => {
         }).rejects.toThrow(IcePanel.InternalServerError);
     });
 
+    test("create (8)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+        const rawRequestBody = { notes: "strawberry", versionId: "versionId" };
+        const rawResponseBody = { key: "value" };
+
+        server
+            .mockEndpoint()
+            .post("/landscapes/landscapeId/version/reverts")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(503)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.versions.reverts.create({
+                landscapeId: "landscapeId",
+                body: {
+                    notes: "strawberry",
+                    versionId: "versionId",
+                },
+            });
+        }).rejects.toThrow(IcePanel.ServiceUnavailableError);
+    });
+
     test("get (1)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
@@ -384,7 +477,6 @@ describe("RevertsClient", () => {
                 createdAt: "2024-01-15T09:30:00Z",
                 createdBy: "user",
                 createdById: "createdById",
-                diagramHandleIds: ["diagramHandleIds"],
                 id: "id",
                 landscapeId: "landscapeId",
                 updatedAt: "2024-01-15T09:30:00Z",
@@ -392,6 +484,7 @@ describe("RevertsClient", () => {
                 updatedById: "updatedById",
             },
         };
+
         server
             .mockEndpoint()
             .get("/landscapes/landscapeId/version/reverts/versionRevertId")
@@ -404,21 +497,7 @@ describe("RevertsClient", () => {
             landscapeId: "landscapeId",
             versionRevertId: "versionRevertId",
         });
-        expect(response).toEqual({
-            versionRevert: {
-                notes: "notes",
-                versionId: "versionId",
-                createdAt: "2024-01-15T09:30:00Z",
-                createdBy: "user",
-                createdById: "createdById",
-                diagramHandleIds: ["diagramHandleIds"],
-                id: "id",
-                landscapeId: "landscapeId",
-                updatedAt: "2024-01-15T09:30:00Z",
-                updatedBy: "user",
-                updatedById: "updatedById",
-            },
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("get (2)", async () => {
@@ -430,7 +509,35 @@ describe("RevertsClient", () => {
             environment: server.baseUrl,
         });
 
+        const rawResponseBody = { message: "message" };
+
+        server
+            .mockEndpoint()
+            .get("/landscapes/landscapeId/version/reverts/versionRevertId")
+            .respondWith()
+            .statusCode(400)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.versions.reverts.get({
+                landscapeId: "landscapeId",
+                versionRevertId: "versionRevertId",
+            });
+        }).rejects.toThrow(IcePanel.BadRequestError);
+    });
+
+    test("get (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .get("/landscapes/landscapeId/version/reverts/versionRevertId")
@@ -447,7 +554,34 @@ describe("RevertsClient", () => {
         }).rejects.toThrow(IcePanel.UnauthorizedError);
     });
 
-    test("get (3)", async () => {
+    test("get (4)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+
+        const rawResponseBody = { message: "message" };
+
+        server
+            .mockEndpoint()
+            .get("/landscapes/landscapeId/version/reverts/versionRevertId")
+            .respondWith()
+            .statusCode(403)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.versions.reverts.get({
+                landscapeId: "landscapeId",
+                versionRevertId: "versionRevertId",
+            });
+        }).rejects.toThrow(IcePanel.ForbiddenError);
+    });
+
+    test("get (5)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -457,6 +591,7 @@ describe("RevertsClient", () => {
         });
 
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .get("/landscapes/landscapeId/version/reverts/versionRevertId")
@@ -473,7 +608,7 @@ describe("RevertsClient", () => {
         }).rejects.toThrow(IcePanel.NotFoundError);
     });
 
-    test("get (4)", async () => {
+    test("get (6)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -483,6 +618,7 @@ describe("RevertsClient", () => {
         });
 
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .get("/landscapes/landscapeId/version/reverts/versionRevertId")
@@ -499,7 +635,7 @@ describe("RevertsClient", () => {
         }).rejects.toThrow(IcePanel.UnprocessableEntityError);
     });
 
-    test("get (5)", async () => {
+    test("get (7)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -509,6 +645,7 @@ describe("RevertsClient", () => {
         });
 
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .get("/landscapes/landscapeId/version/reverts/versionRevertId")
@@ -541,7 +678,6 @@ describe("RevertsClient", () => {
                 createdAt: "2024-01-15T09:30:00Z",
                 createdBy: "user",
                 createdById: "createdById",
-                diagramHandleIds: ["diagramHandleIds"],
                 id: "id",
                 landscapeId: "landscapeId",
                 updatedAt: "2024-01-15T09:30:00Z",
@@ -549,6 +685,7 @@ describe("RevertsClient", () => {
                 updatedById: "updatedById",
             },
         };
+
         server
             .mockEndpoint()
             .patch("/landscapes/landscapeId/version/reverts/versionRevertId")
@@ -563,21 +700,7 @@ describe("RevertsClient", () => {
             versionRevertId: "versionRevertId",
             body: {},
         });
-        expect(response).toEqual({
-            versionRevert: {
-                notes: "notes",
-                versionId: "versionId",
-                createdAt: "2024-01-15T09:30:00Z",
-                createdBy: "user",
-                createdById: "createdById",
-                diagramHandleIds: ["diagramHandleIds"],
-                id: "id",
-                landscapeId: "landscapeId",
-                updatedAt: "2024-01-15T09:30:00Z",
-                updatedBy: "user",
-                updatedById: "updatedById",
-            },
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("update (2)", async () => {
@@ -589,7 +712,37 @@ describe("RevertsClient", () => {
             environment: server.baseUrl,
         });
         const rawRequestBody = {};
+        const rawResponseBody = { message: "message" };
+
+        server
+            .mockEndpoint()
+            .patch("/landscapes/landscapeId/version/reverts/versionRevertId")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(400)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.versions.reverts.update({
+                landscapeId: "landscapeId",
+                versionRevertId: "versionRevertId",
+                body: {},
+            });
+        }).rejects.toThrow(IcePanel.BadRequestError);
+    });
+
+    test("update (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+        const rawRequestBody = {};
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .patch("/landscapes/landscapeId/version/reverts/versionRevertId")
@@ -608,7 +761,36 @@ describe("RevertsClient", () => {
         }).rejects.toThrow(IcePanel.UnauthorizedError);
     });
 
-    test("update (3)", async () => {
+    test("update (4)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+        const rawRequestBody = {};
+        const rawResponseBody = { message: "message" };
+
+        server
+            .mockEndpoint()
+            .patch("/landscapes/landscapeId/version/reverts/versionRevertId")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(403)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.versions.reverts.update({
+                landscapeId: "landscapeId",
+                versionRevertId: "versionRevertId",
+                body: {},
+            });
+        }).rejects.toThrow(IcePanel.ForbiddenError);
+    });
+
+    test("update (5)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -618,6 +800,7 @@ describe("RevertsClient", () => {
         });
         const rawRequestBody = {};
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .patch("/landscapes/landscapeId/version/reverts/versionRevertId")
@@ -636,7 +819,7 @@ describe("RevertsClient", () => {
         }).rejects.toThrow(IcePanel.NotFoundError);
     });
 
-    test("update (4)", async () => {
+    test("update (6)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -646,6 +829,7 @@ describe("RevertsClient", () => {
         });
         const rawRequestBody = {};
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .patch("/landscapes/landscapeId/version/reverts/versionRevertId")
@@ -664,7 +848,7 @@ describe("RevertsClient", () => {
         }).rejects.toThrow(IcePanel.UnprocessableEntityError);
     });
 
-    test("update (5)", async () => {
+    test("update (7)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -674,6 +858,7 @@ describe("RevertsClient", () => {
         });
         const rawRequestBody = {};
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .patch("/landscapes/landscapeId/version/reverts/versionRevertId")
@@ -690,5 +875,34 @@ describe("RevertsClient", () => {
                 body: {},
             });
         }).rejects.toThrow(IcePanel.InternalServerError);
+    });
+
+    test("update (8)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+        const rawRequestBody = {};
+        const rawResponseBody = { key: "value" };
+
+        server
+            .mockEndpoint()
+            .patch("/landscapes/landscapeId/version/reverts/versionRevertId")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(503)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.versions.reverts.update({
+                landscapeId: "landscapeId",
+                versionRevertId: "versionRevertId",
+                body: {},
+            });
+        }).rejects.toThrow(IcePanel.ServiceUnavailableError);
     });
 });

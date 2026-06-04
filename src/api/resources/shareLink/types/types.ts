@@ -3,13 +3,19 @@
 import type * as IcePanel from "../../../index.js";
 
 export interface ShareLinkGetResponse {
+    /** Share link url with default options encoded in the path */
+    defaultUrl: string;
     shareLink: IcePanel.ShareLink;
     stats: IcePanel.ShareLinkStats;
+    /** Share link url prefix, you need to append the options short id onto a trailing path segment */
     url: string;
 }
 
 export interface ShareLinkCreateResponse {
+    /** Share link url with default options encoded in the path */
+    defaultUrl: string;
     shareLink: IcePanel.ShareLink;
+    /** Share link url prefix, you need to append the options short id onto a trailing path segment */
     url: string;
 }
 

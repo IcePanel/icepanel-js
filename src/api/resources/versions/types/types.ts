@@ -3,6 +3,7 @@
 import type * as IcePanel from "../../../index.js";
 
 export interface VersionsListResponse {
+    nextCursor?: string | undefined;
     versions: IcePanel.Version[];
 }
 

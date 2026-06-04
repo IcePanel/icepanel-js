@@ -32,7 +32,9 @@ export class VersionsClient {
      * @param {IcePanel.VersionsListRequest} request
      * @param {VersionsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link IcePanel.BadRequestError}
      * @throws {@link IcePanel.UnauthorizedError}
+     * @throws {@link IcePanel.ForbiddenError}
      * @throws {@link IcePanel.NotFoundError}
      * @throws {@link IcePanel.UnprocessableEntityError}
      * @throws {@link IcePanel.InternalServerError}
@@ -42,82 +44,124 @@ export class VersionsClient {
      *         landscapeId: "landscapeId"
      *     })
      */
-    public list(
+    public async list(
         request: IcePanel.VersionsListRequest,
         requestOptions?: VersionsClient.RequestOptions,
-    ): core.HttpResponsePromise<IcePanel.VersionsListResponse> {
-        return core.HttpResponsePromise.fromPromise(this.__list(request, requestOptions));
-    }
-
-    private async __list(
-        request: IcePanel.VersionsListRequest,
-        requestOptions?: VersionsClient.RequestOptions,
-    ): Promise<core.WithRawResponse<IcePanel.VersionsListResponse>> {
-        const { landscapeId } = request;
-        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            _authRequest.headers,
-            this._options?.headers,
-            requestOptions?.headers,
-        );
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)) ??
-                    environments.IcePanelEnvironment.ApiV1,
-                `landscapes/${core.url.encodePathParam(landscapeId)}/versions`,
-            ),
-            method: "GET",
-            headers: _headers,
-            queryParameters: requestOptions?.queryParams,
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            withCredentials: true,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
-        });
-        if (_response.ok) {
-            return { data: _response.body as IcePanel.VersionsListResponse, rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            switch (_response.error.statusCode) {
-                case 401:
-                    throw new IcePanel.UnauthorizedError(_response.error.body as unknown, _response.rawResponse);
-                case 404:
-                    throw new IcePanel.NotFoundError(_response.error.body as unknown, _response.rawResponse);
-                case 422:
-                    throw new IcePanel.UnprocessableEntityError(_response.error.body as unknown, _response.rawResponse);
-                case 500:
-                    throw new IcePanel.InternalServerError(_response.error.body as unknown, _response.rawResponse);
-                default:
-                    throw new errors.IcePanelError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
+    ): Promise<core.Page<IcePanel.Version, IcePanel.VersionsListResponse>> {
+        const list = core.HttpResponsePromise.interceptFunction(
+            async (
+                request: IcePanel.VersionsListRequest,
+            ): Promise<core.WithRawResponse<IcePanel.VersionsListResponse>> => {
+                const { landscapeId, filter, cursor, limit } = request;
+                const _queryParams: Record<string, unknown> = {
+                    filter,
+                    cursor,
+                    limit,
+                };
+                const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+                const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+                    _authRequest.headers,
+                    this._options?.headers,
+                    requestOptions?.headers,
+                );
+                const _response = await core.fetcher({
+                    url: core.url.join(
+                        (await core.Supplier.get(this._options.baseUrl)) ??
+                            (await core.Supplier.get(this._options.environment)) ??
+                            environments.IcePanelEnvironment.ApiV1,
+                        `landscapes/${core.url.encodePathParam(landscapeId)}/versions`,
+                    ),
+                    method: "GET",
+                    headers: _headers,
+                    queryString: core.url
+                        .queryBuilder()
+                        .addMany(_queryParams)
+                        .mergeAdditional(requestOptions?.queryParams)
+                        .build(),
+                    timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+                    maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+                    withCredentials: true,
+                    abortSignal: requestOptions?.abortSignal,
+                    fetchFn: this._options?.fetch,
+                    logging: this._options.logging,
+                });
+                if (_response.ok) {
+                    return {
+                        data: _response.body as IcePanel.VersionsListResponse,
                         rawResponse: _response.rawResponse,
-                    });
-            }
-        }
-
-        return handleNonStatusCodeError(
-            _response.error,
-            _response.rawResponse,
-            "GET",
-            "/landscapes/{landscapeId}/versions",
+                    };
+                }
+                if (_response.error.reason === "status-code") {
+                    switch (_response.error.statusCode) {
+                        case 400:
+                            throw new IcePanel.BadRequestError(
+                                _response.error.body as IcePanel.Error_,
+                                _response.rawResponse,
+                            );
+                        case 401:
+                            throw new IcePanel.UnauthorizedError(
+                                _response.error.body as unknown,
+                                _response.rawResponse,
+                            );
+                        case 403:
+                            throw new IcePanel.ForbiddenError(
+                                _response.error.body as IcePanel.Error_,
+                                _response.rawResponse,
+                            );
+                        case 404:
+                            throw new IcePanel.NotFoundError(_response.error.body as unknown, _response.rawResponse);
+                        case 422:
+                            throw new IcePanel.UnprocessableEntityError(
+                                _response.error.body as unknown,
+                                _response.rawResponse,
+                            );
+                        case 500:
+                            throw new IcePanel.InternalServerError(
+                                _response.error.body as unknown,
+                                _response.rawResponse,
+                            );
+                        default:
+                            throw new errors.IcePanelError({
+                                statusCode: _response.error.statusCode,
+                                body: _response.error.body,
+                                rawResponse: _response.rawResponse,
+                            });
+                    }
+                }
+                return handleNonStatusCodeError(
+                    _response.error,
+                    _response.rawResponse,
+                    "GET",
+                    "/landscapes/{landscapeId}/versions",
+                );
+            },
         );
+        const dataWithRawResponse = await list(request).withRawResponse();
+        return new core.Page<IcePanel.Version, IcePanel.VersionsListResponse>({
+            response: dataWithRawResponse.data,
+            rawResponse: dataWithRawResponse.rawResponse,
+            hasNextPage: (response) =>
+                response?.nextCursor != null &&
+                !(typeof response?.nextCursor === "string" && response?.nextCursor === ""),
+            getItems: (response) => response?.versions ?? [],
+            loadPage: (response) => {
+                return list(core.setObjectProperty(request, "cursor", response?.nextCursor));
+            },
+        });
     }
 
     /**
      * @param {IcePanel.VersionCreateRequest} request
      * @param {VersionsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link IcePanel.BadRequestError}
      * @throws {@link IcePanel.UnauthorizedError}
      * @throws {@link IcePanel.ForbiddenError}
      * @throws {@link IcePanel.NotFoundError}
      * @throws {@link IcePanel.ConflictError}
      * @throws {@link IcePanel.UnprocessableEntityError}
      * @throws {@link IcePanel.InternalServerError}
+     * @throws {@link IcePanel.ServiceUnavailableError}
      *
      * @example
      *     await client.versions.create({
@@ -156,7 +200,7 @@ export class VersionsClient {
             method: "POST",
             headers: _headers,
             contentType: "application/json",
-            queryParameters: requestOptions?.queryParams,
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
             body: _body,
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
@@ -172,6 +216,8 @@ export class VersionsClient {
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
+                case 400:
+                    throw new IcePanel.BadRequestError(_response.error.body as IcePanel.Error_, _response.rawResponse);
                 case 401:
                     throw new IcePanel.UnauthorizedError(_response.error.body as unknown, _response.rawResponse);
                 case 403:
@@ -184,6 +230,8 @@ export class VersionsClient {
                     throw new IcePanel.UnprocessableEntityError(_response.error.body as unknown, _response.rawResponse);
                 case 500:
                     throw new IcePanel.InternalServerError(_response.error.body as unknown, _response.rawResponse);
+                case 503:
+                    throw new IcePanel.ServiceUnavailableError(_response.error.body as unknown, _response.rawResponse);
                 default:
                     throw new errors.IcePanelError({
                         statusCode: _response.error.statusCode,
@@ -205,7 +253,9 @@ export class VersionsClient {
      * @param {IcePanel.VersionFindRequest} request
      * @param {VersionsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link IcePanel.BadRequestError}
      * @throws {@link IcePanel.UnauthorizedError}
+     * @throws {@link IcePanel.ForbiddenError}
      * @throws {@link IcePanel.NotFoundError}
      * @throws {@link IcePanel.UnprocessableEntityError}
      * @throws {@link IcePanel.InternalServerError}
@@ -243,7 +293,7 @@ export class VersionsClient {
             ),
             method: "GET",
             headers: _headers,
-            queryParameters: requestOptions?.queryParams,
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             withCredentials: true,
@@ -257,8 +307,12 @@ export class VersionsClient {
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
+                case 400:
+                    throw new IcePanel.BadRequestError(_response.error.body as IcePanel.Error_, _response.rawResponse);
                 case 401:
                     throw new IcePanel.UnauthorizedError(_response.error.body as unknown, _response.rawResponse);
+                case 403:
+                    throw new IcePanel.ForbiddenError(_response.error.body as IcePanel.Error_, _response.rawResponse);
                 case 404:
                     throw new IcePanel.NotFoundError(_response.error.body as unknown, _response.rawResponse);
                 case 422:
@@ -286,11 +340,13 @@ export class VersionsClient {
      * @param {IcePanel.VersionDeleteRequest} request
      * @param {VersionsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link IcePanel.BadRequestError}
      * @throws {@link IcePanel.UnauthorizedError}
      * @throws {@link IcePanel.ForbiddenError}
      * @throws {@link IcePanel.NotFoundError}
      * @throws {@link IcePanel.UnprocessableEntityError}
      * @throws {@link IcePanel.InternalServerError}
+     * @throws {@link IcePanel.ServiceUnavailableError}
      *
      * @example
      *     await client.versions.delete({
@@ -325,7 +381,7 @@ export class VersionsClient {
             ),
             method: "DELETE",
             headers: _headers,
-            queryParameters: requestOptions?.queryParams,
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             withCredentials: true,
@@ -339,6 +395,8 @@ export class VersionsClient {
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
+                case 400:
+                    throw new IcePanel.BadRequestError(_response.error.body as IcePanel.Error_, _response.rawResponse);
                 case 401:
                     throw new IcePanel.UnauthorizedError(_response.error.body as unknown, _response.rawResponse);
                 case 403:
@@ -349,6 +407,8 @@ export class VersionsClient {
                     throw new IcePanel.UnprocessableEntityError(_response.error.body as unknown, _response.rawResponse);
                 case 500:
                     throw new IcePanel.InternalServerError(_response.error.body as unknown, _response.rawResponse);
+                case 503:
+                    throw new IcePanel.ServiceUnavailableError(_response.error.body as unknown, _response.rawResponse);
                 default:
                     throw new errors.IcePanelError({
                         statusCode: _response.error.statusCode,
@@ -370,10 +430,13 @@ export class VersionsClient {
      * @param {IcePanel.VersionUpdateRequest} request
      * @param {VersionsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link IcePanel.BadRequestError}
      * @throws {@link IcePanel.UnauthorizedError}
+     * @throws {@link IcePanel.ForbiddenError}
      * @throws {@link IcePanel.NotFoundError}
      * @throws {@link IcePanel.UnprocessableEntityError}
      * @throws {@link IcePanel.InternalServerError}
+     * @throws {@link IcePanel.ServiceUnavailableError}
      *
      * @example
      *     await client.versions.update({
@@ -410,7 +473,7 @@ export class VersionsClient {
             method: "PATCH",
             headers: _headers,
             contentType: "application/json",
-            queryParameters: requestOptions?.queryParams,
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
             body: _body,
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
@@ -426,14 +489,20 @@ export class VersionsClient {
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
+                case 400:
+                    throw new IcePanel.BadRequestError(_response.error.body as IcePanel.Error_, _response.rawResponse);
                 case 401:
                     throw new IcePanel.UnauthorizedError(_response.error.body as unknown, _response.rawResponse);
+                case 403:
+                    throw new IcePanel.ForbiddenError(_response.error.body as IcePanel.Error_, _response.rawResponse);
                 case 404:
                     throw new IcePanel.NotFoundError(_response.error.body as unknown, _response.rawResponse);
                 case 422:
                     throw new IcePanel.UnprocessableEntityError(_response.error.body as unknown, _response.rawResponse);
                 case 500:
                     throw new IcePanel.InternalServerError(_response.error.body as unknown, _response.rawResponse);
+                case 503:
+                    throw new IcePanel.ServiceUnavailableError(_response.error.body as unknown, _response.rawResponse);
                 default:
                     throw new errors.IcePanelError({
                         statusCode: _response.error.statusCode,

@@ -1415,7 +1415,7 @@ await client.drafts.upsert({
 </dl>
 </details>
 
-<details><summary><code>client.drafts.<a href="/src/api/resources/drafts/client/Client.ts">delete</a>({ ...params }) -> Record<string, unknown></code></summary>
+<details><summary><code>client.drafts.<a href="/src/api/resources/drafts/client/Client.ts">delete</a>({ ...params }) -> Record&lt;string, unknown&gt;</code></summary>
 <dl>
 <dd>
 
@@ -2111,7 +2111,7 @@ await client.landscapes.get({
 </dl>
 </details>
 
-<details><summary><code>client.landscapes.<a href="/src/api/resources/landscapes/client/Client.ts">delete</a>({ ...params }) -> Record<string, unknown></code></summary>
+<details><summary><code>client.landscapes.<a href="/src/api/resources/landscapes/client/Client.ts">delete</a>({ ...params }) -> Record&lt;string, unknown&gt;</code></summary>
 <dl>
 <dd>
 
@@ -2268,7 +2268,7 @@ await client.landscapes.duplicate({
 </dl>
 </details>
 
-<details><summary><code>client.landscapes.<a href="/src/api/resources/landscapes/client/Client.ts">copy</a>({ ...params }) -> Record<string, unknown></code></summary>
+<details><summary><code>client.landscapes.<a href="/src/api/resources/landscapes/client/Client.ts">copy</a>({ ...params }) -> Record&lt;string, unknown&gt;</code></summary>
 <dl>
 <dd>
 
@@ -2539,7 +2539,7 @@ await client.organizations.get({
 </dl>
 </details>
 
-<details><summary><code>client.organizations.<a href="/src/api/resources/organizations/client/Client.ts">delete</a>({ ...params }) -> Record<string, unknown></code></summary>
+<details><summary><code>client.organizations.<a href="/src/api/resources/organizations/client/Client.ts">delete</a>({ ...params }) -> Record&lt;string, unknown&gt;</code></summary>
 <dl>
 <dd>
 
@@ -2750,7 +2750,7 @@ await client.shareLink.create({
 </dl>
 </details>
 
-<details><summary><code>client.shareLink.<a href="/src/api/resources/shareLink/client/Client.ts">delete</a>({ ...params }) -> Record<string, unknown></code></summary>
+<details><summary><code>client.shareLink.<a href="/src/api/resources/shareLink/client/Client.ts">delete</a>({ ...params }) -> Record&lt;string, unknown&gt;</code></summary>
 <dl>
 <dd>
 
@@ -3343,7 +3343,7 @@ await client.teams.get({
 </dl>
 </details>
 
-<details><summary><code>client.teams.<a href="/src/api/resources/teams/client/Client.ts">delete</a>({ ...params }) -> Record<string, unknown></code></summary>
+<details><summary><code>client.teams.<a href="/src/api/resources/teams/client/Client.ts">delete</a>({ ...params }) -> Record&lt;string, unknown&gt;</code></summary>
 <dl>
 <dd>
 
@@ -3553,7 +3553,7 @@ await client.teams.listModelObjects({
 </details>
 
 ## Versions
-<details><summary><code>client.versions.<a href="/src/api/resources/versions/client/Client.ts">list</a>({ ...params }) -> IcePanel.VersionsListResponse</code></summary>
+<details><summary><code>client.versions.<a href="/src/api/resources/versions/client/Client.ts">list</a>({ ...params }) -> core.Page&lt;IcePanel.Version, IcePanel.VersionsListResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -3566,9 +3566,23 @@ await client.teams.listModelObjects({
 <dd>
 
 ```typescript
-await client.versions.list({
+const pageableResponse = await client.versions.list({
     landscapeId: "landscapeId"
 });
+for await (const item of pageableResponse) {
+    console.log(item);
+}
+
+// Or you can manually iterate page-by-page
+let page = await client.versions.list({
+    landscapeId: "landscapeId"
+});
+while (page.hasNextPage()) {
+    page = page.getNextPage();
+}
+
+// You can also access the underlying response
+const response = page.response;
 
 ```
 </dd>
@@ -4200,7 +4214,7 @@ await client.comments.replies.upsert({
 </dl>
 </details>
 
-<details><summary><code>client.comments.replies.<a href="/src/api/resources/comments/resources/replies/client/Client.ts">delete</a>({ ...params }) -> Record<string, unknown></code></summary>
+<details><summary><code>client.comments.replies.<a href="/src/api/resources/comments/resources/replies/client/Client.ts">delete</a>({ ...params }) -> Record&lt;string, unknown&gt;</code></summary>
 <dl>
 <dd>
 
@@ -5350,6 +5364,20 @@ await client.landscapes.logs.listChildren({
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a background job that exports a landscape in the specified format.
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -5404,6 +5432,20 @@ await client.landscapes.export.create({
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get the status of a landscape export job.
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -5442,6 +5484,179 @@ await client.landscapes.export.get({
 <dd>
 
 **requestOptions:** `ExportClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Landscapes Import
+<details><summary><code>client.landscapes.import.<a href="/src/api/resources/landscapes/resources/import/client/Client.ts">create</a>({ ...params }) -> IcePanel.ImportCreateResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a background job that imports a landscape from JSON format.
+
+The `JSONSchema` can be accessed at `api.icepanel.io/v1/schemas/LandscapeImportData` for automations or using LLMs for generation.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.landscapes.import.create({
+    landscapeId: "landscapeId",
+    versionId: "versionId",
+    body: {
+        modelConnections: [{
+                direction: "outgoing",
+                id: "connection-1",
+                name: "Connection",
+                originId: "object-2",
+                targetId: "object-3"
+            }],
+        modelObjects: [{
+                id: "object-1",
+                name: "Domain",
+                type: "domain"
+            }, {
+                groupIds: ["object-3"],
+                id: "object-2",
+                name: "System",
+                parentId: "object-1",
+                type: "system"
+            }, {
+                id: "object-3",
+                name: "Group",
+                parentId: "object-1",
+                tagIds: ["tag-1"],
+                type: "group"
+            }],
+        tagGroups: [{
+                icon: "bug",
+                id: "tag-group-1",
+                name: "Tag Group"
+            }],
+        tags: [{
+                color: "beaver",
+                groupId: "tag-group-1",
+                id: "tag-1",
+                name: "Tag"
+            }]
+    }
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IcePanel.LandscapeImportRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ImportClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.landscapes.import.<a href="/src/api/resources/landscapes/resources/import/client/Client.ts">get</a>({ ...params }) -> IcePanel.ImportGetResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get the status of a landscape import job.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.landscapes.import.get({
+    landscapeId: "landscapeId",
+    versionId: "versionId",
+    landscapeImportId: "landscapeImportId"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IcePanel.LandscapeImportGetRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ImportClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -5585,7 +5800,7 @@ await client.landscapes.logs.stats.byEntity({
 </details>
 
 ## Model Connections
-<details><summary><code>client.model.connections.<a href="/src/api/resources/model/resources/connections/client/Client.ts">list</a>({ ...params }) -> IcePanel.ConnectionsListResponse</code></summary>
+<details><summary><code>client.model.connections.<a href="/src/api/resources/model/resources/connections/client/Client.ts">list</a>({ ...params }) -> core.Page&lt;IcePanel.ModelConnectionExpanded, IcePanel.ConnectionsListResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -5598,10 +5813,25 @@ await client.landscapes.logs.stats.byEntity({
 <dd>
 
 ```typescript
-await client.model.connections.list({
+const pageableResponse = await client.model.connections.list({
     landscapeId: "landscapeId",
     versionId: "versionId"
 });
+for await (const item of pageableResponse) {
+    console.log(item);
+}
+
+// Or you can manually iterate page-by-page
+let page = await client.model.connections.list({
+    landscapeId: "landscapeId",
+    versionId: "versionId"
+});
+while (page.hasNextPage()) {
+    page = page.getNextPage();
+}
+
+// You can also access the underlying response
+const response = page.response;
 
 ```
 </dd>
@@ -5981,7 +6211,74 @@ await client.model.connections.generateDescription({
 </details>
 
 ## Model Objects
-<details><summary><code>client.model.objects.<a href="/src/api/resources/model/resources/objects/client/Client.ts">list</a>({ ...params }) -> IcePanel.ObjectsListResponse</code></summary>
+<details><summary><code>client.model.objects.<a href="/src/api/resources/model/resources/objects/client/Client.ts">dependenciesList</a>({ ...params }) -> Record&lt;string, IcePanel.ObjectsDependenciesListResponseValue&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns the incoming and outgoing dependencies for each requested object. Objects can be specified by ID or by label key-value pairs (or both): label pairs use OR semantics so an object matching any pair is included. Results are filtered by tags and/or technologies when provided: within each filter array the semantics are OR (any match passes), and between the two filter dimensions the semantics are AND (an object must satisfy both when both are specified).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.model.objects.dependenciesList({
+    landscapeId: "landscapeId",
+    versionId: "versionId",
+    filter: {}
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IcePanel.ModelObjectDependenciesListRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ObjectsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.model.objects.<a href="/src/api/resources/model/resources/objects/client/Client.ts">list</a>({ ...params }) -> core.Page&lt;IcePanel.ModelObjectExpanded, IcePanel.ObjectsListResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -5994,10 +6291,25 @@ await client.model.connections.generateDescription({
 <dd>
 
 ```typescript
-await client.model.objects.list({
+const pageableResponse = await client.model.objects.list({
     landscapeId: "landscapeId",
     versionId: "versionId"
 });
+for await (const item of pageableResponse) {
+    console.log(item);
+}
+
+// Or you can manually iterate page-by-page
+let page = await client.model.objects.list({
+    landscapeId: "landscapeId",
+    versionId: "versionId"
+});
+while (page.hasNextPage()) {
+    page = page.getNextPage();
+}
+
+// You can also access the underlying response
+const response = page.response;
 
 ```
 </dd>
@@ -6311,6 +6623,20 @@ await client.model.objects.update({
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Use the /landscapes/{landscapeId}/versions/{versionId}/export endpoint with type=connection-csv instead
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -6439,7 +6765,7 @@ await client.model.objects.export.dependenciesJson({
 <dl>
 <dd>
 
-Export all model objects as CSV
+Use the /landscapes/{landscapeId}/versions/{versionId}/export endpoint with type=object-csv instead
 </dd>
 </dl>
 </dd>
@@ -6888,7 +7214,7 @@ await client.organizations.technologies.get({
 </dl>
 </details>
 
-<details><summary><code>client.organizations.technologies.<a href="/src/api/resources/organizations/resources/technologies/client/Client.ts">delete</a>({ ...params }) -> Record<string, unknown></code></summary>
+<details><summary><code>client.organizations.technologies.<a href="/src/api/resources/organizations/resources/technologies/client/Client.ts">delete</a>({ ...params }) -> Record&lt;string, unknown&gt;</code></summary>
 <dl>
 <dd>
 
@@ -7045,7 +7371,7 @@ await client.organizations.users.list({
 </dl>
 </details>
 
-<details><summary><code>client.organizations.users.<a href="/src/api/resources/organizations/resources/users/client/Client.ts">delete</a>({ ...params }) -> Record<string, unknown></code></summary>
+<details><summary><code>client.organizations.users.<a href="/src/api/resources/organizations/resources/users/client/Client.ts">delete</a>({ ...params }) -> Record&lt;string, unknown&gt;</code></summary>
 <dl>
 <dd>
 
@@ -7982,3 +8308,4 @@ await client.versions.reverts.update({
 </dd>
 </dl>
 </details>
+

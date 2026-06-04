@@ -2,8 +2,16 @@
 
 import type * as IcePanel from "../../../../../index.js";
 
+export interface ObjectsDependenciesListResponseValue {
+    /** Objects that depend on this object (have a connection pointing to it). */
+    incoming: Record<string, IcePanel.ModelObject>;
+    /** Objects that this object depends on (has a connection pointing to them). */
+    outgoing: Record<string, IcePanel.ModelObject>;
+}
+
 export interface ObjectsListResponse {
     modelObjects: IcePanel.ModelObjectExpanded[];
+    nextCursor?: string | undefined;
 }
 
 export interface ObjectsCreateResponse {

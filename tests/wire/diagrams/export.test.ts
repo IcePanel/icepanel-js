@@ -31,6 +31,7 @@ describe("ExportClient", () => {
                     focusIds: ["focusIds"],
                     groupId: "groupId",
                     hideIds: ["hideIds"],
+                    maxWidth: 1,
                     pinIds: ["pinIds"],
                     tab: "tags",
                     theme: "light",
@@ -38,6 +39,7 @@ describe("ExportClient", () => {
                 versionId: "versionId",
             },
         };
+
         server
             .mockEndpoint()
             .get("/landscapes/landscapeId/versions/versionId/diagrams/diagramId/export/image/diagramExportImageId")
@@ -52,33 +54,7 @@ describe("ExportClient", () => {
             diagramId: "diagramId",
             diagramExportImageId: "diagramExportImageId",
         });
-        expect(response).toEqual({
-            diagramExportImage: {
-                completedAt: "2024-01-15T09:30:00Z",
-                createdAt: "2024-01-15T09:30:00Z",
-                deleteAt: "2024-01-15T09:30:00Z",
-                diagramId: "diagramId",
-                error: "error",
-                fileUrls: {
-                    png: "png",
-                    svg: "svg",
-                },
-                id: "id",
-                landscapeId: "landscapeId",
-                options: {
-                    draftId: "draftId",
-                    flowId: "flowId",
-                    flowPathIds: ["flowPathIds"],
-                    focusIds: ["focusIds"],
-                    groupId: "groupId",
-                    hideIds: ["hideIds"],
-                    pinIds: ["pinIds"],
-                    tab: "tags",
-                    theme: "light",
-                },
-                versionId: "versionId",
-            },
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("get (2)", async () => {
@@ -90,7 +66,37 @@ describe("ExportClient", () => {
             environment: server.baseUrl,
         });
 
+        const rawResponseBody = { message: "message" };
+
+        server
+            .mockEndpoint()
+            .get("/landscapes/landscapeId/versions/versionId/diagrams/diagramId/export/image/diagramExportImageId")
+            .respondWith()
+            .statusCode(400)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.diagrams.export.get({
+                landscapeId: "landscapeId",
+                versionId: "versionId",
+                diagramId: "diagramId",
+                diagramExportImageId: "diagramExportImageId",
+            });
+        }).rejects.toThrow(IcePanel.BadRequestError);
+    });
+
+    test("get (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .get("/landscapes/landscapeId/versions/versionId/diagrams/diagramId/export/image/diagramExportImageId")
@@ -109,7 +115,36 @@ describe("ExportClient", () => {
         }).rejects.toThrow(IcePanel.UnauthorizedError);
     });
 
-    test("get (3)", async () => {
+    test("get (4)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+
+        const rawResponseBody = { message: "message" };
+
+        server
+            .mockEndpoint()
+            .get("/landscapes/landscapeId/versions/versionId/diagrams/diagramId/export/image/diagramExportImageId")
+            .respondWith()
+            .statusCode(403)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.diagrams.export.get({
+                landscapeId: "landscapeId",
+                versionId: "versionId",
+                diagramId: "diagramId",
+                diagramExportImageId: "diagramExportImageId",
+            });
+        }).rejects.toThrow(IcePanel.ForbiddenError);
+    });
+
+    test("get (5)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -119,6 +154,7 @@ describe("ExportClient", () => {
         });
 
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .get("/landscapes/landscapeId/versions/versionId/diagrams/diagramId/export/image/diagramExportImageId")
@@ -137,7 +173,7 @@ describe("ExportClient", () => {
         }).rejects.toThrow(IcePanel.NotFoundError);
     });
 
-    test("get (4)", async () => {
+    test("get (6)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -147,6 +183,7 @@ describe("ExportClient", () => {
         });
 
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .get("/landscapes/landscapeId/versions/versionId/diagrams/diagramId/export/image/diagramExportImageId")
@@ -165,7 +202,7 @@ describe("ExportClient", () => {
         }).rejects.toThrow(IcePanel.UnprocessableEntityError);
     });
 
-    test("get (5)", async () => {
+    test("get (7)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -175,6 +212,7 @@ describe("ExportClient", () => {
         });
 
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .get("/landscapes/landscapeId/versions/versionId/diagrams/diagramId/export/image/diagramExportImageId")
@@ -219,6 +257,7 @@ describe("ExportClient", () => {
                     focusIds: ["focusIds"],
                     groupId: "groupId",
                     hideIds: ["hideIds"],
+                    maxWidth: 1,
                     pinIds: ["pinIds"],
                     tab: "tags",
                     theme: "light",
@@ -226,6 +265,7 @@ describe("ExportClient", () => {
                 versionId: "versionId",
             },
         };
+
         server
             .mockEndpoint()
             .post("/landscapes/landscapeId/versions/versionId/diagrams/diagramId/export/image")
@@ -241,33 +281,7 @@ describe("ExportClient", () => {
             diagramId: "diagramId",
             body: {},
         });
-        expect(response).toEqual({
-            diagramExportImage: {
-                completedAt: "2024-01-15T09:30:00Z",
-                createdAt: "2024-01-15T09:30:00Z",
-                deleteAt: "2024-01-15T09:30:00Z",
-                diagramId: "diagramId",
-                error: "error",
-                fileUrls: {
-                    png: "png",
-                    svg: "svg",
-                },
-                id: "id",
-                landscapeId: "landscapeId",
-                options: {
-                    draftId: "draftId",
-                    flowId: "flowId",
-                    flowPathIds: ["flowPathIds"],
-                    focusIds: ["focusIds"],
-                    groupId: "groupId",
-                    hideIds: ["hideIds"],
-                    pinIds: ["pinIds"],
-                    tab: "tags",
-                    theme: "light",
-                },
-                versionId: "versionId",
-            },
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("create (2)", async () => {
@@ -279,7 +293,38 @@ describe("ExportClient", () => {
             environment: server.baseUrl,
         });
         const rawRequestBody = {};
+        const rawResponseBody = { message: "message" };
+
+        server
+            .mockEndpoint()
+            .post("/landscapes/landscapeId/versions/versionId/diagrams/diagramId/export/image")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(400)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.diagrams.export.create({
+                landscapeId: "landscapeId",
+                versionId: "versionId",
+                diagramId: "diagramId",
+                body: {},
+            });
+        }).rejects.toThrow(IcePanel.BadRequestError);
+    });
+
+    test("create (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+        const rawRequestBody = {};
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .post("/landscapes/landscapeId/versions/versionId/diagrams/diagramId/export/image")
@@ -299,7 +344,37 @@ describe("ExportClient", () => {
         }).rejects.toThrow(IcePanel.UnauthorizedError);
     });
 
-    test("create (3)", async () => {
+    test("create (4)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+        const rawRequestBody = {};
+        const rawResponseBody = { message: "message" };
+
+        server
+            .mockEndpoint()
+            .post("/landscapes/landscapeId/versions/versionId/diagrams/diagramId/export/image")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(403)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.diagrams.export.create({
+                landscapeId: "landscapeId",
+                versionId: "versionId",
+                diagramId: "diagramId",
+                body: {},
+            });
+        }).rejects.toThrow(IcePanel.ForbiddenError);
+    });
+
+    test("create (5)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -309,6 +384,7 @@ describe("ExportClient", () => {
         });
         const rawRequestBody = {};
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .post("/landscapes/landscapeId/versions/versionId/diagrams/diagramId/export/image")
@@ -328,7 +404,7 @@ describe("ExportClient", () => {
         }).rejects.toThrow(IcePanel.NotFoundError);
     });
 
-    test("create (4)", async () => {
+    test("create (6)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -338,6 +414,7 @@ describe("ExportClient", () => {
         });
         const rawRequestBody = {};
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .post("/landscapes/landscapeId/versions/versionId/diagrams/diagramId/export/image")
@@ -357,7 +434,7 @@ describe("ExportClient", () => {
         }).rejects.toThrow(IcePanel.UnprocessableEntityError);
     });
 
-    test("create (5)", async () => {
+    test("create (7)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -367,6 +444,7 @@ describe("ExportClient", () => {
         });
         const rawRequestBody = {};
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .post("/landscapes/landscapeId/versions/versionId/diagrams/diagramId/export/image")

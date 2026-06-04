@@ -35,6 +35,7 @@ describe("ExportClient", () => {
                 versionId: "versionId",
             },
         };
+
         server
             .mockEndpoint()
             .post("/landscapes/landscapeId/versions/versionId/export")
@@ -50,30 +51,7 @@ describe("ExportClient", () => {
             type: "pdf",
             body: {},
         });
-        expect(response).toEqual({
-            landscapeExport: {
-                completedAt: "2024-01-15T09:30:00Z",
-                createdAt: "2024-01-15T09:30:00Z",
-                deleteAt: "2024-01-15T09:30:00Z",
-                error: "error",
-                fileUrl: "fileUrl",
-                filter: {
-                    diagramId: "diagramId",
-                    flowId: "flowId",
-                    includeDiagrams: true,
-                    includeFlows: true,
-                    modelObjectId: "modelObjectId",
-                },
-                id: "id",
-                landscapeId: "landscapeId",
-                options: {
-                    draftId: "draftId",
-                    orientation: "portrait",
-                },
-                type: "pdf",
-                versionId: "versionId",
-            },
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("create (2)", async () => {
@@ -85,7 +63,38 @@ describe("ExportClient", () => {
             environment: server.baseUrl,
         });
         const rawRequestBody = {};
+        const rawResponseBody = { message: "message" };
+
+        server
+            .mockEndpoint()
+            .post("/landscapes/landscapeId/versions/versionId/export")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(400)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.landscapes.export.create({
+                landscapeId: "landscapeId",
+                versionId: "versionId",
+                type: "pdf",
+                body: {},
+            });
+        }).rejects.toThrow(IcePanel.BadRequestError);
+    });
+
+    test("create (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+        const rawRequestBody = {};
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .post("/landscapes/landscapeId/versions/versionId/export")
@@ -105,7 +114,7 @@ describe("ExportClient", () => {
         }).rejects.toThrow(IcePanel.UnauthorizedError);
     });
 
-    test("create (3)", async () => {
+    test("create (4)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -115,6 +124,7 @@ describe("ExportClient", () => {
         });
         const rawRequestBody = {};
         const rawResponseBody = { message: "message" };
+
         server
             .mockEndpoint()
             .post("/landscapes/landscapeId/versions/versionId/export")
@@ -134,7 +144,7 @@ describe("ExportClient", () => {
         }).rejects.toThrow(IcePanel.ForbiddenError);
     });
 
-    test("create (4)", async () => {
+    test("create (5)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -144,6 +154,7 @@ describe("ExportClient", () => {
         });
         const rawRequestBody = {};
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .post("/landscapes/landscapeId/versions/versionId/export")
@@ -163,7 +174,7 @@ describe("ExportClient", () => {
         }).rejects.toThrow(IcePanel.NotFoundError);
     });
 
-    test("create (5)", async () => {
+    test("create (6)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -173,6 +184,7 @@ describe("ExportClient", () => {
         });
         const rawRequestBody = {};
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .post("/landscapes/landscapeId/versions/versionId/export")
@@ -192,7 +204,7 @@ describe("ExportClient", () => {
         }).rejects.toThrow(IcePanel.UnprocessableEntityError);
     });
 
-    test("create (6)", async () => {
+    test("create (7)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -202,6 +214,7 @@ describe("ExportClient", () => {
         });
         const rawRequestBody = {};
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .post("/landscapes/landscapeId/versions/versionId/export")
@@ -251,6 +264,7 @@ describe("ExportClient", () => {
                 versionId: "versionId",
             },
         };
+
         server
             .mockEndpoint()
             .get("/landscapes/landscapeId/versions/versionId/export/landscapeExportId")
@@ -264,30 +278,7 @@ describe("ExportClient", () => {
             versionId: "versionId",
             landscapeExportId: "landscapeExportId",
         });
-        expect(response).toEqual({
-            landscapeExport: {
-                completedAt: "2024-01-15T09:30:00Z",
-                createdAt: "2024-01-15T09:30:00Z",
-                deleteAt: "2024-01-15T09:30:00Z",
-                error: "error",
-                fileUrl: "fileUrl",
-                filter: {
-                    diagramId: "diagramId",
-                    flowId: "flowId",
-                    includeDiagrams: true,
-                    includeFlows: true,
-                    modelObjectId: "modelObjectId",
-                },
-                id: "id",
-                landscapeId: "landscapeId",
-                options: {
-                    draftId: "draftId",
-                    orientation: "portrait",
-                },
-                type: "pdf",
-                versionId: "versionId",
-            },
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("get (2)", async () => {
@@ -299,7 +290,36 @@ describe("ExportClient", () => {
             environment: server.baseUrl,
         });
 
+        const rawResponseBody = { message: "message" };
+
+        server
+            .mockEndpoint()
+            .get("/landscapes/landscapeId/versions/versionId/export/landscapeExportId")
+            .respondWith()
+            .statusCode(400)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.landscapes.export.get({
+                landscapeId: "landscapeId",
+                versionId: "versionId",
+                landscapeExportId: "landscapeExportId",
+            });
+        }).rejects.toThrow(IcePanel.BadRequestError);
+    });
+
+    test("get (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .get("/landscapes/landscapeId/versions/versionId/export/landscapeExportId")
@@ -317,7 +337,35 @@ describe("ExportClient", () => {
         }).rejects.toThrow(IcePanel.UnauthorizedError);
     });
 
-    test("get (3)", async () => {
+    test("get (4)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+
+        const rawResponseBody = { message: "message" };
+
+        server
+            .mockEndpoint()
+            .get("/landscapes/landscapeId/versions/versionId/export/landscapeExportId")
+            .respondWith()
+            .statusCode(403)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.landscapes.export.get({
+                landscapeId: "landscapeId",
+                versionId: "versionId",
+                landscapeExportId: "landscapeExportId",
+            });
+        }).rejects.toThrow(IcePanel.ForbiddenError);
+    });
+
+    test("get (5)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -327,6 +375,7 @@ describe("ExportClient", () => {
         });
 
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .get("/landscapes/landscapeId/versions/versionId/export/landscapeExportId")
@@ -344,7 +393,7 @@ describe("ExportClient", () => {
         }).rejects.toThrow(IcePanel.NotFoundError);
     });
 
-    test("get (4)", async () => {
+    test("get (6)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -354,6 +403,7 @@ describe("ExportClient", () => {
         });
 
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .get("/landscapes/landscapeId/versions/versionId/export/landscapeExportId")
@@ -371,7 +421,7 @@ describe("ExportClient", () => {
         }).rejects.toThrow(IcePanel.UnprocessableEntityError);
     });
 
-    test("get (5)", async () => {
+    test("get (7)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -381,6 +431,7 @@ describe("ExportClient", () => {
         });
 
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .get("/landscapes/landscapeId/versions/versionId/export/landscapeExportId")

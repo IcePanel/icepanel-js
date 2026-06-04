@@ -27,6 +27,7 @@ export class TechnologiesClient {
      *
      * @param {TechnologiesClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link IcePanel.BadRequestError}
      * @throws {@link IcePanel.UnauthorizedError}
      * @throws {@link IcePanel.ForbiddenError}
      * @throws {@link IcePanel.NotFoundError}
@@ -60,7 +61,7 @@ export class TechnologiesClient {
             ),
             method: "POST",
             headers: _headers,
-            queryParameters: requestOptions?.queryParams,
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             withCredentials: true,
@@ -77,6 +78,8 @@ export class TechnologiesClient {
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
+                case 400:
+                    throw new IcePanel.BadRequestError(_response.error.body as IcePanel.Error_, _response.rawResponse);
                 case 401:
                     throw new IcePanel.UnauthorizedError(_response.error.body as unknown, _response.rawResponse);
                 case 403:
@@ -105,6 +108,7 @@ export class TechnologiesClient {
      * @param {IcePanel.CatalogTechnologyFindRequest} request
      * @param {TechnologiesClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link IcePanel.BadRequestError}
      * @throws {@link IcePanel.UnauthorizedError}
      * @throws {@link IcePanel.NotFoundError}
      * @throws {@link IcePanel.UnprocessableEntityError}
@@ -137,7 +141,7 @@ export class TechnologiesClient {
             ),
             method: "GET",
             headers: _headers,
-            queryParameters: requestOptions?.queryParams,
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             withCredentials: true,
@@ -154,6 +158,8 @@ export class TechnologiesClient {
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
+                case 400:
+                    throw new IcePanel.BadRequestError(_response.error.body as IcePanel.Error_, _response.rawResponse);
                 case 401:
                     throw new IcePanel.UnauthorizedError(_response.error.body as unknown, _response.rawResponse);
                 case 404:

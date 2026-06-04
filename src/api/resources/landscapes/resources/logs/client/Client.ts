@@ -34,7 +34,9 @@ export class LogsClient {
      * @param {IcePanel.ActionLogsListRequest} request
      * @param {LogsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link IcePanel.BadRequestError}
      * @throws {@link IcePanel.UnauthorizedError}
+     * @throws {@link IcePanel.ForbiddenError}
      * @throws {@link IcePanel.NotFoundError}
      * @throws {@link IcePanel.UnprocessableEntityError}
      * @throws {@link IcePanel.InternalServerError}
@@ -56,11 +58,9 @@ export class LogsClient {
         requestOptions?: LogsClient.RequestOptions,
     ): Promise<core.WithRawResponse<IcePanel.landscapes.LogsListResponse>> {
         const { landscapeId, filter } = request;
-        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
-        if (filter != null) {
-            _queryParams.filter = filter;
-        }
-
+        const _queryParams: Record<string, unknown> = {
+            filter,
+        };
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
@@ -76,7 +76,11 @@ export class LogsClient {
             ),
             method: "GET",
             headers: _headers,
-            queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            queryString: core.url
+                .queryBuilder()
+                .addMany(_queryParams)
+                .mergeAdditional(requestOptions?.queryParams)
+                .build(),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             withCredentials: true,
@@ -90,8 +94,12 @@ export class LogsClient {
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
+                case 400:
+                    throw new IcePanel.BadRequestError(_response.error.body as IcePanel.Error_, _response.rawResponse);
                 case 401:
                     throw new IcePanel.UnauthorizedError(_response.error.body as unknown, _response.rawResponse);
+                case 403:
+                    throw new IcePanel.ForbiddenError(_response.error.body as IcePanel.Error_, _response.rawResponse);
                 case 404:
                     throw new IcePanel.NotFoundError(_response.error.body as unknown, _response.rawResponse);
                 case 422:
@@ -121,7 +129,9 @@ export class LogsClient {
      * @param {IcePanel.ActionLogFindRequest} request
      * @param {LogsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link IcePanel.BadRequestError}
      * @throws {@link IcePanel.UnauthorizedError}
+     * @throws {@link IcePanel.ForbiddenError}
      * @throws {@link IcePanel.NotFoundError}
      * @throws {@link IcePanel.UnprocessableEntityError}
      * @throws {@link IcePanel.InternalServerError}
@@ -159,7 +169,7 @@ export class LogsClient {
             ),
             method: "GET",
             headers: _headers,
-            queryParameters: requestOptions?.queryParams,
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             withCredentials: true,
@@ -173,8 +183,12 @@ export class LogsClient {
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
+                case 400:
+                    throw new IcePanel.BadRequestError(_response.error.body as IcePanel.Error_, _response.rawResponse);
                 case 401:
                     throw new IcePanel.UnauthorizedError(_response.error.body as unknown, _response.rawResponse);
+                case 403:
+                    throw new IcePanel.ForbiddenError(_response.error.body as IcePanel.Error_, _response.rawResponse);
                 case 404:
                     throw new IcePanel.NotFoundError(_response.error.body as unknown, _response.rawResponse);
                 case 422:
@@ -204,7 +218,9 @@ export class LogsClient {
      * @param {IcePanel.ActionLogChildrenListRequest} request
      * @param {LogsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link IcePanel.BadRequestError}
      * @throws {@link IcePanel.UnauthorizedError}
+     * @throws {@link IcePanel.ForbiddenError}
      * @throws {@link IcePanel.NotFoundError}
      * @throws {@link IcePanel.UnprocessableEntityError}
      * @throws {@link IcePanel.InternalServerError}
@@ -227,11 +243,9 @@ export class LogsClient {
         requestOptions?: LogsClient.RequestOptions,
     ): Promise<core.WithRawResponse<IcePanel.landscapes.LogsListChildrenResponse>> {
         const { landscapeId, actionLogId, filter } = request;
-        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
-        if (filter != null) {
-            _queryParams.filter = filter;
-        }
-
+        const _queryParams: Record<string, unknown> = {
+            filter,
+        };
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
@@ -247,7 +261,11 @@ export class LogsClient {
             ),
             method: "GET",
             headers: _headers,
-            queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            queryString: core.url
+                .queryBuilder()
+                .addMany(_queryParams)
+                .mergeAdditional(requestOptions?.queryParams)
+                .build(),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             withCredentials: true,
@@ -264,8 +282,12 @@ export class LogsClient {
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
+                case 400:
+                    throw new IcePanel.BadRequestError(_response.error.body as IcePanel.Error_, _response.rawResponse);
                 case 401:
                     throw new IcePanel.UnauthorizedError(_response.error.body as unknown, _response.rawResponse);
+                case 403:
+                    throw new IcePanel.ForbiddenError(_response.error.body as IcePanel.Error_, _response.rawResponse);
                 case 404:
                     throw new IcePanel.NotFoundError(_response.error.body as unknown, _response.rawResponse);
                 case 422:

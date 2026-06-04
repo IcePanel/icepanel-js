@@ -9,6 +9,7 @@ import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCode
 import * as errors from "../../../../errors/index.js";
 import * as IcePanel from "../../../index.js";
 import { ExportClient } from "../resources/export/client/Client.js";
+import { ImportClient } from "../resources/import/client/Client.js";
 import { LogsClient } from "../resources/logs/client/Client.js";
 
 export declare namespace LandscapesClient {
@@ -21,6 +22,7 @@ export class LandscapesClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<LandscapesClient.Options>;
     protected _logs: LogsClient | undefined;
     protected _export: ExportClient | undefined;
+    protected _import: ImportClient | undefined;
 
     constructor(options: LandscapesClient.Options = {}) {
         this._options = normalizeClientOptionsWithAuth(options);
@@ -34,11 +36,17 @@ export class LandscapesClient {
         return (this._export ??= new ExportClient(this._options));
     }
 
+    public get import(): ImportClient {
+        return (this._import ??= new ImportClient(this._options));
+    }
+
     /**
      * @param {IcePanel.LandscapeFindRequest} request
      * @param {LandscapesClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link IcePanel.BadRequestError}
      * @throws {@link IcePanel.UnauthorizedError}
+     * @throws {@link IcePanel.ForbiddenError}
      * @throws {@link IcePanel.NotFoundError}
      * @throws {@link IcePanel.InternalServerError}
      *
@@ -74,7 +82,7 @@ export class LandscapesClient {
             ),
             method: "GET",
             headers: _headers,
-            queryParameters: requestOptions?.queryParams,
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             withCredentials: true,
@@ -88,8 +96,12 @@ export class LandscapesClient {
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
+                case 400:
+                    throw new IcePanel.BadRequestError(_response.error.body as IcePanel.Error_, _response.rawResponse);
                 case 401:
                     throw new IcePanel.UnauthorizedError(_response.error.body as unknown, _response.rawResponse);
+                case 403:
+                    throw new IcePanel.ForbiddenError(_response.error.body as IcePanel.Error_, _response.rawResponse);
                 case 404:
                     throw new IcePanel.NotFoundError(_response.error.body as unknown, _response.rawResponse);
                 case 500:
@@ -110,10 +122,13 @@ export class LandscapesClient {
      * @param {IcePanel.LandscapeDeleteRequest} request
      * @param {LandscapesClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link IcePanel.BadRequestError}
      * @throws {@link IcePanel.UnauthorizedError}
+     * @throws {@link IcePanel.ForbiddenError}
      * @throws {@link IcePanel.NotFoundError}
      * @throws {@link IcePanel.UnprocessableEntityError}
      * @throws {@link IcePanel.InternalServerError}
+     * @throws {@link IcePanel.ServiceUnavailableError}
      *
      * @example
      *     await client.landscapes.delete({
@@ -147,7 +162,7 @@ export class LandscapesClient {
             ),
             method: "DELETE",
             headers: _headers,
-            queryParameters: requestOptions?.queryParams,
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             withCredentials: true,
@@ -161,14 +176,20 @@ export class LandscapesClient {
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
+                case 400:
+                    throw new IcePanel.BadRequestError(_response.error.body as IcePanel.Error_, _response.rawResponse);
                 case 401:
                     throw new IcePanel.UnauthorizedError(_response.error.body as unknown, _response.rawResponse);
+                case 403:
+                    throw new IcePanel.ForbiddenError(_response.error.body as IcePanel.Error_, _response.rawResponse);
                 case 404:
                     throw new IcePanel.NotFoundError(_response.error.body as unknown, _response.rawResponse);
                 case 422:
                     throw new IcePanel.UnprocessableEntityError(_response.error.body as unknown, _response.rawResponse);
                 case 500:
                     throw new IcePanel.InternalServerError(_response.error.body as unknown, _response.rawResponse);
+                case 503:
+                    throw new IcePanel.ServiceUnavailableError(_response.error.body as unknown, _response.rawResponse);
                 default:
                     throw new errors.IcePanelError({
                         statusCode: _response.error.statusCode,
@@ -185,10 +206,13 @@ export class LandscapesClient {
      * @param {IcePanel.LandscapeUpdateRequest} request
      * @param {LandscapesClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link IcePanel.BadRequestError}
      * @throws {@link IcePanel.UnauthorizedError}
+     * @throws {@link IcePanel.ForbiddenError}
      * @throws {@link IcePanel.NotFoundError}
      * @throws {@link IcePanel.UnprocessableEntityError}
      * @throws {@link IcePanel.InternalServerError}
+     * @throws {@link IcePanel.ServiceUnavailableError}
      *
      * @example
      *     await client.landscapes.update({
@@ -224,7 +248,7 @@ export class LandscapesClient {
             method: "PATCH",
             headers: _headers,
             contentType: "application/json",
-            queryParameters: requestOptions?.queryParams,
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
             body: _body,
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
@@ -240,14 +264,20 @@ export class LandscapesClient {
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
+                case 400:
+                    throw new IcePanel.BadRequestError(_response.error.body as IcePanel.Error_, _response.rawResponse);
                 case 401:
                     throw new IcePanel.UnauthorizedError(_response.error.body as unknown, _response.rawResponse);
+                case 403:
+                    throw new IcePanel.ForbiddenError(_response.error.body as IcePanel.Error_, _response.rawResponse);
                 case 404:
                     throw new IcePanel.NotFoundError(_response.error.body as unknown, _response.rawResponse);
                 case 422:
                     throw new IcePanel.UnprocessableEntityError(_response.error.body as unknown, _response.rawResponse);
                 case 500:
                     throw new IcePanel.InternalServerError(_response.error.body as unknown, _response.rawResponse);
+                case 503:
+                    throw new IcePanel.ServiceUnavailableError(_response.error.body as unknown, _response.rawResponse);
                 default:
                     throw new errors.IcePanelError({
                         statusCode: _response.error.statusCode,
@@ -264,11 +294,14 @@ export class LandscapesClient {
      * @param {IcePanel.LandscapeDuplicateRequest} request
      * @param {LandscapesClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link IcePanel.BadRequestError}
      * @throws {@link IcePanel.UnauthorizedError}
+     * @throws {@link IcePanel.ForbiddenError}
      * @throws {@link IcePanel.NotFoundError}
      * @throws {@link IcePanel.UnprocessableEntityError}
      * @throws {@link IcePanel.TooManyRequestsError}
      * @throws {@link IcePanel.InternalServerError}
+     * @throws {@link IcePanel.ServiceUnavailableError}
      *
      * @example
      *     await client.landscapes.duplicate({
@@ -290,11 +323,9 @@ export class LandscapesClient {
         requestOptions?: LandscapesClient.RequestOptions,
     ): Promise<core.WithRawResponse<IcePanel.LandscapesDuplicateResponse>> {
         const { landscapeId, targetOrganizationId, body: _body } = request;
-        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
-        if (targetOrganizationId != null) {
-            _queryParams.targetOrganizationId = targetOrganizationId;
-        }
-
+        const _queryParams: Record<string, unknown> = {
+            targetOrganizationId,
+        };
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
@@ -311,7 +342,11 @@ export class LandscapesClient {
             method: "POST",
             headers: _headers,
             contentType: "application/json",
-            queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            queryString: core.url
+                .queryBuilder()
+                .addMany(_queryParams)
+                .mergeAdditional(requestOptions?.queryParams)
+                .build(),
             requestType: "json",
             body: _body,
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
@@ -327,8 +362,12 @@ export class LandscapesClient {
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
+                case 400:
+                    throw new IcePanel.BadRequestError(_response.error.body as IcePanel.Error_, _response.rawResponse);
                 case 401:
                     throw new IcePanel.UnauthorizedError(_response.error.body as unknown, _response.rawResponse);
+                case 403:
+                    throw new IcePanel.ForbiddenError(_response.error.body as IcePanel.Error_, _response.rawResponse);
                 case 404:
                     throw new IcePanel.NotFoundError(_response.error.body as unknown, _response.rawResponse);
                 case 422:
@@ -340,6 +379,8 @@ export class LandscapesClient {
                     );
                 case 500:
                     throw new IcePanel.InternalServerError(_response.error.body as unknown, _response.rawResponse);
+                case 503:
+                    throw new IcePanel.ServiceUnavailableError(_response.error.body as unknown, _response.rawResponse);
                 default:
                     throw new errors.IcePanelError({
                         statusCode: _response.error.statusCode,
@@ -361,12 +402,15 @@ export class LandscapesClient {
      * @param {IcePanel.LandscapeCopyRequest} request
      * @param {LandscapesClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link IcePanel.BadRequestError}
      * @throws {@link IcePanel.UnauthorizedError}
+     * @throws {@link IcePanel.ForbiddenError}
      * @throws {@link IcePanel.NotFoundError}
      * @throws {@link IcePanel.ConflictError}
      * @throws {@link IcePanel.UnprocessableEntityError}
      * @throws {@link IcePanel.TooManyRequestsError}
      * @throws {@link IcePanel.InternalServerError}
+     * @throws {@link IcePanel.ServiceUnavailableError}
      *
      * @example
      *     await client.landscapes.copy({
@@ -386,8 +430,9 @@ export class LandscapesClient {
         requestOptions?: LandscapesClient.RequestOptions,
     ): Promise<core.WithRawResponse<Record<string, unknown>>> {
         const { landscapeId, targetLandscapeId } = request;
-        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
-        _queryParams.targetLandscapeId = targetLandscapeId;
+        const _queryParams: Record<string, unknown> = {
+            targetLandscapeId,
+        };
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
@@ -403,7 +448,11 @@ export class LandscapesClient {
             ),
             method: "POST",
             headers: _headers,
-            queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            queryString: core.url
+                .queryBuilder()
+                .addMany(_queryParams)
+                .mergeAdditional(requestOptions?.queryParams)
+                .build(),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             withCredentials: true,
@@ -417,8 +466,12 @@ export class LandscapesClient {
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
+                case 400:
+                    throw new IcePanel.BadRequestError(_response.error.body as IcePanel.Error_, _response.rawResponse);
                 case 401:
                     throw new IcePanel.UnauthorizedError(_response.error.body as unknown, _response.rawResponse);
+                case 403:
+                    throw new IcePanel.ForbiddenError(_response.error.body as IcePanel.Error_, _response.rawResponse);
                 case 404:
                     throw new IcePanel.NotFoundError(_response.error.body as unknown, _response.rawResponse);
                 case 409:
@@ -432,6 +485,8 @@ export class LandscapesClient {
                     );
                 case 500:
                     throw new IcePanel.InternalServerError(_response.error.body as unknown, _response.rawResponse);
+                case 503:
+                    throw new IcePanel.ServiceUnavailableError(_response.error.body as unknown, _response.rawResponse);
                 default:
                     throw new errors.IcePanelError({
                         statusCode: _response.error.statusCode,
@@ -457,6 +512,7 @@ export class LandscapesClient {
      *
      * @throws {@link IcePanel.BadRequestError}
      * @throws {@link IcePanel.UnauthorizedError}
+     * @throws {@link IcePanel.ForbiddenError}
      * @throws {@link IcePanel.NotFoundError}
      * @throws {@link IcePanel.UnprocessableEntityError}
      * @throws {@link IcePanel.InternalServerError}
@@ -480,20 +536,12 @@ export class LandscapesClient {
         requestOptions?: LandscapesClient.RequestOptions,
     ): Promise<core.WithRawResponse<IcePanel.LandscapesSearchResponse>> {
         const { landscapeId, versionId, search, filter, includeData, maxResults } = request;
-        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
-        _queryParams.search = search;
-        if (filter != null) {
-            _queryParams.filter = filter;
-        }
-
-        if (includeData != null) {
-            _queryParams.includeData = includeData.toString();
-        }
-
-        if (maxResults != null) {
-            _queryParams.maxResults = maxResults.toString();
-        }
-
+        const _queryParams: Record<string, unknown> = {
+            search,
+            filter,
+            includeData,
+            maxResults,
+        };
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
@@ -509,7 +557,11 @@ export class LandscapesClient {
             ),
             method: "GET",
             headers: _headers,
-            queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            queryString: core.url
+                .queryBuilder()
+                .addMany(_queryParams)
+                .mergeAdditional(requestOptions?.queryParams)
+                .build(),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             withCredentials: true,
@@ -527,6 +579,8 @@ export class LandscapesClient {
                     throw new IcePanel.BadRequestError(_response.error.body as IcePanel.Error_, _response.rawResponse);
                 case 401:
                     throw new IcePanel.UnauthorizedError(_response.error.body as unknown, _response.rawResponse);
+                case 403:
+                    throw new IcePanel.ForbiddenError(_response.error.body as IcePanel.Error_, _response.rawResponse);
                 case 404:
                     throw new IcePanel.NotFoundError(_response.error.body as unknown, _response.rawResponse);
                 case 422:

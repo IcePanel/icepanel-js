@@ -26,7 +26,9 @@ export class DomainsClient {
      * @param {IcePanel.DomainsListRequest} request
      * @param {DomainsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link IcePanel.BadRequestError}
      * @throws {@link IcePanel.UnauthorizedError}
+     * @throws {@link IcePanel.ForbiddenError}
      * @throws {@link IcePanel.NotFoundError}
      * @throws {@link IcePanel.UnprocessableEntityError}
      * @throws {@link IcePanel.InternalServerError}
@@ -49,11 +51,9 @@ export class DomainsClient {
         requestOptions?: DomainsClient.RequestOptions,
     ): Promise<core.WithRawResponse<IcePanel.DomainsListResponse>> {
         const { landscapeId, versionId, filter } = request;
-        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
-        if (filter != null) {
-            _queryParams.filter = filter;
-        }
-
+        const _queryParams: Record<string, unknown> = {
+            filter,
+        };
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
@@ -69,7 +69,11 @@ export class DomainsClient {
             ),
             method: "GET",
             headers: _headers,
-            queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            queryString: core.url
+                .queryBuilder()
+                .addMany(_queryParams)
+                .mergeAdditional(requestOptions?.queryParams)
+                .build(),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             withCredentials: true,
@@ -83,8 +87,12 @@ export class DomainsClient {
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
+                case 400:
+                    throw new IcePanel.BadRequestError(_response.error.body as IcePanel.Error_, _response.rawResponse);
                 case 401:
                     throw new IcePanel.UnauthorizedError(_response.error.body as unknown, _response.rawResponse);
+                case 403:
+                    throw new IcePanel.ForbiddenError(_response.error.body as IcePanel.Error_, _response.rawResponse);
                 case 404:
                     throw new IcePanel.NotFoundError(_response.error.body as unknown, _response.rawResponse);
                 case 422:
@@ -112,11 +120,14 @@ export class DomainsClient {
      * @param {IcePanel.DomainCreateRequest} request
      * @param {DomainsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link IcePanel.BadRequestError}
      * @throws {@link IcePanel.UnauthorizedError}
+     * @throws {@link IcePanel.ForbiddenError}
      * @throws {@link IcePanel.NotFoundError}
      * @throws {@link IcePanel.UnprocessableEntityError}
      * @throws {@link IcePanel.TooManyRequestsError}
      * @throws {@link IcePanel.InternalServerError}
+     * @throws {@link IcePanel.ServiceUnavailableError}
      *
      * @example
      *     await client.domains.create({
@@ -155,7 +166,7 @@ export class DomainsClient {
             method: "POST",
             headers: _headers,
             contentType: "application/json",
-            queryParameters: requestOptions?.queryParams,
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
             body: _body,
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
@@ -171,8 +182,12 @@ export class DomainsClient {
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
+                case 400:
+                    throw new IcePanel.BadRequestError(_response.error.body as IcePanel.Error_, _response.rawResponse);
                 case 401:
                     throw new IcePanel.UnauthorizedError(_response.error.body as unknown, _response.rawResponse);
+                case 403:
+                    throw new IcePanel.ForbiddenError(_response.error.body as IcePanel.Error_, _response.rawResponse);
                 case 404:
                     throw new IcePanel.NotFoundError(_response.error.body as unknown, _response.rawResponse);
                 case 422:
@@ -184,6 +199,8 @@ export class DomainsClient {
                     );
                 case 500:
                     throw new IcePanel.InternalServerError(_response.error.body as unknown, _response.rawResponse);
+                case 503:
+                    throw new IcePanel.ServiceUnavailableError(_response.error.body as unknown, _response.rawResponse);
                 default:
                     throw new errors.IcePanelError({
                         statusCode: _response.error.statusCode,
@@ -205,7 +222,9 @@ export class DomainsClient {
      * @param {IcePanel.DomainFindRequest} request
      * @param {DomainsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link IcePanel.BadRequestError}
      * @throws {@link IcePanel.UnauthorizedError}
+     * @throws {@link IcePanel.ForbiddenError}
      * @throws {@link IcePanel.NotFoundError}
      * @throws {@link IcePanel.UnprocessableEntityError}
      * @throws {@link IcePanel.InternalServerError}
@@ -244,7 +263,7 @@ export class DomainsClient {
             ),
             method: "GET",
             headers: _headers,
-            queryParameters: requestOptions?.queryParams,
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             withCredentials: true,
@@ -258,8 +277,12 @@ export class DomainsClient {
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
+                case 400:
+                    throw new IcePanel.BadRequestError(_response.error.body as IcePanel.Error_, _response.rawResponse);
                 case 401:
                     throw new IcePanel.UnauthorizedError(_response.error.body as unknown, _response.rawResponse);
+                case 403:
+                    throw new IcePanel.ForbiddenError(_response.error.body as IcePanel.Error_, _response.rawResponse);
                 case 404:
                     throw new IcePanel.NotFoundError(_response.error.body as unknown, _response.rawResponse);
                 case 422:
@@ -289,11 +312,13 @@ export class DomainsClient {
      *
      * @throws {@link IcePanel.BadRequestError}
      * @throws {@link IcePanel.UnauthorizedError}
+     * @throws {@link IcePanel.ForbiddenError}
      * @throws {@link IcePanel.NotFoundError}
      * @throws {@link IcePanel.ConflictError}
      * @throws {@link IcePanel.UnprocessableEntityError}
      * @throws {@link IcePanel.TooManyRequestsError}
      * @throws {@link IcePanel.InternalServerError}
+     * @throws {@link IcePanel.ServiceUnavailableError}
      *
      * @example
      *     await client.domains.upsert({
@@ -333,7 +358,7 @@ export class DomainsClient {
             method: "PUT",
             headers: _headers,
             contentType: "application/json",
-            queryParameters: requestOptions?.queryParams,
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
             body: _body,
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
@@ -353,6 +378,8 @@ export class DomainsClient {
                     throw new IcePanel.BadRequestError(_response.error.body as IcePanel.Error_, _response.rawResponse);
                 case 401:
                     throw new IcePanel.UnauthorizedError(_response.error.body as unknown, _response.rawResponse);
+                case 403:
+                    throw new IcePanel.ForbiddenError(_response.error.body as IcePanel.Error_, _response.rawResponse);
                 case 404:
                     throw new IcePanel.NotFoundError(_response.error.body as unknown, _response.rawResponse);
                 case 409:
@@ -366,6 +393,8 @@ export class DomainsClient {
                     );
                 case 500:
                     throw new IcePanel.InternalServerError(_response.error.body as unknown, _response.rawResponse);
+                case 503:
+                    throw new IcePanel.ServiceUnavailableError(_response.error.body as unknown, _response.rawResponse);
                 default:
                     throw new errors.IcePanelError({
                         statusCode: _response.error.statusCode,
@@ -387,10 +416,13 @@ export class DomainsClient {
      * @param {IcePanel.DomainDeleteRequest} request
      * @param {DomainsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link IcePanel.BadRequestError}
      * @throws {@link IcePanel.UnauthorizedError}
+     * @throws {@link IcePanel.ForbiddenError}
      * @throws {@link IcePanel.NotFoundError}
      * @throws {@link IcePanel.UnprocessableEntityError}
      * @throws {@link IcePanel.InternalServerError}
+     * @throws {@link IcePanel.ServiceUnavailableError}
      *
      * @example
      *     await client.domains.delete({
@@ -426,7 +458,7 @@ export class DomainsClient {
             ),
             method: "DELETE",
             headers: _headers,
-            queryParameters: requestOptions?.queryParams,
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             withCredentials: true,
@@ -440,14 +472,20 @@ export class DomainsClient {
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
+                case 400:
+                    throw new IcePanel.BadRequestError(_response.error.body as IcePanel.Error_, _response.rawResponse);
                 case 401:
                     throw new IcePanel.UnauthorizedError(_response.error.body as unknown, _response.rawResponse);
+                case 403:
+                    throw new IcePanel.ForbiddenError(_response.error.body as IcePanel.Error_, _response.rawResponse);
                 case 404:
                     throw new IcePanel.NotFoundError(_response.error.body as unknown, _response.rawResponse);
                 case 422:
                     throw new IcePanel.UnprocessableEntityError(_response.error.body as unknown, _response.rawResponse);
                 case 500:
                     throw new IcePanel.InternalServerError(_response.error.body as unknown, _response.rawResponse);
+                case 503:
+                    throw new IcePanel.ServiceUnavailableError(_response.error.body as unknown, _response.rawResponse);
                 default:
                     throw new errors.IcePanelError({
                         statusCode: _response.error.statusCode,
@@ -471,10 +509,12 @@ export class DomainsClient {
      *
      * @throws {@link IcePanel.BadRequestError}
      * @throws {@link IcePanel.UnauthorizedError}
+     * @throws {@link IcePanel.ForbiddenError}
      * @throws {@link IcePanel.NotFoundError}
      * @throws {@link IcePanel.ConflictError}
      * @throws {@link IcePanel.UnprocessableEntityError}
      * @throws {@link IcePanel.InternalServerError}
+     * @throws {@link IcePanel.ServiceUnavailableError}
      *
      * @example
      *     await client.domains.update({
@@ -512,7 +552,7 @@ export class DomainsClient {
             method: "PATCH",
             headers: _headers,
             contentType: "application/json",
-            queryParameters: requestOptions?.queryParams,
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
             body: _body,
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
@@ -532,6 +572,8 @@ export class DomainsClient {
                     throw new IcePanel.BadRequestError(_response.error.body as IcePanel.Error_, _response.rawResponse);
                 case 401:
                     throw new IcePanel.UnauthorizedError(_response.error.body as unknown, _response.rawResponse);
+                case 403:
+                    throw new IcePanel.ForbiddenError(_response.error.body as IcePanel.Error_, _response.rawResponse);
                 case 404:
                     throw new IcePanel.NotFoundError(_response.error.body as unknown, _response.rawResponse);
                 case 409:
@@ -540,6 +582,8 @@ export class DomainsClient {
                     throw new IcePanel.UnprocessableEntityError(_response.error.body as unknown, _response.rawResponse);
                 case 500:
                     throw new IcePanel.InternalServerError(_response.error.body as unknown, _response.rawResponse);
+                case 503:
+                    throw new IcePanel.ServiceUnavailableError(_response.error.body as unknown, _response.rawResponse);
                 default:
                     throw new errors.IcePanelError({
                         statusCode: _response.error.statusCode,
@@ -561,6 +605,7 @@ export class DomainsClient {
      * @param {IcePanel.DomainExistsRequest} request
      * @param {DomainsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link IcePanel.BadRequestError}
      * @throws {@link IcePanel.UnauthorizedError}
      * @throws {@link IcePanel.NotFoundError}
      * @throws {@link IcePanel.UnprocessableEntityError}
@@ -600,7 +645,7 @@ export class DomainsClient {
             ),
             method: "HEAD",
             headers: _headers,
-            queryParameters: requestOptions?.queryParams,
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             withCredentials: true,
@@ -614,6 +659,8 @@ export class DomainsClient {
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
+                case 400:
+                    throw new IcePanel.BadRequestError(_response.error.body as IcePanel.Error_, _response.rawResponse);
                 case 401:
                     throw new IcePanel.UnauthorizedError(_response.error.body as unknown, _response.rawResponse);
                 case 404:

@@ -34,6 +34,7 @@ describe("StatsClient", () => {
             ],
             totalCount: 1.1,
         };
+
         server
             .mockEndpoint()
             .get("/organizations/organizationId/logs/stats/by-type")
@@ -45,37 +46,7 @@ describe("StatsClient", () => {
         const response = await client.organizations.logs.stats.byType({
             organizationId: "organizationId",
         });
-        expect(response).toEqual({
-            contributors: {
-                key: {
-                    contributedAt: "2024-01-15T09:30:00Z",
-                    count: 1.1,
-                    id: "id",
-                    name: "name",
-                    type: "user",
-                },
-            },
-            dates: [
-                {
-                    actions: {
-                        key: {
-                            contributors: {
-                                key: {
-                                    contributedAt: "2024-01-15T09:30:00Z",
-                                    count: 1.1,
-                                    id: "id",
-                                    type: "user",
-                                },
-                            },
-                            count: 1.1,
-                            type: "api-key-create",
-                        },
-                    },
-                    date: "2024-01-15T09:30:00Z",
-                },
-            ],
-            totalCount: 1.1,
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("byType (2)", async () => {
@@ -87,7 +58,34 @@ describe("StatsClient", () => {
             environment: server.baseUrl,
         });
 
+        const rawResponseBody = { message: "message" };
+
+        server
+            .mockEndpoint()
+            .get("/organizations/organizationId/logs/stats/by-type")
+            .respondWith()
+            .statusCode(400)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.organizations.logs.stats.byType({
+                organizationId: "organizationId",
+            });
+        }).rejects.toThrow(IcePanel.BadRequestError);
+    });
+
+    test("byType (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .get("/organizations/organizationId/logs/stats/by-type")
@@ -103,7 +101,7 @@ describe("StatsClient", () => {
         }).rejects.toThrow(IcePanel.UnauthorizedError);
     });
 
-    test("byType (3)", async () => {
+    test("byType (4)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -113,6 +111,7 @@ describe("StatsClient", () => {
         });
 
         const rawResponseBody = { message: "message" };
+
         server
             .mockEndpoint()
             .get("/organizations/organizationId/logs/stats/by-type")
@@ -128,7 +127,7 @@ describe("StatsClient", () => {
         }).rejects.toThrow(IcePanel.ForbiddenError);
     });
 
-    test("byType (4)", async () => {
+    test("byType (5)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -138,6 +137,7 @@ describe("StatsClient", () => {
         });
 
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .get("/organizations/organizationId/logs/stats/by-type")
@@ -153,7 +153,7 @@ describe("StatsClient", () => {
         }).rejects.toThrow(IcePanel.NotFoundError);
     });
 
-    test("byType (5)", async () => {
+    test("byType (6)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -163,6 +163,7 @@ describe("StatsClient", () => {
         });
 
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .get("/organizations/organizationId/logs/stats/by-type")
@@ -178,7 +179,7 @@ describe("StatsClient", () => {
         }).rejects.toThrow(IcePanel.UnprocessableEntityError);
     });
 
-    test("byType (6)", async () => {
+    test("byType (7)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -188,6 +189,7 @@ describe("StatsClient", () => {
         });
 
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .get("/organizations/organizationId/logs/stats/by-type")
@@ -232,6 +234,7 @@ describe("StatsClient", () => {
             ],
             totalCount: 1.1,
         };
+
         server
             .mockEndpoint()
             .get("/organizations/organizationId/logs/stats/by-entity")
@@ -243,37 +246,7 @@ describe("StatsClient", () => {
         const response = await client.organizations.logs.stats.byEntity({
             organizationId: "organizationId",
         });
-        expect(response).toEqual({
-            contributors: {
-                key: {
-                    contributedAt: "2024-01-15T09:30:00Z",
-                    count: 1.1,
-                    id: "id",
-                    name: "name",
-                    type: "user",
-                },
-            },
-            dates: [
-                {
-                    date: "2024-01-15T09:30:00Z",
-                    entities: {
-                        key: {
-                            contributors: {
-                                key: {
-                                    contributedAt: "2024-01-15T09:30:00Z",
-                                    count: 1.1,
-                                    id: "id",
-                                    type: "user",
-                                },
-                            },
-                            count: 1.1,
-                            entityId: "entityId",
-                        },
-                    },
-                },
-            ],
-            totalCount: 1.1,
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("byEntity (2)", async () => {
@@ -285,7 +258,34 @@ describe("StatsClient", () => {
             environment: server.baseUrl,
         });
 
+        const rawResponseBody = { message: "message" };
+
+        server
+            .mockEndpoint()
+            .get("/organizations/organizationId/logs/stats/by-entity")
+            .respondWith()
+            .statusCode(400)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.organizations.logs.stats.byEntity({
+                organizationId: "organizationId",
+            });
+        }).rejects.toThrow(IcePanel.BadRequestError);
+    });
+
+    test("byEntity (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .get("/organizations/organizationId/logs/stats/by-entity")
@@ -301,7 +301,7 @@ describe("StatsClient", () => {
         }).rejects.toThrow(IcePanel.UnauthorizedError);
     });
 
-    test("byEntity (3)", async () => {
+    test("byEntity (4)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -311,6 +311,7 @@ describe("StatsClient", () => {
         });
 
         const rawResponseBody = { message: "message" };
+
         server
             .mockEndpoint()
             .get("/organizations/organizationId/logs/stats/by-entity")
@@ -326,7 +327,7 @@ describe("StatsClient", () => {
         }).rejects.toThrow(IcePanel.ForbiddenError);
     });
 
-    test("byEntity (4)", async () => {
+    test("byEntity (5)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -336,6 +337,7 @@ describe("StatsClient", () => {
         });
 
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .get("/organizations/organizationId/logs/stats/by-entity")
@@ -351,7 +353,7 @@ describe("StatsClient", () => {
         }).rejects.toThrow(IcePanel.NotFoundError);
     });
 
-    test("byEntity (5)", async () => {
+    test("byEntity (6)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -361,6 +363,7 @@ describe("StatsClient", () => {
         });
 
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .get("/organizations/organizationId/logs/stats/by-entity")
@@ -376,7 +379,7 @@ describe("StatsClient", () => {
         }).rejects.toThrow(IcePanel.UnprocessableEntityError);
     });
 
-    test("byEntity (6)", async () => {
+    test("byEntity (7)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -386,6 +389,7 @@ describe("StatsClient", () => {
         });
 
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .get("/organizations/organizationId/logs/stats/by-entity")

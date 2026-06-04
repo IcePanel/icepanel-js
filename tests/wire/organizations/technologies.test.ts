@@ -55,6 +55,7 @@ describe("TechnologiesClient", () => {
                 },
             ],
         };
+
         server
             .mockEndpoint()
             .get("/organizations/organizationId/technologies")
@@ -66,47 +67,7 @@ describe("TechnologiesClient", () => {
         const response = await client.organizations.technologies.list({
             organizationId: "organizationId",
         });
-        expect(response).toEqual({
-            catalogTechnologies: [
-                {
-                    category: "category",
-                    color: "blue",
-                    deprecatedAt: "2024-01-15T09:30:00Z",
-                    description: "description",
-                    docsUrl: "docsUrl",
-                    iconUrlDark: "iconUrlDark",
-                    iconUrlLight: "iconUrlLight",
-                    name: "name",
-                    nameShort: "nameShort",
-                    provider: "aws",
-                    rejectionMessage: "rejectionMessage",
-                    rejectionReason: "duplicate",
-                    restrictions: ["actor"],
-                    status: "approved",
-                    type: "data-storage",
-                    updatesUrl: "updatesUrl",
-                    websiteUrl: "websiteUrl",
-                    awsXmlSelector: "awsXmlSelector",
-                    azureUpdatesKeyword: "azureUpdatesKeyword",
-                    createdAt: "2024-01-15T09:30:00Z",
-                    createdBy: "user",
-                    createdById: "createdById",
-                    defaultSlug: "defaultSlug",
-                    deletedAt: "2024-01-15T09:30:00Z",
-                    deletedBy: "user",
-                    deletedById: "deletedById",
-                    disabled: true,
-                    iconUrl: "iconUrl",
-                    id: "id",
-                    organizationId: "organizationId",
-                    slugs: ["slugs"],
-                    updatedAt: "2024-01-15T09:30:00Z",
-                    updatedBy: "user",
-                    updatedById: "updatedById",
-                    updatesXmlUrl: "updatesXmlUrl",
-                },
-            ],
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("list (2)", async () => {
@@ -118,7 +79,34 @@ describe("TechnologiesClient", () => {
             environment: server.baseUrl,
         });
 
+        const rawResponseBody = { message: "message" };
+
+        server
+            .mockEndpoint()
+            .get("/organizations/organizationId/technologies")
+            .respondWith()
+            .statusCode(400)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.organizations.technologies.list({
+                organizationId: "organizationId",
+            });
+        }).rejects.toThrow(IcePanel.BadRequestError);
+    });
+
+    test("list (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .get("/organizations/organizationId/technologies")
@@ -134,7 +122,33 @@ describe("TechnologiesClient", () => {
         }).rejects.toThrow(IcePanel.UnauthorizedError);
     });
 
-    test("list (3)", async () => {
+    test("list (4)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+
+        const rawResponseBody = { message: "message" };
+
+        server
+            .mockEndpoint()
+            .get("/organizations/organizationId/technologies")
+            .respondWith()
+            .statusCode(403)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.organizations.technologies.list({
+                organizationId: "organizationId",
+            });
+        }).rejects.toThrow(IcePanel.ForbiddenError);
+    });
+
+    test("list (5)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -144,6 +158,7 @@ describe("TechnologiesClient", () => {
         });
 
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .get("/organizations/organizationId/technologies")
@@ -159,7 +174,7 @@ describe("TechnologiesClient", () => {
         }).rejects.toThrow(IcePanel.NotFoundError);
     });
 
-    test("list (4)", async () => {
+    test("list (6)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -169,6 +184,7 @@ describe("TechnologiesClient", () => {
         });
 
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .get("/organizations/organizationId/technologies")
@@ -184,7 +200,7 @@ describe("TechnologiesClient", () => {
         }).rejects.toThrow(IcePanel.UnprocessableEntityError);
     });
 
-    test("list (5)", async () => {
+    test("list (7)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -194,6 +210,7 @@ describe("TechnologiesClient", () => {
         });
 
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .get("/organizations/organizationId/technologies")
@@ -257,6 +274,7 @@ describe("TechnologiesClient", () => {
                 updatesXmlUrl: "updatesXmlUrl",
             },
         };
+
         server
             .mockEndpoint()
             .post("/organizations/organizationId/technologies")
@@ -273,45 +291,7 @@ describe("TechnologiesClient", () => {
                 name: "name",
             },
         });
-        expect(response).toEqual({
-            catalogTechnology: {
-                category: "category",
-                color: "blue",
-                deprecatedAt: "2024-01-15T09:30:00Z",
-                description: "description",
-                docsUrl: "docsUrl",
-                iconUrlDark: "iconUrlDark",
-                iconUrlLight: "iconUrlLight",
-                name: "name",
-                nameShort: "nameShort",
-                provider: "aws",
-                rejectionMessage: "rejectionMessage",
-                rejectionReason: "duplicate",
-                restrictions: ["actor"],
-                status: "approved",
-                type: "data-storage",
-                updatesUrl: "updatesUrl",
-                websiteUrl: "websiteUrl",
-                awsXmlSelector: "awsXmlSelector",
-                azureUpdatesKeyword: "azureUpdatesKeyword",
-                createdAt: "2024-01-15T09:30:00Z",
-                createdBy: "user",
-                createdById: "createdById",
-                defaultSlug: "defaultSlug",
-                deletedAt: "2024-01-15T09:30:00Z",
-                deletedBy: "user",
-                deletedById: "deletedById",
-                disabled: true,
-                iconUrl: "iconUrl",
-                id: "id",
-                organizationId: "organizationId",
-                slugs: ["slugs"],
-                updatedAt: "2024-01-15T09:30:00Z",
-                updatedBy: "user",
-                updatedById: "updatedById",
-                updatesXmlUrl: "updatesXmlUrl",
-            },
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("create (2)", async () => {
@@ -323,7 +303,39 @@ describe("TechnologiesClient", () => {
             environment: server.baseUrl,
         });
         const rawRequestBody = { color: "blue", name: "name" };
+        const rawResponseBody = { message: "message" };
+
+        server
+            .mockEndpoint()
+            .post("/organizations/organizationId/technologies")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(400)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.organizations.technologies.create({
+                organizationId: "organizationId",
+                body: {
+                    color: "blue",
+                    name: "name",
+                },
+            });
+        }).rejects.toThrow(IcePanel.BadRequestError);
+    });
+
+    test("create (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+        const rawRequestBody = { color: "blue", name: "name" };
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .post("/organizations/organizationId/technologies")
@@ -344,7 +356,38 @@ describe("TechnologiesClient", () => {
         }).rejects.toThrow(IcePanel.UnauthorizedError);
     });
 
-    test("create (3)", async () => {
+    test("create (4)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+        const rawRequestBody = { color: "blue", name: "name" };
+        const rawResponseBody = { message: "message" };
+
+        server
+            .mockEndpoint()
+            .post("/organizations/organizationId/technologies")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(403)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.organizations.technologies.create({
+                organizationId: "organizationId",
+                body: {
+                    color: "blue",
+                    name: "name",
+                },
+            });
+        }).rejects.toThrow(IcePanel.ForbiddenError);
+    });
+
+    test("create (5)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -354,6 +397,7 @@ describe("TechnologiesClient", () => {
         });
         const rawRequestBody = { color: "blue", name: "name" };
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .post("/organizations/organizationId/technologies")
@@ -374,7 +418,7 @@ describe("TechnologiesClient", () => {
         }).rejects.toThrow(IcePanel.NotFoundError);
     });
 
-    test("create (4)", async () => {
+    test("create (6)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -384,6 +428,7 @@ describe("TechnologiesClient", () => {
         });
         const rawRequestBody = { color: "blue", name: "name" };
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .post("/organizations/organizationId/technologies")
@@ -404,7 +449,7 @@ describe("TechnologiesClient", () => {
         }).rejects.toThrow(IcePanel.UnprocessableEntityError);
     });
 
-    test("create (5)", async () => {
+    test("create (7)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -414,6 +459,7 @@ describe("TechnologiesClient", () => {
         });
         const rawRequestBody = { color: "blue", name: "name" };
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .post("/organizations/organizationId/technologies")
@@ -432,6 +478,37 @@ describe("TechnologiesClient", () => {
                 },
             });
         }).rejects.toThrow(IcePanel.InternalServerError);
+    });
+
+    test("create (8)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+        const rawRequestBody = { color: "blue", name: "name" };
+        const rawResponseBody = { key: "value" };
+
+        server
+            .mockEndpoint()
+            .post("/organizations/organizationId/technologies")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(503)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.organizations.technologies.create({
+                organizationId: "organizationId",
+                body: {
+                    color: "blue",
+                    name: "name",
+                },
+            });
+        }).rejects.toThrow(IcePanel.ServiceUnavailableError);
     });
 
     test("get (1)", async () => {
@@ -482,6 +559,7 @@ describe("TechnologiesClient", () => {
                 updatesXmlUrl: "updatesXmlUrl",
             },
         };
+
         server
             .mockEndpoint()
             .get("/organizations/organizationId/technologies/catalogTechnologyId")
@@ -494,45 +572,7 @@ describe("TechnologiesClient", () => {
             organizationId: "organizationId",
             catalogTechnologyId: "catalogTechnologyId",
         });
-        expect(response).toEqual({
-            catalogTechnology: {
-                category: "category",
-                color: "blue",
-                deprecatedAt: "2024-01-15T09:30:00Z",
-                description: "description",
-                docsUrl: "docsUrl",
-                iconUrlDark: "iconUrlDark",
-                iconUrlLight: "iconUrlLight",
-                name: "name",
-                nameShort: "nameShort",
-                provider: "aws",
-                rejectionMessage: "rejectionMessage",
-                rejectionReason: "duplicate",
-                restrictions: ["actor"],
-                status: "approved",
-                type: "data-storage",
-                updatesUrl: "updatesUrl",
-                websiteUrl: "websiteUrl",
-                awsXmlSelector: "awsXmlSelector",
-                azureUpdatesKeyword: "azureUpdatesKeyword",
-                createdAt: "2024-01-15T09:30:00Z",
-                createdBy: "user",
-                createdById: "createdById",
-                defaultSlug: "defaultSlug",
-                deletedAt: "2024-01-15T09:30:00Z",
-                deletedBy: "user",
-                deletedById: "deletedById",
-                disabled: true,
-                iconUrl: "iconUrl",
-                id: "id",
-                organizationId: "organizationId",
-                slugs: ["slugs"],
-                updatedAt: "2024-01-15T09:30:00Z",
-                updatedBy: "user",
-                updatedById: "updatedById",
-                updatesXmlUrl: "updatesXmlUrl",
-            },
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("get (2)", async () => {
@@ -544,7 +584,35 @@ describe("TechnologiesClient", () => {
             environment: server.baseUrl,
         });
 
+        const rawResponseBody = { message: "message" };
+
+        server
+            .mockEndpoint()
+            .get("/organizations/organizationId/technologies/catalogTechnologyId")
+            .respondWith()
+            .statusCode(400)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.organizations.technologies.get({
+                organizationId: "organizationId",
+                catalogTechnologyId: "catalogTechnologyId",
+            });
+        }).rejects.toThrow(IcePanel.BadRequestError);
+    });
+
+    test("get (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .get("/organizations/organizationId/technologies/catalogTechnologyId")
@@ -561,7 +629,34 @@ describe("TechnologiesClient", () => {
         }).rejects.toThrow(IcePanel.UnauthorizedError);
     });
 
-    test("get (3)", async () => {
+    test("get (4)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+
+        const rawResponseBody = { message: "message" };
+
+        server
+            .mockEndpoint()
+            .get("/organizations/organizationId/technologies/catalogTechnologyId")
+            .respondWith()
+            .statusCode(403)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.organizations.technologies.get({
+                organizationId: "organizationId",
+                catalogTechnologyId: "catalogTechnologyId",
+            });
+        }).rejects.toThrow(IcePanel.ForbiddenError);
+    });
+
+    test("get (5)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -571,6 +666,7 @@ describe("TechnologiesClient", () => {
         });
 
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .get("/organizations/organizationId/technologies/catalogTechnologyId")
@@ -587,7 +683,7 @@ describe("TechnologiesClient", () => {
         }).rejects.toThrow(IcePanel.NotFoundError);
     });
 
-    test("get (4)", async () => {
+    test("get (6)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -597,6 +693,7 @@ describe("TechnologiesClient", () => {
         });
 
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .get("/organizations/organizationId/technologies/catalogTechnologyId")
@@ -613,7 +710,7 @@ describe("TechnologiesClient", () => {
         }).rejects.toThrow(IcePanel.UnprocessableEntityError);
     });
 
-    test("get (5)", async () => {
+    test("get (7)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -623,6 +720,7 @@ describe("TechnologiesClient", () => {
         });
 
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .get("/organizations/organizationId/technologies/catalogTechnologyId")
@@ -649,6 +747,7 @@ describe("TechnologiesClient", () => {
         });
 
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .delete("/organizations/organizationId/technologies/catalogTechnologyId")
@@ -661,9 +760,7 @@ describe("TechnologiesClient", () => {
             organizationId: "organizationId",
             catalogTechnologyId: "catalogTechnologyId",
         });
-        expect(response).toEqual({
-            key: "value",
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("delete (2)", async () => {
@@ -675,7 +772,35 @@ describe("TechnologiesClient", () => {
             environment: server.baseUrl,
         });
 
+        const rawResponseBody = { message: "message" };
+
+        server
+            .mockEndpoint()
+            .delete("/organizations/organizationId/technologies/catalogTechnologyId")
+            .respondWith()
+            .statusCode(400)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.organizations.technologies.delete({
+                organizationId: "organizationId",
+                catalogTechnologyId: "catalogTechnologyId",
+            });
+        }).rejects.toThrow(IcePanel.BadRequestError);
+    });
+
+    test("delete (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .delete("/organizations/organizationId/technologies/catalogTechnologyId")
@@ -692,7 +817,34 @@ describe("TechnologiesClient", () => {
         }).rejects.toThrow(IcePanel.UnauthorizedError);
     });
 
-    test("delete (3)", async () => {
+    test("delete (4)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+
+        const rawResponseBody = { message: "message" };
+
+        server
+            .mockEndpoint()
+            .delete("/organizations/organizationId/technologies/catalogTechnologyId")
+            .respondWith()
+            .statusCode(403)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.organizations.technologies.delete({
+                organizationId: "organizationId",
+                catalogTechnologyId: "catalogTechnologyId",
+            });
+        }).rejects.toThrow(IcePanel.ForbiddenError);
+    });
+
+    test("delete (5)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -702,6 +854,7 @@ describe("TechnologiesClient", () => {
         });
 
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .delete("/organizations/organizationId/technologies/catalogTechnologyId")
@@ -718,7 +871,7 @@ describe("TechnologiesClient", () => {
         }).rejects.toThrow(IcePanel.NotFoundError);
     });
 
-    test("delete (4)", async () => {
+    test("delete (6)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -728,6 +881,7 @@ describe("TechnologiesClient", () => {
         });
 
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .delete("/organizations/organizationId/technologies/catalogTechnologyId")
@@ -744,7 +898,7 @@ describe("TechnologiesClient", () => {
         }).rejects.toThrow(IcePanel.UnprocessableEntityError);
     });
 
-    test("delete (5)", async () => {
+    test("delete (7)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -754,6 +908,7 @@ describe("TechnologiesClient", () => {
         });
 
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .delete("/organizations/organizationId/technologies/catalogTechnologyId")
@@ -768,6 +923,33 @@ describe("TechnologiesClient", () => {
                 catalogTechnologyId: "catalogTechnologyId",
             });
         }).rejects.toThrow(IcePanel.InternalServerError);
+    });
+
+    test("delete (8)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+
+        const rawResponseBody = { key: "value" };
+
+        server
+            .mockEndpoint()
+            .delete("/organizations/organizationId/technologies/catalogTechnologyId")
+            .respondWith()
+            .statusCode(503)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.organizations.technologies.delete({
+                organizationId: "organizationId",
+                catalogTechnologyId: "catalogTechnologyId",
+            });
+        }).rejects.toThrow(IcePanel.ServiceUnavailableError);
     });
 
     test("update (1)", async () => {
@@ -818,6 +1000,7 @@ describe("TechnologiesClient", () => {
                 updatesXmlUrl: "updatesXmlUrl",
             },
         };
+
         server
             .mockEndpoint()
             .patch("/organizations/organizationId/technologies/catalogTechnologyId")
@@ -832,45 +1015,7 @@ describe("TechnologiesClient", () => {
             catalogTechnologyId: "catalogTechnologyId",
             body: {},
         });
-        expect(response).toEqual({
-            catalogTechnology: {
-                category: "category",
-                color: "blue",
-                deprecatedAt: "2024-01-15T09:30:00Z",
-                description: "description",
-                docsUrl: "docsUrl",
-                iconUrlDark: "iconUrlDark",
-                iconUrlLight: "iconUrlLight",
-                name: "name",
-                nameShort: "nameShort",
-                provider: "aws",
-                rejectionMessage: "rejectionMessage",
-                rejectionReason: "duplicate",
-                restrictions: ["actor"],
-                status: "approved",
-                type: "data-storage",
-                updatesUrl: "updatesUrl",
-                websiteUrl: "websiteUrl",
-                awsXmlSelector: "awsXmlSelector",
-                azureUpdatesKeyword: "azureUpdatesKeyword",
-                createdAt: "2024-01-15T09:30:00Z",
-                createdBy: "user",
-                createdById: "createdById",
-                defaultSlug: "defaultSlug",
-                deletedAt: "2024-01-15T09:30:00Z",
-                deletedBy: "user",
-                deletedById: "deletedById",
-                disabled: true,
-                iconUrl: "iconUrl",
-                id: "id",
-                organizationId: "organizationId",
-                slugs: ["slugs"],
-                updatedAt: "2024-01-15T09:30:00Z",
-                updatedBy: "user",
-                updatedById: "updatedById",
-                updatesXmlUrl: "updatesXmlUrl",
-            },
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("update (2)", async () => {
@@ -882,7 +1027,37 @@ describe("TechnologiesClient", () => {
             environment: server.baseUrl,
         });
         const rawRequestBody = {};
+        const rawResponseBody = { message: "message" };
+
+        server
+            .mockEndpoint()
+            .patch("/organizations/organizationId/technologies/catalogTechnologyId")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(400)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.organizations.technologies.update({
+                organizationId: "organizationId",
+                catalogTechnologyId: "catalogTechnologyId",
+                body: {},
+            });
+        }).rejects.toThrow(IcePanel.BadRequestError);
+    });
+
+    test("update (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+        const rawRequestBody = {};
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .patch("/organizations/organizationId/technologies/catalogTechnologyId")
@@ -901,7 +1076,36 @@ describe("TechnologiesClient", () => {
         }).rejects.toThrow(IcePanel.UnauthorizedError);
     });
 
-    test("update (3)", async () => {
+    test("update (4)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+        const rawRequestBody = {};
+        const rawResponseBody = { message: "message" };
+
+        server
+            .mockEndpoint()
+            .patch("/organizations/organizationId/technologies/catalogTechnologyId")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(403)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.organizations.technologies.update({
+                organizationId: "organizationId",
+                catalogTechnologyId: "catalogTechnologyId",
+                body: {},
+            });
+        }).rejects.toThrow(IcePanel.ForbiddenError);
+    });
+
+    test("update (5)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -911,6 +1115,7 @@ describe("TechnologiesClient", () => {
         });
         const rawRequestBody = {};
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .patch("/organizations/organizationId/technologies/catalogTechnologyId")
@@ -929,7 +1134,7 @@ describe("TechnologiesClient", () => {
         }).rejects.toThrow(IcePanel.NotFoundError);
     });
 
-    test("update (4)", async () => {
+    test("update (6)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -939,6 +1144,7 @@ describe("TechnologiesClient", () => {
         });
         const rawRequestBody = {};
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .patch("/organizations/organizationId/technologies/catalogTechnologyId")
@@ -957,7 +1163,7 @@ describe("TechnologiesClient", () => {
         }).rejects.toThrow(IcePanel.UnprocessableEntityError);
     });
 
-    test("update (5)", async () => {
+    test("update (7)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -967,6 +1173,7 @@ describe("TechnologiesClient", () => {
         });
         const rawRequestBody = {};
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .patch("/organizations/organizationId/technologies/catalogTechnologyId")
@@ -983,5 +1190,34 @@ describe("TechnologiesClient", () => {
                 body: {},
             });
         }).rejects.toThrow(IcePanel.InternalServerError);
+    });
+
+    test("update (8)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+        const rawRequestBody = {};
+        const rawResponseBody = { key: "value" };
+
+        server
+            .mockEndpoint()
+            .patch("/organizations/organizationId/technologies/catalogTechnologyId")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(503)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.organizations.technologies.update({
+                organizationId: "organizationId",
+                catalogTechnologyId: "catalogTechnologyId",
+                body: {},
+            });
+        }).rejects.toThrow(IcePanel.ServiceUnavailableError);
     });
 });

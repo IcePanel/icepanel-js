@@ -44,7 +44,9 @@ export class DiagramsClient {
      * @param {IcePanel.DiagramsListRequest} request
      * @param {DiagramsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link IcePanel.BadRequestError}
      * @throws {@link IcePanel.UnauthorizedError}
+     * @throws {@link IcePanel.ForbiddenError}
      * @throws {@link IcePanel.NotFoundError}
      * @throws {@link IcePanel.UnprocessableEntityError}
      * @throws {@link IcePanel.InternalServerError}
@@ -67,11 +69,9 @@ export class DiagramsClient {
         requestOptions?: DiagramsClient.RequestOptions,
     ): Promise<core.WithRawResponse<IcePanel.DiagramsListResponse>> {
         const { landscapeId, versionId, filter } = request;
-        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
-        if (filter != null) {
-            _queryParams.filter = filter;
-        }
-
+        const _queryParams: Record<string, unknown> = {
+            filter,
+        };
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
@@ -87,7 +87,11 @@ export class DiagramsClient {
             ),
             method: "GET",
             headers: _headers,
-            queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            queryString: core.url
+                .queryBuilder()
+                .addMany(_queryParams)
+                .mergeAdditional(requestOptions?.queryParams)
+                .build(),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             withCredentials: true,
@@ -101,8 +105,12 @@ export class DiagramsClient {
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
+                case 400:
+                    throw new IcePanel.BadRequestError(_response.error.body as IcePanel.Error_, _response.rawResponse);
                 case 401:
                     throw new IcePanel.UnauthorizedError(_response.error.body as unknown, _response.rawResponse);
+                case 403:
+                    throw new IcePanel.ForbiddenError(_response.error.body as IcePanel.Error_, _response.rawResponse);
                 case 404:
                     throw new IcePanel.NotFoundError(_response.error.body as unknown, _response.rawResponse);
                 case 422:
@@ -130,10 +138,13 @@ export class DiagramsClient {
      * @param {IcePanel.DiagramCreateRequest} request
      * @param {DiagramsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link IcePanel.BadRequestError}
      * @throws {@link IcePanel.UnauthorizedError}
+     * @throws {@link IcePanel.ForbiddenError}
      * @throws {@link IcePanel.NotFoundError}
      * @throws {@link IcePanel.UnprocessableEntityError}
      * @throws {@link IcePanel.InternalServerError}
+     * @throws {@link IcePanel.ServiceUnavailableError}
      *
      * @example
      *     await client.diagrams.create({
@@ -159,11 +170,9 @@ export class DiagramsClient {
         requestOptions?: DiagramsClient.RequestOptions,
     ): Promise<core.WithRawResponse<IcePanel.DiagramsCreateResponse>> {
         const { landscapeId, versionId, updateViewedAt, body: _body } = request;
-        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
-        if (updateViewedAt != null) {
-            _queryParams.updateViewedAt = updateViewedAt.toString();
-        }
-
+        const _queryParams: Record<string, unknown> = {
+            updateViewedAt,
+        };
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
@@ -180,7 +189,11 @@ export class DiagramsClient {
             method: "POST",
             headers: _headers,
             contentType: "application/json",
-            queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            queryString: core.url
+                .queryBuilder()
+                .addMany(_queryParams)
+                .mergeAdditional(requestOptions?.queryParams)
+                .build(),
             requestType: "json",
             body: _body,
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
@@ -196,14 +209,20 @@ export class DiagramsClient {
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
+                case 400:
+                    throw new IcePanel.BadRequestError(_response.error.body as IcePanel.Error_, _response.rawResponse);
                 case 401:
                     throw new IcePanel.UnauthorizedError(_response.error.body as unknown, _response.rawResponse);
+                case 403:
+                    throw new IcePanel.ForbiddenError(_response.error.body as IcePanel.Error_, _response.rawResponse);
                 case 404:
                     throw new IcePanel.NotFoundError(_response.error.body as unknown, _response.rawResponse);
                 case 422:
                     throw new IcePanel.UnprocessableEntityError(_response.error.body as unknown, _response.rawResponse);
                 case 500:
                     throw new IcePanel.InternalServerError(_response.error.body as unknown, _response.rawResponse);
+                case 503:
+                    throw new IcePanel.ServiceUnavailableError(_response.error.body as unknown, _response.rawResponse);
                 default:
                     throw new errors.IcePanelError({
                         statusCode: _response.error.statusCode,
@@ -225,7 +244,9 @@ export class DiagramsClient {
      * @param {IcePanel.DiagramFindRequest} request
      * @param {DiagramsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link IcePanel.BadRequestError}
      * @throws {@link IcePanel.UnauthorizedError}
+     * @throws {@link IcePanel.ForbiddenError}
      * @throws {@link IcePanel.NotFoundError}
      * @throws {@link IcePanel.UnprocessableEntityError}
      * @throws {@link IcePanel.InternalServerError}
@@ -249,11 +270,9 @@ export class DiagramsClient {
         requestOptions?: DiagramsClient.RequestOptions,
     ): Promise<core.WithRawResponse<IcePanel.DiagramsGetResponse>> {
         const { landscapeId, versionId, diagramId, updateViewedAt } = request;
-        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
-        if (updateViewedAt != null) {
-            _queryParams.updateViewedAt = updateViewedAt.toString();
-        }
-
+        const _queryParams: Record<string, unknown> = {
+            updateViewedAt,
+        };
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
@@ -269,7 +288,11 @@ export class DiagramsClient {
             ),
             method: "GET",
             headers: _headers,
-            queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            queryString: core.url
+                .queryBuilder()
+                .addMany(_queryParams)
+                .mergeAdditional(requestOptions?.queryParams)
+                .build(),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             withCredentials: true,
@@ -283,8 +306,12 @@ export class DiagramsClient {
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
+                case 400:
+                    throw new IcePanel.BadRequestError(_response.error.body as IcePanel.Error_, _response.rawResponse);
                 case 401:
                     throw new IcePanel.UnauthorizedError(_response.error.body as unknown, _response.rawResponse);
+                case 403:
+                    throw new IcePanel.ForbiddenError(_response.error.body as IcePanel.Error_, _response.rawResponse);
                 case 404:
                     throw new IcePanel.NotFoundError(_response.error.body as unknown, _response.rawResponse);
                 case 422:
@@ -314,10 +341,12 @@ export class DiagramsClient {
      *
      * @throws {@link IcePanel.BadRequestError}
      * @throws {@link IcePanel.UnauthorizedError}
+     * @throws {@link IcePanel.ForbiddenError}
      * @throws {@link IcePanel.NotFoundError}
      * @throws {@link IcePanel.ConflictError}
      * @throws {@link IcePanel.UnprocessableEntityError}
      * @throws {@link IcePanel.InternalServerError}
+     * @throws {@link IcePanel.ServiceUnavailableError}
      *
      * @example
      *     await client.diagrams.upsert({
@@ -344,11 +373,9 @@ export class DiagramsClient {
         requestOptions?: DiagramsClient.RequestOptions,
     ): Promise<core.WithRawResponse<IcePanel.DiagramsUpsertResponse>> {
         const { landscapeId, versionId, diagramId, updateViewedAt, body: _body } = request;
-        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
-        if (updateViewedAt != null) {
-            _queryParams.updateViewedAt = updateViewedAt.toString();
-        }
-
+        const _queryParams: Record<string, unknown> = {
+            updateViewedAt,
+        };
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
@@ -365,7 +392,11 @@ export class DiagramsClient {
             method: "PUT",
             headers: _headers,
             contentType: "application/json",
-            queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            queryString: core.url
+                .queryBuilder()
+                .addMany(_queryParams)
+                .mergeAdditional(requestOptions?.queryParams)
+                .build(),
             requestType: "json",
             body: _body,
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
@@ -385,6 +416,8 @@ export class DiagramsClient {
                     throw new IcePanel.BadRequestError(_response.error.body as IcePanel.Error_, _response.rawResponse);
                 case 401:
                     throw new IcePanel.UnauthorizedError(_response.error.body as unknown, _response.rawResponse);
+                case 403:
+                    throw new IcePanel.ForbiddenError(_response.error.body as IcePanel.Error_, _response.rawResponse);
                 case 404:
                     throw new IcePanel.NotFoundError(_response.error.body as unknown, _response.rawResponse);
                 case 409:
@@ -393,6 +426,8 @@ export class DiagramsClient {
                     throw new IcePanel.UnprocessableEntityError(_response.error.body as unknown, _response.rawResponse);
                 case 500:
                     throw new IcePanel.InternalServerError(_response.error.body as unknown, _response.rawResponse);
+                case 503:
+                    throw new IcePanel.ServiceUnavailableError(_response.error.body as unknown, _response.rawResponse);
                 default:
                     throw new errors.IcePanelError({
                         statusCode: _response.error.statusCode,
@@ -414,10 +449,13 @@ export class DiagramsClient {
      * @param {IcePanel.DiagramDeleteRequest} request
      * @param {DiagramsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link IcePanel.BadRequestError}
      * @throws {@link IcePanel.UnauthorizedError}
+     * @throws {@link IcePanel.ForbiddenError}
      * @throws {@link IcePanel.NotFoundError}
      * @throws {@link IcePanel.UnprocessableEntityError}
      * @throws {@link IcePanel.InternalServerError}
+     * @throws {@link IcePanel.ServiceUnavailableError}
      *
      * @example
      *     await client.diagrams.delete({
@@ -438,11 +476,9 @@ export class DiagramsClient {
         requestOptions?: DiagramsClient.RequestOptions,
     ): Promise<core.WithRawResponse<IcePanel.DiagramsDeleteResponse>> {
         const { landscapeId, versionId, diagramId, updateViewedAt } = request;
-        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
-        if (updateViewedAt != null) {
-            _queryParams.updateViewedAt = updateViewedAt.toString();
-        }
-
+        const _queryParams: Record<string, unknown> = {
+            updateViewedAt,
+        };
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
@@ -458,7 +494,11 @@ export class DiagramsClient {
             ),
             method: "DELETE",
             headers: _headers,
-            queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            queryString: core.url
+                .queryBuilder()
+                .addMany(_queryParams)
+                .mergeAdditional(requestOptions?.queryParams)
+                .build(),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             withCredentials: true,
@@ -472,14 +512,20 @@ export class DiagramsClient {
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
+                case 400:
+                    throw new IcePanel.BadRequestError(_response.error.body as IcePanel.Error_, _response.rawResponse);
                 case 401:
                     throw new IcePanel.UnauthorizedError(_response.error.body as unknown, _response.rawResponse);
+                case 403:
+                    throw new IcePanel.ForbiddenError(_response.error.body as IcePanel.Error_, _response.rawResponse);
                 case 404:
                     throw new IcePanel.NotFoundError(_response.error.body as unknown, _response.rawResponse);
                 case 422:
                     throw new IcePanel.UnprocessableEntityError(_response.error.body as unknown, _response.rawResponse);
                 case 500:
                     throw new IcePanel.InternalServerError(_response.error.body as unknown, _response.rawResponse);
+                case 503:
+                    throw new IcePanel.ServiceUnavailableError(_response.error.body as unknown, _response.rawResponse);
                 default:
                     throw new errors.IcePanelError({
                         statusCode: _response.error.statusCode,
@@ -503,10 +549,12 @@ export class DiagramsClient {
      *
      * @throws {@link IcePanel.BadRequestError}
      * @throws {@link IcePanel.UnauthorizedError}
+     * @throws {@link IcePanel.ForbiddenError}
      * @throws {@link IcePanel.NotFoundError}
      * @throws {@link IcePanel.ConflictError}
      * @throws {@link IcePanel.UnprocessableEntityError}
      * @throws {@link IcePanel.InternalServerError}
+     * @throws {@link IcePanel.ServiceUnavailableError}
      *
      * @example
      *     await client.diagrams.update({
@@ -528,11 +576,9 @@ export class DiagramsClient {
         requestOptions?: DiagramsClient.RequestOptions,
     ): Promise<core.WithRawResponse<IcePanel.DiagramsUpdateResponse>> {
         const { landscapeId, versionId, diagramId, updateViewedAt, body: _body } = request;
-        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
-        if (updateViewedAt != null) {
-            _queryParams.updateViewedAt = updateViewedAt.toString();
-        }
-
+        const _queryParams: Record<string, unknown> = {
+            updateViewedAt,
+        };
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
@@ -549,7 +595,11 @@ export class DiagramsClient {
             method: "PATCH",
             headers: _headers,
             contentType: "application/json",
-            queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            queryString: core.url
+                .queryBuilder()
+                .addMany(_queryParams)
+                .mergeAdditional(requestOptions?.queryParams)
+                .build(),
             requestType: "json",
             body: _body,
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
@@ -569,6 +619,8 @@ export class DiagramsClient {
                     throw new IcePanel.BadRequestError(_response.error.body as IcePanel.Error_, _response.rawResponse);
                 case 401:
                     throw new IcePanel.UnauthorizedError(_response.error.body as unknown, _response.rawResponse);
+                case 403:
+                    throw new IcePanel.ForbiddenError(_response.error.body as IcePanel.Error_, _response.rawResponse);
                 case 404:
                     throw new IcePanel.NotFoundError(_response.error.body as unknown, _response.rawResponse);
                 case 409:
@@ -577,6 +629,8 @@ export class DiagramsClient {
                     throw new IcePanel.UnprocessableEntityError(_response.error.body as unknown, _response.rawResponse);
                 case 500:
                     throw new IcePanel.InternalServerError(_response.error.body as unknown, _response.rawResponse);
+                case 503:
+                    throw new IcePanel.ServiceUnavailableError(_response.error.body as unknown, _response.rawResponse);
                 default:
                     throw new errors.IcePanelError({
                         statusCode: _response.error.statusCode,
@@ -598,6 +652,7 @@ export class DiagramsClient {
      * @param {IcePanel.DiagramExistsRequest} request
      * @param {DiagramsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link IcePanel.BadRequestError}
      * @throws {@link IcePanel.UnauthorizedError}
      * @throws {@link IcePanel.NotFoundError}
      * @throws {@link IcePanel.UnprocessableEntityError}
@@ -622,11 +677,9 @@ export class DiagramsClient {
         requestOptions?: DiagramsClient.RequestOptions,
     ): Promise<core.WithRawResponse<Headers>> {
         const { landscapeId, versionId, diagramId, updateViewedAt } = request;
-        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
-        if (updateViewedAt != null) {
-            _queryParams.updateViewedAt = updateViewedAt.toString();
-        }
-
+        const _queryParams: Record<string, unknown> = {
+            updateViewedAt,
+        };
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
@@ -642,7 +695,11 @@ export class DiagramsClient {
             ),
             method: "HEAD",
             headers: _headers,
-            queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            queryString: core.url
+                .queryBuilder()
+                .addMany(_queryParams)
+                .mergeAdditional(requestOptions?.queryParams)
+                .build(),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             withCredentials: true,
@@ -656,6 +713,8 @@ export class DiagramsClient {
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
+                case 400:
+                    throw new IcePanel.BadRequestError(_response.error.body as IcePanel.Error_, _response.rawResponse);
                 case 401:
                     throw new IcePanel.UnauthorizedError(_response.error.body as unknown, _response.rawResponse);
                 case 404:
@@ -685,7 +744,9 @@ export class DiagramsClient {
      * @param {IcePanel.DiagramThumbnailsListRequest} request
      * @param {DiagramsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link IcePanel.BadRequestError}
      * @throws {@link IcePanel.UnauthorizedError}
+     * @throws {@link IcePanel.ForbiddenError}
      * @throws {@link IcePanel.NotFoundError}
      * @throws {@link IcePanel.UnprocessableEntityError}
      * @throws {@link IcePanel.InternalServerError}
@@ -708,11 +769,9 @@ export class DiagramsClient {
         requestOptions?: DiagramsClient.RequestOptions,
     ): Promise<core.WithRawResponse<IcePanel.DiagramsListThumbnailsResponse>> {
         const { landscapeId, versionId, filter } = request;
-        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
-        if (filter != null) {
-            _queryParams.filter = filter;
-        }
-
+        const _queryParams: Record<string, unknown> = {
+            filter,
+        };
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
@@ -728,7 +787,11 @@ export class DiagramsClient {
             ),
             method: "GET",
             headers: _headers,
-            queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            queryString: core.url
+                .queryBuilder()
+                .addMany(_queryParams)
+                .mergeAdditional(requestOptions?.queryParams)
+                .build(),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             withCredentials: true,
@@ -745,8 +808,12 @@ export class DiagramsClient {
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
+                case 400:
+                    throw new IcePanel.BadRequestError(_response.error.body as IcePanel.Error_, _response.rawResponse);
                 case 401:
                     throw new IcePanel.UnauthorizedError(_response.error.body as unknown, _response.rawResponse);
+                case 403:
+                    throw new IcePanel.ForbiddenError(_response.error.body as IcePanel.Error_, _response.rawResponse);
                 case 404:
                     throw new IcePanel.NotFoundError(_response.error.body as unknown, _response.rawResponse);
                 case 422:
@@ -774,7 +841,9 @@ export class DiagramsClient {
      * @param {IcePanel.DiagramThumbnailGetRequest} request
      * @param {DiagramsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link IcePanel.BadRequestError}
      * @throws {@link IcePanel.UnauthorizedError}
+     * @throws {@link IcePanel.ForbiddenError}
      * @throws {@link IcePanel.NotFoundError}
      * @throws {@link IcePanel.UnprocessableEntityError}
      * @throws {@link IcePanel.InternalServerError}
@@ -813,7 +882,7 @@ export class DiagramsClient {
             ),
             method: "GET",
             headers: _headers,
-            queryParameters: requestOptions?.queryParams,
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             withCredentials: true,
@@ -830,8 +899,12 @@ export class DiagramsClient {
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
+                case 400:
+                    throw new IcePanel.BadRequestError(_response.error.body as IcePanel.Error_, _response.rawResponse);
                 case 401:
                     throw new IcePanel.UnauthorizedError(_response.error.body as unknown, _response.rawResponse);
+                case 403:
+                    throw new IcePanel.ForbiddenError(_response.error.body as IcePanel.Error_, _response.rawResponse);
                 case 404:
                     throw new IcePanel.NotFoundError(_response.error.body as unknown, _response.rawResponse);
                 case 422:

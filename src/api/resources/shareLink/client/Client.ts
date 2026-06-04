@@ -26,7 +26,9 @@ export class ShareLinkClient {
      * @param {IcePanel.ShareLinkFindRequest} request
      * @param {ShareLinkClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link IcePanel.BadRequestError}
      * @throws {@link IcePanel.UnauthorizedError}
+     * @throws {@link IcePanel.ForbiddenError}
      * @throws {@link IcePanel.NotFoundError}
      * @throws {@link IcePanel.UnprocessableEntityError}
      * @throws {@link IcePanel.InternalServerError}
@@ -64,7 +66,7 @@ export class ShareLinkClient {
             ),
             method: "GET",
             headers: _headers,
-            queryParameters: requestOptions?.queryParams,
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             withCredentials: true,
@@ -78,8 +80,12 @@ export class ShareLinkClient {
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
+                case 400:
+                    throw new IcePanel.BadRequestError(_response.error.body as IcePanel.Error_, _response.rawResponse);
                 case 401:
                     throw new IcePanel.UnauthorizedError(_response.error.body as unknown, _response.rawResponse);
+                case 403:
+                    throw new IcePanel.ForbiddenError(_response.error.body as IcePanel.Error_, _response.rawResponse);
                 case 404:
                     throw new IcePanel.NotFoundError(_response.error.body as unknown, _response.rawResponse);
                 case 422:
@@ -107,12 +113,14 @@ export class ShareLinkClient {
      * @param {IcePanel.ShareLinkCreateRequest} request
      * @param {ShareLinkClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link IcePanel.BadRequestError}
      * @throws {@link IcePanel.UnauthorizedError}
      * @throws {@link IcePanel.ForbiddenError}
      * @throws {@link IcePanel.NotFoundError}
      * @throws {@link IcePanel.ConflictError}
      * @throws {@link IcePanel.UnprocessableEntityError}
      * @throws {@link IcePanel.InternalServerError}
+     * @throws {@link IcePanel.ServiceUnavailableError}
      *
      * @example
      *     await client.shareLink.create({
@@ -151,7 +159,7 @@ export class ShareLinkClient {
             method: "POST",
             headers: _headers,
             contentType: "application/json",
-            queryParameters: requestOptions?.queryParams,
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
             body: _body,
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
@@ -167,6 +175,8 @@ export class ShareLinkClient {
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
+                case 400:
+                    throw new IcePanel.BadRequestError(_response.error.body as IcePanel.Error_, _response.rawResponse);
                 case 401:
                     throw new IcePanel.UnauthorizedError(_response.error.body as unknown, _response.rawResponse);
                 case 403:
@@ -179,6 +189,8 @@ export class ShareLinkClient {
                     throw new IcePanel.UnprocessableEntityError(_response.error.body as unknown, _response.rawResponse);
                 case 500:
                     throw new IcePanel.InternalServerError(_response.error.body as unknown, _response.rawResponse);
+                case 503:
+                    throw new IcePanel.ServiceUnavailableError(_response.error.body as unknown, _response.rawResponse);
                 default:
                     throw new errors.IcePanelError({
                         statusCode: _response.error.statusCode,
@@ -200,10 +212,13 @@ export class ShareLinkClient {
      * @param {IcePanel.ShareLinkDeleteRequest} request
      * @param {ShareLinkClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link IcePanel.BadRequestError}
      * @throws {@link IcePanel.UnauthorizedError}
+     * @throws {@link IcePanel.ForbiddenError}
      * @throws {@link IcePanel.NotFoundError}
      * @throws {@link IcePanel.UnprocessableEntityError}
      * @throws {@link IcePanel.InternalServerError}
+     * @throws {@link IcePanel.ServiceUnavailableError}
      *
      * @example
      *     await client.shareLink.delete({
@@ -238,7 +253,7 @@ export class ShareLinkClient {
             ),
             method: "DELETE",
             headers: _headers,
-            queryParameters: requestOptions?.queryParams,
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             withCredentials: true,
@@ -252,14 +267,20 @@ export class ShareLinkClient {
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
+                case 400:
+                    throw new IcePanel.BadRequestError(_response.error.body as IcePanel.Error_, _response.rawResponse);
                 case 401:
                     throw new IcePanel.UnauthorizedError(_response.error.body as unknown, _response.rawResponse);
+                case 403:
+                    throw new IcePanel.ForbiddenError(_response.error.body as IcePanel.Error_, _response.rawResponse);
                 case 404:
                     throw new IcePanel.NotFoundError(_response.error.body as unknown, _response.rawResponse);
                 case 422:
                     throw new IcePanel.UnprocessableEntityError(_response.error.body as unknown, _response.rawResponse);
                 case 500:
                     throw new IcePanel.InternalServerError(_response.error.body as unknown, _response.rawResponse);
+                case 503:
+                    throw new IcePanel.ServiceUnavailableError(_response.error.body as unknown, _response.rawResponse);
                 default:
                     throw new errors.IcePanelError({
                         statusCode: _response.error.statusCode,
@@ -281,11 +302,13 @@ export class ShareLinkClient {
      * @param {IcePanel.ShareLinkUpdateRequest} request
      * @param {ShareLinkClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link IcePanel.BadRequestError}
      * @throws {@link IcePanel.UnauthorizedError}
      * @throws {@link IcePanel.ForbiddenError}
      * @throws {@link IcePanel.NotFoundError}
      * @throws {@link IcePanel.UnprocessableEntityError}
      * @throws {@link IcePanel.InternalServerError}
+     * @throws {@link IcePanel.ServiceUnavailableError}
      *
      * @example
      *     await client.shareLink.update({
@@ -306,11 +329,9 @@ export class ShareLinkClient {
         requestOptions?: ShareLinkClient.RequestOptions,
     ): Promise<core.WithRawResponse<IcePanel.ShareLinkUpdateResponse>> {
         const { landscapeId, versionId, resetShortId, body: _body } = request;
-        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
-        if (resetShortId != null) {
-            _queryParams.resetShortId = resetShortId.toString();
-        }
-
+        const _queryParams: Record<string, unknown> = {
+            resetShortId,
+        };
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
@@ -327,7 +348,11 @@ export class ShareLinkClient {
             method: "PATCH",
             headers: _headers,
             contentType: "application/json",
-            queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            queryString: core.url
+                .queryBuilder()
+                .addMany(_queryParams)
+                .mergeAdditional(requestOptions?.queryParams)
+                .build(),
             requestType: "json",
             body: _body,
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
@@ -343,6 +368,8 @@ export class ShareLinkClient {
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
+                case 400:
+                    throw new IcePanel.BadRequestError(_response.error.body as IcePanel.Error_, _response.rawResponse);
                 case 401:
                     throw new IcePanel.UnauthorizedError(_response.error.body as unknown, _response.rawResponse);
                 case 403:
@@ -353,6 +380,8 @@ export class ShareLinkClient {
                     throw new IcePanel.UnprocessableEntityError(_response.error.body as unknown, _response.rawResponse);
                 case 500:
                     throw new IcePanel.InternalServerError(_response.error.body as unknown, _response.rawResponse);
+                case 503:
+                    throw new IcePanel.ServiceUnavailableError(_response.error.body as unknown, _response.rawResponse);
                 default:
                     throw new errors.IcePanelError({
                         statusCode: _response.error.statusCode,

@@ -39,6 +39,7 @@ describe("DomainsClient", () => {
                 },
             ],
         };
+
         server
             .mockEndpoint()
             .get("/landscapes/landscapeId/versions/versionId/domains")
@@ -51,33 +52,7 @@ describe("DomainsClient", () => {
             landscapeId: "landscapeId",
             versionId: "versionId",
         });
-        expect(response).toEqual({
-            domains: [
-                {
-                    commit: 1.1,
-                    index: 1.1,
-                    labels: {
-                        key: "value",
-                    },
-                    name: "name",
-                    handleId: "handleId",
-                    createdAt: "2024-01-15T09:30:00Z",
-                    createdBy: "user",
-                    createdById: "createdById",
-                    deletedAt: "2024-01-15T09:30:00Z",
-                    deletedBy: "user",
-                    deletedById: "deletedById",
-                    id: "id",
-                    landscapeId: "landscapeId",
-                    latestEntityId: "latestEntityId",
-                    updatedAt: "2024-01-15T09:30:00Z",
-                    updatedBy: "user",
-                    updatedById: "updatedById",
-                    version: 1.1,
-                    versionId: "versionId",
-                },
-            ],
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("list (2)", async () => {
@@ -89,7 +64,35 @@ describe("DomainsClient", () => {
             environment: server.baseUrl,
         });
 
+        const rawResponseBody = { message: "message" };
+
+        server
+            .mockEndpoint()
+            .get("/landscapes/landscapeId/versions/versionId/domains")
+            .respondWith()
+            .statusCode(400)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.domains.list({
+                landscapeId: "landscapeId",
+                versionId: "versionId",
+            });
+        }).rejects.toThrow(IcePanel.BadRequestError);
+    });
+
+    test("list (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .get("/landscapes/landscapeId/versions/versionId/domains")
@@ -106,7 +109,34 @@ describe("DomainsClient", () => {
         }).rejects.toThrow(IcePanel.UnauthorizedError);
     });
 
-    test("list (3)", async () => {
+    test("list (4)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+
+        const rawResponseBody = { message: "message" };
+
+        server
+            .mockEndpoint()
+            .get("/landscapes/landscapeId/versions/versionId/domains")
+            .respondWith()
+            .statusCode(403)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.domains.list({
+                landscapeId: "landscapeId",
+                versionId: "versionId",
+            });
+        }).rejects.toThrow(IcePanel.ForbiddenError);
+    });
+
+    test("list (5)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -116,6 +146,7 @@ describe("DomainsClient", () => {
         });
 
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .get("/landscapes/landscapeId/versions/versionId/domains")
@@ -132,7 +163,7 @@ describe("DomainsClient", () => {
         }).rejects.toThrow(IcePanel.NotFoundError);
     });
 
-    test("list (4)", async () => {
+    test("list (6)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -142,6 +173,7 @@ describe("DomainsClient", () => {
         });
 
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .get("/landscapes/landscapeId/versions/versionId/domains")
@@ -158,7 +190,7 @@ describe("DomainsClient", () => {
         }).rejects.toThrow(IcePanel.UnprocessableEntityError);
     });
 
-    test("list (5)", async () => {
+    test("list (7)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -168,6 +200,7 @@ describe("DomainsClient", () => {
         });
 
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .get("/landscapes/landscapeId/versions/versionId/domains")
@@ -216,6 +249,7 @@ describe("DomainsClient", () => {
                 versionId: "versionId",
             },
         };
+
         server
             .mockEndpoint()
             .post("/landscapes/landscapeId/versions/versionId/domains")
@@ -232,31 +266,7 @@ describe("DomainsClient", () => {
                 name: "name",
             },
         });
-        expect(response).toEqual({
-            domain: {
-                commit: 1.1,
-                index: 1.1,
-                labels: {
-                    key: "value",
-                },
-                name: "name",
-                handleId: "handleId",
-                createdAt: "2024-01-15T09:30:00Z",
-                createdBy: "user",
-                createdById: "createdById",
-                deletedAt: "2024-01-15T09:30:00Z",
-                deletedBy: "user",
-                deletedById: "deletedById",
-                id: "id",
-                landscapeId: "landscapeId",
-                latestEntityId: "latestEntityId",
-                updatedAt: "2024-01-15T09:30:00Z",
-                updatedBy: "user",
-                updatedById: "updatedById",
-                version: 1.1,
-                versionId: "versionId",
-            },
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("create (2)", async () => {
@@ -268,7 +278,39 @@ describe("DomainsClient", () => {
             environment: server.baseUrl,
         });
         const rawRequestBody = { name: "name" };
+        const rawResponseBody = { message: "message" };
+
+        server
+            .mockEndpoint()
+            .post("/landscapes/landscapeId/versions/versionId/domains")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(400)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.domains.create({
+                landscapeId: "landscapeId",
+                versionId: "versionId",
+                body: {
+                    name: "name",
+                },
+            });
+        }).rejects.toThrow(IcePanel.BadRequestError);
+    });
+
+    test("create (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+        const rawRequestBody = { name: "name" };
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .post("/landscapes/landscapeId/versions/versionId/domains")
@@ -289,7 +331,38 @@ describe("DomainsClient", () => {
         }).rejects.toThrow(IcePanel.UnauthorizedError);
     });
 
-    test("create (3)", async () => {
+    test("create (4)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+        const rawRequestBody = { name: "name" };
+        const rawResponseBody = { message: "message" };
+
+        server
+            .mockEndpoint()
+            .post("/landscapes/landscapeId/versions/versionId/domains")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(403)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.domains.create({
+                landscapeId: "landscapeId",
+                versionId: "versionId",
+                body: {
+                    name: "name",
+                },
+            });
+        }).rejects.toThrow(IcePanel.ForbiddenError);
+    });
+
+    test("create (5)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -299,6 +372,7 @@ describe("DomainsClient", () => {
         });
         const rawRequestBody = { name: "name" };
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .post("/landscapes/landscapeId/versions/versionId/domains")
@@ -319,7 +393,7 @@ describe("DomainsClient", () => {
         }).rejects.toThrow(IcePanel.NotFoundError);
     });
 
-    test("create (4)", async () => {
+    test("create (6)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -329,6 +403,7 @@ describe("DomainsClient", () => {
         });
         const rawRequestBody = { name: "name" };
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .post("/landscapes/landscapeId/versions/versionId/domains")
@@ -349,7 +424,7 @@ describe("DomainsClient", () => {
         }).rejects.toThrow(IcePanel.UnprocessableEntityError);
     });
 
-    test("create (5)", async () => {
+    test("create (7)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -359,6 +434,7 @@ describe("DomainsClient", () => {
         });
         const rawRequestBody = { name: "name" };
         const rawResponseBody = { message: "message" };
+
         server
             .mockEndpoint()
             .post("/landscapes/landscapeId/versions/versionId/domains")
@@ -379,7 +455,7 @@ describe("DomainsClient", () => {
         }).rejects.toThrow(IcePanel.TooManyRequestsError);
     });
 
-    test("create (6)", async () => {
+    test("create (8)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -389,6 +465,7 @@ describe("DomainsClient", () => {
         });
         const rawRequestBody = { name: "name" };
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .post("/landscapes/landscapeId/versions/versionId/domains")
@@ -407,6 +484,37 @@ describe("DomainsClient", () => {
                 },
             });
         }).rejects.toThrow(IcePanel.InternalServerError);
+    });
+
+    test("create (9)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+        const rawRequestBody = { name: "name" };
+        const rawResponseBody = { key: "value" };
+
+        server
+            .mockEndpoint()
+            .post("/landscapes/landscapeId/versions/versionId/domains")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(503)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.domains.create({
+                landscapeId: "landscapeId",
+                versionId: "versionId",
+                body: {
+                    name: "name",
+                },
+            });
+        }).rejects.toThrow(IcePanel.ServiceUnavailableError);
     });
 
     test("get (1)", async () => {
@@ -441,6 +549,7 @@ describe("DomainsClient", () => {
                 versionId: "versionId",
             },
         };
+
         server
             .mockEndpoint()
             .get("/landscapes/landscapeId/versions/versionId/domains/domainId")
@@ -454,31 +563,7 @@ describe("DomainsClient", () => {
             versionId: "versionId",
             domainId: "domainId",
         });
-        expect(response).toEqual({
-            domain: {
-                commit: 1.1,
-                index: 1.1,
-                labels: {
-                    key: "value",
-                },
-                name: "name",
-                handleId: "handleId",
-                createdAt: "2024-01-15T09:30:00Z",
-                createdBy: "user",
-                createdById: "createdById",
-                deletedAt: "2024-01-15T09:30:00Z",
-                deletedBy: "user",
-                deletedById: "deletedById",
-                id: "id",
-                landscapeId: "landscapeId",
-                latestEntityId: "latestEntityId",
-                updatedAt: "2024-01-15T09:30:00Z",
-                updatedBy: "user",
-                updatedById: "updatedById",
-                version: 1.1,
-                versionId: "versionId",
-            },
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("get (2)", async () => {
@@ -490,7 +575,36 @@ describe("DomainsClient", () => {
             environment: server.baseUrl,
         });
 
+        const rawResponseBody = { message: "message" };
+
+        server
+            .mockEndpoint()
+            .get("/landscapes/landscapeId/versions/versionId/domains/domainId")
+            .respondWith()
+            .statusCode(400)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.domains.get({
+                landscapeId: "landscapeId",
+                versionId: "versionId",
+                domainId: "domainId",
+            });
+        }).rejects.toThrow(IcePanel.BadRequestError);
+    });
+
+    test("get (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .get("/landscapes/landscapeId/versions/versionId/domains/domainId")
@@ -508,7 +622,35 @@ describe("DomainsClient", () => {
         }).rejects.toThrow(IcePanel.UnauthorizedError);
     });
 
-    test("get (3)", async () => {
+    test("get (4)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+
+        const rawResponseBody = { message: "message" };
+
+        server
+            .mockEndpoint()
+            .get("/landscapes/landscapeId/versions/versionId/domains/domainId")
+            .respondWith()
+            .statusCode(403)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.domains.get({
+                landscapeId: "landscapeId",
+                versionId: "versionId",
+                domainId: "domainId",
+            });
+        }).rejects.toThrow(IcePanel.ForbiddenError);
+    });
+
+    test("get (5)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -518,6 +660,7 @@ describe("DomainsClient", () => {
         });
 
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .get("/landscapes/landscapeId/versions/versionId/domains/domainId")
@@ -535,7 +678,7 @@ describe("DomainsClient", () => {
         }).rejects.toThrow(IcePanel.NotFoundError);
     });
 
-    test("get (4)", async () => {
+    test("get (6)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -545,6 +688,7 @@ describe("DomainsClient", () => {
         });
 
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .get("/landscapes/landscapeId/versions/versionId/domains/domainId")
@@ -562,7 +706,7 @@ describe("DomainsClient", () => {
         }).rejects.toThrow(IcePanel.UnprocessableEntityError);
     });
 
-    test("get (5)", async () => {
+    test("get (7)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -572,6 +716,7 @@ describe("DomainsClient", () => {
         });
 
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .get("/landscapes/landscapeId/versions/versionId/domains/domainId")
@@ -621,6 +766,7 @@ describe("DomainsClient", () => {
                 versionId: "versionId",
             },
         };
+
         server
             .mockEndpoint()
             .put("/landscapes/landscapeId/versions/versionId/domains/domainId")
@@ -638,31 +784,7 @@ describe("DomainsClient", () => {
                 name: "name",
             },
         });
-        expect(response).toEqual({
-            domain: {
-                commit: 1.1,
-                index: 1.1,
-                labels: {
-                    key: "value",
-                },
-                name: "name",
-                handleId: "handleId",
-                createdAt: "2024-01-15T09:30:00Z",
-                createdBy: "user",
-                createdById: "createdById",
-                deletedAt: "2024-01-15T09:30:00Z",
-                deletedBy: "user",
-                deletedById: "deletedById",
-                id: "id",
-                landscapeId: "landscapeId",
-                latestEntityId: "latestEntityId",
-                updatedAt: "2024-01-15T09:30:00Z",
-                updatedBy: "user",
-                updatedById: "updatedById",
-                version: 1.1,
-                versionId: "versionId",
-            },
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("upsert (2)", async () => {
@@ -675,6 +797,7 @@ describe("DomainsClient", () => {
         });
         const rawRequestBody = { name: "name" };
         const rawResponseBody = { message: "message" };
+
         server
             .mockEndpoint()
             .put("/landscapes/landscapeId/versions/versionId/domains/domainId")
@@ -706,6 +829,7 @@ describe("DomainsClient", () => {
         });
         const rawRequestBody = { name: "name" };
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .put("/landscapes/landscapeId/versions/versionId/domains/domainId")
@@ -736,7 +860,40 @@ describe("DomainsClient", () => {
             environment: server.baseUrl,
         });
         const rawRequestBody = { name: "name" };
+        const rawResponseBody = { message: "message" };
+
+        server
+            .mockEndpoint()
+            .put("/landscapes/landscapeId/versions/versionId/domains/domainId")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(403)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.domains.upsert({
+                landscapeId: "landscapeId",
+                versionId: "versionId",
+                domainId: "domainId",
+                body: {
+                    name: "name",
+                },
+            });
+        }).rejects.toThrow(IcePanel.ForbiddenError);
+    });
+
+    test("upsert (5)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+        const rawRequestBody = { name: "name" };
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .put("/landscapes/landscapeId/versions/versionId/domains/domainId")
@@ -758,7 +915,7 @@ describe("DomainsClient", () => {
         }).rejects.toThrow(IcePanel.NotFoundError);
     });
 
-    test("upsert (5)", async () => {
+    test("upsert (6)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -768,6 +925,7 @@ describe("DomainsClient", () => {
         });
         const rawRequestBody = { name: "name" };
         const rawResponseBody = { message: "message" };
+
         server
             .mockEndpoint()
             .put("/landscapes/landscapeId/versions/versionId/domains/domainId")
@@ -789,7 +947,7 @@ describe("DomainsClient", () => {
         }).rejects.toThrow(IcePanel.ConflictError);
     });
 
-    test("upsert (6)", async () => {
+    test("upsert (7)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -799,6 +957,7 @@ describe("DomainsClient", () => {
         });
         const rawRequestBody = { name: "name" };
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .put("/landscapes/landscapeId/versions/versionId/domains/domainId")
@@ -820,7 +979,7 @@ describe("DomainsClient", () => {
         }).rejects.toThrow(IcePanel.UnprocessableEntityError);
     });
 
-    test("upsert (7)", async () => {
+    test("upsert (8)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -830,6 +989,7 @@ describe("DomainsClient", () => {
         });
         const rawRequestBody = { name: "name" };
         const rawResponseBody = { message: "message" };
+
         server
             .mockEndpoint()
             .put("/landscapes/landscapeId/versions/versionId/domains/domainId")
@@ -851,7 +1011,7 @@ describe("DomainsClient", () => {
         }).rejects.toThrow(IcePanel.TooManyRequestsError);
     });
 
-    test("upsert (8)", async () => {
+    test("upsert (9)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -861,6 +1021,7 @@ describe("DomainsClient", () => {
         });
         const rawRequestBody = { name: "name" };
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .put("/landscapes/landscapeId/versions/versionId/domains/domainId")
@@ -882,6 +1043,38 @@ describe("DomainsClient", () => {
         }).rejects.toThrow(IcePanel.InternalServerError);
     });
 
+    test("upsert (10)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+        const rawRequestBody = { name: "name" };
+        const rawResponseBody = { key: "value" };
+
+        server
+            .mockEndpoint()
+            .put("/landscapes/landscapeId/versions/versionId/domains/domainId")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(503)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.domains.upsert({
+                landscapeId: "landscapeId",
+                versionId: "versionId",
+                domainId: "domainId",
+                body: {
+                    name: "name",
+                },
+            });
+        }).rejects.toThrow(IcePanel.ServiceUnavailableError);
+    });
+
     test("delete (1)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
@@ -892,6 +1085,7 @@ describe("DomainsClient", () => {
         });
 
         const rawResponseBody = { commit: 1.1 };
+
         server
             .mockEndpoint()
             .delete("/landscapes/landscapeId/versions/versionId/domains/domainId")
@@ -905,9 +1099,7 @@ describe("DomainsClient", () => {
             versionId: "versionId",
             domainId: "domainId",
         });
-        expect(response).toEqual({
-            commit: 1.1,
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("delete (2)", async () => {
@@ -919,7 +1111,36 @@ describe("DomainsClient", () => {
             environment: server.baseUrl,
         });
 
+        const rawResponseBody = { message: "message" };
+
+        server
+            .mockEndpoint()
+            .delete("/landscapes/landscapeId/versions/versionId/domains/domainId")
+            .respondWith()
+            .statusCode(400)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.domains.delete({
+                landscapeId: "landscapeId",
+                versionId: "versionId",
+                domainId: "domainId",
+            });
+        }).rejects.toThrow(IcePanel.BadRequestError);
+    });
+
+    test("delete (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .delete("/landscapes/landscapeId/versions/versionId/domains/domainId")
@@ -937,7 +1158,35 @@ describe("DomainsClient", () => {
         }).rejects.toThrow(IcePanel.UnauthorizedError);
     });
 
-    test("delete (3)", async () => {
+    test("delete (4)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+
+        const rawResponseBody = { message: "message" };
+
+        server
+            .mockEndpoint()
+            .delete("/landscapes/landscapeId/versions/versionId/domains/domainId")
+            .respondWith()
+            .statusCode(403)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.domains.delete({
+                landscapeId: "landscapeId",
+                versionId: "versionId",
+                domainId: "domainId",
+            });
+        }).rejects.toThrow(IcePanel.ForbiddenError);
+    });
+
+    test("delete (5)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -947,6 +1196,7 @@ describe("DomainsClient", () => {
         });
 
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .delete("/landscapes/landscapeId/versions/versionId/domains/domainId")
@@ -964,7 +1214,7 @@ describe("DomainsClient", () => {
         }).rejects.toThrow(IcePanel.NotFoundError);
     });
 
-    test("delete (4)", async () => {
+    test("delete (6)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -974,6 +1224,7 @@ describe("DomainsClient", () => {
         });
 
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .delete("/landscapes/landscapeId/versions/versionId/domains/domainId")
@@ -991,7 +1242,7 @@ describe("DomainsClient", () => {
         }).rejects.toThrow(IcePanel.UnprocessableEntityError);
     });
 
-    test("delete (5)", async () => {
+    test("delete (7)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -1001,6 +1252,7 @@ describe("DomainsClient", () => {
         });
 
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .delete("/landscapes/landscapeId/versions/versionId/domains/domainId")
@@ -1016,6 +1268,34 @@ describe("DomainsClient", () => {
                 domainId: "domainId",
             });
         }).rejects.toThrow(IcePanel.InternalServerError);
+    });
+
+    test("delete (8)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+
+        const rawResponseBody = { key: "value" };
+
+        server
+            .mockEndpoint()
+            .delete("/landscapes/landscapeId/versions/versionId/domains/domainId")
+            .respondWith()
+            .statusCode(503)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.domains.delete({
+                landscapeId: "landscapeId",
+                versionId: "versionId",
+                domainId: "domainId",
+            });
+        }).rejects.toThrow(IcePanel.ServiceUnavailableError);
     });
 
     test("update (1)", async () => {
@@ -1050,6 +1330,7 @@ describe("DomainsClient", () => {
                 versionId: "versionId",
             },
         };
+
         server
             .mockEndpoint()
             .patch("/landscapes/landscapeId/versions/versionId/domains/domainId")
@@ -1065,31 +1346,7 @@ describe("DomainsClient", () => {
             domainId: "domainId",
             body: {},
         });
-        expect(response).toEqual({
-            domain: {
-                commit: 1.1,
-                index: 1.1,
-                labels: {
-                    key: "value",
-                },
-                name: "name",
-                handleId: "handleId",
-                createdAt: "2024-01-15T09:30:00Z",
-                createdBy: "user",
-                createdById: "createdById",
-                deletedAt: "2024-01-15T09:30:00Z",
-                deletedBy: "user",
-                deletedById: "deletedById",
-                id: "id",
-                landscapeId: "landscapeId",
-                latestEntityId: "latestEntityId",
-                updatedAt: "2024-01-15T09:30:00Z",
-                updatedBy: "user",
-                updatedById: "updatedById",
-                version: 1.1,
-                versionId: "versionId",
-            },
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("update (2)", async () => {
@@ -1102,6 +1359,7 @@ describe("DomainsClient", () => {
         });
         const rawRequestBody = {};
         const rawResponseBody = { message: "message" };
+
         server
             .mockEndpoint()
             .patch("/landscapes/landscapeId/versions/versionId/domains/domainId")
@@ -1131,6 +1389,7 @@ describe("DomainsClient", () => {
         });
         const rawRequestBody = {};
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .patch("/landscapes/landscapeId/versions/versionId/domains/domainId")
@@ -1159,7 +1418,38 @@ describe("DomainsClient", () => {
             environment: server.baseUrl,
         });
         const rawRequestBody = {};
+        const rawResponseBody = { message: "message" };
+
+        server
+            .mockEndpoint()
+            .patch("/landscapes/landscapeId/versions/versionId/domains/domainId")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(403)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.domains.update({
+                landscapeId: "landscapeId",
+                versionId: "versionId",
+                domainId: "domainId",
+                body: {},
+            });
+        }).rejects.toThrow(IcePanel.ForbiddenError);
+    });
+
+    test("update (5)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+        const rawRequestBody = {};
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .patch("/landscapes/landscapeId/versions/versionId/domains/domainId")
@@ -1179,7 +1469,7 @@ describe("DomainsClient", () => {
         }).rejects.toThrow(IcePanel.NotFoundError);
     });
 
-    test("update (5)", async () => {
+    test("update (6)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -1189,6 +1479,7 @@ describe("DomainsClient", () => {
         });
         const rawRequestBody = {};
         const rawResponseBody = { message: "message" };
+
         server
             .mockEndpoint()
             .patch("/landscapes/landscapeId/versions/versionId/domains/domainId")
@@ -1208,7 +1499,7 @@ describe("DomainsClient", () => {
         }).rejects.toThrow(IcePanel.ConflictError);
     });
 
-    test("update (6)", async () => {
+    test("update (7)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -1218,6 +1509,7 @@ describe("DomainsClient", () => {
         });
         const rawRequestBody = {};
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .patch("/landscapes/landscapeId/versions/versionId/domains/domainId")
@@ -1237,7 +1529,7 @@ describe("DomainsClient", () => {
         }).rejects.toThrow(IcePanel.UnprocessableEntityError);
     });
 
-    test("update (7)", async () => {
+    test("update (8)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -1247,6 +1539,7 @@ describe("DomainsClient", () => {
         });
         const rawRequestBody = {};
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .patch("/landscapes/landscapeId/versions/versionId/domains/domainId")
@@ -1264,6 +1557,36 @@ describe("DomainsClient", () => {
                 body: {},
             });
         }).rejects.toThrow(IcePanel.InternalServerError);
+    });
+
+    test("update (9)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+        const rawRequestBody = {};
+        const rawResponseBody = { key: "value" };
+
+        server
+            .mockEndpoint()
+            .patch("/landscapes/landscapeId/versions/versionId/domains/domainId")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(503)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.domains.update({
+                landscapeId: "landscapeId",
+                versionId: "versionId",
+                domainId: "domainId",
+                body: {},
+            });
+        }).rejects.toThrow(IcePanel.ServiceUnavailableError);
     });
 
     test("exists (1)", async () => {
@@ -1299,7 +1622,36 @@ describe("DomainsClient", () => {
             environment: server.baseUrl,
         });
 
+        const rawResponseBody = { message: "message" };
+
+        server
+            .mockEndpoint()
+            .head("/landscapes/landscapeId/versions/versionId/domains/domainId")
+            .respondWith()
+            .statusCode(400)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.domains.exists({
+                landscapeId: "landscapeId",
+                versionId: "versionId",
+                domainId: "domainId",
+            });
+        }).rejects.toThrow(IcePanel.BadRequestError);
+    });
+
+    test("exists (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IcePanelClient({
+            maxRetries: 0,
+            apiKeyAuth: { apiKey: "test" },
+            bearerAuth: { token: "test" },
+            environment: server.baseUrl,
+        });
+
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .head("/landscapes/landscapeId/versions/versionId/domains/domainId")
@@ -1317,7 +1669,7 @@ describe("DomainsClient", () => {
         }).rejects.toThrow(IcePanel.UnauthorizedError);
     });
 
-    test("exists (3)", async () => {
+    test("exists (4)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -1327,6 +1679,7 @@ describe("DomainsClient", () => {
         });
 
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .head("/landscapes/landscapeId/versions/versionId/domains/domainId")
@@ -1344,7 +1697,7 @@ describe("DomainsClient", () => {
         }).rejects.toThrow(IcePanel.NotFoundError);
     });
 
-    test("exists (4)", async () => {
+    test("exists (5)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -1354,6 +1707,7 @@ describe("DomainsClient", () => {
         });
 
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .head("/landscapes/landscapeId/versions/versionId/domains/domainId")
@@ -1371,7 +1725,7 @@ describe("DomainsClient", () => {
         }).rejects.toThrow(IcePanel.UnprocessableEntityError);
     });
 
-    test("exists (5)", async () => {
+    test("exists (6)", async () => {
         const server = mockServerPool.createServer();
         const client = new IcePanelClient({
             maxRetries: 0,
@@ -1381,6 +1735,7 @@ describe("DomainsClient", () => {
         });
 
         const rawResponseBody = { key: "value" };
+
         server
             .mockEndpoint()
             .head("/landscapes/landscapeId/versions/versionId/domains/domainId")

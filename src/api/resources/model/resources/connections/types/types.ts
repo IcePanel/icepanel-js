@@ -4,6 +4,7 @@ import type * as IcePanel from "../../../../../index.js";
 
 export interface ConnectionsListResponse {
     modelConnections: IcePanel.ModelConnectionExpanded[];
+    nextCursor?: string | undefined;
 }
 
 export interface ConnectionsCreateResponse {
@@ -63,6 +64,4 @@ export interface ConnectionsUpdateResponse {
 export interface ConnectionsGenerateDescriptionResponse {
     /** AI-generated description of the model connection */
     description: string;
-    /** Success message from the AI API */
-    message: string;
 }

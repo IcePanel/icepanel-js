@@ -1,7 +1,7 @@
 {
-    "cliVersion": "3.56.8",
+    "cliVersion": "5.4.3",
     "generatorName": "fernapi/fern-typescript-sdk",
-    "generatorVersion": "3.43.0",
+    "generatorVersion": "3.65.5",
     "generatorConfig": {
         "namespaceExport": "IcePanel",
         "enableInlineTypes": false,
@@ -13,5 +13,10 @@
             "nanoid": "^5.1.6"
         }
     },
-    "sdkVersion": "0.1.6"
+    "originGitCommit": "b9b5c4c40c190f0ff43bcd167f81ec1fb0f50507",
+    "originGitCommitIsDirty": true,
+    "invokedBy": "manual",
+    "requestedVersion": null,
+    "ciProvider": null,
+    "sdkVersion": "0.1.7"
 }

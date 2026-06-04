@@ -10,9 +10,12 @@ The IcePanel TypeScript library provides convenient access to the IcePanel APIs 
 - [Installation](#installation)
 - [Reference](#reference)
 - [Getting Started](#getting-started)
+- [Environments](#environments)
 - [Request and Response Types](#request-and-response-types)
 - [Exception Handling](#exception-handling)
+- [Pagination](#pagination)
 - [Advanced](#advanced)
+  - [Subpackage Exports](#subpackage-exports)
   - [Additional Headers](#additional-headers)
   - [Additional Query String Parameters](#additional-query-string-parameters)
   - [Retries](#retries)
@@ -20,6 +23,7 @@ The IcePanel TypeScript library provides convenient access to the IcePanel APIs 
   - [Aborting Requests](#aborting-requests)
   - [Access Raw Response Data](#access-raw-response-data)
   - [Logging](#logging)
+  - [Custom Fetch](#custom-fetch)
   - [Runtime Compatibility](#runtime-compatibility)
 - [Contributing](#contributing)
 
@@ -51,6 +55,18 @@ await client.model.objects.list({
 });
 ```
 
+
+## Environments
+
+This SDK allows you to configure different environments for API requests.
+
+```typescript
+import { IcePanelClient, IcePanelEnvironment } from "@icepanel/sdk";
+
+const client = new IcePanelClient({
+    environment: IcePanelEnvironment.ApiV1,
+});
+```
 
 ## Request and Response Types
 
@@ -85,7 +101,44 @@ try {
 }
 ```
 
+## Pagination
+
+List endpoints are paginated. The SDK provides an iterator so that you can simply loop over the items:
+
+```typescript
+import { IcePanelClient } from "@icepanel/sdk";
+
+const client = new IcePanelClient({ apiKey: "YOUR_API_KEY", token: "YOUR_TOKEN" });
+const pageableResponse = await client.versions.list({
+    landscapeId: "landscapeId"
+});
+for await (const item of pageableResponse) {
+    console.log(item);
+}
+
+// Or you can manually iterate page-by-page
+let page = await client.versions.list({
+    landscapeId: "landscapeId"
+});
+while (page.hasNextPage()) {
+    page = page.getNextPage();
+}
+
+// You can also access the underlying response
+const response = page.response;
+```
+
 ## Advanced
+
+### Subpackage Exports
+
+This SDK supports direct imports of subpackage clients, which allows JavaScript bundlers to tree-shake and include only the imported subpackage code. This results in much smaller bundle sizes.
+
+```typescript
+import { CommentsClient } from '@icepanel/sdk/comments';
+
+const client = new CommentsClient({...});
+```
 
 ### Additional Headers
 
@@ -237,6 +290,26 @@ const logger: logging.ILogger = {
 </details>
 
 
+### Custom Fetch
+
+The SDK provides a low-level `fetch` method for making custom HTTP requests while still
+benefiting from SDK-level configuration like authentication, retries, timeouts, and logging.
+This is useful for calling API endpoints not yet supported in the SDK.
+
+```typescript
+const response = await client.fetch("/v1/custom/endpoint", {
+    method: "GET",
+}, {
+    timeoutInSeconds: 30,
+    maxRetries: 3,
+    headers: {
+        "X-Custom-Header": "custom-value",
+    },
+});
+
+const data = await response.json();
+```
+
 ### Runtime Compatibility
 
 
@@ -251,19 +324,6 @@ The SDK works in the following runtimes:
 - Bun 1.0+
 - React Native
 
-### Customizing Fetch Client
-
-The SDK provides a way for you to customize the underlying HTTP client / Fetch function. If you're running in an
-unsupported environment, this provides a way for you to break glass and ensure the SDK works.
-
-```typescript
-import { IcePanelClient } from "@icepanel/sdk";
-
-const client = new IcePanelClient({
-    ...
-    fetcher: // provide your implementation here
-});
-```
 
 ## Contributing
 
