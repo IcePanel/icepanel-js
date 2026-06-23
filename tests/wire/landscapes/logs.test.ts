@@ -32,20 +32,26 @@ describe("LogsClient", () => {
                     performedByUserAgent: "performedByUserAgent",
                 },
             ],
+            nextCursor: "nextCursor",
         };
 
         server
-            .mockEndpoint()
+            .mockEndpoint({ once: false })
             .get("/landscapes/landscapeId/action-logs")
             .respondWith()
             .statusCode(200)
             .jsonBody(rawResponseBody)
             .build();
 
-        const response = await client.landscapes.logs.list({
+        const expected = rawResponseBody;
+        const page = await client.landscapes.logs.list({
             landscapeId: "landscapeId",
         });
-        expect(response).toEqual(rawResponseBody);
+
+        expect(expected.actionLogs).toEqual(page.data);
+        expect(page.hasNextPage()).toBe(true);
+        const nextPage = await page.getNextPage();
+        expect(expected.actionLogs).toEqual(nextPage.data);
     });
 
     test("list (2)", async () => {
@@ -435,21 +441,27 @@ describe("LogsClient", () => {
                     performedByUserAgent: "performedByUserAgent",
                 },
             ],
+            nextCursor: "nextCursor",
         };
 
         server
-            .mockEndpoint()
+            .mockEndpoint({ once: false })
             .get("/landscapes/landscapeId/action-logs/actionLogId/children")
             .respondWith()
             .statusCode(200)
             .jsonBody(rawResponseBody)
             .build();
 
-        const response = await client.landscapes.logs.listChildren({
+        const expected = rawResponseBody;
+        const page = await client.landscapes.logs.listChildren({
             landscapeId: "landscapeId",
             actionLogId: "actionLogId",
         });
-        expect(response).toEqual(rawResponseBody);
+
+        expect(expected.actionLogs).toEqual(page.data);
+        expect(page.hasNextPage()).toBe(true);
+        const nextPage = await page.getNextPage();
+        expect(expected.actionLogs).toEqual(nextPage.data);
     });
 
     test("listChildren (2)", async () => {

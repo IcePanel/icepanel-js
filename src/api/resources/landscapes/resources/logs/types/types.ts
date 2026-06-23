@@ -4,6 +4,7 @@ import type * as IcePanel from "../../../../../index.js";
 
 export interface LogsListResponse {
     actionLogs: IcePanel.ActionLog[];
+    nextCursor?: string | undefined;
 }
 
 export interface LogsGetResponse {
@@ -12,4 +13,5 @@ export interface LogsGetResponse {
 
 export interface LogsListChildrenResponse {
     actionLogs: IcePanel.ActionLog[];
+    nextCursor?: string | undefined;
 }

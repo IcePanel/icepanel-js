@@ -1,4 +1,274 @@
 # Reference
+## Adrs
+<details><summary><code>client.adrs.<a href="/src/api/resources/adrs/client/Client.ts">list</a>({ ...params }) -> IcePanel.AdrsListResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.adrs.list({
+    landscapeId: "landscapeId",
+    versionId: "latest"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IcePanel.AdRsListRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `AdrsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.adrs.<a href="/src/api/resources/adrs/client/Client.ts">create</a>({ ...params }) -> IcePanel.AdrsCreateResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.adrs.create({
+    landscapeId: "landscapeId",
+    versionId: "latest",
+    body: {
+        name: "name",
+        status: "accepted",
+        handleId: "handleId"
+    }
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IcePanel.AdrCreateRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `AdrsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.adrs.<a href="/src/api/resources/adrs/client/Client.ts">get</a>({ ...params }) -> IcePanel.AdrsGetResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.adrs.get({
+    landscapeId: "landscapeId",
+    versionId: "latest",
+    adrId: "adrId"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IcePanel.AdrFindRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `AdrsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.adrs.<a href="/src/api/resources/adrs/client/Client.ts">delete</a>({ ...params }) -> Record&lt;string, unknown&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.adrs.delete({
+    landscapeId: "landscapeId",
+    versionId: "latest",
+    adrId: "adrId"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IcePanel.AdrDeleteRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `AdrsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.adrs.<a href="/src/api/resources/adrs/client/Client.ts">update</a>({ ...params }) -> IcePanel.AdrsUpdateResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.adrs.update({
+    landscapeId: "landscapeId",
+    versionId: "latest",
+    adrId: "adrId",
+    body: {}
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IcePanel.AdrUpdateRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `AdrsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Comments
 <details><summary><code>client.comments.<a href="/src/api/resources/comments/client/Client.ts">list</a>({ ...params }) -> IcePanel.CommentsListResponse</code></summary>
 <dl>
@@ -5162,7 +5432,7 @@ await client.flows.export.mermaid({
 </details>
 
 ## Landscapes Logs
-<details><summary><code>client.landscapes.logs.<a href="/src/api/resources/landscapes/resources/logs/client/Client.ts">list</a>({ ...params }) -> IcePanel.LogsListResponse</code></summary>
+<details><summary><code>client.landscapes.logs.<a href="/src/api/resources/landscapes/resources/logs/client/Client.ts">list</a>({ ...params }) -> core.Page&lt;IcePanel.ActionLog, IcePanel.LogsListResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -5189,9 +5459,23 @@ List action logs
 <dd>
 
 ```typescript
-await client.landscapes.logs.list({
+const pageableResponse = await client.landscapes.logs.list({
     landscapeId: "landscapeId"
 });
+for await (const item of pageableResponse) {
+    console.log(item);
+}
+
+// Or you can manually iterate page-by-page
+let page = await client.landscapes.logs.list({
+    landscapeId: "landscapeId"
+});
+while (page.hasNextPage()) {
+    page = page.getNextPage();
+}
+
+// You can also access the underlying response
+const response = page.response;
 
 ```
 </dd>
@@ -5293,7 +5577,7 @@ await client.landscapes.logs.get({
 </dl>
 </details>
 
-<details><summary><code>client.landscapes.logs.<a href="/src/api/resources/landscapes/resources/logs/client/Client.ts">listChildren</a>({ ...params }) -> IcePanel.LogsListChildrenResponse</code></summary>
+<details><summary><code>client.landscapes.logs.<a href="/src/api/resources/landscapes/resources/logs/client/Client.ts">listChildren</a>({ ...params }) -> core.Page&lt;IcePanel.ActionLog, IcePanel.LogsListChildrenResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -5320,10 +5604,25 @@ List actions that happened as a result of a different action
 <dd>
 
 ```typescript
-await client.landscapes.logs.listChildren({
+const pageableResponse = await client.landscapes.logs.listChildren({
     landscapeId: "landscapeId",
     actionLogId: "actionLogId"
 });
+for await (const item of pageableResponse) {
+    console.log(item);
+}
+
+// Or you can manually iterate page-by-page
+let page = await client.landscapes.logs.listChildren({
+    landscapeId: "landscapeId",
+    actionLogId: "actionLogId"
+});
+while (page.hasNextPage()) {
+    page = page.getNextPage();
+}
+
+// You can also access the underlying response
+const response = page.response;
 
 ```
 </dd>
@@ -6924,7 +7223,7 @@ await client.organizations.landscapes.create({
 </details>
 
 ## Organizations Logs
-<details><summary><code>client.organizations.logs.<a href="/src/api/resources/organizations/resources/logs/client/Client.ts">list</a>({ ...params }) -> IcePanel.LogsListResponse</code></summary>
+<details><summary><code>client.organizations.logs.<a href="/src/api/resources/organizations/resources/logs/client/Client.ts">list</a>({ ...params }) -> core.Page&lt;IcePanel.OrganizationLog, IcePanel.LogsListResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -6951,9 +7250,23 @@ List organization logs (only available on the scale plan and above)
 <dd>
 
 ```typescript
-await client.organizations.logs.list({
+const pageableResponse = await client.organizations.logs.list({
     organizationId: "organizationId"
 });
+for await (const item of pageableResponse) {
+    console.log(item);
+}
+
+// Or you can manually iterate page-by-page
+let page = await client.organizations.logs.list({
+    organizationId: "organizationId"
+});
+while (page.hasNextPage()) {
+    page = page.getNextPage();
+}
+
+// You can also access the underlying response
+const response = page.response;
 
 ```
 </dd>

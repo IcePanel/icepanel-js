@@ -6,6 +6,81 @@ import type * as IcePanel from "../index.js";
  * @example
  *     {
  *         landscapeId: "landscapeId",
+ *         versionId: "latest"
+ *     }
+ */
+export interface AdRsListRequest {
+    landscapeId: string;
+    versionId: IcePanel.VersionIdPathParam;
+    filter?: IcePanel.AdrFilter;
+}
+
+/**
+ * @example
+ *     {
+ *         landscapeId: "landscapeId",
+ *         versionId: "latest",
+ *         body: {
+ *             name: "name",
+ *             status: "accepted",
+ *             handleId: "handleId"
+ *         }
+ *     }
+ */
+export interface AdrCreateRequest {
+    landscapeId: string;
+    versionId: IcePanel.VersionIdPathParam;
+    body: IcePanel.AdrRequired;
+}
+
+/**
+ * @example
+ *     {
+ *         landscapeId: "landscapeId",
+ *         versionId: "latest",
+ *         adrId: "adrId"
+ *     }
+ */
+export interface AdrFindRequest {
+    landscapeId: string;
+    versionId: IcePanel.VersionIdPathParam;
+    adrId: string;
+}
+
+/**
+ * @example
+ *     {
+ *         landscapeId: "landscapeId",
+ *         versionId: "latest",
+ *         adrId: "adrId"
+ *     }
+ */
+export interface AdrDeleteRequest {
+    landscapeId: string;
+    versionId: IcePanel.VersionIdPathParam;
+    adrId: string;
+}
+
+/**
+ * @example
+ *     {
+ *         landscapeId: "landscapeId",
+ *         versionId: "latest",
+ *         adrId: "adrId",
+ *         body: {}
+ *     }
+ */
+export interface AdrUpdateRequest {
+    landscapeId: string;
+    versionId: IcePanel.VersionIdPathParam;
+    adrId: string;
+    body: IcePanel.AdrPartial;
+}
+
+/**
+ * @example
+ *     {
+ *         landscapeId: "landscapeId",
  *         versionId: "versionId"
  *     }
  */
@@ -1363,6 +1438,7 @@ export interface FlowExportMermaidRequest {
 export interface ActionLogsListRequest {
     landscapeId: string;
     filter?: IcePanel.ActionLogFilter;
+    cursor?: string;
 }
 
 /**
@@ -1388,6 +1464,7 @@ export interface ActionLogChildrenListRequest {
     landscapeId: string;
     actionLogId: string;
     filter?: IcePanel.ActionLogFilter;
+    cursor?: string;
 }
 
 /**
@@ -1812,6 +1889,7 @@ export interface OrganizationLandscapeCreateRequest extends IcePanel.LandscapeRe
 export interface OrganizationLogsListRequest {
     organizationId: string;
     filter?: IcePanel.OrganizationLogFilter;
+    cursor?: string;
 }
 
 /**
