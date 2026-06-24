@@ -46,87 +46,114 @@ export class LogsClient {
      *         organizationId: "organizationId"
      *     })
      */
-    public list(
+    public async list(
         request: IcePanel.OrganizationLogsListRequest,
         requestOptions?: LogsClient.RequestOptions,
-    ): core.HttpResponsePromise<IcePanel.organizations.LogsListResponse> {
-        return core.HttpResponsePromise.fromPromise(this.__list(request, requestOptions));
-    }
-
-    private async __list(
-        request: IcePanel.OrganizationLogsListRequest,
-        requestOptions?: LogsClient.RequestOptions,
-    ): Promise<core.WithRawResponse<IcePanel.organizations.LogsListResponse>> {
-        const { organizationId, filter } = request;
-        const _queryParams: Record<string, unknown> = {
-            filter,
-        };
-        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            _authRequest.headers,
-            this._options?.headers,
-            requestOptions?.headers,
-        );
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)) ??
-                    environments.IcePanelEnvironment.ApiV1,
-                `organizations/${core.url.encodePathParam(organizationId)}/logs`,
-            ),
-            method: "GET",
-            headers: _headers,
-            queryString: core.url
-                .queryBuilder()
-                .addMany(_queryParams)
-                .mergeAdditional(requestOptions?.queryParams)
-                .build(),
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            withCredentials: true,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
-        });
-        if (_response.ok) {
-            return {
-                data: _response.body as IcePanel.organizations.LogsListResponse,
-                rawResponse: _response.rawResponse,
-            };
-        }
-
-        if (_response.error.reason === "status-code") {
-            switch (_response.error.statusCode) {
-                case 400:
-                    throw new IcePanel.BadRequestError(_response.error.body as IcePanel.Error_, _response.rawResponse);
-                case 401:
-                    throw new IcePanel.UnauthorizedError(_response.error.body as unknown, _response.rawResponse);
-                case 403:
-                    throw new IcePanel.ForbiddenError(_response.error.body as IcePanel.Error_, _response.rawResponse);
-                case 404:
-                    throw new IcePanel.NotFoundError(_response.error.body as unknown, _response.rawResponse);
-                case 422:
-                    throw new IcePanel.UnprocessableEntityError(_response.error.body as unknown, _response.rawResponse);
-                case 500:
-                    throw new IcePanel.InternalServerError(_response.error.body as unknown, _response.rawResponse);
-                default:
-                    throw new errors.IcePanelError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
+    ): Promise<core.Page<IcePanel.OrganizationLog, IcePanel.organizations.LogsListResponse>> {
+        const list = core.HttpResponsePromise.interceptFunction(
+            async (
+                request: IcePanel.OrganizationLogsListRequest,
+            ): Promise<core.WithRawResponse<IcePanel.organizations.LogsListResponse>> => {
+                const { organizationId, filter, cursor } = request;
+                const _queryParams: Record<string, unknown> = {
+                    filter,
+                    cursor,
+                };
+                const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+                const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+                    _authRequest.headers,
+                    this._options?.headers,
+                    requestOptions?.headers,
+                );
+                const _response = await core.fetcher({
+                    url: core.url.join(
+                        (await core.Supplier.get(this._options.baseUrl)) ??
+                            (await core.Supplier.get(this._options.environment)) ??
+                            environments.IcePanelEnvironment.ApiV1,
+                        `organizations/${core.url.encodePathParam(organizationId)}/logs`,
+                    ),
+                    method: "GET",
+                    headers: _headers,
+                    queryString: core.url
+                        .queryBuilder()
+                        .addMany(_queryParams)
+                        .mergeAdditional(requestOptions?.queryParams)
+                        .build(),
+                    timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+                    maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+                    withCredentials: true,
+                    abortSignal: requestOptions?.abortSignal,
+                    fetchFn: this._options?.fetch,
+                    logging: this._options.logging,
+                });
+                if (_response.ok) {
+                    return {
+                        data: _response.body as IcePanel.organizations.LogsListResponse,
                         rawResponse: _response.rawResponse,
-                    });
-            }
-        }
-
-        return handleNonStatusCodeError(
-            _response.error,
-            _response.rawResponse,
-            "GET",
-            "/organizations/{organizationId}/logs",
+                    };
+                }
+                if (_response.error.reason === "status-code") {
+                    switch (_response.error.statusCode) {
+                        case 400:
+                            throw new IcePanel.BadRequestError(
+                                _response.error.body as IcePanel.Error_,
+                                _response.rawResponse,
+                            );
+                        case 401:
+                            throw new IcePanel.UnauthorizedError(
+                                _response.error.body as unknown,
+                                _response.rawResponse,
+                            );
+                        case 403:
+                            throw new IcePanel.ForbiddenError(
+                                _response.error.body as IcePanel.Error_,
+                                _response.rawResponse,
+                            );
+                        case 404:
+                            throw new IcePanel.NotFoundError(_response.error.body as unknown, _response.rawResponse);
+                        case 422:
+                            throw new IcePanel.UnprocessableEntityError(
+                                _response.error.body as unknown,
+                                _response.rawResponse,
+                            );
+                        case 500:
+                            throw new IcePanel.InternalServerError(
+                                _response.error.body as unknown,
+                                _response.rawResponse,
+                            );
+                        default:
+                            throw new errors.IcePanelError({
+                                statusCode: _response.error.statusCode,
+                                body: _response.error.body,
+                                rawResponse: _response.rawResponse,
+                            });
+                    }
+                }
+                return handleNonStatusCodeError(
+                    _response.error,
+                    _response.rawResponse,
+                    "GET",
+                    "/organizations/{organizationId}/logs",
+                );
+            },
         );
+        const dataWithRawResponse = await list(request).withRawResponse();
+        return new core.Page<IcePanel.OrganizationLog, IcePanel.organizations.LogsListResponse>({
+            response: dataWithRawResponse.data,
+            rawResponse: dataWithRawResponse.rawResponse,
+            hasNextPage: (response) =>
+                response?.nextCursor != null &&
+                !(typeof response?.nextCursor === "string" && response?.nextCursor === ""),
+            getItems: (response) => response?.organizationLogs ?? [],
+            loadPage: (response) => {
+                return list(core.setObjectProperty(request, "cursor", response?.nextCursor));
+            },
+        });
     }
 
     /**
+     * @deprecated
+     *
      * Find an organization log (only available on the scale plan and above)
      *
      * @param {IcePanel.OrganizationLogFindRequest} request
