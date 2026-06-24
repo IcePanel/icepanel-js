@@ -24,3 +24,5 @@ export * as teams from "./teams/index.js";
 export * from "./teams/types/index.js";
 export * as versions from "./versions/index.js";
 export * from "./versions/types/index.js";
+export * as webhookEvents from "./webhookEvents/index.js";
+export * from "./webhookEvents/types/index.js";
