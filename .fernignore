@@ -5,3 +5,6 @@ src/index.ts
 src/IcePanelClient.ts
 src/types.ts
 src/consts.ts
+.fern/replay.lock
+.fern/replay.yml
+.gitattributes

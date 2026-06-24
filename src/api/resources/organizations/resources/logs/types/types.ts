@@ -3,6 +3,7 @@
 import type * as IcePanel from "../../../../../index.js";
 
 export interface LogsListResponse {
+    nextCursor?: string | undefined;
     organizationLogs: IcePanel.OrganizationLog[];
 }
 

@@ -46,84 +46,114 @@ export class LogsClient {
      *         landscapeId: "landscapeId"
      *     })
      */
-    public list(
+    public async list(
         request: IcePanel.ActionLogsListRequest,
         requestOptions?: LogsClient.RequestOptions,
-    ): core.HttpResponsePromise<IcePanel.landscapes.LogsListResponse> {
-        return core.HttpResponsePromise.fromPromise(this.__list(request, requestOptions));
-    }
-
-    private async __list(
-        request: IcePanel.ActionLogsListRequest,
-        requestOptions?: LogsClient.RequestOptions,
-    ): Promise<core.WithRawResponse<IcePanel.landscapes.LogsListResponse>> {
-        const { landscapeId, filter } = request;
-        const _queryParams: Record<string, unknown> = {
-            filter,
-        };
-        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            _authRequest.headers,
-            this._options?.headers,
-            requestOptions?.headers,
-        );
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)) ??
-                    environments.IcePanelEnvironment.ApiV1,
-                `landscapes/${core.url.encodePathParam(landscapeId)}/action-logs`,
-            ),
-            method: "GET",
-            headers: _headers,
-            queryString: core.url
-                .queryBuilder()
-                .addMany(_queryParams)
-                .mergeAdditional(requestOptions?.queryParams)
-                .build(),
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            withCredentials: true,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
-        });
-        if (_response.ok) {
-            return { data: _response.body as IcePanel.landscapes.LogsListResponse, rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            switch (_response.error.statusCode) {
-                case 400:
-                    throw new IcePanel.BadRequestError(_response.error.body as IcePanel.Error_, _response.rawResponse);
-                case 401:
-                    throw new IcePanel.UnauthorizedError(_response.error.body as unknown, _response.rawResponse);
-                case 403:
-                    throw new IcePanel.ForbiddenError(_response.error.body as IcePanel.Error_, _response.rawResponse);
-                case 404:
-                    throw new IcePanel.NotFoundError(_response.error.body as unknown, _response.rawResponse);
-                case 422:
-                    throw new IcePanel.UnprocessableEntityError(_response.error.body as unknown, _response.rawResponse);
-                case 500:
-                    throw new IcePanel.InternalServerError(_response.error.body as unknown, _response.rawResponse);
-                default:
-                    throw new errors.IcePanelError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
+    ): Promise<core.Page<IcePanel.ActionLog, IcePanel.landscapes.LogsListResponse>> {
+        const list = core.HttpResponsePromise.interceptFunction(
+            async (
+                request: IcePanel.ActionLogsListRequest,
+            ): Promise<core.WithRawResponse<IcePanel.landscapes.LogsListResponse>> => {
+                const { landscapeId, filter, cursor } = request;
+                const _queryParams: Record<string, unknown> = {
+                    filter,
+                    cursor,
+                };
+                const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+                const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+                    _authRequest.headers,
+                    this._options?.headers,
+                    requestOptions?.headers,
+                );
+                const _response = await core.fetcher({
+                    url: core.url.join(
+                        (await core.Supplier.get(this._options.baseUrl)) ??
+                            (await core.Supplier.get(this._options.environment)) ??
+                            environments.IcePanelEnvironment.ApiV1,
+                        `landscapes/${core.url.encodePathParam(landscapeId)}/action-logs`,
+                    ),
+                    method: "GET",
+                    headers: _headers,
+                    queryString: core.url
+                        .queryBuilder()
+                        .addMany(_queryParams)
+                        .mergeAdditional(requestOptions?.queryParams)
+                        .build(),
+                    timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+                    maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+                    withCredentials: true,
+                    abortSignal: requestOptions?.abortSignal,
+                    fetchFn: this._options?.fetch,
+                    logging: this._options.logging,
+                });
+                if (_response.ok) {
+                    return {
+                        data: _response.body as IcePanel.landscapes.LogsListResponse,
                         rawResponse: _response.rawResponse,
-                    });
-            }
-        }
-
-        return handleNonStatusCodeError(
-            _response.error,
-            _response.rawResponse,
-            "GET",
-            "/landscapes/{landscapeId}/action-logs",
+                    };
+                }
+                if (_response.error.reason === "status-code") {
+                    switch (_response.error.statusCode) {
+                        case 400:
+                            throw new IcePanel.BadRequestError(
+                                _response.error.body as IcePanel.Error_,
+                                _response.rawResponse,
+                            );
+                        case 401:
+                            throw new IcePanel.UnauthorizedError(
+                                _response.error.body as unknown,
+                                _response.rawResponse,
+                            );
+                        case 403:
+                            throw new IcePanel.ForbiddenError(
+                                _response.error.body as IcePanel.Error_,
+                                _response.rawResponse,
+                            );
+                        case 404:
+                            throw new IcePanel.NotFoundError(_response.error.body as unknown, _response.rawResponse);
+                        case 422:
+                            throw new IcePanel.UnprocessableEntityError(
+                                _response.error.body as unknown,
+                                _response.rawResponse,
+                            );
+                        case 500:
+                            throw new IcePanel.InternalServerError(
+                                _response.error.body as unknown,
+                                _response.rawResponse,
+                            );
+                        default:
+                            throw new errors.IcePanelError({
+                                statusCode: _response.error.statusCode,
+                                body: _response.error.body,
+                                rawResponse: _response.rawResponse,
+                            });
+                    }
+                }
+                return handleNonStatusCodeError(
+                    _response.error,
+                    _response.rawResponse,
+                    "GET",
+                    "/landscapes/{landscapeId}/action-logs",
+                );
+            },
         );
+        const dataWithRawResponse = await list(request).withRawResponse();
+        return new core.Page<IcePanel.ActionLog, IcePanel.landscapes.LogsListResponse>({
+            response: dataWithRawResponse.data,
+            rawResponse: dataWithRawResponse.rawResponse,
+            hasNextPage: (response) =>
+                response?.nextCursor != null &&
+                !(typeof response?.nextCursor === "string" && response?.nextCursor === ""),
+            getItems: (response) => response?.actionLogs ?? [],
+            loadPage: (response) => {
+                return list(core.setObjectProperty(request, "cursor", response?.nextCursor));
+            },
+        });
     }
 
     /**
+     * @deprecated
+     *
      * Find an action log
      *
      * @param {IcePanel.ActionLogFindRequest} request
@@ -231,83 +261,108 @@ export class LogsClient {
      *         actionLogId: "actionLogId"
      *     })
      */
-    public listChildren(
+    public async listChildren(
         request: IcePanel.ActionLogChildrenListRequest,
         requestOptions?: LogsClient.RequestOptions,
-    ): core.HttpResponsePromise<IcePanel.landscapes.LogsListChildrenResponse> {
-        return core.HttpResponsePromise.fromPromise(this.__listChildren(request, requestOptions));
-    }
-
-    private async __listChildren(
-        request: IcePanel.ActionLogChildrenListRequest,
-        requestOptions?: LogsClient.RequestOptions,
-    ): Promise<core.WithRawResponse<IcePanel.landscapes.LogsListChildrenResponse>> {
-        const { landscapeId, actionLogId, filter } = request;
-        const _queryParams: Record<string, unknown> = {
-            filter,
-        };
-        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            _authRequest.headers,
-            this._options?.headers,
-            requestOptions?.headers,
-        );
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)) ??
-                    environments.IcePanelEnvironment.ApiV1,
-                `landscapes/${core.url.encodePathParam(landscapeId)}/action-logs/${core.url.encodePathParam(actionLogId)}/children`,
-            ),
-            method: "GET",
-            headers: _headers,
-            queryString: core.url
-                .queryBuilder()
-                .addMany(_queryParams)
-                .mergeAdditional(requestOptions?.queryParams)
-                .build(),
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            withCredentials: true,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
-        });
-        if (_response.ok) {
-            return {
-                data: _response.body as IcePanel.landscapes.LogsListChildrenResponse,
-                rawResponse: _response.rawResponse,
-            };
-        }
-
-        if (_response.error.reason === "status-code") {
-            switch (_response.error.statusCode) {
-                case 400:
-                    throw new IcePanel.BadRequestError(_response.error.body as IcePanel.Error_, _response.rawResponse);
-                case 401:
-                    throw new IcePanel.UnauthorizedError(_response.error.body as unknown, _response.rawResponse);
-                case 403:
-                    throw new IcePanel.ForbiddenError(_response.error.body as IcePanel.Error_, _response.rawResponse);
-                case 404:
-                    throw new IcePanel.NotFoundError(_response.error.body as unknown, _response.rawResponse);
-                case 422:
-                    throw new IcePanel.UnprocessableEntityError(_response.error.body as unknown, _response.rawResponse);
-                case 500:
-                    throw new IcePanel.InternalServerError(_response.error.body as unknown, _response.rawResponse);
-                default:
-                    throw new errors.IcePanelError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
+    ): Promise<core.Page<IcePanel.ActionLog, IcePanel.landscapes.LogsListChildrenResponse>> {
+        const list = core.HttpResponsePromise.interceptFunction(
+            async (
+                request: IcePanel.ActionLogChildrenListRequest,
+            ): Promise<core.WithRawResponse<IcePanel.landscapes.LogsListChildrenResponse>> => {
+                const { landscapeId, actionLogId, filter, cursor } = request;
+                const _queryParams: Record<string, unknown> = {
+                    filter,
+                    cursor,
+                };
+                const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+                const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+                    _authRequest.headers,
+                    this._options?.headers,
+                    requestOptions?.headers,
+                );
+                const _response = await core.fetcher({
+                    url: core.url.join(
+                        (await core.Supplier.get(this._options.baseUrl)) ??
+                            (await core.Supplier.get(this._options.environment)) ??
+                            environments.IcePanelEnvironment.ApiV1,
+                        `landscapes/${core.url.encodePathParam(landscapeId)}/action-logs/${core.url.encodePathParam(actionLogId)}/children`,
+                    ),
+                    method: "GET",
+                    headers: _headers,
+                    queryString: core.url
+                        .queryBuilder()
+                        .addMany(_queryParams)
+                        .mergeAdditional(requestOptions?.queryParams)
+                        .build(),
+                    timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+                    maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+                    withCredentials: true,
+                    abortSignal: requestOptions?.abortSignal,
+                    fetchFn: this._options?.fetch,
+                    logging: this._options.logging,
+                });
+                if (_response.ok) {
+                    return {
+                        data: _response.body as IcePanel.landscapes.LogsListChildrenResponse,
                         rawResponse: _response.rawResponse,
-                    });
-            }
-        }
-
-        return handleNonStatusCodeError(
-            _response.error,
-            _response.rawResponse,
-            "GET",
-            "/landscapes/{landscapeId}/action-logs/{actionLogId}/children",
+                    };
+                }
+                if (_response.error.reason === "status-code") {
+                    switch (_response.error.statusCode) {
+                        case 400:
+                            throw new IcePanel.BadRequestError(
+                                _response.error.body as IcePanel.Error_,
+                                _response.rawResponse,
+                            );
+                        case 401:
+                            throw new IcePanel.UnauthorizedError(
+                                _response.error.body as unknown,
+                                _response.rawResponse,
+                            );
+                        case 403:
+                            throw new IcePanel.ForbiddenError(
+                                _response.error.body as IcePanel.Error_,
+                                _response.rawResponse,
+                            );
+                        case 404:
+                            throw new IcePanel.NotFoundError(_response.error.body as unknown, _response.rawResponse);
+                        case 422:
+                            throw new IcePanel.UnprocessableEntityError(
+                                _response.error.body as unknown,
+                                _response.rawResponse,
+                            );
+                        case 500:
+                            throw new IcePanel.InternalServerError(
+                                _response.error.body as unknown,
+                                _response.rawResponse,
+                            );
+                        default:
+                            throw new errors.IcePanelError({
+                                statusCode: _response.error.statusCode,
+                                body: _response.error.body,
+                                rawResponse: _response.rawResponse,
+                            });
+                    }
+                }
+                return handleNonStatusCodeError(
+                    _response.error,
+                    _response.rawResponse,
+                    "GET",
+                    "/landscapes/{landscapeId}/action-logs/{actionLogId}/children",
+                );
+            },
         );
+        const dataWithRawResponse = await list(request).withRawResponse();
+        return new core.Page<IcePanel.ActionLog, IcePanel.landscapes.LogsListChildrenResponse>({
+            response: dataWithRawResponse.data,
+            rawResponse: dataWithRawResponse.rawResponse,
+            hasNextPage: (response) =>
+                response?.nextCursor != null &&
+                !(typeof response?.nextCursor === "string" && response?.nextCursor === ""),
+            getItems: (response) => response?.actionLogs ?? [],
+            loadPage: (response) => {
+                return list(core.setObjectProperty(request, "cursor", response?.nextCursor));
+            },
+        });
     }
 }

@@ -15,6 +15,7 @@ describe("LogsClient", () => {
         });
 
         const rawResponseBody = {
+            nextCursor: "nextCursor",
             organizationLogs: [
                 {
                     action: { id: "id", props: { name: "name", permission: "billing" }, type: "api-key-create" },
@@ -35,17 +36,22 @@ describe("LogsClient", () => {
         };
 
         server
-            .mockEndpoint()
+            .mockEndpoint({ once: false })
             .get("/organizations/organizationId/logs")
             .respondWith()
             .statusCode(200)
             .jsonBody(rawResponseBody)
             .build();
 
-        const response = await client.organizations.logs.list({
+        const expected = rawResponseBody;
+        const page = await client.organizations.logs.list({
             organizationId: "organizationId",
         });
-        expect(response).toEqual(rawResponseBody);
+
+        expect(expected.organizationLogs).toEqual(page.data);
+        expect(page.hasNextPage()).toBe(true);
+        const nextPage = await page.getNextPage();
+        expect(expected.organizationLogs).toEqual(nextPage.data);
     });
 
     test("list (2)", async () => {

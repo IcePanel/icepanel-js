@@ -744,8 +744,10 @@ export interface ActionLogFilter {
     actionId?: string | undefined;
     actionType?: IcePanel.ActionLogFilterActionType | undefined;
     endAtDate?: string | undefined;
+    /** use cursor instead */
     endAtId?: string | undefined;
     endBeforeDate?: string | undefined;
+    /** use cursor instead */
     endBeforeId?: string | undefined;
     /** include actions from objects inside the context, eg: update of a model connection that is connected to a model object */
     includeActionsInContext?: boolean | undefined;
@@ -755,8 +757,10 @@ export interface ActionLogFilter {
     /** id of the user or api key who performed the action */
     performedById?: IcePanel.ActionLogFilterPerformedById | undefined;
     startAfterDate?: string | undefined;
+    /** use cursor instead */
     startAfterId?: string | undefined;
     startAtDate?: string | undefined;
+    /** use cursor instead */
     startAtId?: string | undefined;
 }
 
@@ -1908,6 +1912,110 @@ export interface ActionVersionRevertCreate {
     id: string;
     props: IcePanel.VersionRevertRequired;
     type: IcePanel.ActionVersionRevertCreateType;
+}
+
+export interface Adr {
+    commit: number;
+    /** The markdown content of the ADR */
+    content?: string | undefined;
+    /** The description of the ADR */
+    description?: string | undefined;
+    /** The name of the ADR */
+    name: string;
+    relatedItems?: Record<string, IcePanel.AdrRelatedItem> | undefined;
+    /** The status of the ADR */
+    status: IcePanel.AdrStatus;
+    statusChanges?: IcePanel.AdrStatusChange[] | undefined;
+    /** The handle id of the ADR */
+    handleId: string;
+    createdAt: string;
+    createdBy: IcePanel.AuthType;
+    createdById: string;
+    deletedAt?: string | undefined;
+    deletedBy?: IcePanel.AuthType | undefined;
+    deletedById?: string | undefined;
+    /** The id of the ADR */
+    id: string;
+    /** The id of the landscape that the ADR belongs to */
+    landscapeId: string;
+    latestEntityId?: string | undefined;
+    /** The incremental number of the ADR */
+    number: number;
+    updatedAt: string;
+    updatedBy: IcePanel.AuthType;
+    updatedById: string;
+    version: number;
+    versionId: string;
+}
+
+export type AdrFilterStatus = IcePanel.AdrStatus | IcePanel.AdrStatus[];
+
+export interface AdrFilter {
+    /** The name of the ADR */
+    name?: string | undefined;
+    status?: IcePanel.AdrFilterStatus | undefined;
+}
+
+export interface AdrPartial {
+    commit?: number | undefined;
+    /** The markdown content of the ADR */
+    content?: string | undefined;
+    /** The description of the ADR */
+    description?: string | undefined;
+    /** The name of the ADR */
+    name?: string | undefined;
+    relatedItems?: Record<string, IcePanel.AdrRelatedItem> | undefined;
+    /** The status of the ADR */
+    status?: IcePanel.AdrStatus | undefined;
+    statusChanges?: IcePanel.AdrStatusChange[] | undefined;
+}
+
+export interface AdrRelatedItem {
+    adrId?: string | undefined;
+    diagramId?: string | undefined;
+    draftId?: string | undefined;
+    id: string;
+    index: number;
+    link?: IcePanel.RealityLink | undefined;
+    type: IcePanel.AdrRelatedItemType;
+}
+
+export const AdrRelatedItemType = {
+    Adr: "adr",
+    Diagram: "diagram",
+    Draft: "draft",
+    Link: "link",
+} as const;
+export type AdrRelatedItemType = (typeof AdrRelatedItemType)[keyof typeof AdrRelatedItemType];
+
+export interface AdrRequired {
+    commit?: number | undefined;
+    /** The markdown content of the ADR */
+    content?: string | undefined;
+    /** The description of the ADR */
+    description?: string | undefined;
+    /** The name of the ADR */
+    name: string;
+    relatedItems?: Record<string, IcePanel.AdrRelatedItem> | undefined;
+    /** The status of the ADR */
+    status: IcePanel.AdrStatus;
+    statusChanges?: IcePanel.AdrStatusChange[] | undefined;
+    /** The handle id of the ADR */
+    handleId: string;
+}
+
+export const AdrStatus = {
+    Accepted: "accepted",
+    Draft: "draft",
+    Rejected: "rejected",
+} as const;
+export type AdrStatus = (typeof AdrStatus)[keyof typeof AdrStatus];
+
+export interface AdrStatusChange {
+    createdAt: string;
+    createdBy: IcePanel.AuthType;
+    createdById: string;
+    status: IcePanel.AdrStatus;
 }
 
 export interface ApiKeyPartial {
@@ -4434,8 +4542,10 @@ export interface OrganizationLogFilter {
     actionId?: string | undefined;
     actionType?: IcePanel.OrganizationLogFilterActionType | undefined;
     endAtDate?: string | undefined;
+    /** use cursor instead */
     endAtId?: string | undefined;
     endBeforeDate?: string | undefined;
+    /** use cursor instead */
     endBeforeId?: string | undefined;
     /** include actions from objects inside the context, eg: update of a model connection that is connected to a model object */
     includeActionsInContext?: boolean | undefined;
@@ -4445,8 +4555,10 @@ export interface OrganizationLogFilter {
     /** id of the user or api key who performed the action */
     performedById?: IcePanel.OrganizationLogFilterPerformedById | undefined;
     startAfterDate?: string | undefined;
+    /** use cursor instead */
     startAfterId?: string | undefined;
     startAtDate?: string | undefined;
+    /** use cursor instead */
     startAtId?: string | undefined;
 }
 
@@ -4939,6 +5051,13 @@ export interface TechnologyExport {
     updatesUrl?: string | undefined;
     websiteUrl?: string | undefined;
 }
+
+export const VersionIdPathParamOne = {
+    Latest: "latest",
+} as const;
+export type VersionIdPathParamOne = (typeof VersionIdPathParamOne)[keyof typeof VersionIdPathParamOne];
+
+export type VersionIdPathParam = string | IcePanel.VersionIdPathParamOne;
 
 export const ImportEntityType = {
     ModelObject: "model-object",
